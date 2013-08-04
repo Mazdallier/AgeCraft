@@ -1,0 +1,126 @@
+======= Dimension IDs ======
+10		Prehistory
+11		Agriculture Age
+12		Ancient Egypt
+13		Ancient China
+14		Roman/Greek Age
+15		Middle Ages
+16		Early Modern Age
+17 		Industrial Age
+18		Modern Age
+19		Future
+20-30 	Other dimension
+30+		Planets
+
+
+======= Biome IDs ======
+30-50	Prehistoric Biomes
+50-100	Normal Biomes
+100+ 	Other biomes
+
+
+======= Block IDs ======
+2500-2999 	Core blocks
+	2500 Ore
+	2501 Block
+	2502 Fence
+	2503 Fence gate
+	2504 Door
+	2505 Trapdoor
+	2506 Ladders
+	
+	2510 Wood
+	2511 Log
+	2512 Planks
+	2513 Leaves
+	2514 Sapling
+	2515 Wood wall
+	2516 Stairs
+	2517 Slab
+	2518 Fence
+	2519 Fence gate
+	2520 Door
+	2521 Trapdoor
+	2522 Ladders
+	2523 Design planks
+	
+	2530 Wood DNA
+	2531 Log DNA
+	2532 Leaves DNA
+	2533 Sapling DNA
+	
+	2996 Age Teleporter
+	2997 Age Teleporter Block
+	2998 Age Teleporter Beam
+	2999 Age Teleporter Chest
+3000-3099	Prehistory
+	3000 Campfire off
+	3001 Campfire on
+	3002 Rock
+3100-3199	Agriculture Age
+3200-3299	Ancient Egypt
+3300-3399	Ancient China
+3400-3499	Roman/Greek Age
+3500-3599	Middle Ages
+3600-3699	Early Modern Age
+3700-3799	Industrial Age
+3800-3899	Modern Age
+3900-3999	Future
+
+
+======= Item IDs ======
+12500-12999 	Core items
+	12500 Ingot/Gem
+13000-13099		Prehistory
+	13000 Rock Tool
+	13001 Rock Tanning Tool
+13100-13199		Agriculture Age
+13200-13299		Ancient Egypt
+13300-13399		Ancient China
+13400-13499		Roman/Greek Age
+13500-13599		Middle Ages
+13600-13699		Early Modern Age
+13700-13799		Industrial Age
+13800-13899		Modern Age
+13900-13999		Future
+
+
+======= Packet IDs ======
+0-74	Server to client packets
+	1 TechTree Component
+	2 TechTree All Components
+75-90	Client to server packets
+90+ 	TileEntity packets
+	90 NBT
+	91 DNA
+	92 Metadata
+	100 Ore
+	200 Campfire
+
+======= Block Render IDs ======
+100-199 	Core blocks
+200-299		Prehistory
+	200 Campfire
+	201 Rock
+300-399		Agriculture Age
+400-499		Ancient Egypt
+500-599		Ancient China
+600-699		Roman/Greek Age
+700-799		Middle Ages
+800-899		Early Modern Age
+900-999		Industrial Age
+1000-1099	Modern Age
+1100-1199	Future
+
+======= GUI IDs ======
+0-9			Core
+10-19		Prehistory Age
+20-29		Agriculture Age
+30-39		Ancient Egypt
+40-49		Ancient China
+50-59		Roman/Greek Age
+60-69		Middle Ages
+70-79		Early Modern Age
+80-89		Industrial Age
+90-99		Modern Age
+100-199		Future
