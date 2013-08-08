@@ -1,6 +1,5 @@
 package elcon.mods.agecraft.core.tileentities.renderers;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -22,7 +21,6 @@ public class TileEntityAgeTeleporterChestRenderer extends TileEntitySpecialRende
 	public void renderTileEntityChestAt(TileEntityAgeTeleporterChest tileEntityChest, double par2, double par4, double par6, float par8) {
 		int var9 = 0;
 		if(tileEntityChest.hasWorldObj()) {
-			Block var10 = tileEntityChest.getBlockType();
 			var9 = tileEntityChest.getBlockMetadata();
 		}
 		func_110628_a(ResourcesCore.ageTeleporterChest);
@@ -51,8 +49,7 @@ public class TileEntityAgeTeleporterChestRenderer extends TileEntitySpecialRende
 		GL11.glRotatef((float) var11, 0.0F, 1.0F, 0.0F);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		float var12 = tileEntityChest.prevLidAngle + (tileEntityChest.lidAngle - tileEntityChest.prevLidAngle) * par8;
-		float var13;
-
+		
 		var12 = 1.0F - var12;
 		var12 = 1.0F - var12 * var12 * var12;
 		var14.chestLid.rotateAngleX = -(var12 * (float) Math.PI / 2.0F);

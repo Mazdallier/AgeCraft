@@ -3,7 +3,6 @@ package elcon.mods.agecraft.prehistory.gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 
 public class InventorySharpener implements IInventory {

@@ -38,7 +38,7 @@ public class BiomeDecoratorACPrehistory {
 	}
 
 	private void decorate() {
-		int i, j;
+		int i;
 		int x, y, z;
 		WorldGenerator gen;
 		for(i = 0; i < rocksPerChunk; i++) {

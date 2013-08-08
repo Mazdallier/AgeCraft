@@ -19,7 +19,6 @@ public class BlockModelCampfire extends ModelBase {
 	public ModelRenderer spit;
 
 	public BlockModelCampfire() {
-		byte byte0 = 16;
 		logCen = new ModelRenderer(this, 0, 0);
 		logCen.addBox(-1.0F, 9.2F, -1.0F, 2, 2, 2);
 		logCen.setRotationPoint(0.0F, 0.0F, 0.0F);

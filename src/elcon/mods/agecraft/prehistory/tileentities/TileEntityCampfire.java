@@ -3,8 +3,6 @@ package elcon.mods.agecraft.prehistory.tileentities;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -86,8 +84,8 @@ public class TileEntityCampfire extends TileEntity {
 			double d = xCoord + 0.5F;
 		    double d1 = yCoord + 0.37F;
 		    double d2 = zCoord + 0.5F;
-		    double d3 = 0.22D;
-		    double d4 = 0.27D;
+		    //double d3 = 0.22D;
+		    //double d4 = 0.27D;
 		    worldObj.spawnParticle("smoke", d, d1, d2, 0.0D, 0.0D, 0.0D);
 		    worldObj.spawnParticle("flame", d + 0.1D, d1, d2, 0.0D, 0.0D, 0.0D);
 		    worldObj.spawnParticle("flame", d, d1, d2 + 0.1D, 0.0D, 0.0D, 0.0D);

@@ -2,9 +2,7 @@ package elcon.mods.agecraft.dna;
 
 import java.util.HashMap;
 import java.util.Random;
-import java.util.logging.Level;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import elcon.mods.agecraft.ACLog;
 import elcon.mods.agecraft.dna.storage.DNAStorage;
 import elcon.mods.agecraft.dna.storage.DNAStorageChromosome;

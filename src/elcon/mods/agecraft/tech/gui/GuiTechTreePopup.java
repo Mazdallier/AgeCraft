@@ -49,13 +49,13 @@ public class GuiTechTreePopup extends Gui {
 		GuiTechTree.lastY = tech.displayRow;
 	}
 
-	private void queueTechTreeComponentInformation(TechTreeComponent tech) {
+	/*private void queueTechTreeComponentInformation(TechTreeComponent tech) {
 		achievementGetLocalText = tech.getName();
 		achievementStatName = tech.getDescription();
 		popupTime = Minecraft.getSystemTime() - 2500L;
 		theComponent = tech;
 		haveTech = true;
-	}
+	}*/
 
 	private void updateWindowScale() {
 		GL11.glViewport(0, 0, theGame.displayWidth, theGame.displayHeight);

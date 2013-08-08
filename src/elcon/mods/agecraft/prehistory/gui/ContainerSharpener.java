@@ -40,7 +40,7 @@ public class ContainerSharpener extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int i) {
-		ItemStack itemstack = null;
+		//ItemStack itemstack = null;
         Slot slot = (Slot)inventorySlots.get(i);
         slot.onPickupFromSlot(player, slot.getStack());
         slot.onSlotChanged();

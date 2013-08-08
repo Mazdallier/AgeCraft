@@ -1,8 +1,5 @@
 package elcon.mods.agecraft.util;
 
-import java.util.logging.Level;
-
-import cpw.mods.fml.common.FMLCommonHandler;
 import elcon.mods.agecraft.ACLog;
 
 public class Vect {
@@ -49,9 +46,9 @@ public class Vect {
 	public int hashCode() {
 		int prime = 31;
 		int result = 1;
-		result = 31 * result + this.x;
-		result = 31 * result + this.y;
-		result = 31 * result + this.z;
+		result = prime * result + this.x;
+		result = prime * result + this.y;
+		result = prime * result + this.z;
 		return result;
 	}
 

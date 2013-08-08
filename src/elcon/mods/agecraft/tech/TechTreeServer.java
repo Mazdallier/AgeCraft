@@ -2,11 +2,9 @@ package elcon.mods.agecraft.tech;
 
 import java.util.ArrayList;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import elcon.mods.agecraft.ACPacketHandler;
 import elcon.mods.agecraft.AgeCraft;
-
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.src.*;
 
 public class TechTreeServer {
 

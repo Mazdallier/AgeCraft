@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlockWithMetadata;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraftforge.client.GuiIngameForge;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -95,7 +94,7 @@ public class AgeCraftCore extends ACComponent {
 		RenderingRegistry.registerBlockHandler(107, blockRenderingHandler);
 		
 		//register item rendering handler
-		ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();
+		//ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();
 				
 		//register tile entity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterBeam.class, new TileEntityAgeTeleporterBeamRenderer());

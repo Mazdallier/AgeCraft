@@ -1,7 +1,6 @@
 package elcon.mods.agecraft.core;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import elcon.mods.agecraft.ACLog;
 
 public class MetalRegistry {

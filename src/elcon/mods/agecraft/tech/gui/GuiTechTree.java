@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.input.Mouse;
@@ -56,7 +55,6 @@ public class GuiTechTree extends GuiScreen {
 
 	public static int lastX = 0;
 	public static int lastY = 0;
-	private GuiSmallButton button;
 	private LinkedList<TechTreeComponent> techTreeComponents = new LinkedList<TechTreeComponent>();
 	public static List unlockedTechTreeComponents = new ArrayList();
 	private FontRenderer galFontRenderer;

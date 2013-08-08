@@ -1,20 +1,13 @@
 package elcon.mods.agecraft.prehistory;
 
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.CAVE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.MINESHAFT;
 import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.RAVINE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.SCATTERED_FEATURE;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.STRONGHOLD;
-import static net.minecraftforge.event.terraingen.InitMapGenEvent.EventType.VILLAGE;
-import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.DUNGEON;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.ICE;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE;
 import static net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAVA;
 
 import java.util.List;
 import java.util.Random;
-
-import elcon.mods.agecraft.prehistory.biomes.BiomeGenACPrehistory;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
@@ -31,17 +24,13 @@ import net.minecraft.world.gen.MapGenBase;
 import net.minecraft.world.gen.MapGenCaves;
 import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
-import net.minecraft.world.gen.feature.MapGenScatteredFeature;
-import net.minecraft.world.gen.feature.WorldGenDungeons;
 import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.structure.MapGenMineshaft;
-import net.minecraft.world.gen.structure.MapGenStronghold;
-import net.minecraft.world.gen.structure.MapGenVillage;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import elcon.mods.agecraft.prehistory.biomes.BiomeGenACPrehistory;
 
 public class PrehistoryChunkProvider implements IChunkProvider {
 
@@ -292,8 +281,8 @@ public class PrehistoryChunkProvider implements IChunkProvider {
 		noise3 = noiseGen3.generateNoiseOctaves(noise3, par2, par3, par4, par5, par6, par7, d0 / 80.0D, d1 / 160.0D, d0 / 80.0D);
 		noise1 = noiseGen1.generateNoiseOctaves(noise1, par2, par3, par4, par5, par6, par7, d0, d1, d0);
 		noise2 = noiseGen2.generateNoiseOctaves(noise2, par2, par3, par4, par5, par6, par7, d0, d1, d0);
-		boolean flag = false;
-		boolean flag1 = false;
+		//boolean flag = false;
+		//boolean flag1 = false;
 		int i2 = 0;
 		int j2 = 0;
 

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
@@ -22,32 +21,44 @@ import net.minecraft.world.World;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
 import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
 import elcon.mods.agecraft.core.tileentities.TileEntityNBT;
-import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.tech.TechTreeClient;
 import elcon.mods.agecraft.tech.TechTreeServer;
 
 public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
-
+	
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 		ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
 		int packetID = dat.readInt();
 
+		Side side = FMLCommonHandler.instance().getEffectiveSide();
+		if(side == Side.CLIENT) {
+			handlePacketClient(packetID, dat);
+		} else if(side == Side.SERVER) {
+			handlePacketServer(packetID, dat);
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private void handlePacketClient(int packetID, ByteArrayDataInput dat) {
 		World world = Minecraft.getMinecraft().theWorld;
-
+		
 		switch(packetID) {
 		case 1:
 			handleTechTreeComponentPacket(dat);
-			break;
+			return;
 		case 2:
 			handleAllTechTreeComponentsPacket(dat);
-			break;
+			return;
 		case 90:
 			handleTileEntityNBT(world, dat);
 			break;
@@ -57,9 +68,26 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		case 92:
 			handleTileEntityMetadata(world, dat);
 			break;
-		case 200:
-			handleTileEntityCampfire(world, dat);
-			break;
+		}	
+		
+		for(ACComponent component : AgeCraft.instance.components) {
+			if(component != null) {
+				IACPacketHandler packetHandler = component.getPacketHandler();
+				if(packetHandler != null) {
+					packetHandler.handlePacketClient(packetID, dat, world);
+				}
+			}
+		}
+	}
+	
+	private void handlePacketServer(int packetID, ByteArrayDataInput dat) {
+		for(ACComponent component : AgeCraft.instance.components) {
+			if(component != null) {
+				IACPacketHandler packetHandler = component.getPacketHandler();
+				if(packetHandler != null) {
+					packetHandler.handlePacketServer(packetID, dat);
+				}
+			}
 		}
 	}
 
@@ -197,36 +225,6 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			world.setBlockTileEntity(x, y, z, tile);
 		}
 		tile.metadata = dat.readInt();
-		world.markBlockForUpdate(x, y, z);
-	}
-
-	private void handleTileEntityCampfire(World world, ByteArrayDataInput dat) {
-		NBTTagCompound nbt = new NBTTagCompound();
-		int x = dat.readInt();
-		int y = dat.readInt();
-		int z = dat.readInt();
-
-		TileEntityCampfire tile = (TileEntityCampfire) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityCampfire();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
-		tile.tick = dat.readInt();
-		tile.timeLeft = dat.readInt();
-		tile.fuel = dat.readInt();
-		tile.hasFuel = dat.readBoolean();
-		tile.isBurning = dat.readBoolean();
-		tile.canBurn = dat.readBoolean();
-		tile.logType = dat.readByte();
-
-		tile.hasSpit = dat.readBoolean();
-		tile.spitStage = dat.readByte();
-		tile.spitDirection = dat.readByte();
-		if(dat.readBoolean()) {
-			tile.spitStack = new ItemStack(dat.readInt(), 1, dat.readInt());
-		}
-		tile.cookTime = dat.readInt();
-		tile.cooked = dat.readBoolean();
 		world.markBlockForUpdate(x, y, z);
 	}
 

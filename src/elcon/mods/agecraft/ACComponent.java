@@ -39,4 +39,8 @@ public class ACComponent {
 	public String firstCaps(String s) {
 		return Character.toString(s.charAt(0)).toUpperCase() + s.substring(1, s.length());
 	}
+	
+	public IACPacketHandler getPacketHandler() {
+		return null;
+	}
 }

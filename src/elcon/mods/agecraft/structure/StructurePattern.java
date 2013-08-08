@@ -1,14 +1,11 @@
 package elcon.mods.agecraft.structure;
 
-import java.util.logging.Level;
-
-import cpw.mods.fml.common.FMLCommonHandler;
 import elcon.mods.agecraft.ACLog;
 import elcon.mods.agecraft.util.Vect;
 
 public class StructurePattern {
 	
-	private final String uid;
+	public final String uid;
 	private EnumStructureBlock[][][] structure;
 	private int width;
 	private int height;

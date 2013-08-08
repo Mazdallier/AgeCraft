@@ -1,12 +1,9 @@
 package elcon.mods.agecraft.tech;
 
-import java.util.ArrayList;
-
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.src.*;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class TechTreeComponent {
 

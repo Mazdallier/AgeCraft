@@ -2,9 +2,7 @@ package elcon.mods.agecraft.core.tileentities;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.util.Iterator;
 
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;

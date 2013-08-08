@@ -1,16 +1,7 @@
 package elcon.mods.agecraft.core;
 
-import org.lwjgl.opengl.GL11;
-
-import elcon.mods.agecraft.core.blocks.BlockOverlay;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.client.IItemRenderer.ItemRenderType;
-import net.minecraftforge.client.IItemRenderer.ItemRendererHelper;
 
 public class ACItemRenderingHandler implements IItemRenderer {
 

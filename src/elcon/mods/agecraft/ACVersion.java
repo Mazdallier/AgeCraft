@@ -1,14 +1,9 @@
 package elcon.mods.agecraft;
 
 import java.io.InputStream;
-import java.lang.ref.Reference;
 import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Level;
-
-import net.minecraftforge.common.Configuration;
-
-import com.google.common.base.Strings;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.LanguageRegistry;

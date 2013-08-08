@@ -8,6 +8,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.Age;
+import elcon.mods.agecraft.IACPacketHandler;
 import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.items.ItemFakeStone;
@@ -21,6 +22,8 @@ public class PrehistoryAge extends Age {
 	
 	public PrehistoryBlockRenderingHandler blockRenderingHandler;
 	
+	public PrehistoryPacketHandler packetHandler;
+	
 	public static Block campfireOff;
 	public static Block campfireOn;
 	public static Block rockBlock;
@@ -32,6 +35,7 @@ public class PrehistoryAge extends Age {
 	
 	public PrehistoryAge(int id) {
 		super(id, "prehistory", ACCreativeTabs.prehistoryAge);
+		packetHandler = new PrehistoryPacketHandler();
 	}
 	
 	@Override
@@ -89,5 +93,9 @@ public class PrehistoryAge extends Age {
 		
 		//register tile entity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());
+	}
+	
+	public IACPacketHandler getPacketHandler() {
+		return packetHandler;
 	}
 }
