@@ -84,8 +84,6 @@ public class TileEntityCampfire extends TileEntity {
 			double d = xCoord + 0.5F;
 		    double d1 = yCoord + 0.37F;
 		    double d2 = zCoord + 0.5F;
-		    //double d3 = 0.22D;
-		    //double d4 = 0.27D;
 		    worldObj.spawnParticle("smoke", d, d1, d2, 0.0D, 0.0D, 0.0D);
 		    worldObj.spawnParticle("flame", d + 0.1D, d1, d2, 0.0D, 0.0D, 0.0D);
 		    worldObj.spawnParticle("flame", d, d1, d2 + 0.1D, 0.0D, 0.0D, 0.0D);
@@ -143,6 +141,7 @@ public class TileEntityCampfire extends TileEntity {
 				}
 				spitStack = null;
 			} else {
+				System.out.println(cookTime);
 				if(cookTime <= 3600) {
 					cookTime++;
 				}
@@ -153,6 +152,7 @@ public class TileEntityCampfire extends TileEntity {
 						cooked = true;
 						worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 					}
+					
 				} else if(cookTime == 3000) {
 					if(!worldObj.isRemote) {
 						spitStack = CampfireRecipes.getRecipeOutputBurned(originalStack);
