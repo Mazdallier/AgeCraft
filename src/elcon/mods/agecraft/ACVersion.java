@@ -20,7 +20,7 @@ public class ACVersion implements Runnable {
 	
 	private static ACVersion instance = new ACVersion();
 
-	private static final String REMOTE_VERSION_XML_FILE = "https://raw.github.com/ItsMeElConquistador/AgeCraft/master/version.xml";
+	private static final String REMOTE_VERSION_XML_FILE = "https://raw.github.com/AgeCraft/AgeCraft/master/version.xml";
 
 	public static Properties remoteVersionProperties = new Properties();
 
