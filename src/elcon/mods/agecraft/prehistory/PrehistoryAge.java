@@ -6,6 +6,8 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.Age;
 import elcon.mods.agecraft.IACPacketHandler;
@@ -84,6 +86,7 @@ public class PrehistoryAge extends Age {
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void clientProxy() {
 		blockRenderingHandler = new PrehistoryBlockRenderingHandler();
 		

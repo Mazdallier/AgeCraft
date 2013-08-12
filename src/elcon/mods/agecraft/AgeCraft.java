@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -20,6 +21,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.AgeCraftCore;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
 import elcon.mods.agecraft.ranks.ACRankManager;
@@ -69,7 +71,9 @@ public class AgeCraft {
 		LanguageRegistry.instance().addStringLocalization("agecraft.version.final_error", "en_US", "Version check stopping after three unsuccessful connection attempts");
 		LanguageRegistry.instance().addStringLocalization("agecraft.version.mc_version_not_found", "en_US", "Unable to find a version of @MOD_NAME@ for @MINECRAFT_VERSION@ in the remote version authority");
 		
-		ACVersion.execute();
+		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+			ACVersion.execute();
+		}
 
 		config.save();
 
@@ -155,6 +159,7 @@ public class AgeCraft {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IconRegister iconRegister) {
 		for(int i = 0; i < Age.ages.length; i++) {
 			if(Age.ages[i] != null) {
@@ -166,6 +171,7 @@ public class AgeCraft {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	public void registerItemIcons(IconRegister iconRegister) {
 		for(int i = 0; i < Age.ages.length; i++) {
 			if(Age.ages[i] != null) {

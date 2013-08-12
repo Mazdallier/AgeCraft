@@ -11,6 +11,8 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporter;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBeam;
@@ -81,6 +83,7 @@ public class AgeCraftCore extends ACComponent {
 		Item.itemsList[1] = new ItemBlockWithMetadata(1 - 256, Block.stone).setUnlocalizedName("stone");
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public void clientProxy() {
 		//register block rendering handler
 		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();

@@ -1,6 +1,8 @@
 package elcon.mods.agecraft;
 
 import net.minecraft.client.renderer.texture.IconRegister;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ACComponent {
 
@@ -20,6 +22,7 @@ public class ACComponent {
 
 	}
 
+	@SideOnly(Side.CLIENT)
 	public void clientProxy() {
 
 	}
@@ -28,10 +31,12 @@ public class ACComponent {
 
 	}
 
+	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IconRegister iconRegister) {
 
 	}
 
+	@SideOnly(Side.CLIENT)
 	public void registerItemIcons(IconRegister iconRegister) {
 
 	}

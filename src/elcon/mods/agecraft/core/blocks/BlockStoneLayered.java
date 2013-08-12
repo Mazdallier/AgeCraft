@@ -7,6 +7,7 @@ import net.minecraft.block.BlockStone;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -20,7 +21,9 @@ public class BlockStoneLayered extends BlockStone {
 		setHardness(1.5F);
 		setResistance(10.0F);
 		setStepSound(Block.soundStoneFootstep);
-		blockIcon = Block.stone.getIcon(0, 0);
+		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+			blockIcon = Block.stone.getIcon(0, 0);
+		}
 	}
 	
 	@Override
