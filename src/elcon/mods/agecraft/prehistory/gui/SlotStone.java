@@ -36,4 +36,5 @@ public class SlotStone extends Slot {
 	public boolean isItemValid(ItemStack par1ItemStack) {
 		return false;
 	}
+
 }

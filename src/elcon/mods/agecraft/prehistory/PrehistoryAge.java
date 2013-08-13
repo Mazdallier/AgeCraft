@@ -59,9 +59,9 @@ public class PrehistoryAge extends Age {
 		rockTanningTool = new ItemRockTanningTool(13001).setCreativeTab(tab).setUnlocalizedName("rockTanningTool");
 		
 		//add block names
-		LanguageRegistry.addName(campfireOff, "Campfire");
-		LanguageRegistry.addName(campfireOn, "Campfire");
-		LanguageRegistry.addName(rockBlock, "Rock");
+		//LanguageRegistry.addName(campfireOff, "Campfire");
+		//LanguageRegistry.addName(campfireOn, "Campfire");
+		//LanguageRegistry.addName(rockBlock, "Rock");
 		
 		//add item names
 		LanguageRegistry.addName(fakeStone, "Rock");

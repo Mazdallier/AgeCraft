@@ -6,8 +6,8 @@ import net.minecraft.item.ItemStack;
 
 public class CreativeTabMetals extends CreativeTabs {
 
-	public CreativeTabMetals(int id) {
-		super(id, "Metals");
+	public CreativeTabMetals(int id, String name) {
+		super(id, name);
 	}
 
 	@Override

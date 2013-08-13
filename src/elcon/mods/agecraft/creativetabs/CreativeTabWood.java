@@ -6,8 +6,8 @@ import net.minecraft.item.ItemStack;
 
 public class CreativeTabWood extends CreativeTabs {
 
-	public CreativeTabWood(int id) {
-		super(id, "Wood");
+	public CreativeTabWood(int id, String name) {
+		super(id, name);
 	}
 
 	@Override
