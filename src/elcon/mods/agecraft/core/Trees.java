@@ -12,6 +12,7 @@ import elcon.mods.agecraft.core.blocks.BlockLeaves;
 import elcon.mods.agecraft.core.blocks.BlockLog;
 import elcon.mods.agecraft.core.blocks.BlockPlanks;
 import elcon.mods.agecraft.core.blocks.BlockWood;
+import elcon.mods.agecraft.core.blocks.BlockWoodWall;
 import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.agecraft.core.items.ItemBlockLeaves;
 import elcon.mods.agecraft.core.items.ItemLog;
@@ -31,12 +32,14 @@ public class Trees extends ACComponent {
 		log = new BlockLog(2511).setUnlocalizedName("log");
 		planks = new BlockPlanks(2512).setUnlocalizedName("planks");
 		leaves = new BlockLeaves(2513).setUnlocalizedName("leaves");
+		woodWall = new BlockWoodWall(2514).setUnlocalizedName("woodWall");
 		
 		//register blocks
 		GameRegistry.registerBlock(wood, ItemBlockExtendedMetadata.class, "AC_wood");
 		GameRegistry.registerBlock(log, ItemLog.class, "AC_log");
 		GameRegistry.registerBlock(planks, ItemBlockExtendedMetadata.class, "AC_planks");
 		GameRegistry.registerBlock(leaves, ItemBlockLeaves.class, "AC_leaves");
+		GameRegistry.registerBlock(woodWall, ItemBlockExtendedMetadata.class, "AC_woodWall");
 		
 		//register trees
 		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true));

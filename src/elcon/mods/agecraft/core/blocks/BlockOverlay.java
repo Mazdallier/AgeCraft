@@ -11,11 +11,6 @@ public class BlockOverlay extends Block {
 	public BlockOverlay(int i, Material material) {
 		super(i, material);
 	}
-
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
 	
 	@Override
 	public int getRenderType() {

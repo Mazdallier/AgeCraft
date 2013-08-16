@@ -32,6 +32,9 @@ public class SchematicAPI {
 			return;
 		}
 		HashMap<String, Schematic> oldSchematics = schematics.get(mod);
+		if(oldSchematics == null) {
+			oldSchematics = new HashMap<String, Schematic>();
+		}
 		oldSchematics.put(name, schematic);
 		schematics.put(mod, oldSchematics);
 	}

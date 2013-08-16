@@ -44,22 +44,22 @@ public class BlockLog extends BlockExtendedMetadata {
 		float maxZ = 0.6875F;
 		
 		int meta = getMetadata(blockAccess, x, y, z);
-		if(isConnected(blockAccess, x - 1, y, z, meta, false)) {
+		if(canConnectTo(blockAccess, x - 1, y, z, meta, false)) {
 			minX = 0.0F;
 		}
-		if(isConnected(blockAccess, x + 1, y, z, meta, false)) {
+		if(canConnectTo(blockAccess, x + 1, y, z, meta, false)) {
 			maxX = 1.0F;
 		}
-		if(isConnected(blockAccess, x, y - 1, z, meta, false)) {
+		if(canConnectTo(blockAccess, x, y - 1, z, meta, false)) {
 			minY = 0.0F;
 		}
-		if(isConnected(blockAccess, x, y + 1, z, meta, true)) {
+		if(canConnectTo(blockAccess, x, y + 1, z, meta, true)) {
 			maxY = 1.0F;
 		}
-		if(isConnected(blockAccess, x, y, z - 1, meta, false)) {
+		if(canConnectTo(blockAccess, x, y, z - 1, meta, false)) {
 			minZ = 0.0F;
 		}
-		if(isConnected(blockAccess, x, y, z + 1, meta, false)) {
+		if(canConnectTo(blockAccess, x, y, z + 1, meta, false)) {
 			maxZ = 1.0F;
 		}
 		setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
@@ -70,7 +70,7 @@ public class BlockLog extends BlockExtendedMetadata {
 		setBlockBounds(0.3125F, 0.0F, 0.3125F, 0.6875F, 0.75F, 0.6875F);
 	}
 	
-	public boolean isConnected(IBlockAccess blockAccess, int x, int y, int z, int meta, boolean leaves) {
+	public boolean canConnectTo(IBlockAccess blockAccess, int x, int y, int z, int meta, boolean leaves) {
 		if(leaves && blockAccess.getBlockId(x, y, z) == Trees.leaves.blockID) {
 			return true;
 		} else if(blockAccess.getBlockId(x, y, z) == blockID) {

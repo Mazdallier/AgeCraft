@@ -24,11 +24,6 @@ public class BlockWood extends BlockExtendedMetadata {
 	}
 	
 	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
-
-	@Override
 	public int getRenderType() {
 		return 105;
 	}
