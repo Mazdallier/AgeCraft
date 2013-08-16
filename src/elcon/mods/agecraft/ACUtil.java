@@ -11,4 +11,8 @@ public class ACUtil {
         }
         return i;
 	}
+
+	public static String firstUpperCase(String s) {
+		return Character.toString(s.charAt(0)).toUpperCase() + s.substring(1, s.length());
+	}
 }

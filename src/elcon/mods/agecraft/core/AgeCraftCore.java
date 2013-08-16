@@ -98,6 +98,7 @@ public class AgeCraftCore extends ACComponent {
 		
 		//register item rendering handler
 		//ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();
+		//MinecraftForgeClient.registerItemRenderer(itemID, itemRenderingHandler);
 				
 		//register tile entity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterBeam.class, new TileEntityAgeTeleporterBeamRenderer());

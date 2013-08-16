@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 
 public abstract class BlockContainerOverlay extends BlockOverlay implements ITileEntityProvider {
 
-	public BlockContainerOverlay(int i, Material material) {
-		super(i, material);
+	public BlockContainerOverlay(int id, Material material) {
+		super(id, material);
 		isBlockContainer = true;
 	}
 	

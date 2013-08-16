@@ -10,7 +10,15 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityMetadata extends TileEntity {
 
-	public int metadata;
+	private int meta = 0;
+	
+	public int getTileMetadata() {
+	    return meta;
+	  }
+
+	  public void setTileMetadata(int meta) {
+	    this.meta = meta;
+	  }
 	
 	@Override
 	public Packet getDescriptionPacket() {
@@ -22,7 +30,7 @@ public class TileEntityMetadata extends TileEntity {
 			dos.writeInt(yCoord);
 			dos.writeInt(zCoord);
 			
-			dos.writeInt(metadata);
+			dos.writeInt(meta);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -37,12 +45,17 @@ public class TileEntityMetadata extends TileEntity {
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		metadata = nbt.getInteger("Metadata");
+		meta = nbt.getInteger("Metadata");
 	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		nbt.setInteger("Metadata", metadata);
+		nbt.setInteger("Metadata", meta);
+	}
+	
+	@Override
+	public boolean canUpdate() {
+		return false;
 	}
 }

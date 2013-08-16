@@ -224,7 +224,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			tile = new TileEntityMetadata();
 			world.setBlockTileEntity(x, y, z, tile);
 		}
-		tile.metadata = dat.readInt();
+		tile.setTileMetadata(dat.readInt());
 		world.markBlockForUpdate(x, y, z);
 	}
 

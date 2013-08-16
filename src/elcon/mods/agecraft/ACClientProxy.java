@@ -8,9 +8,9 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
+import elcon.mods.agecraft.overlay.BlockOverlayRenderingHandler;
 import elcon.mods.agecraft.prehistory.gui.GuiSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
-import elcon.mods.agecraft.render.BlockOverlayRenderingHandler;
 
 public class ACClientProxy extends ACCommonProxy {
 
@@ -23,7 +23,7 @@ public class ACClientProxy extends ACCommonProxy {
 		KeyBindingRegistry.registerKeyBinding(new ACKeyHandler());
 
 		//register block handlers
-		RenderingRegistry.registerBlockHandler(AgeCraft.BLOCK_OVERLAY_RENDER_ID, new BlockOverlayRenderingHandler());
+		RenderingRegistry.registerBlockHandler(ACConfig.BLOCK_OVERLAY_RENDER_ID, new BlockOverlayRenderingHandler());
 		
 		for(int i = 0; i < Age.ages.length; i++) {
 			if(Age.ages[i] != null) {

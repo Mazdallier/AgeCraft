@@ -36,8 +36,6 @@ public class AgeCraft {
 
 	@SidedProxy(clientSide = ACReference.CLIENT_PROXY_CLASS, serverSide = ACReference.SERVER_PROXY_CLASS)
 	public static ACCommonProxy proxy;
-
-	public static int BLOCK_OVERLAY_RENDER_ID = 42;
 	
 	public static File minecraftDir;
 

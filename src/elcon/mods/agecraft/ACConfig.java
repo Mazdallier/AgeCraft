@@ -14,6 +14,8 @@ public class ACConfig {
 	public static boolean DISPLAY_VERSION_RESULT = true;
 	public static String LAST_DISCOVERED_VERSION = "";
 	public static String LAST_DISCOVERED_VERSION_TYPE = "";
+	
+	public static int BLOCK_OVERLAY_RENDER_ID = 42;
 
 	public static void load(Configuration config) {
 		DISPLAY_VERSION_RESULT = config.get(CATEGORY_VERSION, "display_results", true).getBoolean(true);
