@@ -67,6 +67,11 @@ public class BlockWood extends BlockExtendedMetadata {
 			}
 		}
 	}
+	
+	@Override
+	protected ItemStack createStackedBlock(int meta) {
+		return new ItemStack(blockID, 1, (meta - (meta & 3)) / 4);
+	}
 
 	@Override
 	public boolean canSustainLeaves(World world, int x, int y, int z) {
@@ -104,7 +109,7 @@ public class BlockWood extends BlockExtendedMetadata {
 	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			if(TreeRegistry.trees[i] != null) {
-				list.add(new ItemStack(id, 1, i));
+				list.add(new ItemStack(id, 1, i * 4));
 			}
 		}
 	}

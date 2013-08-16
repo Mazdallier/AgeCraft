@@ -52,4 +52,11 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 		}
 		return blockAccess.getBlockMetadata(x, y, z);
 	}
+	
+	@Override
+	public void setMetadata(World world, int x, int y, int z, int meta) {
+		if(Block.blocksList[world.getBlockId(x, y, z)] instanceof BlockExtendedMetadata) {
+			((TileEntityMetadata) world.getBlockTileEntity(x, y, z)).setTileMetadata(meta);
+		}
+	}
 }

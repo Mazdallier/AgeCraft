@@ -8,26 +8,37 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.TreeRegistry.Tree;
+import elcon.mods.agecraft.core.blocks.BlockLeaves;
+import elcon.mods.agecraft.core.blocks.BlockPlanks;
 import elcon.mods.agecraft.core.blocks.BlockWood;
 import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
 
 public class Trees extends ACComponent {
 
 	public static Block wood;
+	public static Block log;
+	public static Block planks;
+	public static Block leaves;
+	public static Block sapling;
+	public static Block woodWall;
 	
 	@Override
 	public void preInit() {
 		//init blocks
 		wood = new BlockWood(2510).setUnlocalizedName("wood");
+		//logs
+		planks = new BlockPlanks(2512).setUnlocalizedName("planks");
+		leaves = new BlockLeaves(2513).setUnlocalizedName("leaves");
 		
 		//register blocks
-		GameRegistry.registerBlock(wood, ItemBlockExtendedMetadata.class,"AC_wood");
+		GameRegistry.registerBlock(wood, ItemBlockExtendedMetadata.class, "AC_wood");
+		GameRegistry.registerBlock(planks, ItemBlockExtendedMetadata.class, "AC_planks");
 		
 		//register trees
-		TreeRegistry.registerTree(new Tree(0, "oak"));
-		TreeRegistry.registerTree(new Tree(1, "birch"));
-		TreeRegistry.registerTree(new Tree(2, "spruce"));
-		TreeRegistry.registerTree(new Tree(3, "jungle"));
+		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true));
+		TreeRegistry.registerTree(new Tree(1, "birch", 0x80A755, false));
+		TreeRegistry.registerTree(new Tree(2, "spruce", 0x619961, false));
+		TreeRegistry.registerTree(new Tree(3, "jungle", 0x48B518, true));
 	}
 	
 	@Override
