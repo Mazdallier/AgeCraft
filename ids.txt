@@ -33,16 +33,13 @@
 	2511 Log
 	2512 Planks
 	2513 Leaves
-	2514 Sapling
-	2515 Wood wall
-	2516 Stairs
-	2517 Slab
-	2518 Fence
-	2519 Fence gate
-	2520 Door
-	2521 Trapdoor
-	2522 Ladders
-	2523 Design planks
+	2514 Wood wall
+	2515 Fence
+	2516 Fence gate
+	2517 Door
+	2518 Trapdoor
+	2519 Ladders
+	2520 Design planks
 	
 	2530 Wood DNA
 	2531 Log DNA
@@ -107,17 +104,12 @@
 	
 	105 Wood
 	106 Log
-	107 Planks
-	108 Leaves
-	109 Sapling
-	110 Wood wall
-	111 Stairs
-	112 Slab
-	113 Fence
-	114 Fence gate
-	115 Door
-	116 Trapdoor
-	117 Ladders	
+	107 Wood wall
+	108 Fence
+	109 Fence gate
+	110 Door
+	111 Trapdoor
+	112 Ladders	
 200-299		Prehistory
 	200 Campfire
 	201 Rock

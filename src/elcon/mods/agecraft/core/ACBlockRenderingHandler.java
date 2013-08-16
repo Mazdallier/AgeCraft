@@ -17,6 +17,8 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		switch(modelID) {
 		case 105:
 			return renderBlockWood(blockAccess, x, y, z, block, modelID, renderer);
+		case 106:
+			return renderer.renderStandardBlock(block, x, y, z);
 		}
 		return false;
 	}
@@ -44,9 +46,15 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	}
 	
 	@Override
+	public boolean shouldRender3DInInventory() {
+		return true;
+	}
+	
+	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
 		switch(modelID) {
 		case 105:
+			block.setBlockBoundsForItemRender();
 			renderItemBlock(block, metadata, modelID, renderer);
 		}
 	}
@@ -98,11 +106,6 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
         tessellator.draw();
         
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-	}
-
-	@Override
-	public boolean shouldRender3DInInventory() {
-		return true;
 	}
 
 	@Override

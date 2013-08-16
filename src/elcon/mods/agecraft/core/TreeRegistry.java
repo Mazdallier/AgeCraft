@@ -16,6 +16,7 @@ public class TreeRegistry {
 		public Icon wood;
 		public Icon woodTop;
 		public Icon log;
+		public Icon logTop;
 		public Icon planks;
 		public Icon leaves;
 		public Icon leavesFast;

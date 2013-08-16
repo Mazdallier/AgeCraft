@@ -1,10 +1,13 @@
 package elcon.mods.agecraft.core.blocks;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -12,24 +15,25 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
-import elcon.mods.agecraft.core.Trees;
 
 public class BlockLeaves extends BlockExtendedMetadata {
 
-	public boolean graphicsLevel;
+	public boolean fancyGraphics;
 
 	private int[] adjacentTreeBlocks;
 
 	public BlockLeaves(int id) {
 		super(id, Material.leaves);
-		this.graphicsLevel = false;
+		this.fancyGraphics = false;
+		setHardness(0.2F);
+		setLightOpacity(1);
 		setTickRandomly(true);
 		setCreativeTab(ACCreativeTabs.wood);
 	}
 
 	@Override
 	public boolean isOpaqueCube() {
-		return !graphicsLevel;
+		return !fancyGraphics;
 	}
 
 	@Override
@@ -176,63 +180,41 @@ public class BlockLeaves extends BlockExtendedMetadata {
 
 	@Override
 	public int idDropped(int meta, Random random, int fortune) {
-		return Trees.sapling.blockID;
+		return 0;
 	}
 
 	@Override
 	public int quantityDropped(Random random) {
-		return random.nextInt(20) == 0 ? 1 : 0;
+		return 0;
+	}
+	
+	@Override
+	public int damageDropped(int meta) {
+		return 0;
 	}
 	
 	@Override
 	public int getPlacedMetadata(ItemStack stack, World world, int x, int y, int z, int side) {
 		return stack.getItemDamage() | 1;
 	}
-
+	
 	@Override
-	public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float chance, int fortune) {
-		//TODO: improve this
-		/*if(!world.isRemote) {
-			int j1 = 20;
-
-			if((meta & 3) == 3) {
-				j1 = 40;
-			}
-
-			if(fortune > 0) {
-				j1 -= 2 << fortune;
-
-				if(j1 < 10) {
-					j1 = 10;
-				}
-			}
-
-			if(world.rand.nextInt(j1) == 0) {
-				int k1 = this.idDropped(meta, world.rand, fortune);
-				this.dropBlockAsItem_do(world, x, y, z, new ItemStack(k1, 1, this.damageDropped(meta)));
-			}
-
-			j1 = 200;
-
-			if(fortune > 0) {
-				j1 -= 10 << fortune;
-
-				if(j1 < 40) {
-					j1 = 40;
-				}
-			}
-
-			if((par5 & 3) == 0 && par1World.rand.nextInt(j1) == 0) {
-				this.dropBlockAsItem_do(par1World, par2, par3, par4, new ItemStack(Item.appleRed, 1, 0));
-			}
-		}*/
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int meta) {
+		return fancyGraphics ? TreeRegistry.trees[(meta - (meta & 3)) / 4].leaves : TreeRegistry.trees[(meta - (meta & 3)) / 4].leavesFast;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
+		return getIcon(side, getMetadata(blockAccess, x, y, z));
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		int id = blockAccess.getBlockId(x, y, z);
-		return !graphicsLevel && id == blockID ? false : super.shouldSideBeRendered(blockAccess, x, y, z, side);
+		return !fancyGraphics && id == blockID ? false : super.shouldSideBeRendered(blockAccess, x, y, z, side);
 	}
 	
 	@Override
@@ -248,5 +230,15 @@ public class BlockLeaves extends BlockExtendedMetadata {
 	@Override
 	public boolean isLeaves(World world, int x, int y, int z) {
 		return true;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
+		for(int i = 0; i < TreeRegistry.trees.length; i++) {
+			if(TreeRegistry.trees[i] != null) {
+				list.add(new ItemStack(id, 1, i * 4));
+			}
+		}
 	}
 }
