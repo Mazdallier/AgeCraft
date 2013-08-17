@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.core.blocks;
+package elcon.mods.agecraft.core.blocks.tree;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
+import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
 
 public class BlockLog extends BlockExtendedMetadata {
 

@@ -1,10 +1,11 @@
-package elcon.mods.agecraft.core.blocks;
+package elcon.mods.agecraft.core.blocks.tree;
 
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
@@ -13,6 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
+import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
 
 public class BlockWood extends BlockExtendedMetadata {
 
@@ -29,7 +31,7 @@ public class BlockWood extends BlockExtendedMetadata {
 	}
 	
 	@Override
-	public int getPlacedMetadata(ItemStack stack, World world, int x, int y, int z, int side) {
+	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side) {
 		switch(side) {
 		case 0:
 		case 1:

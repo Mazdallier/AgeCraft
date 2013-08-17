@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.core.blocks;
+package elcon.mods.agecraft.core.blocks.tree;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
+import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;

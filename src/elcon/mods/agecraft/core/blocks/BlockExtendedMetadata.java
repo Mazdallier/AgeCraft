@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
@@ -23,7 +24,7 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 	}
 	
 	@Override
-	public int getPlacedMetadata(ItemStack stack, World world, int x, int y, int z, int side) {
+	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side) {
 		return stack.getItemDamage();
 	}
 

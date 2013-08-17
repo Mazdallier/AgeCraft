@@ -8,11 +8,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.TreeRegistry.Tree;
-import elcon.mods.agecraft.core.blocks.BlockLeaves;
-import elcon.mods.agecraft.core.blocks.BlockLog;
-import elcon.mods.agecraft.core.blocks.BlockPlanks;
-import elcon.mods.agecraft.core.blocks.BlockWood;
-import elcon.mods.agecraft.core.blocks.BlockWoodWall;
+import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
+import elcon.mods.agecraft.core.blocks.tree.BlockLog;
+import elcon.mods.agecraft.core.blocks.tree.BlockPlanks;
+import elcon.mods.agecraft.core.blocks.tree.BlockWood;
+import elcon.mods.agecraft.core.blocks.tree.BlockWoodFence;
+import elcon.mods.agecraft.core.blocks.tree.BlockWoodFenceGate;
+import elcon.mods.agecraft.core.blocks.tree.BlockWoodWall;
 import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.agecraft.core.items.ItemBlockLeaves;
 import elcon.mods.agecraft.core.items.ItemLog;
@@ -24,6 +26,11 @@ public class Trees extends ACComponent {
 	public static Block planks;
 	public static Block leaves;
 	public static Block woodWall;
+	public static Block fence;
+	public static Block fenceGate;
+	public static Block door;
+	public static Block trapdoor;
+	public static Block ladder;
 	
 	@Override
 	public void preInit() {
@@ -33,6 +40,8 @@ public class Trees extends ACComponent {
 		planks = new BlockPlanks(2512).setUnlocalizedName("planks");
 		leaves = new BlockLeaves(2513).setUnlocalizedName("leaves");
 		woodWall = new BlockWoodWall(2514).setUnlocalizedName("woodWall");
+		fence = new BlockWoodFence(2515).setUnlocalizedName("fence");
+		fenceGate = new BlockWoodFenceGate(2516).setUnlocalizedName("fenceGate");
 		
 		//register blocks
 		GameRegistry.registerBlock(wood, ItemBlockExtendedMetadata.class, "AC_wood");
@@ -40,6 +49,8 @@ public class Trees extends ACComponent {
 		GameRegistry.registerBlock(planks, ItemBlockExtendedMetadata.class, "AC_planks");
 		GameRegistry.registerBlock(leaves, ItemBlockLeaves.class, "AC_leaves");
 		GameRegistry.registerBlock(woodWall, ItemBlockExtendedMetadata.class, "AC_woodWall");
+		GameRegistry.registerBlock(fence, ItemBlockExtendedMetadata.class, "AC_fence");
+		GameRegistry.registerBlock(fenceGate, ItemBlockExtendedMetadata.class, "AC_fenceGate");
 		
 		//register trees
 		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true));
