@@ -100,8 +100,11 @@ public class BlockWoodFence extends BlockExtendedMetadata {
 
 	public boolean canConnectTo(IBlockAccess blockAccess, int x, int y, int z, int meta) {
 		int id = blockAccess.getBlockId(x, y, z);
-		if(id == blockID || id == Trees.fenceGate.blockID) {
+		if(id == blockID) {
 			return meta == getMetadata(blockAccess, x, y, z);
+		} else if(id == Trees.fenceGate.blockID) {
+			int m = getMetadata(blockAccess, x, y, z);
+			return meta == ((m - (m & 7)) / 8);
 		}
 		Block block = Block.blocksList[id];
 		return block != null && block.blockMaterial.isOpaque() && block.renderAsNormalBlock() ? block.blockMaterial != Material.pumpkin : false;

@@ -61,13 +61,15 @@ public class BlockWoodFenceGate extends BlockExtendedMetadata {
 		int direction = meta & 3;
 		int type = (meta - (meta & 7)) / 8;
 		if(isFenceGateOpen(meta)) {
-			world.setBlockMetadataWithNotify(x, y, z, meta & -5, 2);
+			setMetadata(world, x, y, z, meta & -5);
+			world.markBlockForUpdate(x, y, z);
 		} else {
 			int newDirection = (MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) % 4;
 			if(direction == (newDirection + 2) % 4) {
-				meta = newDirection | type;
+				meta = newDirection + (type * 8);
 			}
-			world.setBlockMetadataWithNotify(x, y, z, meta | 4, 2);
+			setMetadata(world, x, y, z, meta | 4);
+			world.markBlockForUpdate(x, y, z);
 		}
 		world.playAuxSFXAtEntity(player, 1003, x, y, z, 0);
 		return true;
@@ -80,10 +82,12 @@ public class BlockWoodFenceGate extends BlockExtendedMetadata {
 			boolean indirectPower = world.isBlockIndirectlyGettingPowered(x, y, z);
 			if(indirectPower || blockID > 0 && Block.blocksList[blockID].canProvidePower()) {
 				if(indirectPower && !isFenceGateOpen(meta)) {
-					world.setBlockMetadataWithNotify(x, y, z, meta | 4, 2);
+					setMetadata(world, x, y, z, meta | 4);
+					world.markBlockForUpdate(x, y, z);
 					world.playAuxSFXAtEntity((EntityPlayer) null, 1003, x, y, z, 0);
 				} else if(!indirectPower && isFenceGateOpen(meta)) {
-					world.setBlockMetadataWithNotify(x, y, z, meta & -5, 2);
+					setMetadata(world, x, y, z, meta & -5);
+					world.markBlockForUpdate(x, y, z);
 					world.playAuxSFXAtEntity((EntityPlayer) null, 1003, x, y, z, 0);
 				}
 			}

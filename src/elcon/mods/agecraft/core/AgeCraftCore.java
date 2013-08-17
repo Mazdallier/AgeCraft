@@ -95,6 +95,8 @@ public class AgeCraftCore extends ACComponent {
 		RenderingRegistry.registerBlockHandler(105, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(106, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(107, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(108, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(109, blockRenderingHandler);
 		
 		//register item rendering handler
 		//ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();
