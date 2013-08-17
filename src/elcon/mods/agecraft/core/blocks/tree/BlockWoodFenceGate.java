@@ -49,6 +49,11 @@ public class BlockWoodFenceGate extends BlockExtendedMetadata {
 			setBlockBounds(0.0F, 0.0F, 0.375F, 1.0F, 1.0F, 0.625F);
 		}
 	}
+	
+	@Override
+	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
+		return meta - (meta & 7);
+	}
 
 	@Override
 	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side) {

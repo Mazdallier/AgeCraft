@@ -12,6 +12,7 @@ public class TreeRegistry {
 		
 		public int leavesColor;
 		public boolean useBiomeColor;
+		public int woodColor;
 		
 		public Icon wood;
 		public Icon woodTop;
@@ -24,11 +25,12 @@ public class TreeRegistry {
 		public Icon sapling;
 		public Icon stick;
 		
-		public Tree(int id, String name, int leavesColor, boolean useBiomeColor) {
+		public Tree(int id, String name, int leavesColor, boolean useBiomeColor, int woodColor) {
 			this.id = id;
 			this.name = name;
 			this.leavesColor = leavesColor;
 			this.useBiomeColor = useBiomeColor;
+			this.woodColor = woodColor;
 		}
 	}
 	

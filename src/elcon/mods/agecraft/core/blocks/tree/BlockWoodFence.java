@@ -111,6 +111,11 @@ public class BlockWoodFence extends BlockExtendedMetadata {
 	}
 
 	@Override
+	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
+		return meta - (meta & 7);
+	}
+	
+	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}

@@ -53,15 +53,17 @@ public class Trees extends ACComponent {
 		GameRegistry.registerBlock(fenceGate, ItemBlockExtendedMetadata.class, "AC_fenceGate");
 		
 		//register trees
-		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true));
-		TreeRegistry.registerTree(new Tree(1, "birch", 0x80A755, false));
-		TreeRegistry.registerTree(new Tree(2, "spruce", 0x619961, false));
-		TreeRegistry.registerTree(new Tree(3, "jungle", 0x48B518, true));
+		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true, 0xB4905A));
+		TreeRegistry.registerTree(new Tree(1, "birch", 0x80A755, false, 0xD7C185));
+		TreeRegistry.registerTree(new Tree(2, "spruce", 0x619961, false, 0x785836));
+		TreeRegistry.registerTree(new Tree(3, "jungle", 0x48B518, true, 0xB1805C));
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IconRegister iconRegister) {
+		
+		
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			Tree tree = TreeRegistry.trees[i];
 			if(tree != null) {

@@ -12,6 +12,8 @@ public class ItemBlockExtendedMetadata extends ItemBlock {
 
 	public ItemBlockExtendedMetadata(int id) {
 		super(id);
+		setMaxDamage(0);
+		setHasSubtypes(true);
 	}
 	
 	@Override

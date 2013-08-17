@@ -7,9 +7,13 @@ import net.minecraft.world.World;
 
 public abstract interface IBlockExtendedMetadata {
 
-	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side);
+	public abstract int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune);
 	
-	public int getMetadata(IBlockAccess blockAccess, int x, int y, int z);
+	public abstract int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side);
 	
-	public void setMetadata(World world, int x, int y, int z, int meta);
+	public abstract int getMetadata(IBlockAccess blockAccess, int x, int y, int z);
+	
+	public abstract void setMetadata(World world, int x, int y, int z, int meta);
+	
+	public abstract void dropAsStack(World world, int x, int y, int z, ItemStack stack);
 }

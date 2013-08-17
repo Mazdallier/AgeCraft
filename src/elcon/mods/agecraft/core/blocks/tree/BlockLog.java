@@ -100,6 +100,11 @@ public class BlockLog extends BlockExtendedMetadata {
 	}
 	
 	@Override
+	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
+		return meta;
+	}
+	
+	@Override
 	public boolean canSustainLeaves(World world, int x, int y, int z) {
 		return true;
 	}

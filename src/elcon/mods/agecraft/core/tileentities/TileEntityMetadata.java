@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityMetadata extends TileEntity {
 
 	private int meta = 0;
+	public boolean droppedBlock = false;
 	
 	public int getTileMetadata() {
 	    return meta;
