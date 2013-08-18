@@ -56,7 +56,7 @@ public class BlockWoodFenceGate extends BlockExtendedMetadata {
 	}
 
 	@Override
-	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side) {
+	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, float xx, float yy, float zz) {
 		return ((MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3) % 4) | stack.getItemDamage();
 	}
 

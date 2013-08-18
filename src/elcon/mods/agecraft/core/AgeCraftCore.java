@@ -96,10 +96,8 @@ public class AgeCraftCore extends ACComponent {
 			ResourcesCore.doorIcons[i][0][1] = new IconFlipped(ResourcesCore.doorIcons[i][0][0], true, false);
 			ResourcesCore.doorIcons[i][1][1] = new IconFlipped(ResourcesCore.doorIcons[i][1][0], true, false);
 		}
-		ResourcesCore.doorOverlayIcons[0][0] = iconRegister.registerIcon("agecraft:door/doorOverlayLower");
-		ResourcesCore.doorOverlayIcons[1][0] = iconRegister.registerIcon("agecraft:door/doorOverlayUpper");
-		ResourcesCore.doorOverlayIcons[0][1] = new IconFlipped(ResourcesCore.doorOverlayIcons[0][0], true, false);
-		ResourcesCore.doorOverlayIcons[1][1] = new IconFlipped(ResourcesCore.doorOverlayIcons[1][0], true, false);
+		ResourcesCore.trapdoorIcons[0] = iconRegister.registerIcon("agecraft:door/trapdoorStandard");
+		ResourcesCore.trapdoorIcons[1] = iconRegister.registerIcon("agecraft:door/trapdoorFull");
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -117,6 +115,7 @@ public class AgeCraftCore extends ACComponent {
 		RenderingRegistry.registerBlockHandler(108, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(109, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(110, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(111, blockRenderingHandler);
 		
 		//register item rendering handler
 		//ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();

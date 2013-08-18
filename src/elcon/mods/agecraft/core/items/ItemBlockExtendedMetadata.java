@@ -27,7 +27,7 @@ public class ItemBlockExtendedMetadata extends ItemBlock {
 		if(!(block instanceof IBlockExtendedMetadata)) {
 			return false;
 		}
-		int placedMeta = ((IBlockExtendedMetadata) block).getPlacedMetadata(player, stack, world, x, y, z, side);
+		int placedMeta = ((IBlockExtendedMetadata) block).getPlacedMetadata(player, stack, world, x, y, z, side, hitX, hitY, hitZ);
 		if(!world.setBlock(x, y, z, getBlockID(), meta, 2)) {
 			return false;
 		}

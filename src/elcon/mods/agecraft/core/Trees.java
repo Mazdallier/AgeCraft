@@ -15,6 +15,8 @@ import elcon.mods.agecraft.core.blocks.tree.BlockWood;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodDoor;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodFence;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodFenceGate;
+import elcon.mods.agecraft.core.blocks.tree.BlockWoodLadder;
+import elcon.mods.agecraft.core.blocks.tree.BlockWoodTrapdoor;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodWall;
 import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.agecraft.core.items.ItemBlockLeaves;
@@ -45,6 +47,8 @@ public class Trees extends ACComponent {
 		fence = new BlockWoodFence(2515).setUnlocalizedName("fence");
 		fenceGate = new BlockWoodFenceGate(2516).setUnlocalizedName("fenceGate");
 		door = new BlockWoodDoor(2517).setUnlocalizedName("door");
+		trapdoor = new BlockWoodTrapdoor(2518).setUnlocalizedName("trapdoor");
+		ladder = new BlockWoodLadder(2519).setUnlocalizedName("ladder");
 		
 		//register blocks
 		GameRegistry.registerBlock(wood, ItemBlockExtendedMetadata.class, "AC_wood");
@@ -55,6 +59,8 @@ public class Trees extends ACComponent {
 		GameRegistry.registerBlock(fence, ItemBlockExtendedMetadata.class, "AC_fence");
 		GameRegistry.registerBlock(fenceGate, ItemBlockExtendedMetadata.class, "AC_fenceGate");
 		GameRegistry.registerBlock(door, ItemWoodDoor.class, "AC_door");
+		GameRegistry.registerBlock(trapdoor, ItemBlockExtendedMetadata.class, "AC_trapdoor");
+		GameRegistry.registerBlock(ladder, ItemBlockExtendedMetadata.class, "AC_ladder");
 		
 		//register trees
 		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true, 0xB4905A));

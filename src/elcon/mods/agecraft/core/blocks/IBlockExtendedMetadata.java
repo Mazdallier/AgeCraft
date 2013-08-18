@@ -9,7 +9,7 @@ public abstract interface IBlockExtendedMetadata {
 
 	public abstract int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune);
 	
-	public abstract int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side);
+	public abstract int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, float xx, float yy, float zz);
 	
 	public abstract int getMetadata(IBlockAccess blockAccess, int x, int y, int z);
 	

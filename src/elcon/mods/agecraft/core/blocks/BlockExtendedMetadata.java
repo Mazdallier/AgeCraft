@@ -30,7 +30,7 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 	}
 
 	@Override
-	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side) {
+	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, float xx, float yy, float zz) {
 		return stack.getItemDamage();
 	}
 
@@ -85,7 +85,7 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 
 	@Override
 	public int getDamageValue(World world, int x, int y, int z) {
-		return getMetadata(world, x, y, z);
+		return getDroppedMetadata(world, x, y, z, getMetadata(world, x, y, z), 0);
 	}
 
 	@Override

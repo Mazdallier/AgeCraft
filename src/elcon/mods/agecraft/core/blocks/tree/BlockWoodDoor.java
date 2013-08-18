@@ -135,12 +135,12 @@ public class BlockWoodDoor extends BlockExtendedMetadata {
 
 			if((meta & 8) == 0) {
 				setMetadata(world, x, y, z, directionAndState);
-				world.markBlockForUpdate(x, y, z);
-				world.markBlockForUpdate(x, y + 1, z);
+				world.markBlockForRenderUpdate(x, y, z);
+				world.markBlockForRenderUpdate(x, y + 1, z);
 			} else {
 				setMetadata(world, x, y - 1, z, directionAndState);
-				world.markBlockForUpdate(x, y, z);
-				world.markBlockForUpdate(x, y - 1, z);
+				world.markBlockForRenderUpdate(x, y, z);
+				world.markBlockForRenderUpdate(x, y - 1, z);
 			}
 			world.playAuxSFXAtEntity((EntityPlayer) null, 1003, x, y, z, 0);
 		}
@@ -152,7 +152,6 @@ public class BlockWoodDoor extends BlockExtendedMetadata {
 
 		if((meta & 8) == 0) {
 			boolean removed = false;
-
 			if(world.getBlockId(x, y + 1, z) != blockID) {
 				world.setBlockToAir(x, y, z);
 				removed = true;
@@ -170,7 +169,6 @@ public class BlockWoodDoor extends BlockExtendedMetadata {
 				}
 			} else {
 				boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z) || world.isBlockIndirectlyGettingPowered(x, y + 1, z);
-				System.out.println(powered);
 				if((powered || id > 0 && Block.blocksList[id].canProvidePower()) && id != blockID) {
 					onPoweredBlockChange(world, x, y, z, powered);
 				}

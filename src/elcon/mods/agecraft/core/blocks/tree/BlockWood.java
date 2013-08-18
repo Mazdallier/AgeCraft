@@ -36,7 +36,7 @@ public class BlockWood extends BlockExtendedMetadata {
 	}
 	
 	@Override
-	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side) {
+	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, float xx, float yy, float zz) {
 		switch(side) {
 		case 0:
 		case 1:

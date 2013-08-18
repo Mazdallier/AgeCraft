@@ -64,8 +64,6 @@ public class ItemWoodDoor extends ItemBlockExtendedMetadata {
 		}
 		world.markBlockForRenderUpdate(x, y, z);
 		world.markBlockForRenderUpdate(x, y, z);
-		
-		System.out.println("direction: " + direction);
 		return true;
 	}
 	

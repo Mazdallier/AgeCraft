@@ -99,8 +99,7 @@
 	100 Fence
 	101 Fence gate
 	102 Door
-	103 Trapdoor
-	104 Ladders
+	103 Ladders
 	
 	105 Wood
 	106 Log
@@ -108,8 +107,7 @@
 	108 Fence
 	109 Fence gate
 	110 Door
-	111 Trapdoor
-	112 Ladders	
+	111 Ladders	
 200-299		Prehistory
 	200 Campfire
 	201 Rock
