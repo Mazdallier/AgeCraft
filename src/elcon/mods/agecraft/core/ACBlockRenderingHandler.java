@@ -28,6 +28,8 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			return renderBlockWoodFence(blockAccess, x, y, z, (BlockWoodFence) block, modelID, renderer);
 		case 109:
 			return renderBlockWoodFenceGate(blockAccess, x, y, z, (BlockWoodFenceGate) block, modelID, renderer);
+		case 110:
+			return renderer.renderStandardBlock(block, x, y, z);
 		}
 		return false;
 	}
@@ -537,7 +539,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			GL11.glColor4f(r, g, b, 1.0F);
 		}
 		renderer.setRenderBoundsFromBlock(block);
-		
+
 		for(int k = 0; k < 3; ++k) {
 			float f2 = 0.0625F;
 			if(k == 0) {

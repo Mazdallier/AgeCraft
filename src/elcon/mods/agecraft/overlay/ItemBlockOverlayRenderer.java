@@ -26,7 +26,7 @@ public class ItemBlockOverlayRenderer implements IItemRenderer {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, -1.0F, 0.0F);
 		render.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(0, item.getItemDamage()));
-		overlay = block.getOverlayTextureForBlock(0, item.getItemDamage());
+		overlay = block.getBlockOverlayTexture(0, item.getItemDamage());
 		if(overlay != null) {
 			render.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -35,7 +35,7 @@ public class ItemBlockOverlayRenderer implements IItemRenderer {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 1.0F, 0.0F);
 		render.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(1, item.getItemDamage()));
-		overlay = block.getOverlayTextureForBlock(1, item.getItemDamage());
+		overlay = block.getBlockOverlayTexture(1, item.getItemDamage());
 		if(overlay != null) {
 			render.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -44,7 +44,7 @@ public class ItemBlockOverlayRenderer implements IItemRenderer {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, -1.0F);
 		render.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(2, item.getItemDamage()));
-		overlay = block.getOverlayTextureForBlock(2, item.getItemDamage());
+		overlay = block.getBlockOverlayTexture(2, item.getItemDamage());
 		if(overlay != null) {
 			render.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -53,7 +53,7 @@ public class ItemBlockOverlayRenderer implements IItemRenderer {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(0.0F, 0.0F, 1.0F);
 		render.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(3, item.getItemDamage()));
-		overlay = block.getOverlayTextureForBlock(3, item.getItemDamage());
+		overlay = block.getBlockOverlayTexture(3, item.getItemDamage());
 		if(overlay != null) {
 			render.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -62,7 +62,7 @@ public class ItemBlockOverlayRenderer implements IItemRenderer {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
 		render.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(4, item.getItemDamage()));
-		overlay = block.getOverlayTextureForBlock(4, item.getItemDamage());
+		overlay = block.getBlockOverlayTexture(4, item.getItemDamage());
 		if(overlay != null) {
 			render.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, overlay);
 		}
@@ -71,7 +71,7 @@ public class ItemBlockOverlayRenderer implements IItemRenderer {
 		tessellator.startDrawingQuads();
 		tessellator.setNormal(1.0F, 0.0F, 0.0F);
 		render.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(5, item.getItemDamage()));
-		overlay = block.getOverlayTextureForBlock(5, item.getItemDamage());
+		overlay = block.getBlockOverlayTexture(5, item.getItemDamage());
 		if(overlay != null) {
 			render.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, overlay);
 		}

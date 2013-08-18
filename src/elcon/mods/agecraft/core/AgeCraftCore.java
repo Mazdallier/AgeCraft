@@ -3,6 +3,8 @@ package elcon.mods.agecraft.core;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.IconFlipped;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlockWithMetadata;
 import net.minecraft.world.World;
@@ -14,6 +16,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
+import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporter;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBeam;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBlock;
@@ -83,6 +86,22 @@ public class AgeCraftCore extends ACComponent {
 		Item.itemsList[1] = new ItemBlockWithMetadata(1 - 256, Block.stone).setUnlocalizedName("stone");
 	}
 	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IconRegister iconRegister) {
+		String[] doorTypes = new String[]{"Standard", "Solid", "Double", "Full"};
+		for(int i = 0; i < doorTypes.length; i++) {
+			ResourcesCore.doorIcons[i][0][0] = iconRegister.registerIcon("agecraft:door/door" + doorTypes[i] + "Lower");
+			ResourcesCore.doorIcons[i][1][0] = iconRegister.registerIcon("agecraft:door/door" + doorTypes[i] + "Upper");
+			ResourcesCore.doorIcons[i][0][1] = new IconFlipped(ResourcesCore.doorIcons[i][0][0], true, false);
+			ResourcesCore.doorIcons[i][1][1] = new IconFlipped(ResourcesCore.doorIcons[i][1][0], true, false);
+		}
+		ResourcesCore.doorOverlayIcons[0][0] = iconRegister.registerIcon("agecraft:door/doorOverlayLower");
+		ResourcesCore.doorOverlayIcons[1][0] = iconRegister.registerIcon("agecraft:door/doorOverlayUpper");
+		ResourcesCore.doorOverlayIcons[0][1] = new IconFlipped(ResourcesCore.doorOverlayIcons[0][0], true, false);
+		ResourcesCore.doorOverlayIcons[1][1] = new IconFlipped(ResourcesCore.doorOverlayIcons[1][0], true, false);
+	}
+	
 	@SideOnly(Side.CLIENT)
 	public void clientProxy() {
 		//register block rendering handler
@@ -97,6 +116,7 @@ public class AgeCraftCore extends ACComponent {
 		RenderingRegistry.registerBlockHandler(107, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(108, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(109, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(110, blockRenderingHandler);
 		
 		//register item rendering handler
 		//ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();

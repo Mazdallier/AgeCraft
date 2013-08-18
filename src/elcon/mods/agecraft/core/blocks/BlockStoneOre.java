@@ -35,7 +35,7 @@ public class BlockStoneOre extends BlockExtendedMetadataOverlay {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getOverlayTextureForBlock(int side, int metadata) {
+	public Icon getBlockOverlayTexture(int side, int metadata) {
 		return null;
 	}
 }

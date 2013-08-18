@@ -2,12 +2,17 @@ package elcon.mods.agecraft.core.blocks;
 
 import java.util.ArrayList;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
@@ -84,7 +89,7 @@ public class BlockExtendedMetadataOverlay extends BlockContainerOverlay implemen
 	
 	@Override
 	public int getMetadata(IBlockAccess blockAccess, int x, int y, int z) {
-		if(Block.blocksList[blockAccess.getBlockId(x, y, z)] instanceof BlockExtendedMetadata) {
+		if(Block.blocksList[blockAccess.getBlockId(x, y, z)] instanceof IBlockExtendedMetadata) {
 			return ((TileEntityMetadata) blockAccess.getBlockTileEntity(x, y, z)).getTileMetadata();
 		}
 		return blockAccess.getBlockMetadata(x, y, z);
@@ -92,7 +97,7 @@ public class BlockExtendedMetadataOverlay extends BlockContainerOverlay implemen
 	
 	@Override
 	public void setMetadata(World world, int x, int y, int z, int meta) {
-		if(Block.blocksList[world.getBlockId(x, y, z)] instanceof BlockExtendedMetadata) {
+		if(Block.blocksList[world.getBlockId(x, y, z)] instanceof IBlockExtendedMetadata) {
 			((TileEntityMetadata) world.getBlockTileEntity(x, y, z)).setTileMetadata(meta);
 		}
 	}
@@ -100,5 +105,21 @@ public class BlockExtendedMetadataOverlay extends BlockContainerOverlay implemen
 	@Override
 	public void dropAsStack(World world, int x, int y, int z, ItemStack stack) {
 		dropBlockAsItem_do(world, x, y, z, stack);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
+		return getIcon(side, getMetadata(blockAccess, x, y, z));
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public Icon getBlockOverlayTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
+		return getBlockOverlayTexture(side, getMetadata(blockAccess, x, y, z));
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
 	}
 }
