@@ -140,6 +140,12 @@ public class BlockWoodLadder extends BlockExtendedMetadata {
 
 	@Override
 	@SideOnly(Side.CLIENT)
+	public int getRenderColor(int meta) {
+		return TreeRegistry.trees[(meta - (meta & 7)) / 8].woodColor;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
 		int meta = getMetadata(blockAccess, x, y, z);
 		return TreeRegistry.trees[(meta - (meta & 7)) / 8].woodColor;
