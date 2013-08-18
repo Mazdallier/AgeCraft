@@ -1,5 +1,7 @@
 package elcon.mods.agecraft.core.items;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -14,6 +16,12 @@ public class ItemBlockExtendedMetadata extends ItemBlock {
 		super(id);
 		setMaxDamage(0);
 		setHasSubtypes(true);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getColorFromItemStack(ItemStack stack, int renderPass) {
+		return Block.blocksList[getBlockID()].getRenderColor(stack.getItemDamage());
 	}
 	
 	@Override

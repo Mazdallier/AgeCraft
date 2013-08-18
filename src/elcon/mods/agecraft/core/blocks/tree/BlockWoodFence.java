@@ -109,11 +109,6 @@ public class BlockWoodFence extends BlockExtendedMetadata {
 		Block block = Block.blocksList[id];
 		return block != null && block.blockMaterial.isOpaque() && block.renderAsNormalBlock() ? block.blockMaterial != Material.pumpkin : false;
 	}
-
-	@Override
-	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
-		return meta - (meta & 7);
-	}
 	
 	@Override
 	public boolean isOpaqueCube() {

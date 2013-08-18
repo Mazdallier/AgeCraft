@@ -67,7 +67,7 @@ public class BlockWoodLadder extends BlockExtendedMetadata {
 
 	@Override
 	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
-		return (meta - (meta & 7)) / 8;
+		return (meta - (meta & 7));
 	}
 
 	@Override

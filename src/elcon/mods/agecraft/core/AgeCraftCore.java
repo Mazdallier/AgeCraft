@@ -97,7 +97,7 @@ public class AgeCraftCore extends ACComponent {
 			ResourcesCore.doorIcons[i][1][1] = new IconFlipped(ResourcesCore.doorIcons[i][1][0], true, false);
 		}
 		ResourcesCore.trapdoorIcons[0] = iconRegister.registerIcon("agecraft:door/trapdoorStandard");
-		ResourcesCore.trapdoorIcons[1] = iconRegister.registerIcon("agecraft:door/trapdoorFull");
+		ResourcesCore.trapdoorIcons[1] = iconRegister.registerIcon("agecraft:door/trapdoorSolid");
 	}
 	
 	@SideOnly(Side.CLIENT)

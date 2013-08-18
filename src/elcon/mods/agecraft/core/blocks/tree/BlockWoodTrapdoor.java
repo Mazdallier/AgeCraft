@@ -136,7 +136,7 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 
 	@Override
 	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
-		return (meta - (meta & 31)) / 32;
+		return (meta - (meta & 31));
 	}
 
 	@Override
@@ -203,6 +203,12 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderColor(int meta) {
+		return TreeRegistry.trees[(meta - (meta & 31)) / 32].woodColor;
 	}
 
 	@Override
