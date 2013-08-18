@@ -7,12 +7,12 @@ import java.util.List;
 
 import cpw.mods.fml.common.asm.transformers.AccessTransformer;
 
-public class ACAccessTransformer extends AccessTransformer {
+public class ACCoreAccessTransformer extends AccessTransformer {
 
-	private static ACAccessTransformer instance;
+	private static ACCoreAccessTransformer instance;
 	private static List<String> mapFileList = new LinkedList<String>();
 	
-	public ACAccessTransformer() throws IOException {
+	public ACCoreAccessTransformer() throws IOException {
 		super();
 		instance = this;
 		for(String file : mapFileList) {

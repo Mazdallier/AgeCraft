@@ -40,7 +40,7 @@ public class ACCoreLoadingPlugin implements IFMLLoadingPlugin, IFMLCallHook {
 
 	@Override
 	public Void call() throws Exception {
-		ACAccessTransformer.addTransformerMap("agecraft_at.cfg");
+		ACCoreAccessTransformer.addTransformerMap("agecraft_at.cfg");
 		return null;
 	}
 }

@@ -147,14 +147,6 @@ public class AgeCraft {
 		for(ACComponent component : components) {
 			component.postInit();
 		}
-
-		try {
-			DimensionManager.spawnSettings.put(0, false);
-			DimensionManager.spawnSettings.put(1, false);
-			DimensionManager.spawnSettings.put(-1, false);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	@SideOnly(Side.CLIENT)
