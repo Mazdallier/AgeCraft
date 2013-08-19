@@ -61,7 +61,10 @@ public class Trees extends ACComponent {
 		GameRegistry.registerBlock(door, ItemWoodDoor.class, "AC_door");
 		GameRegistry.registerBlock(trapdoor, ItemBlockExtendedMetadata.class, "AC_trapdoor");
 		GameRegistry.registerBlock(ladder, ItemBlockExtendedMetadata.class, "AC_ladder");
-		
+	}
+	
+	@Override
+	public void init() {
 		//register trees
 		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true, 0xB4905A));
 		TreeRegistry.registerTree(new Tree(1, "birch", 0x80A755, false, 0xD7C185));

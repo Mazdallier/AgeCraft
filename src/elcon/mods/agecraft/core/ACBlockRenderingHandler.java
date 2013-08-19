@@ -455,6 +455,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			float b = (float) (color & 255) / 255.0F;
 			GL11.glColor4f(r, g, b, 1.0F);
 		}
+		block.setBlockBoundsForItemRender();
 		renderer.setRenderBoundsFromBlock(block);
 
 		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
@@ -497,6 +498,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			float b = (float) (color & 255) / 255.0F;
 			GL11.glColor4f(r, g, b, 1.0F);
 		}
+		block.setBlockBoundsForItemRender();
 		renderer.setRenderBoundsFromBlock(block);
 
 		for(int k = 0; k < 2; k++) {
@@ -545,6 +547,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			float b = (float) (color & 255) / 255.0F;
 			GL11.glColor4f(r, g, b, 1.0F);
 		}
+		block.setBlockBoundsForItemRender();
 		renderer.setRenderBoundsFromBlock(block);
 
 		for(int k = 0; k < 4; ++k) {
@@ -602,6 +605,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			float b = (float) (color & 255) / 255.0F;
 			GL11.glColor4f(r, g, b, 1.0F);
 		}
+		block.setBlockBoundsForItemRender();
 		renderer.setRenderBoundsFromBlock(block);
 
 		for(int k = 0; k < 3; ++k) {

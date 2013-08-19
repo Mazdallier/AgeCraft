@@ -1,6 +1,7 @@
 package elcon.mods.agecraft.core;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import elcon.mods.agecraft.ACLog;
 
 public class MetalRegistry {
@@ -11,6 +12,12 @@ public class MetalRegistry {
 		public String name;
 		public OreType type;
 		
+		public float hardness;
+		public float resistance;
+		public int harvestLevel;
+		public float blockHardness;
+		public float blockResistance;
+		
 		public ItemStack drop;
 		public int dropMin;
 		public int dropMax;
@@ -19,10 +26,22 @@ public class MetalRegistry {
 		public boolean hasIngot;
 		public boolean hasBlock;
 		
-		public Metal(int id, String name, OreType type, ItemStack drop, int dropMin, int dropMax, boolean fortune, boolean hasIngot, boolean hasBlock) {
+		public int metalColor;
+		
+		public Icon ore;
+		public Icon block;
+		public Icon ingot;
+		
+		public Metal(int id, String name, OreType type, float hardness, float resistane, int harvestLevel, float blockHardness, float blockResistane, ItemStack drop, int dropMin, int dropMax, boolean fortune, boolean hasIngot, boolean hasBlock, int metalColor) {
 			this.id = id;
 			this.name = name;
 			this.type = type;
+			
+			this.hardness = hardness;
+			this.resistance = resistane;
+			this.harvestLevel = harvestLevel;
+			this.blockHardness = blockHardness;
+			this.blockResistance = blockResistane;
 			
 			drop.stackSize = 1;
 			this.drop = drop;
@@ -32,6 +51,8 @@ public class MetalRegistry {
 			
 			this.hasIngot = hasIngot;
 			this.hasBlock = hasBlock;
+			
+			this.metalColor = metalColor;
 		}
 	}
 	
@@ -40,12 +61,12 @@ public class MetalRegistry {
 		GEM();
 	}
 	
-	public static Metal[] ores = new Metal[64];
+	public static Metal[] metals = new Metal[64];
 	
 	public static void registerMetal(Metal ore) {
-		if(ores[ore.id] != null) {
-			ACLog.warning("[OreRegistry] Overriding existing ore (" + ores[ore.id] + ": " + ores[ore.id].name.toUpperCase() + ") with new ore (" + ore.id + ": " + ore.name.toUpperCase() + ")");
+		if(metals[ore.id] != null) {
+			ACLog.warning("[OreRegistry] Overriding existing ore (" + metals[ore.id] + ": " + metals[ore.id].name.toUpperCase() + ") with new ore (" + ore.id + ": " + ore.name.toUpperCase() + ")");
 		}
-		ores[ore.id]= ore;
+		metals[ore.id]= ore;
 	}
 }

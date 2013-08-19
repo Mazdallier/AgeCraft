@@ -20,7 +20,7 @@ public class BlockOverlay extends Block {
 	
 	@SideOnly(Side.CLIENT)
 	public boolean shouldOverlaySideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
-		return shouldSideBeRendered(blockAccess, x, y, z, side);
+		return true;
 	}
 
 	@SideOnly(Side.CLIENT)

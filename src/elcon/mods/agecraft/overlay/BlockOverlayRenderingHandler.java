@@ -1,5 +1,7 @@
 package elcon.mods.agecraft.overlay;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -12,9 +14,9 @@ import elcon.mods.agecraft.core.blocks.BlockOverlay;
 public class BlockOverlayRenderingHandler implements ISimpleBlockRenderingHandler {
 
 	public static final double OVERLAY_SHIFT = 0.001D;
-
-	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		
+	
+	public int getRenderId() {
+		return 42;
 	}
 
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
@@ -32,7 +34,7 @@ public class BlockOverlayRenderingHandler implements ISimpleBlockRenderingHandle
 		return flag;
 	}
 	
-	public static boolean renderBlockOverlay(IBlockAccess blockAccess, BlockOverlay block, int x, int y, int z, RenderBlocks renderer, int multiplier) {
+	public static boolean renderBlockOverlay(IBlockAccess blockAccess, BlockOverlay block, int x, int y, int z, RenderBlocks renderer, int multiplier) {		
 		float mR = (multiplier >> 16 & 0xFF) / 255.0F;
 		float mG = (multiplier >> 8 & 0xFF) / 255.0F;
 		float mB = (multiplier & 0xFF) / 255.0F;
@@ -81,13 +83,7 @@ public class BlockOverlayRenderingHandler implements ISimpleBlockRenderingHandle
 		return true;
 	}
 
-	public boolean shouldRender3DInInventory() {
-		return true;
-	}
-
-	public int getRenderId() {
-		return 42;
-	}
+	
 
 	protected static int determineMixedBrightness(IBlockAccess world, Block block, int x, int y, int z, RenderBlocks renderer, int mixedBrightness) {
 		return renderer.renderMinY > 0.0D ? mixedBrightness : block.getMixedBrightnessForBlock(world, x, y, z);
@@ -100,7 +96,7 @@ public class BlockOverlayRenderingHandler implements ISimpleBlockRenderingHandle
 		Tessellator tesselator = Tessellator.instance;
 
 		tesselator.setBrightness(determineMixedBrightness(world, block, x, y - 1, z, renderer, mixedBrightness));
-		tesselator.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+		tesselator.setColorOpaque_F(0.5F * r, 0.5F * g, 0.5F * b);
 		renderer.renderFaceYNeg(block, x, y - OVERLAY_SHIFT, z, textureIndex);
 	}
 
@@ -122,7 +118,7 @@ public class BlockOverlayRenderingHandler implements ISimpleBlockRenderingHandle
 		Tessellator tesselator = Tessellator.instance;
 
 		tesselator.setBrightness(determineMixedBrightness(world, block, x, y, z - 1, renderer, mixedBrightness));
-		tesselator.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+		tesselator.setColorOpaque_F(0.8F * r, 0.8F * g, 0.8F * b);
 		renderer.renderFaceZNeg(block, x, y, z - OVERLAY_SHIFT, textureIndex);
 	}
 
@@ -133,7 +129,7 @@ public class BlockOverlayRenderingHandler implements ISimpleBlockRenderingHandle
 		Tessellator tesselator = Tessellator.instance;
 
 		tesselator.setBrightness(determineMixedBrightness(world, block, x, y, z + 1, renderer, mixedBrightness));
-		tesselator.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+		tesselator.setColorOpaque_F(0.8F * r, 0.8F * g, 0.8F * b);
 		renderer.renderFaceZPos(block, x, y, z + OVERLAY_SHIFT, textureIndex);
 	}
 
@@ -144,7 +140,7 @@ public class BlockOverlayRenderingHandler implements ISimpleBlockRenderingHandle
 		Tessellator tesselator = Tessellator.instance;
 
 		tesselator.setBrightness(determineMixedBrightness(world, block, x - 1, y, z, renderer, mixedBrightness));
-		tesselator.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+		tesselator.setColorOpaque_F(0.6F * r, 0.6F * g, 0.6F * b);
 		renderer.renderFaceXNeg(block, x - OVERLAY_SHIFT, y, z, textureIndex);
 	}
 
@@ -155,7 +151,90 @@ public class BlockOverlayRenderingHandler implements ISimpleBlockRenderingHandle
 		Tessellator tesselator = Tessellator.instance;
 
 		tesselator.setBrightness(determineMixedBrightness(world, block, x + 1, y, z, renderer, mixedBrightness));
-		tesselator.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+		tesselator.setColorOpaque_F(0.6F * r, 0.6F * g, 0.6F * b);
 		renderer.renderFaceXPos(block, x + OVERLAY_SHIFT, y, z, textureIndex);
+	}
+	
+	public boolean shouldRender3DInInventory() {
+		return true;
+	}
+	
+	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+		if(modelID == 42) {
+			renderItemBlockOverlay((BlockOverlay) block, metadata, modelID, renderer);
+		}
+	}
+
+	private void renderItemBlockOverlay(BlockOverlay block, int metadata, int modelID, RenderBlocks renderer) {
+		Icon overlay = null;
+		Tessellator tessellator = Tessellator.instance;
+		if(renderer.useInventoryTint) {
+			int color = block.getRenderColor(metadata);
+			float r = (float) (color >> 16 & 255) / 255.0F;
+			float g = (float) (color >> 8 & 255) / 255.0F;
+			float b = (float) (color & 255) / 255.0F;
+			GL11.glColor4f(r, g, b, 1.0F);
+		}
+		block.setBlockBoundsForItemRender();
+		renderer.setRenderBoundsFromBlock(block);
+
+		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, -1.0F, 0.0F);
+		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 0, metadata));
+		overlay = block.getBlockOverlayTexture(0, metadata);
+		if(overlay != null) {
+			renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 1.0F, 0.0F);
+		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
+		overlay = block.getBlockOverlayTexture(1, metadata);
+		if(overlay != null) {
+			renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 0.0F, -1.0F);
+		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 2, metadata));
+		overlay = block.getBlockOverlayTexture(2, metadata);
+		if(overlay != null) {
+			renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 0.0F, 1.0F);
+		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 3, metadata));
+		overlay = block.getBlockOverlayTexture(3, metadata);
+		if(overlay != null) {
+			renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
+		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 4, metadata));
+		overlay = block.getBlockOverlayTexture(4, metadata);
+		if(overlay != null) {
+			renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(1.0F, 0.0F, 0.0F);
+		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 5, metadata));
+		overlay = block.getBlockOverlayTexture(5, metadata);
+		if(overlay != null) {
+			renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+
+		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 	}
 }

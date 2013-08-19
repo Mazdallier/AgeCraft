@@ -67,7 +67,8 @@
 
 ======= Item IDs ======
 12500-12999 	Core items
-	12500 Ingot/Gem
+	12500 Ingot
+	12501 Gem
 13000-13099		Prehistory
 	13000 Rock Tool
 	13001 Rock Tanning Tool
