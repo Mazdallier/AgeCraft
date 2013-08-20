@@ -44,9 +44,10 @@ public class Metals extends ACComponent {
 	public void init() {
 		//init metals
 		//TODO: change metal colors
-		MetalRegistry.registerMetal(new Metal(0, "coal", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 0), 1, 1, true, true, true, 0xFFFFFF));
-		MetalRegistry.registerMetal(new Metal(1, "copper", OreType.METAL, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(ore, 1, 1), 1, 1, false, true, true, 0xFFFFFF));
-		MetalRegistry.registerMetal(new Metal(2, "tin", OreType.METAL, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(ore, 1, 2), 1, 1, false, true, true, 0xFFFFFF));
+		MetalRegistry.registerMetal(new Metal(0, "coal", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 0), 1, 1, true, true, true, true, 0xFFFFFF));
+		MetalRegistry.registerMetal(new Metal(1, "copper", OreType.METAL, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(ore, 1, 1), 1, 1, false, true, true, true, 0xFFFFFF));
+		MetalRegistry.registerMetal(new Metal(2, "tin", OreType.METAL, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(ore, 1, 2), 1, 1, false, true, true, true, 0xFFFFFF));
+		MetalRegistry.registerMetal(new Metal(3, "bronze", OreType.METAL, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(ore, 1, 3), 1, 1, false, false, true, true, 0xFFFFFF));
 	}
 
 	@Override
@@ -61,12 +62,16 @@ public class Metals extends ACComponent {
 			Metal metal = MetalRegistry.metals[i];
 			if(metal != null) {
 				if(metal.type == OreType.METAL) {
-					metal.ore = iconRegister.registerIcon("agecraft:metals/ores/metals/ore" + ACUtil.firstUpperCase(metal.name));
+					if(metal.hasOre) {
+						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/metals/ore" + ACUtil.firstUpperCase(metal.name));
+					}
 					if(metal.hasBlock) {
 						metal.block = iconRegister.registerIcon("agecraft:metals/blocks/metals/block" + ACUtil.firstUpperCase(metal.name));
 					}
 				} else if(metal.type == OreType.GEM) {
-					metal.ore = iconRegister.registerIcon("agecraft:metals/ores/gems/ore" + ACUtil.firstUpperCase(metal.name));
+					if(metal.hasOre) {
+						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/gems/ore" + ACUtil.firstUpperCase(metal.name));
+					}
 					if(metal.hasBlock) {
 						metal.block = iconRegister.registerIcon("agecraft:metals/blocks/gems/block" + ACUtil.firstUpperCase(metal.name));
 					}

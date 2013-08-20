@@ -101,7 +101,7 @@ public class BlockStoneOre extends BlockExtendedMetadataOverlay {
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
-			if(MetalRegistry.metals[i] != null) {
+			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasOre) {
 				list.add(new ItemStack(id, 1, i));
 			}
 		}
