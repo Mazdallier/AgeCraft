@@ -6,7 +6,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class ACVersion implements Runnable {
 
@@ -105,43 +105,43 @@ public class ACVersion implements Runnable {
 
 	public static String getResultMessage() {
 		if(result == UNINITIALIZED) {
-			return LanguageRegistry.instance().getStringLocalization(UNINITIALIZED_MESSAGE);
+			return LanguageManager.getLocalization(UNINITIALIZED_MESSAGE);
 		} else if(result == CURRENT) {
-			String returnString = LanguageRegistry.instance().getStringLocalization(CURRENT_MESSAGE);
+			String returnString = LanguageManager.getLocalization(CURRENT_MESSAGE);
 			returnString = returnString.replace("@REMOTE_MOD_VERSION@", remoteVersion);
 			returnString = returnString.replace("@MINECRAFT_VERSION@", Loader.instance().getMCVersionString());
 			return returnString;
 		} else if(result == OUTDATED && remoteVersion != null && remoteUpdateLocation != null) {
-			String returnString = LanguageRegistry.instance().getStringLocalization(OUTDATED_MESSAGE);
+			String returnString = LanguageManager.getLocalization(OUTDATED_MESSAGE);
 			returnString = returnString.replace("@MOD_NAME@", ACReference.NAME);
 			returnString = returnString.replace("@REMOTE_MOD_VERSION@", remoteVersion);
 			returnString = returnString.replace("@MINECRAFT_VERSION@", Loader.instance().getMCVersionString());
 			returnString = returnString.replace("@MOD_UPDATE_LOCATION@", remoteUpdateLocation);
 			return returnString;
 		} else if(result == OUTDATED && remoteVersion != null && remoteUpdateLocation != null) {
-			String returnString = LanguageRegistry.instance().getStringLocalization(OUTDATED_MESSAGE);
+			String returnString = LanguageManager.getLocalization(OUTDATED_MESSAGE);
 			returnString = returnString.replace("@MOD_NAME@", ACReference.NAME);
 			returnString = returnString.replace("@REMOTE_MOD_VERSION@", remoteVersion);
 			returnString = returnString.replace("@MINECRAFT_VERSION@", Loader.instance().getMCVersionString());
 			returnString = returnString.replace("@MOD_UPDATE_LOCATION@", remoteUpdateLocation);
 			return returnString;
 		} else if(result == ERROR) { 
-			return LanguageRegistry.instance().getStringLocalization(GENERAL_ERROR_MESSAGE);
+			return LanguageManager.getLocalization(GENERAL_ERROR_MESSAGE);
 		} else if(result == FINAL_ERROR) {
-			return LanguageRegistry.instance().getStringLocalization(FINAL_ERROR_MESSAGE);
+			return LanguageManager.getLocalization(FINAL_ERROR_MESSAGE);
 		} else if(result == MC_VERSION_NOT_FOUND) {
-			String returnString = LanguageRegistry.instance().getStringLocalization(MC_VERSION_NOT_FOUND_MESSAGE);
+			String returnString = LanguageManager.getLocalization(MC_VERSION_NOT_FOUND_MESSAGE);
 			returnString = returnString.replace("@MOD_NAME@", ACReference.NAME);
 			returnString = returnString.replace("@MINECRAFT_VERSION@", Loader.instance().getMCVersionString());
 			return returnString;
 		} else {
 			result = ERROR;
-			return LanguageRegistry.instance().getStringLocalization(GENERAL_ERROR_MESSAGE);
+			return LanguageManager.getLocalization(GENERAL_ERROR_MESSAGE);
 		}
 	}
 
 	public static String getResultMessageForClient() {
-		String returnString = LanguageRegistry.instance().getStringLocalization(OUTDATED_MESSAGE);
+		String returnString = LanguageManager.getLocalization(OUTDATED_MESSAGE);
 		returnString = returnString.replace("@MOD_NAME@", ACColors.TEXT_COLOUR_PREFIX_YELLOW + ACReference.NAME + ACColors.TEXT_COLOUR_PREFIX_WHITE);
 		returnString = returnString.replace("@REMOTE_MOD_VERSION@", ACColors.TEXT_COLOUR_PREFIX_YELLOW + ACVersion.remoteVersion + ACColors.TEXT_COLOUR_PREFIX_WHITE);
 		returnString = returnString.replace("@MINECRAFT_VERSION@", ACColors.TEXT_COLOUR_PREFIX_YELLOW + Loader.instance().getMCVersionString() + ACColors.TEXT_COLOUR_PREFIX_WHITE);
@@ -157,7 +157,7 @@ public class ACVersion implements Runnable {
 	public void run() {
 		int count = 0;
 
-		ACLog.log(Level.INFO, LanguageRegistry.instance().getStringLocalization(VERSION_CHECK_INIT_LOG_MESSAGE) + " " + REMOTE_VERSION_XML_FILE);
+		ACLog.log(Level.INFO, LanguageManager.getLocalization(VERSION_CHECK_INIT_LOG_MESSAGE) + " " + REMOTE_VERSION_XML_FILE);
 
 		try {
 			while(count < ACReference.VERSION_CHECK_ATTEMPTS - 1 && (result == UNINITIALIZED || result == ERROR)) {

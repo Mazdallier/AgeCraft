@@ -21,7 +21,7 @@ import elcon.mods.agecraft.core.blocks.BlockAgeTeleporter;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBeam;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBlock;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterChest;
-import elcon.mods.agecraft.core.blocks.BlockStoneLayered;
+import elcon.mods.agecraft.core.blocks.metal.BlockStoneLayered;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;

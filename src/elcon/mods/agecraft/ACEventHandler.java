@@ -1,17 +1,29 @@
 package elcon.mods.agecraft;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import cpw.mods.fml.common.ICraftingHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.lang.LanguageManager;
 import elcon.mods.agecraft.tech.TechTreeServer;
 
 public class ACEventHandler implements ICraftingHandler {
 
+	@ForgeSubscribe
+	@SideOnly(Side.CLIENT)
+	public void onTextureStitchPost(TextureStitchEvent.Post event) {
+		LanguageManager.load();
+		LanguageManager.setCurrentLanguage(Minecraft.getMinecraft().func_135016_M().func_135041_c().func_135034_a());
+	}
+	
 	@ForgeSubscribe
 	public void worldLoad(WorldEvent.Load event) {
 		if(event.world.isRemote) {

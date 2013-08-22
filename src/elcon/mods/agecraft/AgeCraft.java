@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -18,11 +17,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.AgeCraftCore;
+import elcon.mods.agecraft.lang.LanguageManager;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
 import elcon.mods.agecraft.ranks.ACRankManager;
 import elcon.mods.agecraft.tech.TechTree;
@@ -38,6 +37,7 @@ public class AgeCraft {
 	public static ACCommonProxy proxy;
 	
 	public static File minecraftDir;
+	public static File modContainerSource;
 
 	public ArrayList<ACComponent> components = new ArrayList<ACComponent>();
 
@@ -54,27 +54,19 @@ public class AgeCraft {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		minecraftDir = new File(event.getSuggestedConfigurationFile().getPath().replace("config\\AgeCraft.cfg", ""));
-
+		modContainerSource = event.getSourceFile();
+		LanguageManager.load();
+		
 		ACLog.init();
 
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		ACConfig.load(config);
 		
-		LanguageRegistry.instance().addStringLocalization("agecraft.version.init_log_message", "en_US", "Initializing remote version check against remote version authority, located at");
-		LanguageRegistry.instance().addStringLocalization("agecraft.version.uninitialized", "en_US", "Remote version check failed to initialize properly");
-		LanguageRegistry.instance().addStringLocalization("agecraft.version.current", "en_US", "Currently using the most up to date version (@REMOTE_MOD_VERSION@) of AgeCraft for @MINECRAFT_VERSION@");
-		LanguageRegistry.instance().addStringLocalization("agecraft.version.outdated", "en_US", "A new @MOD_NAME@ version exists (@REMOTE_MOD_VERSION@) for @MINECRAFT_VERSION@. Get it here: @MOD_UPDATE_LOCATION@");
-		LanguageRegistry.instance().addStringLocalization("agecraft.version.general_error", "en_US", "Error while connecting to remote version authority file; trying again");
-		LanguageRegistry.instance().addStringLocalization("agecraft.version.final_error", "en_US", "Version check stopping after three unsuccessful connection attempts");
-		LanguageRegistry.instance().addStringLocalization("agecraft.version.mc_version_not_found", "en_US", "Unable to find a version of @MOD_NAME@ for @MINECRAFT_VERSION@ in the remote version authority");
-		
-		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
-			ACVersion.execute();
-		}
+		ACVersion.execute();
 
 		config.save();
-
+		
 		core = new AgeCraftCore();
 
 		for(int i = 0; i < Age.ages.length; i++) {

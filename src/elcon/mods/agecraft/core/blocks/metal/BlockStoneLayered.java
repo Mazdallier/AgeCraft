@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.core.blocks;
+package elcon.mods.agecraft.core.blocks.metal;
 
 import java.util.Random;
 

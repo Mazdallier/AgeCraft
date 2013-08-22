@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.core.blocks;
+package elcon.mods.agecraft.core.blocks.metal;
 
 import java.util.List;
 
@@ -13,6 +13,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
+import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
 
 public class BlockOreStorage extends BlockExtendedMetadata {
 
