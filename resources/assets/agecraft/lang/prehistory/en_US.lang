@@ -1,5 +1,4 @@
-tile.campfireOff.name=Campfire
-tile.campfireOn.name=Campfire
+tile.campfire.name=Campfire
 tile.rock.name=Rock
 
 item.fakeStone.name=Rock

@@ -1,12 +1,12 @@
 package elcon.mods.agecraft.core.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.blocks.IBlockExtendedMetadata;
 import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
 
@@ -16,6 +16,26 @@ public class ItemBlockExtendedMetadata extends ItemBlock {
 		super(id);
 		setMaxDamage(0);
 		setHasSubtypes(true);
+	}
+	
+	@Override
+	public String getItemDisplayName(ItemStack stack) {
+		return getLocalizedName(stack);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return ((IBlockExtendedMetadata) Block.blocksList[getBlockID()]).getLocalizedName(stack);
+	}
+
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return ((IBlockExtendedMetadata) Block.blocksList[getBlockID()]).getUnlocalizedName(stack);
+	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		return Block.blocksList[getBlockID()].getUnlocalizedName();
 	}
 	
 	@Override

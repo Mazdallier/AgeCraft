@@ -16,6 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.lang.LanguageManager;
 import elcon.mods.agecraft.prehistory.CampfireRecipes;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
@@ -32,6 +33,16 @@ public class BlockCampfire extends BlockContainer {
 		setHardness(2.0F);
 		setResistance(5.0F);
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3F, 1.0F);
+	}
+	
+	@Override
+	public String getLocalizedName() {
+		return LanguageManager.getLocalization(getUnlocalizedName());
+	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		return "tile.campfire.name";
 	}
 	
 	@Override

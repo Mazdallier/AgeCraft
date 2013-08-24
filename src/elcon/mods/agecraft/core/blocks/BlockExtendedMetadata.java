@@ -24,6 +24,14 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 		super(i, material);
 	}
 
+	public String getLocalizedName(ItemStack stack) {
+		return getLocalizedName();
+	}
+
+	public String getUnlocalizedName(ItemStack stack) {
+		return getUnlocalizedName();
+	}
+	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityMetadata();

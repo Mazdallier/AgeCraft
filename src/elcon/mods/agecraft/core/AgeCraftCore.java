@@ -12,7 +12,6 @@ import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
@@ -59,12 +58,6 @@ public class AgeCraftCore extends ACComponent {
 		GameRegistry.registerBlock(ageTeleporterBlock, "AC_ageTeleporterBlock");
 		GameRegistry.registerBlock(ageTeleporterBeam, "AC_ageTeleporterBeam");
 		GameRegistry.registerBlock(ageTeleporterChest, "AC_ageTeleporterChest");
-		
-		//add block names
-		LanguageRegistry.addName(ageTeleporter, "Age Teleporter");
-		LanguageRegistry.addName(ageTeleporterBlock, "Age Teleporter Block");
-		LanguageRegistry.addName(ageTeleporterBeam, "Age Teleporter Beam");
-		LanguageRegistry.addName(ageTeleporterChest, "Age Teleporter Chest");
 		
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntityAgeTeleporterBeam.class, "AgeTeleporterBeam");

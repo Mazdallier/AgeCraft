@@ -22,6 +22,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockAgeTeleporterChest extends BlockContainer {
 
@@ -32,6 +33,16 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 		setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 		setResistance(6000000.0F);
 		setLightValue(0.5F);
+	}
+	
+	@Override
+	public String getLocalizedName() {
+		return LanguageManager.getLocalization(getUnlocalizedName());
+	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		return "tile.ageTeleporterChest.name";
 	}
 
 	public boolean isOpaqueCube() {

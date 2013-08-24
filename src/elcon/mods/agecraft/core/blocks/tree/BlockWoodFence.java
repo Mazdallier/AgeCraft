@@ -17,6 +17,7 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockWoodFence extends BlockExtendedMetadata {
 
@@ -28,6 +29,16 @@ public class BlockWoodFence extends BlockExtendedMetadata {
 		setCreativeTab(ACCreativeTabs.wood);
 	}
 
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "trees.fence";
+	}
+	
 	@Override
 	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axisAlignedBB, List list, Entity entity) {
 		int meta = getMetadata(world, x, y, z);

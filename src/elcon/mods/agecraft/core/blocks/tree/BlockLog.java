@@ -17,6 +17,7 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockLog extends BlockExtendedMetadata {
 
@@ -27,6 +28,16 @@ public class BlockLog extends BlockExtendedMetadata {
 		setCreativeTab(ACCreativeTabs.wood);
 		
 		setBlockBounds(0.3125F, 0.0F, 0.3125F, 0.6875F, 0.75F, 0.6875F);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "trees.log";
 	}
 	
 	@Override

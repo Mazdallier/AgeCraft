@@ -22,6 +22,7 @@ import net.minecraft.world.World;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockWoodLadder extends BlockExtendedMetadata {
 
@@ -32,6 +33,16 @@ public class BlockWoodLadder extends BlockExtendedMetadata {
 		setHardness(0.4F);
 		setStepSound(soundLadderFootstep);
 		setCreativeTab(ACCreativeTabs.wood);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[(stack.getItemDamage() - (stack.getItemDamage() & 7)) / 8].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "trees.ladder";
 	}
 
 	@Override

@@ -23,6 +23,14 @@ public class BlockExtendedMetadataOverlay extends BlockContainerOverlay implemen
 		super(id, material);
 	}
 	
+	public String getLocalizedName(ItemStack stack) {
+		return getLocalizedName();
+	}
+
+	public String getUnlocalizedName(ItemStack stack) {
+		return getUnlocalizedName();
+	}
+	
 	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityMetadata();

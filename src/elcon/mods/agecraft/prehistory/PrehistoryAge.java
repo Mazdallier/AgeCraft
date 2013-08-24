@@ -5,7 +5,6 @@ import net.minecraft.item.Item;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
@@ -57,17 +56,6 @@ public class PrehistoryAge extends Age {
 		rock = new ItemRock(3002 - 256).setCreativeTab(tab).setUnlocalizedName("rock");
 		rockTool = new ItemRockTool(13000).setCreativeTab(tab).setUnlocalizedName("rockTool");
 		rockTanningTool = new ItemRockTanningTool(13001).setCreativeTab(tab).setUnlocalizedName("rockTanningTool");
-		
-		//add block names
-		//LanguageRegistry.addName(campfireOff, "Campfire");
-		//LanguageRegistry.addName(campfireOn, "Campfire");
-		//LanguageRegistry.addName(rockBlock, "Rock");
-		
-		//add item names
-		LanguageRegistry.addName(fakeStone, "Rock");
-		LanguageRegistry.addName(rock, "Rock");
-		LanguageRegistry.addName(rockTool, "Rock Tool");
-		LanguageRegistry.addName(rockTanningTool, "Rock Tanning Tool");
 		
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntityCampfire.class, "Campfire");

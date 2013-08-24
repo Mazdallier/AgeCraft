@@ -7,6 +7,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
+import elcon.mods.agecraft.lang.LanguageManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -22,6 +23,17 @@ public class BlockPlanks extends BlockExtendedMetadata {
 		setResistance(5.0F);
 		setStepSound(Block.soundWoodFootstep);
 		setCreativeTab(ACCreativeTabs.wood);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		System.out.println(LanguageManager.getCurrentLanguage() + " " + LanguageManager.getLocalization("trees.planks"));
+		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "trees.planks";
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockAgeTeleporterBeam extends BlockContainer {
 
@@ -19,6 +20,16 @@ public class BlockAgeTeleporterBeam extends BlockContainer {
 		super(i, Material.iron);
 		setResistance(6000000.0F);
 		setLightValue(0.5F);
+	}
+	
+	@Override
+	public String getLocalizedName() {
+		return LanguageManager.getLocalization(getUnlocalizedName());
+	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		return "tile.ageTeleporterBeam.name";
 	}
 
 	@Override

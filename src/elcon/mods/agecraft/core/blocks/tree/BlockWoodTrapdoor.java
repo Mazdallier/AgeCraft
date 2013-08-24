@@ -22,9 +22,12 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 
+	public static String[] types = new String[]{"standard", "solid"};
+	
 	public BlockWoodTrapdoor(int id) {
 		super(id, Material.wood);
 		setHardness(2.0F);
@@ -33,6 +36,16 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 		setCreativeTab(ACCreativeTabs.wood);
 		
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[(stack.getItemDamage() - (stack.getItemDamage() & 31)) / 32].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "trees.trapdoor." + types[(stack.getItemDamage() & 16) / 16];
 	}
 	
 	@Override

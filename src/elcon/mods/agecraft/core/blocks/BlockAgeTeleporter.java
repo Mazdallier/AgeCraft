@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.core.AgeTeleport;
 import elcon.mods.agecraft.core.TeleporterAC;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockAgeTeleporter extends BlockAgeTeleporterBlock {
 
@@ -18,6 +19,16 @@ public class BlockAgeTeleporter extends BlockAgeTeleporterBlock {
 	
 	public BlockAgeTeleporter(int i) {
 		super(i);
+	}
+	
+	@Override
+	public String getLocalizedName() {
+		return LanguageManager.getLocalization(getUnlocalizedName());
+	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		return "tile.ageTeleporter.name";
 	}
 
 	@Override

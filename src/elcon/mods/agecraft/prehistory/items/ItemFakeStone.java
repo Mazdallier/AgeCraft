@@ -2,10 +2,12 @@ package elcon.mods.agecraft.prehistory.items;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.AgeCraft;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class ItemFakeStone extends Item {
 	
@@ -13,6 +15,21 @@ public class ItemFakeStone extends Item {
 	
 	public ItemFakeStone(int i) {
 		super(i);
+	}
+	
+	@Override
+	public String getItemDisplayName(ItemStack stack) {
+		return getLocalizedName(stack);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "item.fakeStone.name";
 	}
 	
 	@Override

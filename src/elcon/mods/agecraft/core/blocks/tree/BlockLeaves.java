@@ -17,6 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockLeaves extends BlockExtendedMetadata {
 
@@ -33,6 +34,16 @@ public class BlockLeaves extends BlockExtendedMetadata {
 		setCreativeTab(ACCreativeTabs.wood);
 	}
 
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[(stack.getItemDamage() - (stack.getItemDamage() & 3)) / 4].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "trees.leaves";
+	}
+	
 	@Override
 	public boolean isOpaqueCube() {
 		return !fancyGraphics;

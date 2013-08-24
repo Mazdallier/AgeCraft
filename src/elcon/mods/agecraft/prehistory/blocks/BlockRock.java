@@ -11,6 +11,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.lang.LanguageManager;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 
 public class BlockRock extends Block {
@@ -22,6 +23,16 @@ public class BlockRock extends Block {
 		setHardness(0.4F);
 		setStepSound(Block.soundStoneFootstep);
 		setBlockBounds(0.35F, 0.0F, 0.35F, 0.75F, 0.2F, 0.75F);
+	}
+	
+	@Override
+	public String getLocalizedName() {
+		return LanguageManager.getLocalization(getUnlocalizedName());
+	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		return "tile.rock.name";
 	}
 	
 	@Override

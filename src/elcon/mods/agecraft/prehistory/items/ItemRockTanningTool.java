@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class ItemRockTanningTool extends Item {
 
@@ -17,6 +18,21 @@ public class ItemRockTanningTool extends Item {
 		setMaxDamage(32);
 		setMaxStackSize(1);
 		setDamage(new ItemStack(this), 1);
+	}
+	
+	@Override
+	public String getItemDisplayName(ItemStack stack) {
+		return getLocalizedName(stack);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "item.rockToolTanning.name";
 	}
 	
 	@Override

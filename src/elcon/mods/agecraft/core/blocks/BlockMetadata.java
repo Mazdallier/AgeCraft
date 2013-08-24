@@ -15,6 +15,6 @@ public class BlockMetadata extends Block {
 	}
 
 	public String getUnlocalizedName(ItemStack stack) {
-		return  super.getUnlocalizedName();
+		return super.getUnlocalizedName();
 	}
 }

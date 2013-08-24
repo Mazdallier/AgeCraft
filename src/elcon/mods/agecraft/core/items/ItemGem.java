@@ -11,6 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.MetalRegistry.OreType;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class ItemGem extends Item {
 
@@ -19,6 +20,21 @@ public class ItemGem extends Item {
 		setMaxDamage(0);
 		setHasSubtypes(true);
 		setCreativeTab(ACCreativeTabs.metals);
+	}
+	
+	@Override
+	public String getItemDisplayName(ItemStack stack) {
+		return getLocalizedName(stack);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return LanguageManager.getLocalization( "metals." + MetalRegistry.metals[stack.getItemDamage()].name);
+	}
+
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "metals.gem";
 	}
 	
 	@Override

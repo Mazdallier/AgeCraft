@@ -18,6 +18,7 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.MetalRegistry.Metal;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadataOverlay;
+import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockStoneOre extends BlockExtendedMetadataOverlay {
 
@@ -25,6 +26,16 @@ public class BlockStoneOre extends BlockExtendedMetadataOverlay {
 		super(i, Material.rock);
 		setStepSound(Block.soundStoneFootstep);
 		setCreativeTab(ACCreativeTabs.metals);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return "metals.ore";
 	}
 	
 	@Override

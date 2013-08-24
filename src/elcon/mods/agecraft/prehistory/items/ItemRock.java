@@ -1,5 +1,6 @@
 package elcon.mods.agecraft.prehistory.items;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -18,6 +19,26 @@ public class ItemRock extends ItemBlock {
 	
 	public ItemRock(int i) {
 		super(i);
+	}
+	
+	@Override
+	public String getItemDisplayName(ItemStack stack) {
+		return getLocalizedName(stack);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return Block.blocksList[getBlockID()].getLocalizedName();
+	}
+
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return Block.blocksList[getBlockID()].getUnlocalizedName();
+	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		return Block.blocksList[getBlockID()].getUnlocalizedName();
 	}
 	
 	@Override
