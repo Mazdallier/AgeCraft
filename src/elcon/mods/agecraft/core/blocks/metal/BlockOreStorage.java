@@ -8,7 +8,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
@@ -33,7 +35,27 @@ public class BlockOreStorage extends BlockExtendedMetadata {
 	public String getUnlocalizedName(ItemStack stack) {
 		return "metals.block";
 	}
-
+	
+	@Override
+	public boolean canConnectRedstone(IBlockAccess blockAccess, int x, int y, int z, int side) {
+		return MetalRegistry.metals[getMetadata(blockAccess, x, y, z)].redstonePower > 0 && side != -1;
+	}
+	
+	@Override
+	public int isProvidingWeakPower(IBlockAccess blockAccess, int x, int y, int z, int side) {
+		return MetalRegistry.metals[getMetadata(blockAccess, x, y, z)].redstonePower;
+	}
+	
+	@Override
+	public int getFireSpreadSpeed(World world, int x, int y, int z, int metadata, ForgeDirection face) {
+		return MetalRegistry.metals[getMetadata(world, x, y, z)].fireSpreadSpeed;
+	}
+	
+	@Override
+	public int getFlammability(IBlockAccess blockAccess, int x, int y, int z, int metadata, ForgeDirection face) {
+		return MetalRegistry.metals[getMetadata(blockAccess, x, y, z)].flammability;
+	}
+	
 	@Override
 	public float getBlockHardness(World world, int x, int y, int z) {
 		return MetalRegistry.metals[getMetadata(world, x, y, z)].blockHardness;

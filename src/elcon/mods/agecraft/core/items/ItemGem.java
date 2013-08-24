@@ -29,7 +29,7 @@ public class ItemGem extends Item {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization( "metals." + MetalRegistry.metals[stack.getItemDamage()].name);
+		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[stack.getItemDamage()].name);
 	}
 
 	@Override

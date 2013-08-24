@@ -29,7 +29,7 @@ public class ItemIngot extends Item {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization( "metals." + MetalRegistry.metals[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 
 	@Override

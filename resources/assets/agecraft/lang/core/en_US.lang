@@ -32,6 +32,7 @@ trees.door.full=Full Cut Door
 trees.trapdoor.standard=Trapdoor
 trees.trapdoor.solid=Solid Trapdoor
 trees.ladder=Ladder
+trees.stick=Stick
 
 trees.oak=Oak
 trees.birch=Birch
@@ -40,8 +41,6 @@ trees.jungle=Jungle
 
 metals.ore=Ore
 metals.block=Block
-metals.ingot=Ingot
-metals.gem=Gem
 metals.fence=Fence
 metals.fenceGate=Fence Gate
 metals.door.standard=Door
@@ -51,6 +50,9 @@ metals.door.full=Full Cut Door
 metals.trapdoor.standard=Trapdoor
 metals.trapdoor.solid=Solid Trapdoor
 metals.ladder=Ladder
+metals.ingot=Ingot
+metals.gem=Gem
+metals.stick=Stick
 
 metals.copper=Copper
 metals.tin=Tin

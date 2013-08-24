@@ -28,6 +28,7 @@
 	2504 Door
 	2505 Trapdoor
 	2506 Ladders
+	2507 Design blocks
 	
 	2510 Wood
 	2511 Log
@@ -69,6 +70,9 @@
 12500-12999 	Core items
 	12500 Ingot
 	12501 Gem
+	12502 Stick
+	
+	12510 Stick
 13000-13099		Prehistory
 	13000 Rock Tool
 	13001 Rock Tanning Tool

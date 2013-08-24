@@ -2,6 +2,7 @@ package elcon.mods.agecraft.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.item.Item;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,6 +23,7 @@ import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.agecraft.core.items.ItemBlockLeaves;
 import elcon.mods.agecraft.core.items.ItemLog;
 import elcon.mods.agecraft.core.items.ItemWoodDoor;
+import elcon.mods.agecraft.core.items.ItemWoodStick;
 
 public class Trees extends ACComponent {
 
@@ -35,6 +37,8 @@ public class Trees extends ACComponent {
 	public static Block door;
 	public static Block trapdoor;
 	public static Block ladder;
+	
+	public static Item stick;
 	
 	@Override
 	public void preInit() {
@@ -61,6 +65,21 @@ public class Trees extends ACComponent {
 		GameRegistry.registerBlock(door, ItemWoodDoor.class, "AC_trees_door");
 		GameRegistry.registerBlock(trapdoor, ItemBlockExtendedMetadata.class, "AC_trees_trapdoor");
 		GameRegistry.registerBlock(ladder, ItemBlockExtendedMetadata.class, "AC_trees_ladder");
+		
+		//register block flammability
+		Block.setBurnProperties(wood.blockID, 5, 5);
+		Block.setBurnProperties(log.blockID, 5, 5);
+		Block.setBurnProperties(planks.blockID, 5, 20);
+		Block.setBurnProperties(leaves.blockID, 30, 60);
+		Block.setBurnProperties(woodWall.blockID, 5, 5);
+		Block.setBurnProperties(fence.blockID, 5, 20);
+		Block.setBurnProperties(fenceGate.blockID, 5, 20);
+		Block.setBurnProperties(door.blockID, 5, 20);
+		Block.setBurnProperties(trapdoor.blockID, 5, 20);
+		Block.setBurnProperties(ladder.blockID, 5, 20);
+		
+		//init items
+		stick = new ItemWoodStick(12510).setUnlocalizedName("trees_stick");
 	}
 	
 	@Override
@@ -96,8 +115,8 @@ public class Trees extends ACComponent {
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			Tree tree = TreeRegistry.trees[i];
 			if(tree != null) {
-				tree.log = iconRegister.registerIcon("agecraft:wood/log" + ACUtil.firstUpperCase(tree.name));
-				tree.stick = iconRegister.registerIcon("agecraft:wood/stick" + ACUtil.firstUpperCase(tree.name));
+				tree.log = iconRegister.registerIcon("agecraft:wood/logs/log" + ACUtil.firstUpperCase(tree.name));
+				tree.stick = iconRegister.registerIcon("agecraft:wood/sticks/stick" + ACUtil.firstUpperCase(tree.name));
 			}
 		}
 	}
