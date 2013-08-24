@@ -1,22 +1,29 @@
 package elcon.mods.agecraft.core;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFence;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFenceGate;
 import elcon.mods.agecraft.core.blocks.tree.BlockWood;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodFence;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodFenceGate;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodWall;
+import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
 
 public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
+
+	private TileEntityAgeTeleporterChest tileChestInstance = new TileEntityAgeTeleporterChest();
 
 	@Override
 	public boolean renderWorldBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
@@ -626,6 +633,13 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
 		switch(modelID) {
+		case 99:
+			GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+            GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+            Minecraft.getMinecraft().func_110434_K().func_110577_a(ResourcesCore.ageTeleporterChest);
+            TileEntityRenderer.instance.renderTileEntityAt(tileChestInstance , 0.0D, 0.0D, 0.0D, 0.0F);
+            GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+			break;
 		case 100:
 			renderItemBlockMetalFence(block, metadata, modelID, renderer);
 			break;

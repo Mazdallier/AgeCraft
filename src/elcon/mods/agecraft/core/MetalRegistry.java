@@ -26,6 +26,7 @@ public class MetalRegistry {
 		public boolean hasOre;
 		public boolean hasIngot;
 		public boolean hasBlock;
+		public boolean hasDoor;
 		
 		public int metalColor;
 		
@@ -33,7 +34,7 @@ public class MetalRegistry {
 		public Icon block;
 		public Icon ingot;
 		
-		public Metal(int id, String name, OreType type, float hardness, float resistane, int harvestLevel, float blockHardness, float blockResistane, ItemStack drop, int dropMin, int dropMax, boolean fortune, boolean hasOre, boolean hasIngot, boolean hasBlock, int metalColor) {
+		public Metal(int id, String name, OreType type, float hardness, float resistane, int harvestLevel, float blockHardness, float blockResistane, ItemStack drop, int dropMin, int dropMax, boolean fortune, boolean hasOre, boolean hasIngot, boolean hasBlock, boolean hasDoor, int metalColor) {
 			this.id = id;
 			this.name = name;
 			this.type = type;
@@ -53,6 +54,7 @@ public class MetalRegistry {
 			this.hasOre = hasOre;
 			this.hasIngot = hasIngot;
 			this.hasBlock = hasBlock;
+			this.hasDoor = hasDoor;
 			
 			this.metalColor = metalColor;
 		}

@@ -22,7 +22,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.MetalRegistry;
-import elcon.mods.agecraft.core.MetalRegistry.OreType;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
 import elcon.mods.agecraft.lang.LanguageManager;
 
@@ -257,7 +256,7 @@ public class BlockMetalTrapdoor extends BlockExtendedMetadata {
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
-			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].type == OreType.METAL && MetalRegistry.metals[i].hasBlock) {
+			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasDoor) {
 				list.add(new ItemStack(id, 1, (i * 32)));
 				list.add(new ItemStack(id, 1, (i * 32) | 16));
 			}

@@ -2,6 +2,7 @@ package elcon.mods.agecraft.core.blocks;
 
 import static net.minecraftforge.common.ForgeDirection.DOWN;
 
+import java.util.List;
 import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
@@ -11,15 +12,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.lang.LanguageManager;
@@ -33,6 +37,7 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 		setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 		setResistance(6000000.0F);
 		setLightValue(0.5F);
+		setCreativeTab(ACCreativeTabs.ageCraft);
 	}
 	
 	@Override
@@ -54,20 +59,26 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 	}
 
 	public int getRenderType() {
-		return 22;
+		return 99;
 	}
 
-	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
+	public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, int x, int y, int z) {
 		setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 	}
+	
+	@Override
+	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axisAlignedBB, List list, Entity entity) {
+		setBlockBoundsBasedOnState(world, x, y, z);
+		super.addCollisionBoxesToList(world, x, y, z, axisAlignedBB, list, entity);
+	}
 
-	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving) {
-		int var6 = par1World.getBlockId(par2, par3, par4 - 1);
-		int var7 = par1World.getBlockId(par2, par3, par4 + 1);
-		int var8 = par1World.getBlockId(par2 - 1, par3, par4);
-		int var9 = par1World.getBlockId(par2 + 1, par3, par4);
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entity) {
+		int var6 = world.getBlockId(x, y, z - 1);
+		int var7 = world.getBlockId(x, y, z + 1);
+		int var8 = world.getBlockId(x - 1, y, z);
+		int var9 = world.getBlockId(x + 1, y, z);
 		byte var10 = 0;
-		int var11 = MathHelper.floor_double((double) (par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+		int var11 = MathHelper.floor_double((double) (entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
 		if(var11 == 0) {
 			var10 = 2;
@@ -86,32 +97,32 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 		}
 
 		if(var6 != blockID && var7 != blockID && var8 != blockID && var9 != blockID) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, var10, 1);
+			world.setBlockMetadataWithNotify(x, y, z, var10, 1);
 		} else {
 			if((var6 == blockID || var7 == blockID) && (var10 == 4 || var10 == 5)) {
 				if(var6 == blockID) {
-					par1World.setBlockMetadataWithNotify(par2, par3, par4 - 1, var10, 1);
+					world.setBlockMetadataWithNotify(x, y, z - 1, var10, 1);
 				} else {
-					par1World.setBlockMetadataWithNotify(par2, par3, par4 + 1, var10, 1);
+					world.setBlockMetadataWithNotify(x, y, z + 1, var10, 1);
 				}
 
-				par1World.setBlockMetadataWithNotify(par2, par3, par4, var10, 1);
+				world.setBlockMetadataWithNotify(x, y, z, var10, 1);
 			}
 
 			if((var8 == blockID || var9 == blockID) && (var10 == 2 || var10 == 3)) {
 				if(var8 == blockID) {
-					par1World.setBlockMetadataWithNotify(par2 - 1, par3, par4, var10, 1);
+					world.setBlockMetadataWithNotify(x - 1, y, z, var10, 1);
 				} else {
-					par1World.setBlockMetadataWithNotify(par2 + 1, par3, par4, var10, 1);
+					world.setBlockMetadataWithNotify(x + 1, y, z, var10, 1);
 				}
 
-				par1World.setBlockMetadataWithNotify(par2, par3, par4, var10, 1);
+				world.setBlockMetadataWithNotify(x, y, z, var10, 1);
 			}
 		}
 	}
 
-	public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6) {
-		TileEntityAgeTeleporterChest var7 = (TileEntityAgeTeleporterChest) par1World.getBlockTileEntity(par2, par3, par4);
+	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
+		TileEntityAgeTeleporterChest var7 = (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z);
 
 		if(var7 != null) {
 			for(int var8 = 0; var8 < var7.getSizeInventory(); ++var8) {
@@ -122,7 +133,7 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 					float var11 = random.nextFloat() * 0.8F + 0.1F;
 					EntityItem var14;
 
-					for(float var12 = random.nextFloat() * 0.8F + 0.1F; var9.stackSize > 0; par1World.spawnEntityInWorld(var14)) {
+					for(float var12 = random.nextFloat() * 0.8F + 0.1F; var9.stackSize > 0; world.spawnEntityInWorld(var14)) {
 						int var13 = random.nextInt(21) + 10;
 
 						if(var13 > var9.stackSize) {
@@ -130,7 +141,7 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 						}
 
 						var9.stackSize -= var13;
-						var14 = new EntityItem(par1World, (double) ((float) par2 + var10), (double) ((float) par3 + var11), (double) ((float) par4 + var12), new ItemStack(var9.itemID, var13, var9.getItemDamage()));
+						var14 = new EntityItem(world, (double) ((float) x + var10), (double) ((float) y + var11), (double) ((float) z + var12), new ItemStack(var9.itemID, var13, var9.getItemDamage()));
 						float var15 = 0.05F;
 						var14.motionX = (double) ((float) random.nextGaussian() * var15);
 						var14.motionY = (double) ((float) random.nextGaussian() * var15 + 0.2F);
@@ -144,7 +155,7 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 			}
 		}
 
-		super.breakBlock(par1World, par2, par3, par4, par5, par6);
+		super.breakBlock(world, x, y, z, par5, par6);
 	}
 
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
@@ -164,7 +175,7 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 		}
 	}
 
-	public TileEntity createNewTileEntity(World par1World) {
+	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityAgeTeleporterChest();
 	}
 	

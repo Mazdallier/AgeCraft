@@ -21,6 +21,7 @@ import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBeam;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBlock;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterChest;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneLayered;
+import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
@@ -54,10 +55,10 @@ public class AgeCraftCore extends ACComponent {
 		ageTeleporterChest = new BlockAgeTeleporterChest(2999).setUnlocalizedName("ageTeleporterChest");
 		
 		//register blocks
-		GameRegistry.registerBlock(ageTeleporter, "AC_ageTeleporter");
-		GameRegistry.registerBlock(ageTeleporterBlock, "AC_ageTeleporterBlock");
-		GameRegistry.registerBlock(ageTeleporterBeam, "AC_ageTeleporterBeam");
-		GameRegistry.registerBlock(ageTeleporterChest, "AC_ageTeleporterChest");
+		GameRegistry.registerBlock(ageTeleporter, ItemBlockName.class, "AC_ageTeleporter");
+		GameRegistry.registerBlock(ageTeleporterBlock, ItemBlockName.class, "AC_ageTeleporterBlock");
+		GameRegistry.registerBlock(ageTeleporterBeam, ItemBlockName.class, "AC_ageTeleporterBeam");
+		GameRegistry.registerBlock(ageTeleporterChest, ItemBlockName.class, "AC_ageTeleporterChest");
 		
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntityAgeTeleporterBeam.class, "AgeTeleporterBeam");
@@ -98,10 +99,11 @@ public class AgeCraftCore extends ACComponent {
 		//register block rendering handler
 		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();
 		ACBlockRenderingHandlerWithIcon blockRenderingHandlerWithIcon = new ACBlockRenderingHandlerWithIcon();
+		RenderingRegistry.registerBlockHandler(99, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(100, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(101, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(102, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(103, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(102, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(103, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(104, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(105, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(106, blockRenderingHandler);
