@@ -51,14 +51,17 @@ public class LanguageManager {
 					JarFile jar = new JarFile(AgeCraft.modContainerSource);
 					Enumeration entries = jar.entries();
 					while(entries.hasMoreElements()) {
-						JarEntry file = (JarEntry) entries.nextElement();
-						if(file.getName().contains("assets/agecraft/lang/")) {
-							File f = new File(languageDirectory + File.separator + file.getName());
-							if(file.isDirectory()) {
-								f.mkdir();
+						JarEntry jarEntry = (JarEntry) entries.nextElement();
+						if(jarEntry.getName().contains("assets/agecraft/lang/")) {
+							File f = new File(languageDirectory + File.separator + jarEntry.getName());
+							if(jarEntry.isDirectory()) {
+								f.mkdirs();
 								continue;
 							}
-							InputStream is = jar.getInputStream(file);
+							if(!f.exists()) {
+								f.createNewFile();
+							}
+							InputStream is = jar.getInputStream(jarEntry);
 							FileOutputStream fos = new FileOutputStream(f);
 							while(is.available() > 0) {
 								fos.write(is.read());
