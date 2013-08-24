@@ -97,6 +97,7 @@ public class AgeCraftCore extends ACComponent {
 	public void clientProxy() {
 		//register block rendering handler
 		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();
+		ACBlockRenderingHandlerWithIcon blockRenderingHandlerWithIcon = new ACBlockRenderingHandlerWithIcon();
 		RenderingRegistry.registerBlockHandler(100, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(101, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(102, blockRenderingHandler);
@@ -107,8 +108,8 @@ public class AgeCraftCore extends ACComponent {
 		RenderingRegistry.registerBlockHandler(107, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(108, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(109, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(110, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(111, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(110, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(111, blockRenderingHandlerWithIcon);
 		
 		//register item rendering handler
 		//ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();

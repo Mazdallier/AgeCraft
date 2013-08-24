@@ -27,7 +27,6 @@ public class BlockPlanks extends BlockExtendedMetadata {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		System.out.println(LanguageManager.getCurrentLanguage() + " " + LanguageManager.getLocalization("trees.planks"));
 		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 	

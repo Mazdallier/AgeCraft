@@ -39,28 +39,28 @@ public class Trees extends ACComponent {
 	@Override
 	public void preInit() {
 		//init blocks
-		wood = new BlockWood(2510).setUnlocalizedName("wood");
-		log = new BlockLog(2511).setUnlocalizedName("log");
-		planks = new BlockPlanks(2512).setUnlocalizedName("planks");
-		leaves = new BlockLeaves(2513).setUnlocalizedName("leaves");
-		woodWall = new BlockWoodWall(2514).setUnlocalizedName("woodWall");
-		fence = new BlockWoodFence(2515).setUnlocalizedName("fence");
-		fenceGate = new BlockWoodFenceGate(2516).setUnlocalizedName("fenceGate");
-		door = new BlockWoodDoor(2517).setUnlocalizedName("door");
-		trapdoor = new BlockWoodTrapdoor(2518).setUnlocalizedName("trapdoor");
-		ladder = new BlockWoodLadder(2519).setUnlocalizedName("ladder");
+		wood = new BlockWood(2510).setUnlocalizedName("trees_wood");
+		log = new BlockLog(2511).setUnlocalizedName("trees_log");
+		planks = new BlockPlanks(2512).setUnlocalizedName("trees_planks");
+		leaves = new BlockLeaves(2513).setUnlocalizedName("trees_leaves");
+		woodWall = new BlockWoodWall(2514).setUnlocalizedName("trees_woodWall");
+		fence = new BlockWoodFence(2515).setUnlocalizedName("trees_fence");
+		fenceGate = new BlockWoodFenceGate(2516).setUnlocalizedName("trees_fenceGate");
+		door = new BlockWoodDoor(2517).setUnlocalizedName("trees_door");
+		trapdoor = new BlockWoodTrapdoor(2518).setUnlocalizedName("trees_trapdoor");
+		ladder = new BlockWoodLadder(2519).setUnlocalizedName("trees_ladder");
 		
 		//register blocks
-		GameRegistry.registerBlock(wood, ItemBlockExtendedMetadata.class, "AC_wood");
-		GameRegistry.registerBlock(log, ItemLog.class, "AC_log");
-		GameRegistry.registerBlock(planks, ItemBlockExtendedMetadata.class, "AC_planks");
-		GameRegistry.registerBlock(leaves, ItemBlockLeaves.class, "AC_leaves");
-		GameRegistry.registerBlock(woodWall, ItemBlockExtendedMetadata.class, "AC_woodWall");
-		GameRegistry.registerBlock(fence, ItemBlockExtendedMetadata.class, "AC_fence");
-		GameRegistry.registerBlock(fenceGate, ItemBlockExtendedMetadata.class, "AC_fenceGate");
-		GameRegistry.registerBlock(door, ItemWoodDoor.class, "AC_door");
-		GameRegistry.registerBlock(trapdoor, ItemBlockExtendedMetadata.class, "AC_trapdoor");
-		GameRegistry.registerBlock(ladder, ItemBlockExtendedMetadata.class, "AC_ladder");
+		GameRegistry.registerBlock(wood, ItemBlockExtendedMetadata.class, "AC_trees_wood");
+		GameRegistry.registerBlock(log, ItemLog.class, "AC_trees_log");
+		GameRegistry.registerBlock(planks, ItemBlockExtendedMetadata.class, "AC_trees_planks");
+		GameRegistry.registerBlock(leaves, ItemBlockLeaves.class, "AC_trees_leaves");
+		GameRegistry.registerBlock(woodWall, ItemBlockExtendedMetadata.class, "AC_trees_woodWall");
+		GameRegistry.registerBlock(fence, ItemBlockExtendedMetadata.class, "AC_trees_fence");
+		GameRegistry.registerBlock(fenceGate, ItemBlockExtendedMetadata.class, "AC_trees_fenceGate");
+		GameRegistry.registerBlock(door, ItemWoodDoor.class, "AC_trees_door");
+		GameRegistry.registerBlock(trapdoor, ItemBlockExtendedMetadata.class, "AC_trees_trapdoor");
+		GameRegistry.registerBlock(ladder, ItemBlockExtendedMetadata.class, "AC_trees_ladder");
 	}
 	
 	@Override

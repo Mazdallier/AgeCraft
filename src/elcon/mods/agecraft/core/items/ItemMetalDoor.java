@@ -8,15 +8,15 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.core.TreeRegistry;
+import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
 
-public class ItemWoodDoor extends ItemBlockExtendedMetadata {
+public class ItemMetalDoor extends ItemBlockExtendedMetadata {
 
 	private Icon[] icons = new Icon[4];
 	private Icon iconOverlay;
 
-	public ItemWoodDoor(int id) {
+	public ItemMetalDoor(int id) {
 		super(id);
 	}
 
@@ -82,7 +82,7 @@ public class ItemWoodDoor extends ItemBlockExtendedMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int renderPass) {
-		return renderPass == 0 ? TreeRegistry.trees[(stack.getItemDamage() - (stack.getItemDamage() & 127)) / 128].woodColor : super.getColorFromItemStack(stack, renderPass);
+		return renderPass == 0 ? MetalRegistry.metals[(stack.getItemDamage() - (stack.getItemDamage() & 127)) / 128].metalColor : super.getColorFromItemStack(stack, renderPass);
 	}
 
 	@Override
