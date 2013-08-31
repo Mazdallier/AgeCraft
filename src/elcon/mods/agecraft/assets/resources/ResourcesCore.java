@@ -12,6 +12,7 @@ public class ResourcesCore {
 	public static ResourceLocation ageTeleporterChest = new ResourceLocation("agecraft", "textures/tile/teleporter_chest.png");
 	
 	public static Icon missingTexture;
+	public static Icon emptyTexture;
 	
 	public static Icon[][][] doorWoodIcons = new Icon[4][2][2];
 	public static Icon[] trapdoorWoodIcons = new Icon[2];

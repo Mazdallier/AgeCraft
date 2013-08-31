@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -101,8 +102,7 @@ public class ItemTool extends Item {
 	
 	@Override
 	public int getRenderPasses(int metadata) {
-		//TODO: increase to 3 for enhancements
-		return 2;
+		return 3;
 	}
 	
 	@Override
@@ -115,7 +115,12 @@ public class ItemTool extends Item {
 		}/* else if(pass == 2 && tool.hasEnhancements) {
 			return ToolRegistry.toolEnhancementMaterials[getToolMaterial(stack)].icons[tool.id];
 		}*/
-		return ResourcesCore.missingTexture;
+		return ResourcesCore.emptyTexture;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
 	}
 	
 	@Override

@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -221,6 +222,11 @@ public class BlockCampfire extends BlockContainer {
 	@Override
 	public int getRenderType() {
 		return 200;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
 	}
 	
 	public static void updateCampfireBlockState(boolean enabled, World world, int x, int y, int z) {
