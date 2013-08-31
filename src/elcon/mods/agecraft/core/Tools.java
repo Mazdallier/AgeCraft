@@ -8,8 +8,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.ToolRegistry.Tool;
+import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
 import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
+import elcon.mods.agecraft.core.items.tool.ItemSword;
 import elcon.mods.agecraft.core.items.tool.ItemTool;
 
 public class Tools extends ACComponent {
@@ -22,7 +24,8 @@ public class Tools extends ACComponent {
 	
 	@Override
 	public void preInit() {
-		sword = (ItemTool) new ItemTool(12520).setUnlocalizedName("tools_sword");
+		sword = (ItemTool) new ItemSword(12520).setUnlocalizedName("tools_sword");
+		//pickaxe = (ItemTool) new ItemTool(12521).setUnlocalizedName("tools_pickaxe");
 	}
 	
 	@Override
@@ -36,10 +39,13 @@ public class Tools extends ACComponent {
 		}));
 		
 		//register tool materials
-		ToolRegistry.registerToolMaterial(new ToolMaterial(0, "woodOak", new ItemStack(Trees.planks, 1, 0), 39, 1.5F, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(0, "woodOak", "tools.materials.woodOak", new ItemStack(Trees.planks, 1, 0), 39, 1.5F, 0));
 		
 		//register tool rod materials
-		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(0, "woodOak", new ItemStack(Trees.stick, 1, 0), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(0, "woodOak", "tools.materials.woodOak", new ItemStack(Trees.stick, 1, 0), 20, 0.5F, 0));
+	
+		//register tool creative entries
+		ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(0, 0, 0, 0));
 	}
 	
 	@Override

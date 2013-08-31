@@ -1,6 +1,10 @@
 package elcon.mods.agecraft.core.items.tool;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,12 +17,13 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.ToolRegistry;
 import elcon.mods.agecraft.core.ToolRegistry.Tool;
+import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
 import elcon.mods.agecraft.lang.LanguageManager;
 
 public class ItemTool extends Item {
 	
 	public ItemTool(int id) {
-		super(id);
+		super(id - 256);
 		setMaxStackSize(1);
 		setCreativeTab(ACCreativeTabs.tools);
 	}
@@ -30,7 +35,7 @@ public class ItemTool extends Item {
 
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("tools.materials." + ToolRegistry.toolMaterials[getToolMaterial(stack)].name) + " " + LanguageManager.getLocalization(getUnlocalizedName());
+		return LanguageManager.getLocalization(ToolRegistry.toolMaterials[getToolMaterial(stack)].localization) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 
 	@Override
@@ -72,6 +77,17 @@ public class ItemTool extends Item {
 	}
 	
 	@Override
+	public boolean canHarvestBlock(Block block, ItemStack stack) {
+		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
+		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
+			if(blocksEffectiveAgainst[i] == block) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean isFull3D() {
 		return true;
@@ -100,6 +116,26 @@ public class ItemTool extends Item {
 			return ToolRegistry.toolEnhancementMaterials[getToolMaterial(stack)].icons[tool.id];
 		}*/
 		return ResourcesCore.missingTexture;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(int id, CreativeTabs creativeTabs, List list) {
+		if(ToolRegistry.toolCreativeEntries.containsKey(id - 12520)) {
+			ArrayList<ToolCreativeEntry> entries = ToolRegistry.toolCreativeEntries.get(id - 12520);
+			for(ToolCreativeEntry entry : entries) {
+				ItemStack stack = new ItemStack(12520 + entry.tool, 1, 0);
+				NBTTagCompound nbt = new NBTTagCompound();
+				NBTTagCompound nbt2 = new NBTTagCompound();
+				nbt2.setInteger("Type", entry.tool);
+				nbt2.setInteger("Material", entry.toolMaterial);
+				nbt2.setInteger("RodMaterial", entry.toolRodMaterial);
+				nbt2.setInteger("EnhancementMaterial", entry.toolEnhancement);
+				nbt.setTag("Tool", nbt2);
+				stack.setTagCompound(nbt);
+				list.add(stack);
+			}
+		}
 	}
 
 	private NBTTagCompound getToolNBT(ItemStack stack) {

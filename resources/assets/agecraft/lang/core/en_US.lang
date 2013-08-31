@@ -101,6 +101,11 @@ tools.type.axe=Axe
 tools.type.shovel=Shovel
 tools.type.hoe=Hoe
 
+tools.materials.woodOak=Oak Wood
+tools.materials.woodBirch=Birch Wood
+tools.materials.woodSpruce=Spruce Wood
+tools.materials.woodJungle=Jungle Wood
+
 tile.ageTeleporter.name=Age Teleporter
 tile.ageTeleporterBlock.name=Age Teleporter Block
 tile.ageTeleporterBeam.name=Age Teleporter Beam

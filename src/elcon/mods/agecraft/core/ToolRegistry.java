@@ -1,5 +1,8 @@
 package elcon.mods.agecraft.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
@@ -45,6 +48,7 @@ public class ToolRegistry {
 		
 		public int id;
 		public String name;
+		public String localization;
 		
 		public ItemStack stack;
 		
@@ -54,9 +58,10 @@ public class ToolRegistry {
 		
 		public Icon[] icons = new Icon[128];
 		
-		public ToolMaterial(int id, String name, ItemStack stack, int durability, float efficiency, int attackStrength) {
+		public ToolMaterial(int id, String name, String localization, ItemStack stack, int durability, float efficiency, int attackStrength) {
 			this.id = id;
 			this.name = name;
+			this.localization = localization;
 			
 			this.stack = stack;
 			
@@ -70,6 +75,7 @@ public class ToolRegistry {
 		
 		public int id;
 		public String name;
+		public String localization;
 		
 		public ItemStack stack;
 		
@@ -79,9 +85,10 @@ public class ToolRegistry {
 		
 		public Icon[] icons = new Icon[128];
 		
-		public ToolRodMaterial(int id, String name, ItemStack stack, int durability, float efficiency, int attackStrength) {
+		public ToolRodMaterial(int id, String name, String localization, ItemStack stack, int durability, float efficiency, int attackStrength) {
 			this.id = id;
 			this.name = name;
+			this.localization = localization;
 			
 			this.stack = stack;
 			
@@ -95,16 +102,33 @@ public class ToolRegistry {
 		
 		public int id;
 		public String name;
+		public String localization;
 		
 		public ItemStack stack;
 		
 		public Icon[] icons = new Icon[128];
 		
-		public ToolEnhancementMaterial(int id, String name, ItemStack stack) {
+		public ToolEnhancementMaterial(int id, String name, String localization, ItemStack stack) {
 			this.id = id;
 			this.name = name;
+			this.localization = localization;
 			
 			this.stack = stack;
+		}
+	}
+	
+	public static class ToolCreativeEntry {
+		
+		public int tool;
+		public int toolMaterial;
+		public int toolRodMaterial;
+		public int toolEnhancement;
+		
+		public ToolCreativeEntry(int tool, int toolMaterial, int toolRodMaterial, int toolEnhancement) {
+			this.tool = tool;
+			this.toolMaterial = toolMaterial;
+			this.toolRodMaterial = toolRodMaterial;
+			this.toolEnhancement = toolEnhancement;
 		}
 	}
 	
@@ -112,6 +136,7 @@ public class ToolRegistry {
 	public static ToolMaterial[] toolMaterials = new ToolMaterial[256];
 	public static ToolRodMaterial[] toolRodMaterials = new ToolRodMaterial[256];
 	public static ToolEnhancementMaterial[] toolEnhancementMaterials = new ToolEnhancementMaterial[256];
+	public static HashMap<Integer, ArrayList<ToolCreativeEntry>> toolCreativeEntries = new HashMap<Integer, ArrayList<ToolCreativeEntry>>();
 	
 	public static void registerTool(Tool tool) {
 		if(tools[tool.id] != null) {
@@ -139,5 +164,16 @@ public class ToolRegistry {
 			ACLog.warning("[ToolRegistry] Overriding existing tool enhancement material (" + tools[toolEnhancementMaterial.id] + ": " + tools[toolEnhancementMaterial.id].name.toUpperCase() + ") with new tool enhancement material (" + toolEnhancementMaterial.id + ": " + toolEnhancementMaterial.name.toUpperCase() + ")");
 		}
 		toolEnhancementMaterials[toolEnhancementMaterial.id]= toolEnhancementMaterial;
+	}
+	
+	public static void registerToolCreativeEntry(ToolCreativeEntry toolCreativeEntry) {
+		ArrayList<ToolCreativeEntry> entries = null;
+		if(!toolCreativeEntries.containsKey(toolCreativeEntry.tool)) {
+			entries = new ArrayList<ToolCreativeEntry>();
+		} else {
+			toolCreativeEntries.get(toolCreativeEntry.tool);
+		}
+		entries.add(toolCreativeEntry);
+		toolCreativeEntries.put(toolCreativeEntry.tool, entries);
 	}
 }
