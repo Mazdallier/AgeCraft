@@ -87,13 +87,22 @@ public class AgeCraftCore extends ACComponent {
 	public void registerBlockIcons(IconRegister iconRegister) {
 		String[] doorTypes = new String[]{"Standard", "Solid", "Double", "Full"};
 		for(int i = 0; i < doorTypes.length; i++) {
-			ResourcesCore.doorIcons[i][0][0] = iconRegister.registerIcon("agecraft:door/door" + doorTypes[i] + "Lower");
-			ResourcesCore.doorIcons[i][1][0] = iconRegister.registerIcon("agecraft:door/door" + doorTypes[i] + "Upper");
-			ResourcesCore.doorIcons[i][0][1] = new IconFlipped(ResourcesCore.doorIcons[i][0][0], true, false);
-			ResourcesCore.doorIcons[i][1][1] = new IconFlipped(ResourcesCore.doorIcons[i][1][0], true, false);
+			ResourcesCore.doorWoodIcons[i][0][0] = iconRegister.registerIcon("agecraft:door/wood/door" + doorTypes[i] + "Lower");
+			ResourcesCore.doorWoodIcons[i][1][0] = iconRegister.registerIcon("agecraft:door/wood/door" + doorTypes[i] + "Upper");
+			ResourcesCore.doorWoodIcons[i][0][1] = new IconFlipped(ResourcesCore.doorWoodIcons[i][0][0], true, false);
+			ResourcesCore.doorWoodIcons[i][1][1] = new IconFlipped(ResourcesCore.doorWoodIcons[i][1][0], true, false);
 		}
-		ResourcesCore.trapdoorIcons[0] = iconRegister.registerIcon("agecraft:door/trapdoorStandard");
-		ResourcesCore.trapdoorIcons[1] = iconRegister.registerIcon("agecraft:door/trapdoorSolid");
+		ResourcesCore.trapdoorWoodIcons[0] = iconRegister.registerIcon("agecraft:door/wood/trapdoorStandard");
+		ResourcesCore.trapdoorWoodIcons[1] = iconRegister.registerIcon("agecraft:door/wood/trapdoorSolid");
+		
+		for(int i = 0; i < doorTypes.length; i++) {
+			ResourcesCore.doorMetalIcons[i][0][0] = iconRegister.registerIcon("agecraft:door/metal/doorMetal" + doorTypes[i] + "Lower");
+			ResourcesCore.doorMetalIcons[i][1][0] = iconRegister.registerIcon("agecraft:door/metal/doorMetal" + doorTypes[i] + "Upper");
+			ResourcesCore.doorMetalIcons[i][0][1] = new IconFlipped(ResourcesCore.doorMetalIcons[i][0][0], true, false);
+			ResourcesCore.doorMetalIcons[i][1][1] = new IconFlipped(ResourcesCore.doorMetalIcons[i][1][0], true, false);
+		}
+		ResourcesCore.trapdoorMetalIcons[0] = iconRegister.registerIcon("agecraft:door/metal/trapdoorMetalStandard");
+		ResourcesCore.trapdoorMetalIcons[1] = iconRegister.registerIcon("agecraft:door/metal/trapdoorMetalSolid");
 	}
 	
 	@Override

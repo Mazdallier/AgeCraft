@@ -13,6 +13,9 @@ public class ResourcesCore {
 	
 	public static Icon missingTexture;
 	
-	public static Icon[][][] doorIcons = new Icon[4][2][2];
-	public static Icon[] trapdoorIcons = new Icon[2];
+	public static Icon[][][] doorWoodIcons = new Icon[4][2][2];
+	public static Icon[] trapdoorWoodIcons = new Icon[2];
+	
+	public static Icon[][][] doorMetalIcons = new Icon[4][2][2];
+	public static Icon[] trapdoorMetalIcons = new Icon[2];
 }

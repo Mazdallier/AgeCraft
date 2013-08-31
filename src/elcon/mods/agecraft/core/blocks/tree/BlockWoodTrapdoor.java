@@ -236,7 +236,7 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
-		return ResourcesCore.trapdoorIcons[(meta & 16) / 16];
+		return ResourcesCore.trapdoorWoodIcons[(meta & 16) / 16];
 	}
 	
 	@Override

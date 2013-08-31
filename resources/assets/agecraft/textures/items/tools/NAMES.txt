@@ -1,0 +1,12 @@
+===== FOLDERS =====
+<tool>
+sticks/<tool>
+enhancements/<tool>
+
+
+===== FILES =====
+<tool>/<tool><Material>.png
+
+
+===== PREFIXES ======
+Material wood = Wood

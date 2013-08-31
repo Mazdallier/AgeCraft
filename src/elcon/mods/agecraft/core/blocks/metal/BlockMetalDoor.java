@@ -331,9 +331,9 @@ public class BlockMetalDoor extends BlockExtendedMetadata {
 					flipped = !flipped;
 				}
 			}
-			return ResourcesCore.doorIcons[type][isTop ? 1 : 0][flipped ? 1 : 0];
+			return ResourcesCore.doorMetalIcons[type][isTop ? 1 : 0][flipped ? 1 : 0];
 		} else {
-			return ResourcesCore.doorIcons[type][isTop ? 1 : 0][0];
+			return ResourcesCore.doorMetalIcons[type][isTop ? 1 : 0][0];
 		}
 	}
 

@@ -200,6 +200,6 @@ public class BlockMetalLadder extends BlockExtendedMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		icon = iconRegister.registerIcon("agecraft:ladder");
+		icon = iconRegister.registerIcon("agecraft:metalLadder");
 	}
 }
