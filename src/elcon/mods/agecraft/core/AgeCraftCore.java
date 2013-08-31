@@ -35,6 +35,7 @@ public class AgeCraftCore extends ACComponent {
 	
 	public Metals ores;
 	public Trees trees;
+	public Tools tools;
 	
 	public static Block ageTeleporter;
 	public static Block ageTeleporterBlock;
@@ -45,6 +46,7 @@ public class AgeCraftCore extends ACComponent {
 		super();
 		ores = new Metals();
 		trees = new Trees();
+		tools = new Tools();
 	}
 	
 	public void preInit() {
@@ -92,6 +94,12 @@ public class AgeCraftCore extends ACComponent {
 		}
 		ResourcesCore.trapdoorIcons[0] = iconRegister.registerIcon("agecraft:door/trapdoorStandard");
 		ResourcesCore.trapdoorIcons[1] = iconRegister.registerIcon("agecraft:door/trapdoorSolid");
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerItemIcons(IconRegister iconRegister) {
+		ResourcesCore.missingTexture = iconRegister.registerIcon("missingTexture");
 	}
 	
 	@SideOnly(Side.CLIENT)

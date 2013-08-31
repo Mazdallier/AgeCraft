@@ -37,6 +37,16 @@ public class BlockOreStorage extends BlockExtendedMetadata {
 	}
 	
 	@Override
+	public boolean canProvidePower() {
+		return true;
+	}
+	
+	@Override
+	public boolean isBlockNormalCube(World world, int x, int y, int z) {
+		return blockMaterial.isOpaque() && renderAsNormalBlock();
+	}
+	
+	@Override
 	public boolean canConnectRedstone(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return MetalRegistry.metals[getMetadata(blockAccess, x, y, z)].redstonePower > 0 && side != -1;
 	}

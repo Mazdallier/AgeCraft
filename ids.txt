@@ -73,6 +73,8 @@
 	12502 Stick
 	
 	12510 Stick
+	
+	12520 Sword
 13000-13099		Prehistory
 	13000 Rock Tool
 	13001 Rock Tanning Tool

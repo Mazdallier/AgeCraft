@@ -96,7 +96,9 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xx, float yy, float zz) {
 		setMetadata(world, x, y, z, getMetadata(world, x, y, z) ^ 4);
 		world.markBlockForRenderUpdate(x, y, z);
-		world.playAuxSFXAtEntity((EntityPlayer) null, 1003, x, y, z, 0);
+		if(world.isRemote) {
+			world.playAuxSFXAtEntity((EntityPlayer) null, 1003, x, y, z, 0);
+		}
 		return true;
 	}
 

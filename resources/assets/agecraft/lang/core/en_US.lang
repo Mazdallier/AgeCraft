@@ -1,6 +1,7 @@
 itemGroup.AgeCraft=AgeCraft
 itemGroup.Metals=Metals
 itemGroup.Wood=Wood
+itemGroup.Tools=Tools
 
 itemGroup.Prehistory=Prehistory
 itemGroup.Agriculture=Agriculture
@@ -65,6 +66,7 @@ metals.nickel=Nickel
 metals.aluminium=Aluminium
 metals.platinum=Platinum
 metals.lead=Lead
+metals.steel=Steel
 metals.cobalt=Cobalt
 metals.mithril=Mithril
 metals.adamantite=Adamantite
@@ -89,6 +91,15 @@ metals.tigerEye=Tiger Eye
 metals.topaz=Topaz
 metals.turquoise=Turquoise
 metals.redstone=Redstone
+metals.salt=Salt
+metals.sulphur=Sulphur
+
+tools.type.default=Tool
+tools.type.sword=Sword
+tools.type.pickaxe=Pickaxe
+tools.type.axe=Axe
+tools.type.shovel=Shovel
+tools.type.hoe=Hoe
 
 tile.ageTeleporter.name=Age Teleporter
 tile.ageTeleporterBlock.name=Age Teleporter Block

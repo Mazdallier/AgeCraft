@@ -37,12 +37,14 @@ public class BlockMetalDoor extends BlockExtendedMetadata {
 	
 	@Override
 	public float getBlockHardness(World world, int x, int y, int z) {
-		return MetalRegistry.metals[getMetadata(world, x, y, z)].blockHardness;
+		int meta = getFullMetadata(world, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 127)) / 128].blockHardness;
 	}
 	
 	@Override
 	public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
-		return MetalRegistry.metals[getMetadata(world, x, y, z)].blockResistance / 5.0F;
+		int meta = getFullMetadata(world, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 127)) / 128].blockResistance / 5.0F;
 	}
 	
 	@Override

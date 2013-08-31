@@ -8,7 +8,7 @@ import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.lang.LanguageManager;
 
 public class CreativeTabWood extends CreativeTabs {
-
+	
 	public CreativeTabWood(int id, String name) {
 		super(id, name);
 	}
@@ -21,6 +21,6 @@ public class CreativeTabWood extends CreativeTabs {
 
 	@Override
 	public ItemStack getIconItemStack() {
-		return new ItemStack(Trees.wood.blockID, 1, 0);
+		return new ItemStack(Trees.wood, 1, 0);
 	}
 }

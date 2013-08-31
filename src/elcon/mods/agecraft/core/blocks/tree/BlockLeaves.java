@@ -31,6 +31,7 @@ public class BlockLeaves extends BlockExtendedMetadata {
 		setHardness(0.2F);
 		setLightOpacity(1);
 		setTickRandomly(true);
+		setStepSound(Block.soundGrassFootstep);
 		setCreativeTab(ACCreativeTabs.wood);
 	}
 

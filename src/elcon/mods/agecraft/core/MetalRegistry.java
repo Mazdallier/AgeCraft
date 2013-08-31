@@ -74,11 +74,11 @@ public class MetalRegistry {
 		GEM();
 	}
 	
-	public static Metal[] metals = new Metal[64];
+	public static Metal[] metals = new Metal[128];
 	
 	public static void registerMetal(Metal ore) {
 		if(metals[ore.id] != null) {
-			ACLog.warning("[OreRegistry] Overriding existing ore (" + metals[ore.id] + ": " + metals[ore.id].name.toUpperCase() + ") with new ore (" + ore.id + ": " + ore.name.toUpperCase() + ")");
+			ACLog.warning("[MetalRegistry] Overriding existing ore (" + metals[ore.id] + ": " + metals[ore.id].name.toUpperCase() + ") with new ore (" + ore.id + ": " + ore.name.toUpperCase() + ")");
 		}
 		metals[ore.id]= ore;
 	}

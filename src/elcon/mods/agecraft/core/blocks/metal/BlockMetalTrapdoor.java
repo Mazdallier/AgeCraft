@@ -39,12 +39,14 @@ public class BlockMetalTrapdoor extends BlockExtendedMetadata {
 	
 	@Override
 	public float getBlockHardness(World world, int x, int y, int z) {
-		return MetalRegistry.metals[getMetadata(world, x, y, z)].blockHardness;
+		int meta = getMetadata(world, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 31)) / 32].blockHardness;
 	}
 	
 	@Override
 	public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
-		return MetalRegistry.metals[getMetadata(world, x, y, z)].blockResistance / 5.0F;
+		int meta = getMetadata(world, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 31)) / 32].blockResistance / 5.0F;
 	}
 	
 	@Override
@@ -105,7 +107,9 @@ public class BlockMetalTrapdoor extends BlockExtendedMetadata {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xx, float yy, float zz) {
 		setMetadata(world, x, y, z, getMetadata(world, x, y, z) ^ 4);
 		world.markBlockForRenderUpdate(x, y, z);
-		world.playAuxSFXAtEntity((EntityPlayer) null, 1003, x, y, z, 0);
+		if(world.isRemote) {
+			world.playAuxSFXAtEntity((EntityPlayer) null, 1003, x, y, z, 0);
+		}
 		return true;
 	}
 
