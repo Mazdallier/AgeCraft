@@ -55,10 +55,11 @@ public class ToolRegistry {
 		public int durability;
 		public float efficiency;
 		public int attackStrength;
+		public int harvestLevel;
 		
 		public Icon[] icons = new Icon[128];
 		
-		public ToolMaterial(int id, String name, String localization, ItemStack stack, int durability, float efficiency, int attackStrength) {
+		public ToolMaterial(int id, String name, String localization, ItemStack stack, int durability, float efficiency, int attackStrength, int harvestLevel) {
 			this.id = id;
 			this.name = name;
 			this.localization = localization;
@@ -68,6 +69,7 @@ public class ToolRegistry {
 			this.durability = durability;
 			this.efficiency = efficiency;
 			this.attackStrength = attackStrength;
+			this.harvestLevel = harvestLevel;
 		}
 	}
 	

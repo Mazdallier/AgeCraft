@@ -85,13 +85,18 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 			drops = block2.getBlockDropped(world, x, y, z, getMetadata(world, x, y, z), EnchantmentHelper.getFortuneModifier(player));
 		}
 		boolean hasBeenBroken = world.setBlockToAir(x, y, z);
-		if(hasBeenBroken && !world.isRemote && drops.size() > 0 && (player == null || !player.capabilities.isCreativeMode)) {
+		if(hasBeenBroken && !world.isRemote && drops.size() > 0 && (player == null || !player.capabilities.isCreativeMode) && shouldDropItems(world, x, y, z, getMetadata(world, x, y, z), player, player.getCurrentEquippedItem())) {
 			for(ItemStack drop : drops) {
 				block.dropAsStack(world, x, y, z, drop);
 			}
 			tile.droppedBlock = true;
 		}
 		return hasBeenBroken;
+	}
+	
+	@Override
+	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
+		return true;
 	}
 
 	@Override

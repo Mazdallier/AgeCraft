@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
@@ -16,6 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
+import elcon.mods.agecraft.core.items.tool.ItemTool;
 import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockOreStorage extends BlockExtendedMetadata {
@@ -26,6 +28,16 @@ public class BlockOreStorage extends BlockExtendedMetadata {
 		setCreativeTab(ACCreativeTabs.metals);
 	}
 	
+	
+	@Override
+	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
+		if(stack != null) {
+			if(stack.getItem() instanceof ItemTool) {
+				return ((ItemTool) stack.getItem()).canHarvestBlock(stack, this, meta);
+			}
+		}
+		return false;
+	}
 	@Override
 	public String getLocalizedName(ItemStack stack) {
 		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));

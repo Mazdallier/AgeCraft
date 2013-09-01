@@ -54,6 +54,8 @@ metals.ladder=Ladder
 metals.ingot=Ingot
 metals.gem=Gem
 metals.stick=Stick
+metals.nugget=Nugget
+metals.dust=Dust
 
 metals.copper=Copper
 metals.tin=Tin

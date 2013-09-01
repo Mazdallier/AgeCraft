@@ -8,6 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
@@ -18,6 +19,7 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.MetalRegistry.Metal;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadataOverlay;
+import elcon.mods.agecraft.core.items.tool.ItemTool;
 import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockStoneOre extends BlockExtendedMetadataOverlay {
@@ -36,6 +38,16 @@ public class BlockStoneOre extends BlockExtendedMetadataOverlay {
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		return "metals.ore";
+	}
+	
+	@Override
+	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
+		if(stack != null) {
+			if(stack.getItem() instanceof ItemTool) {
+				return ((ItemTool) stack.getItem()).canHarvestBlock(stack, this, meta);
+			}
+		}
+		return false;
 	}
 	
 	@Override

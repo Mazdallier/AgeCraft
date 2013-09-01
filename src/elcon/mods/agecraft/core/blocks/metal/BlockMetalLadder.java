@@ -24,6 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
+import elcon.mods.agecraft.core.items.tool.ItemTool;
 import elcon.mods.agecraft.lang.LanguageManager;
 
 public class BlockMetalLadder extends BlockExtendedMetadata {
@@ -46,6 +47,16 @@ public class BlockMetalLadder extends BlockExtendedMetadata {
 	public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
 		int meta = getMetadata(world, x, y, z);
 		return MetalRegistry.metals[(meta - (meta & 7)) / 8].blockResistance / 5.0F;
+	}
+	
+	@Override
+	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
+		if(stack != null) {
+			if(stack.getItem() instanceof ItemTool) {
+				return ((ItemTool) stack.getItem()).canHarvestBlock(stack, this, meta);
+			}
+		}
+		return false;
 	}
 	
 	@Override

@@ -109,7 +109,7 @@ public class AgeCraftCore extends ACComponent {
 	@SideOnly(Side.CLIENT)
 	public void registerItemIcons(IconRegister iconRegister) {
 		ResourcesCore.missingTexture = iconRegister.registerIcon("agecraft:missingTexture");
-		ResourcesCore.missingTexture = iconRegister.registerIcon("agecraft:emptyTexture");
+		ResourcesCore.emptyTexture = iconRegister.registerIcon("agecraft:emptyTexture");
 	}
 	
 	@SideOnly(Side.CLIENT)

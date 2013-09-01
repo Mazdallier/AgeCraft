@@ -20,4 +20,6 @@ public abstract interface IBlockExtendedMetadata {
 	public abstract void setMetadata(World world, int x, int y, int z, int meta);
 	
 	public abstract void dropAsStack(World world, int x, int y, int z, ItemStack stack);
+
+	public abstract boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack);
 }

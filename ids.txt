@@ -71,10 +71,16 @@
 	12500 Ingot
 	12501 Gem
 	12502 Stick
+	12503 Nugget
+	12504 Dust
 	
 	12510 Stick
 	
 	12520 Sword
+	12521 Pickaxe
+	12522 Axe
+	12523 Shovel
+	12524 Hoe
 13000-13099		Prehistory
 	13000 Rock Tool
 	13001 Rock Tanning Tool
