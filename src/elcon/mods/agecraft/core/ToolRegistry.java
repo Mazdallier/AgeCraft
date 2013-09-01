@@ -169,11 +169,9 @@ public class ToolRegistry {
 	}
 	
 	public static void registerToolCreativeEntry(ToolCreativeEntry toolCreativeEntry) {
-		ArrayList<ToolCreativeEntry> entries = null;
-		if(!toolCreativeEntries.containsKey(toolCreativeEntry.tool)) {
-			entries = new ArrayList<ToolCreativeEntry>();
-		} else {
-			toolCreativeEntries.get(toolCreativeEntry.tool);
+		ArrayList<ToolCreativeEntry> entries = new ArrayList<ToolCreativeEntry>();
+		if(toolCreativeEntries.containsKey(toolCreativeEntry.tool)) {
+			entries = toolCreativeEntries.get(toolCreativeEntry.tool);
 		}
 		entries.add(toolCreativeEntry);
 		toolCreativeEntries.put(toolCreativeEntry.tool, entries);

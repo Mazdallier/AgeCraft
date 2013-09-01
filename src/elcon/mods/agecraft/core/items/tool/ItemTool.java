@@ -203,13 +203,13 @@ public class ItemTool extends Item {
 	public Icon getIcon(ItemStack stack, int pass) {
 		Tool tool = ToolRegistry.tools[getToolType(stack)];
 		if(pass == 0 && tool.hasRod) {
-			return ToolRegistry.toolRodMaterials[getToolMaterial(stack)].icons[tool.id];
+			return ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].icons[tool.id];
 		} else if(pass == 1 && tool.hasHead) {
 			return ToolRegistry.toolMaterials[getToolMaterial(stack)].icons[tool.id];
 		} else if(pass == 2 && tool.hasEnhancements) {
 			return ResourcesCore.emptyTexture;
 			//TODO
-			//return ToolRegistry.toolEnhancementMaterials[getToolMaterial(stack)].icons[tool.id];
+			//return ToolRegistry.toolEnhancementMaterials[getToolEnhancementMaterial(stack)].icons[tool.id];
 		}
 		return ResourcesCore.emptyTexture;
 	}

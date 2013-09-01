@@ -41,7 +41,7 @@ public class ItemNugget extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIconFromDamage(int meta) {
-		return MetalRegistry.metals[meta].ingot;
+		return MetalRegistry.metals[meta].nugget;
 	}
 	
 	@Override
