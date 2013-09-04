@@ -23,7 +23,7 @@ public class TileEntityAgeTeleporterChestRenderer extends TileEntitySpecialRende
 		if(tileEntityChest.hasWorldObj()) {
 			var9 = tileEntityChest.getBlockMetadata();
 		}
-		func_110628_a(ResourcesCore.ageTeleporterChest);
+		bindTexture(ResourcesCore.ageTeleporterChest);
 		ModelChest var14 = chestModel;
 		GL11.glPushMatrix();
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);

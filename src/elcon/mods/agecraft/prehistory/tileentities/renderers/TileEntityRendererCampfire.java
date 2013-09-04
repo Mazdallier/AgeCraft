@@ -30,7 +30,7 @@ public class TileEntityRendererCampfire extends TileEntitySpecialRenderer {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y, z);
 		GL11.glTranslatef(0.5F, -0.5F, 0.5F);
-		func_110628_a(ResourcesPrehistory.campfire);
+		bindTexture(ResourcesPrehistory.campfire);
 		GL11.glPushMatrix();
 		model.renderModel(0.0625F);
 		GL11.glPopMatrix();

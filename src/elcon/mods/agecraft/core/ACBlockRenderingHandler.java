@@ -636,7 +636,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		case 99:
 			GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            Minecraft.getMinecraft().func_110434_K().func_110577_a(ResourcesCore.ageTeleporterChest);
+            Minecraft.getMinecraft().getTextureManager().bindTexture(ResourcesCore.ageTeleporterChest);
             TileEntityRenderer.instance.renderTileEntityAt(tileChestInstance , 0.0D, 0.0D, 0.0D, 0.0F);
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 			break;

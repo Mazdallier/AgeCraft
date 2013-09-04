@@ -270,7 +270,7 @@ public class GuiTechTree extends GuiScreen {
 					icon = Block.bedrock.getIcon(0, 0);
 				}
 
-				mc.func_110434_K().func_110577_a(TextureMap.field_110575_b);
+				mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 				drawTexturedModelRectFromIcon(k1 + k3 * 16 - k2, l1 + i3 * 16 - l2, icon, 16, 16);
 			}
 		}
@@ -373,7 +373,7 @@ public class GuiTechTree extends GuiScreen {
 					}
 				}
 
-				mc.renderEngine.func_110577_a(ResourcesCore.guiTechTree);
+				mc.renderEngine.bindTexture(ResourcesCore.guiTechTree);
 				int var42 = k1 + var26;
 				int var41 = l1 + var27;
 
@@ -398,7 +398,7 @@ public class GuiTechTree extends GuiScreen {
 					var37.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, var35.itemStack, var42 + 3, var41 + 3);
 					GL11.glDisable(GL11.GL_LIGHTING);
 				} else {
-					mc.renderEngine.func_110577_a(ResourcesCore.guiTechTreeIcons);
+					mc.renderEngine.bindTexture(ResourcesCore.guiTechTreeIcons);
 					drawTexturedModalRect(var42 + 3, var41 + 3, var35.iconIndex % 16 * 16, var35.iconIndex / 16 * 16, 16, 16);
 				}
 
@@ -417,7 +417,7 @@ public class GuiTechTree extends GuiScreen {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.func_110577_a(ResourcesCore.guiTechTree);
+		mc.renderEngine.bindTexture(ResourcesCore.guiTechTree);
 		drawTexturedModalRect(i1, j1, 0, 0, achievementsPaneWidth, achievementsPaneHeight);
 		GL11.glPopMatrix();
 		zLevel = 0.0F;

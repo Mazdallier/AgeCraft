@@ -104,10 +104,10 @@ public class GuiTechTreePopup extends Gui {
 				var3 *= var3;
 				int var5 = achievementWindowWidth - 160;
 				int var6 = 0 - (int) (var3 * 36.0D);
-				int var7 = theGame.renderEngine.func_110581_b(achievementBackground).func_110552_b();
+				int textureID = theGame.renderEngine.getTexture(achievementBackground).getGlTextureId();
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
-				GL11.glBindTexture(GL11.GL_TEXTURE_2D, var7);
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
 				GL11.glDisable(GL11.GL_LIGHTING);
 				drawTexturedModalRect(var5, var6, 96, 202, 160, 32);
 
@@ -134,8 +134,8 @@ public class GuiTechTreePopup extends Gui {
 					GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 					GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 					GL11.glEnable(GL11.GL_LIGHTING);
-					var7 = theGame.renderEngine.func_110581_b(ResourcesCore.guiTechTreeIcons).func_110552_b();
-					GL11.glBindTexture(GL11.GL_TEXTURE_2D, var7);
+					textureID = theGame.renderEngine.getTexture(ResourcesCore.guiTechTreeIcons).getGlTextureId();
+					GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
 					drawTexturedModalRect(var5 + 8, var6 + 8, theComponent.iconIndex % 16 * 16, theComponent.iconIndex / 16 * 16, 16, 16);
 					GL11.glDisable(GL11.GL_LIGHTING);
 					GL11.glDepthMask(true);

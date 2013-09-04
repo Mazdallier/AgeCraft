@@ -22,11 +22,11 @@ public class ItemRockTanningTool extends Item {
 	
 	@Override
 	public String getItemDisplayName(ItemStack stack) {
-		return getLocalizedName(stack);
+		return getItemStackDisplayName(stack);
 	}
 	
 	@Override
-	public String getLocalizedName(ItemStack stack) {
+	public String getItemStackDisplayName(ItemStack stack) {
 		return LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 

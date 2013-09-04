@@ -78,7 +78,7 @@ public class AgeCraftCore extends ACComponent {
 	
 	public void postInit() {
 		Block.blocksList[1] = null;
-		Block.stone = new BlockStoneLayered(1).setUnlocalizedName("stone").func_111022_d("stone");
+		Block.stone = new BlockStoneLayered(1).setUnlocalizedName("stone").setTextureName("stone");
 		Item.itemsList[1] = new ItemBlockWithMetadata(1 - 256, Block.stone).setUnlocalizedName("stone");
 	}
 	

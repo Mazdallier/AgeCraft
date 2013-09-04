@@ -20,11 +20,11 @@ public class ItemBlockExtendedMetadata extends ItemBlock {
 	
 	@Override
 	public String getItemDisplayName(ItemStack stack) {
-		return getLocalizedName(stack);
+		return getItemStackDisplayName(stack);
 	}
 	
 	@Override
-	public String getLocalizedName(ItemStack stack) {
+	public String getItemStackDisplayName(ItemStack stack) {
 		return ((IBlockExtendedMetadata) Block.blocksList[getBlockID()]).getLocalizedName(stack);
 	}
 

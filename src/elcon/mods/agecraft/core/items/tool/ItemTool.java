@@ -42,11 +42,11 @@ public class ItemTool extends Item {
 
 	@Override
 	public String getItemDisplayName(ItemStack stack) {
-		return getLocalizedName(stack);
+		return getItemStackDisplayName(stack);
 	}
 
 	@Override
-	public String getLocalizedName(ItemStack stack) {
+	public String getItemStackDisplayName(ItemStack stack) {
 		return LanguageManager.getLocalization(ToolRegistry.toolMaterials[getToolMaterial(stack)].localization) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 
@@ -106,7 +106,7 @@ public class ItemTool extends Item {
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
 		if(entity.canAttackWithItem()) {
-			if(!entity.func_85031_j(player)) {
+			if(!entity.hitByEntity(player)) {
 				float damage = (float) getToolAttackStrength(stack);
 				int i = 0;
 				float extraDamage = 0.0F;
@@ -146,7 +146,7 @@ public class ItemTool extends Item {
 						if(damage >= 18.0F) {
 							player.triggerAchievement(AchievementList.overkill);
 						}
-						player.func_130011_c(entity);
+						player.setLastAttacker(entity);
 						if(entity instanceof EntityLivingBase) {
 							EnchantmentThorns.func_92096_a(player, (EntityLivingBase) entity, player.worldObj.rand);
 						}

@@ -23,11 +23,11 @@ public class ItemRock extends ItemBlock {
 	
 	@Override
 	public String getItemDisplayName(ItemStack stack) {
-		return getLocalizedName(stack);
+		return getItemStackDisplayName(stack);
 	}
 	
 	@Override
-	public String getLocalizedName(ItemStack stack) {
+	public String getItemStackDisplayName(ItemStack stack) {
 		return Block.blocksList[getBlockID()].getLocalizedName();
 	}
 

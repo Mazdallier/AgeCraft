@@ -17,7 +17,7 @@ public class GuiSharpener extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {		
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.func_110577_a(ResourcesPrehistory.guiSharpener);
+		mc.renderEngine.bindTexture(ResourcesPrehistory.guiSharpener);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
 }

@@ -225,10 +225,12 @@ public class PrehistoryChunkProvider implements IChunkProvider {
 		}
 	}
 
+	@Override
 	public Chunk loadChunk(int par1, int par2) {
 		return provideChunk(par1, par2);
 	}
 
+	@Override
 	public Chunk provideChunk(int par1, int par2) {
 		rand.setSeed((long) par1 * 341873128712L + (long) par2 * 132897987541L);
 		byte[] abyte = new byte[32768];
@@ -381,10 +383,12 @@ public class PrehistoryChunkProvider implements IChunkProvider {
 		return par1ArrayOfDouble;
 	}
 
+	@Override
 	public boolean chunkExists(int par1, int par2) {
 		return true;
 	}
 
+	@Override
 	public void populate(IChunkProvider par1IChunkProvider, int par2, int par3) {		
 		BlockSand.fallInstantly = true;
 		int k = par2 * 16;
@@ -460,40 +464,49 @@ public class PrehistoryChunkProvider implements IChunkProvider {
 		BlockSand.fallInstantly = false;
 	}
 
+	@Override
 	public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate) {
 		return true;
 	}
 
-	public void func_104112_b() {
-	}
-
+	@Override
 	public boolean unloadQueuedChunks() {
 		return false;
 	}
 
+	@Override
 	public boolean canSave() {
 		return true;
 	}
 
+	@Override
 	public String makeString() {
 		return "RandomLevelSourcePrehistory";
 	}
 
+	@Override
 	public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4) {
 		return null;
 	}
 
+	@Override
 	public ChunkPosition findClosestStructure(World par1World, String par2Str, int par3, int par4, int par5) {
 		return null;
 	}
 
+	@Override
 	public int getLoadedChunkCount() {
 		return 0;
 	}
 
+	@Override
 	public void recreateStructures(int par1, int par2) {
 		if(mapFeaturesEnabled) {
 
 		}
+	}
+
+	@Override
+	public void saveExtraData() {
 	}
 }

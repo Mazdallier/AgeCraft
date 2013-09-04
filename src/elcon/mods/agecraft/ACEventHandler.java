@@ -21,7 +21,7 @@ public class ACEventHandler implements ICraftingHandler {
 	@SideOnly(Side.CLIENT)
 	public void onTextureStitchPost(TextureStitchEvent.Post event) {
 		LanguageManager.load();
-		LanguageManager.setCurrentLanguage(Minecraft.getMinecraft().func_135016_M().func_135041_c().func_135034_a());
+		LanguageManager.setCurrentLanguage(Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getLanguageCode());
 	}
 	
 	@ForgeSubscribe
