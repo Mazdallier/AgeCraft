@@ -26,7 +26,7 @@ import elcon.mods.agecraft.prehistory.PrehistoryProvider;
 import elcon.mods.agecraft.ranks.ACRankManager;
 import elcon.mods.agecraft.tech.TechTree;
 
-@Mod(modid = ACReference.MOD_ID, name = ACReference.NAME, version = ACReference.VERSION)
+@Mod(modid = ACReference.MOD_ID, name = ACReference.NAME, version = ACReference.VERSION, acceptedMinecraftVersions = ACReference.MC_VERSION, dependencies = ACReference.DEPENDENCIES)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, packetHandler = ACPacketHandler.class, channels = {"ACTech", "ACTile"})
 public class AgeCraft {
 
@@ -126,7 +126,6 @@ public class AgeCraft {
 		DimensionManager.registerDimension(10, 10);
 
 		proxy.registerRenderInformation();
-		proxy.registerPlayerAPI();
 	}
 
 	@EventHandler

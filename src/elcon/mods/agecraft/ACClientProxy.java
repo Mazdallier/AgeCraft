@@ -34,11 +34,6 @@ public class ACClientProxy extends ACCommonProxy {
 			component.clientProxy();
 		}
 	}
-	
-	@Override
-	public void registerPlayerAPI() {
-		super.registerPlayerAPI();
-	}
 
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {

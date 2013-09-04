@@ -61,9 +61,7 @@ public class Tools extends ACComponent {
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(0, "woodOak", "tools.materials.woodOak", new ItemStack(Trees.stick, 1, 0), 20, 0.5F, 0));
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(1, "woodBirch", "tools.materials.woodBirch", new ItemStack(Trees.stick, 1, 1), 20, 0.5F, 0));
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(2, "woodSpruce", "tools.materials.woodSpruce", new ItemStack(Trees.stick, 1, 2), 20, 0.5F, 0));
-		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(3, "woodJungle", "tools.materials.woodJungle", new ItemStack(Trees.stick, 1, 3), 20, 0.5F, 0));
-	
-		
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(3, "woodJungle", "tools.materials.woodJungle", new ItemStack(Trees.stick, 1, 3), 20, 0.5F, 0));		
 		
 		//register tool creative entries
 		ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(0, 0, 0, 0));
