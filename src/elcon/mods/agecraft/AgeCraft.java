@@ -55,9 +55,9 @@ public class AgeCraft {
 	public void preInit(FMLPreInitializationEvent event) {
 		minecraftDir = new File(event.getSuggestedConfigurationFile().getPath().replace("config\\AgeCraft.cfg", ""));
 		modContainerSource = event.getSourceFile();
-		LanguageManager.load();
 		
 		ACLog.init();
+		LanguageManager.load();		
 
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();

@@ -13,6 +13,7 @@ import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
 import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
 import elcon.mods.agecraft.core.items.tool.ItemAxe;
+import elcon.mods.agecraft.core.items.tool.ItemBattleAxe;
 import elcon.mods.agecraft.core.items.tool.ItemHoe;
 import elcon.mods.agecraft.core.items.tool.ItemPickaxe;
 import elcon.mods.agecraft.core.items.tool.ItemShovel;
@@ -26,6 +27,7 @@ public class Tools extends ACComponent {
 	public static ItemTool axe;
 	public static ItemTool shovel;
 	public static ItemTool hoe;
+	public static ItemTool battleAxe;
 	
 	@Override
 	public void preInit() {
@@ -34,6 +36,7 @@ public class Tools extends ACComponent {
 		axe = (ItemTool) new ItemAxe(12522).setUnlocalizedName("tools_axe");
 		shovel = (ItemTool) new ItemShovel(12523).setUnlocalizedName("tools_shovel");
 		hoe = (ItemTool) new ItemHoe(12524).setUnlocalizedName("tools_hoe");
+		battleAxe = (ItemTool) new ItemBattleAxe(12525).setUnlocalizedName("tools_battleAxe");
 	}
 	
 	@Override
@@ -53,6 +56,8 @@ public class Tools extends ACComponent {
 		}));
 		ToolRegistry.registerTool(new Tool(4, "hoe", hoe, 2, 2, true, true, true, new Block[] {
 		}));
+		ToolRegistry.registerTool(new Tool(5, "battleAxe", battleAxe, 1, 1, true, true, true, ToolRegistry.tools[2].blocksEffectiveAgainst
+		));
 		
 		//register tool materials
 		ToolRegistry.registerToolMaterial(new ToolMaterial(0, "woodOak", "tools.materials.woodOak", new ItemStack(Trees.planks, 1, 0), 39, 1.5F, 4, 0));
