@@ -59,8 +59,17 @@ public class Tools extends ACComponent {
 		ToolRegistry.registerTool(new Tool(5, "battleAxe", battleAxe, 1, 1, true, true, true, ToolRegistry.tools[2].blocksEffectiveAgainst
 		));
 		
-		//register tool materials
-		ToolRegistry.registerToolMaterial(new ToolMaterial(0, "woodOak", "tools.materials.woodOak", new ItemStack(Trees.planks, 1, 0), 39, 1.5F, 4, 0));
+		//register tool materials		
+		ToolRegistry.registerToolMaterial(new ToolMaterial(128, "copper", "metals.copper", new ItemStack(Metals.ingot, 1, 0), 39, 1.5F, 4, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(130, "bronze", "metals.bronze", new ItemStack(Metals.ingot, 1, 2), 39, 1.5F, 4, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(131, "silver", "metals.silver", new ItemStack(Metals.ingot, 1, 3), 39, 1.5F, 4, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(132, "iron", "metals.iron", new ItemStack(Metals.ingot, 1, 4), 39, 1.5F, 4, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(133, "gold", "metals.gold", new ItemStack(Metals.ingot, 1, 5), 39, 1.5F, 4, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(137, "platinum", "metals.platinum", new ItemStack(Metals.ingot, 1, 9), 39, 1.5F, 4, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(139, "steel", "metals.steel", new ItemStack(Metals.ingot, 1, 11), 39, 1.5F, 4, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(140, "cobalt", "metals.cobalt", new ItemStack(Metals.ingot, 1, 12), 39, 1.5F, 4, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(141, "mithril", "metals.mithril", new ItemStack(Metals.ingot, 1, 13), 39, 1.5F, 4, 0));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(142, "adamantite", "metals.adamantite", new ItemStack(Metals.ingot, 1, 14), 39, 1.5F, 4, 0));
 		
 		//register tool rod materials
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(0, "woodOak", "tools.materials.woodOak", new ItemStack(Trees.stick, 1, 0), 20, 0.5F, 0));
@@ -68,14 +77,35 @@ public class Tools extends ACComponent {
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(2, "woodSpruce", "tools.materials.woodSpruce", new ItemStack(Trees.stick, 1, 2), 20, 0.5F, 0));
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(3, "woodJungle", "tools.materials.woodJungle", new ItemStack(Trees.stick, 1, 3), 20, 0.5F, 0));		
 		
-		//register tool creative entries
-		ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(0, 0, 0, 0));
-		ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(1, 0, 0, 0));
-		ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(2, 0, 0, 0));
-		ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(3, 0, 0, 0));
-		ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(4, 0, 0, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(128, "copper", "metals.copper", new ItemStack(Metals.stick, 1, 0), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(130, "bronze", "metals.bronze", new ItemStack(Metals.stick, 1, 2), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(131, "silver", "metals.silver", new ItemStack(Metals.stick, 1, 3), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(132, "iron", "metals.iron", new ItemStack(Metals.stick, 1, 4), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(133, "gold", "metals.gold", new ItemStack(Metals.stick, 1, 5), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(137, "platinum", "metals.platinum", new ItemStack(Metals.stick, 1, 9), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(139, "steel", "metals.steel", new ItemStack(Metals.stick, 1, 11), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(140, "cobalt", "metals.cobalt", new ItemStack(Metals.stick, 1, 12), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(141, "mithril", "metals.mithril", new ItemStack(Metals.stick, 1, 13), 20, 0.5F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(142, "adamantite", "metals.adamantite", new ItemStack(Metals.stick, 1, 14), 20, 0.5F, 0));
 		
-		ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(4, 0, 1, 0));
+		//register tool creative entries		
+		//TODO: add enhancements and head less tools
+		for(int i = 0; i < ToolRegistry.tools.length; i++) {
+			if(ToolRegistry.tools[i] != null) {
+				Tool tool = ToolRegistry.tools[i];
+				if(tool.hasHead) {
+					for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
+						if(ToolRegistry.toolMaterials[j] != null) {
+							if(tool.hasRod) {
+								ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, j, 0));
+							} else {
+								ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, 0, 0));
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	@Override

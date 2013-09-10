@@ -103,15 +103,15 @@ public class ItemTool extends Item {
 		return false;
 	}
 	
-	public double getAttackDamageModifier(ItemStack stack) {
-		return 1.0;
+	public int getBaseAttackDamage(ItemStack stack) {
+		return 0;
 	}
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
 		if(entity.canAttackWithItem()) {
 			if(!entity.hitByEntity(player)) {
-				float damage = (float) (getToolAttackStrength(stack) * getAttackDamageModifier(stack));
+				float damage = (float) (getToolAttackStrength(stack) * getBaseAttackDamage(stack));
 				int i = 0;
 				float extraDamage = 0.0F;
 				if(entity instanceof EntityLivingBase) {
