@@ -7,7 +7,6 @@ import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
-import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
 import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
@@ -19,6 +18,7 @@ import elcon.mods.agecraft.core.items.tool.ItemPickaxe;
 import elcon.mods.agecraft.core.items.tool.ItemShovel;
 import elcon.mods.agecraft.core.items.tool.ItemSword;
 import elcon.mods.agecraft.core.items.tool.ItemTool;
+import elcon.mods.core.ElConCore;
 
 public class Tools extends ACComponent {
 
@@ -88,8 +88,7 @@ public class Tools extends ACComponent {
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(141, "mithril", "metals.mithril", new ItemStack(Metals.stick, 1, 13), 20, 0.5F, 0));
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(142, "adamantite", "metals.adamantite", new ItemStack(Metals.stick, 1, 14), 20, 0.5F, 0));
 		
-		//register tool creative entries		
-		//TODO: add enhancements and head less tools
+		//register tool creative entries
 		for(int i = 0; i < ToolRegistry.tools.length; i++) {
 			if(ToolRegistry.tools[i] != null) {
 				Tool tool = ToolRegistry.tools[i];
@@ -101,6 +100,12 @@ public class Tools extends ACComponent {
 							} else {
 								ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, 0, 0));
 							}
+						}
+					}
+				} else {
+					for(int j = 0; j < ToolRegistry.toolRodMaterials.length; j++) {
+						if(ToolRegistry.toolRodMaterials[j] != null) {
+							ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, 0, j, 0));
 						}
 					}
 				}
@@ -131,7 +136,7 @@ public class Tools extends ACComponent {
 					for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
 						ToolMaterial toolMaterial = ToolRegistry.toolMaterials[j];
 						if(toolMaterial != null) {
-							toolMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/" + tool.name + "/" + tool.name + ACUtil.firstUpperCase(toolMaterial.name));
+							toolMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolMaterial.name));
 						}
 					}
 				}
@@ -139,7 +144,7 @@ public class Tools extends ACComponent {
 					for(int j = 0; j < ToolRegistry.toolRodMaterials.length; j++) {
 						ToolRodMaterial toolRodMaterial = ToolRegistry.toolRodMaterials[j];
 						if(toolRodMaterial != null) {
-							toolRodMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/sticks/" + tool.name + "/" + tool.name + ACUtil.firstUpperCase(toolRodMaterial.name));
+							toolRodMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/sticks/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolRodMaterial.name));
 						}
 					}
 				}

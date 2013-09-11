@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
@@ -21,10 +20,14 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.AgeCraftCore;
-import elcon.mods.agecraft.lang.LanguageManager;
+import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
 import elcon.mods.agecraft.ranks.ACRankManager;
 import elcon.mods.agecraft.tech.TechTree;
+import elcon.mods.core.ElConCore;
+import elcon.mods.core.ElConMod;
+import elcon.mods.core.player.PlayerAPI;
+import elcon.mods.core.player.PlayerAPI.PlayerCoreType;
 
 @Mod(modid = ACReference.MOD_ID, name = ACReference.NAME, version = ACReference.VERSION, acceptedMinecraftVersions = ACReference.MC_VERSION, dependencies = ACReference.DEPENDENCIES)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, packetHandler = ACPacketHandler.class, channels = {"ACTech", "ACTile"})
@@ -37,7 +40,6 @@ public class AgeCraft {
 	public static ACCommonProxy proxy;
 	
 	public static File minecraftDir;
-	public static File modContainerSource;
 
 	public ArrayList<ACComponent> components = new ArrayList<ACComponent>();
 
@@ -53,19 +55,10 @@ public class AgeCraft {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		minecraftDir = new File(event.getSuggestedConfigurationFile().getPath().replace("config\\AgeCraft.cfg", ""));
-		modContainerSource = event.getSourceFile();
+		minecraftDir = ElConCore.minecraftDir;
+		ElConCore.registerMod(ACReference.NAME, new ElConMod(ACReference.NAME, ACReference.VERSION, ACReference.VERSION_URL, event.getSourceFile(), event.getSuggestedConfigurationFile(), new ACSaveHandler()));
 		
 		ACLog.init();
-		LanguageManager.load();		
-
-		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
-		config.load();
-		ACConfig.load(config);
-		
-		ACVersion.execute();
-
-		config.save();
 		
 		core = new AgeCraftCore();
 
@@ -138,6 +131,9 @@ public class AgeCraft {
 		for(ACComponent component : components) {
 			component.postInit();
 		}
+		
+		//register players
+		PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
 	}
 
 	@SideOnly(Side.CLIENT)

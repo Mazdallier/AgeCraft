@@ -7,8 +7,6 @@ import static net.minecraftforge.common.ForgeDirection.WEST;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,10 +17,12 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
-import elcon.mods.agecraft.lang.LanguageManager;
+import elcon.mods.core.lang.LanguageManager;
 
 public class BlockWoodLadder extends BlockExtendedMetadata {
 

@@ -5,9 +5,6 @@ import static net.minecraftforge.common.ForgeDirection.DOWN;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -23,10 +20,12 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
-import elcon.mods.agecraft.lang.LanguageManager;
+import elcon.mods.core.lang.LanguageManager;
 
 public class BlockAgeTeleporterChest extends BlockContainer {
 

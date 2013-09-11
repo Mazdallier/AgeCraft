@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
-import elcon.mods.agecraft.lang.LanguageManager;
+import elcon.mods.core.lang.LanguageManager;
 
 public class BlockWood extends BlockExtendedMetadata {
 

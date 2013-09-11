@@ -17,10 +17,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.lang.LanguageManager;
 import elcon.mods.agecraft.prehistory.CampfireRecipes;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
+import elcon.mods.core.lang.LanguageManager;
 
 public class BlockCampfire extends BlockContainer {
 

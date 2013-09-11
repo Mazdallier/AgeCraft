@@ -7,7 +7,7 @@ import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.AgeCraft;
-import elcon.mods.agecraft.lang.LanguageManager;
+import elcon.mods.core.lang.LanguageManager;
 
 public class ItemFakeStone extends Item {
 	

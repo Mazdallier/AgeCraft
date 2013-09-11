@@ -10,7 +10,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.core.AgeTeleport;
 import elcon.mods.agecraft.core.TeleporterAC;
-import elcon.mods.agecraft.lang.LanguageManager;
+import elcon.mods.core.lang.LanguageManager;
 
 public class BlockAgeTeleporter extends BlockAgeTeleporterBlock {
 

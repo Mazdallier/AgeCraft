@@ -25,7 +25,7 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
 import elcon.mods.agecraft.core.items.tool.ItemTool;
-import elcon.mods.agecraft.lang.LanguageManager;
+import elcon.mods.core.lang.LanguageManager;
 
 public class BlockMetalLadder extends BlockExtendedMetadata {
 

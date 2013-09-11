@@ -2,12 +2,12 @@ package elcon.mods.agecraft.ranks;
 
 import java.util.ArrayList;
 
-import elcon.mods.agecraft.ACColors;
+import elcon.mods.core.color.Color;
 
 public enum ACRank {
 
-	DEVELOPER("AgeCraft Developer", ACColors.TEXT_COLOUR_BLUE, ACRankManager.developers), 
-	DONATOR("AgeCraft Donator", ACColors.TEXT_COLOUR_GREEN, ACRankManager.donators), 
+	DEVELOPER("AgeCraft Developer", Color.TEXT_COLOR_BLUE, ACRankManager.developers), 
+	DONATOR("AgeCraft Donator", Color.TEXT_COLOR_GREEN, ACRankManager.donators), 
 	DEFAULT("", 0, ACRankManager.users);
 
 	public String description;

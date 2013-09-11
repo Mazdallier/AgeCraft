@@ -1,11 +1,11 @@
 package elcon.mods.agecraft.creativetabs;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.lang.LanguageManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.core.lang.LanguageManager;
 
 public class CreativeTabAgeCraft extends CreativeTabs {
 

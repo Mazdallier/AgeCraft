@@ -11,8 +11,8 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.lang.LanguageManager;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
+import elcon.mods.core.lang.LanguageManager;
 
 public class BlockRock extends Block {
 

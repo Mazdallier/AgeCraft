@@ -20,7 +20,7 @@ import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.MetalRegistry.Metal;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadataOverlay;
 import elcon.mods.agecraft.core.items.tool.ItemTool;
-import elcon.mods.agecraft.lang.LanguageManager;
+import elcon.mods.core.lang.LanguageManager;
 
 public class BlockStoneOre extends BlockExtendedMetadataOverlay {
 

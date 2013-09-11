@@ -30,7 +30,7 @@ import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.ToolRegistry;
 import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
-import elcon.mods.agecraft.lang.LanguageManager;
+import elcon.mods.core.lang.LanguageManager;
 
 public class ItemTool extends Item {
 

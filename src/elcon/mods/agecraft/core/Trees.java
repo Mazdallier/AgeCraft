@@ -7,7 +7,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
-import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.TreeRegistry.Tree;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
 import elcon.mods.agecraft.core.blocks.tree.BlockLog;
@@ -24,6 +23,7 @@ import elcon.mods.agecraft.core.items.ItemBlockLeaves;
 import elcon.mods.agecraft.core.items.ItemLog;
 import elcon.mods.agecraft.core.items.ItemWoodDoor;
 import elcon.mods.agecraft.core.items.ItemWoodStick;
+import elcon.mods.core.ElConCore;
 
 public class Trees extends ACComponent {
 
@@ -97,14 +97,14 @@ public class Trees extends ACComponent {
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			Tree tree = TreeRegistry.trees[i];
 			if(tree != null) {
-				tree.wood = iconRegister.registerIcon("agecraft:wood/wood" + ACUtil.firstUpperCase(tree.name));
-				tree.woodTop = iconRegister.registerIcon("agecraft:wood/woodTop" + ACUtil.firstUpperCase(tree.name));
-				tree.logTop = iconRegister.registerIcon("agecraft:wood/logTop" + ACUtil.firstUpperCase(tree.name));
-				tree.planks = iconRegister.registerIcon("agecraft:wood/planks" + ACUtil.firstUpperCase(tree.name));
-				tree.leaves = iconRegister.registerIcon("agecraft:leaves/leaves" + ACUtil.firstUpperCase(tree.name));
-				tree.leavesFast = iconRegister.registerIcon("agecraft:leaves/leavesFast" + ACUtil.firstUpperCase(tree.name));
-				tree.smallSapling = iconRegister.registerIcon("agecraft:sapling/smallSapling" + ACUtil.firstUpperCase(tree.name));
-				tree.sapling = iconRegister.registerIcon("agecraft:sapling/sapling" + ACUtil.firstUpperCase(tree.name));
+				tree.wood = iconRegister.registerIcon("agecraft:wood/wood" + ElConCore.firstUpperCase(tree.name));
+				tree.woodTop = iconRegister.registerIcon("agecraft:wood/woodTop" + ElConCore.firstUpperCase(tree.name));
+				tree.logTop = iconRegister.registerIcon("agecraft:wood/logTop" + ElConCore.firstUpperCase(tree.name));
+				tree.planks = iconRegister.registerIcon("agecraft:wood/planks" + ElConCore.firstUpperCase(tree.name));
+				tree.leaves = iconRegister.registerIcon("agecraft:leaves/leaves" + ElConCore.firstUpperCase(tree.name));
+				tree.leavesFast = iconRegister.registerIcon("agecraft:leaves/leavesFast" + ElConCore.firstUpperCase(tree.name));
+				tree.smallSapling = iconRegister.registerIcon("agecraft:sapling/smallSapling" + ElConCore.firstUpperCase(tree.name));
+				tree.sapling = iconRegister.registerIcon("agecraft:sapling/sapling" + ElConCore.firstUpperCase(tree.name));
 			}
 		}
 	}
@@ -115,8 +115,8 @@ public class Trees extends ACComponent {
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			Tree tree = TreeRegistry.trees[i];
 			if(tree != null) {
-				tree.log = iconRegister.registerIcon("agecraft:wood/logs/log" + ACUtil.firstUpperCase(tree.name));
-				tree.stick = iconRegister.registerIcon("agecraft:wood/sticks/stick" + ACUtil.firstUpperCase(tree.name));
+				tree.log = iconRegister.registerIcon("agecraft:wood/logs/log" + ElConCore.firstUpperCase(tree.name));
+				tree.stick = iconRegister.registerIcon("agecraft:wood/sticks/stick" + ElConCore.firstUpperCase(tree.name));
 			}
 		}
 	}

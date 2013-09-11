@@ -8,7 +8,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
-import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.MetalRegistry.Metal;
 import elcon.mods.agecraft.core.MetalRegistry.OreType;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalDoor;
@@ -25,6 +24,7 @@ import elcon.mods.agecraft.core.items.ItemIngot;
 import elcon.mods.agecraft.core.items.ItemMetalDoor;
 import elcon.mods.agecraft.core.items.ItemMetalStick;
 import elcon.mods.agecraft.core.items.ItemNugget;
+import elcon.mods.core.ElConCore;
 
 public class Metals extends ACComponent {
 
@@ -127,17 +127,17 @@ public class Metals extends ACComponent {
 			if(metal != null) {
 				if(metal.type == OreType.METAL) {
 					if(metal.hasOre) {
-						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/metals/ore" + ACUtil.firstUpperCase(metal.name));
+						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/metals/ore" + ElConCore.firstUpperCase(metal.name));
 					}
 					if(metal.hasBlock) {
-						metal.block = iconRegister.registerIcon("agecraft:metals/blocks/metals/block" + ACUtil.firstUpperCase(metal.name));
+						metal.block = iconRegister.registerIcon("agecraft:metals/blocks/metals/block" + ElConCore.firstUpperCase(metal.name));
 					}
 				} else if(metal.type == OreType.GEM) {
 					if(metal.hasOre) {
-						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/gems/ore" + ACUtil.firstUpperCase(metal.name));
+						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/gems/ore" + ElConCore.firstUpperCase(metal.name));
 					}
 					if(metal.hasBlock) {
-						metal.block = iconRegister.registerIcon("agecraft:metals/blocks/gems/block" + ACUtil.firstUpperCase(metal.name));
+						metal.block = iconRegister.registerIcon("agecraft:metals/blocks/gems/block" + ElConCore.firstUpperCase(metal.name));
 					}
 				}
 			}
@@ -152,15 +152,15 @@ public class Metals extends ACComponent {
 			if(metal != null) {
 				if(metal.type == OreType.METAL) {
 					if(metal.hasIngot) {
-						metal.ingot = iconRegister.registerIcon("agecraft:metals/ingots/ingot" + ACUtil.firstUpperCase(metal.name));
-						metal.stick = iconRegister.registerIcon("agecraft:metals/sticks/stick" + ACUtil.firstUpperCase(metal.name));
-						metal.nugget = iconRegister.registerIcon("agecraft:metals/nuggets/nugget" + ACUtil.firstUpperCase(metal.name));
-						metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/metals/dust" + ACUtil.firstUpperCase(metal.name));
+						metal.ingot = iconRegister.registerIcon("agecraft:metals/ingots/ingot" + ElConCore.firstUpperCase(metal.name));
+						metal.stick = iconRegister.registerIcon("agecraft:metals/sticks/stick" + ElConCore.firstUpperCase(metal.name));
+						metal.nugget = iconRegister.registerIcon("agecraft:metals/nuggets/nugget" + ElConCore.firstUpperCase(metal.name));
+						metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/metals/dust" + ElConCore.firstUpperCase(metal.name));
 					}
 				} else if(metal.type == OreType.GEM) {
 					if(metal.hasIngot) {
-						metal.ingot = iconRegister.registerIcon("agecraft:metals/gems/gem" + ACUtil.firstUpperCase(metal.name));
-						metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/gems/dust" + ACUtil.firstUpperCase(metal.name));
+						metal.ingot = iconRegister.registerIcon("agecraft:metals/gems/gem" + ElConCore.firstUpperCase(metal.name));
+						metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/gems/dust" + ElConCore.firstUpperCase(metal.name));
 					}
 				}
 			}
