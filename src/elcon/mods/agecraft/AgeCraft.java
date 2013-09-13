@@ -20,14 +20,11 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.AgeCraftCore;
-import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
 import elcon.mods.agecraft.ranks.ACRankManager;
 import elcon.mods.agecraft.tech.TechTree;
 import elcon.mods.core.ElConCore;
 import elcon.mods.core.ElConMod;
-import elcon.mods.core.player.PlayerAPI;
-import elcon.mods.core.player.PlayerAPI.PlayerCoreType;
 
 @Mod(modid = ACReference.MOD_ID, name = ACReference.NAME, version = ACReference.VERSION, acceptedMinecraftVersions = ACReference.MC_VERSION, dependencies = ACReference.DEPENDENCIES)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, packetHandler = ACPacketHandler.class, channels = {"ACTech", "ACTile"})
@@ -119,6 +116,7 @@ public class AgeCraft {
 		DimensionManager.registerDimension(10, 10);
 
 		proxy.registerRenderInformation();
+		proxy.registerPlayerAPI();
 	}
 
 	@EventHandler
@@ -131,9 +129,6 @@ public class AgeCraft {
 		for(ACComponent component : components) {
 			component.postInit();
 		}
-		
-		//register players
-		PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -10,4 +10,14 @@ public class ACPlayerServer extends PlayerCoreServer {
 	public ACPlayerServer(MinecraftServer mcServer, World world, String username, ItemInWorldManager itemInWorldManager, int playerCoreIndex, PlayerCoreServer entityPlayerMP) {
 		super(mcServer, world, username, itemInWorldManager, playerCoreIndex, entityPlayerMP);
 	}
+	
+	@Override
+	public float getMaxHealth() {
+		return 100.0F;
+	}
+	
+	public void onLivingUpdate() {
+		super.onLivingUpdate();
+		heal(1.0F);
+	}
 }
