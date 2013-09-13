@@ -11,11 +11,6 @@ public class ACPlayerServer extends PlayerCoreServer {
 		super(mcServer, world, username, itemInWorldManager, playerCoreIndex, entityPlayerMP);
 	}
 	
-	@Override
-	public float getMaxHealth() {
-		return 100.0F;
-	}
-	
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		heal(1.0F);
