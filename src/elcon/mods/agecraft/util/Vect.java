@@ -10,7 +10,7 @@ public class Vect {
 
 	public Vect(int[] dim) {
 		if(dim.length != 3) {
-			ACLog.info("Cannot instantiate a vector with less or more than 3 points.");
+			ACLog.warning("Cannot instantiate a vector with less or more than 3 points.");
 		}
 		this.x = dim[0];
 		this.y = dim[1];

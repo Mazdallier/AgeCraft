@@ -53,7 +53,7 @@ public class AgeCraft {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		minecraftDir = ElConCore.minecraftDir;
-		ElConCore.registerMod(ACReference.NAME, new ElConMod(ACReference.NAME, ACReference.VERSION, ACReference.VERSION_URL, event.getSourceFile(), event.getSuggestedConfigurationFile(), new ACSaveHandler()));
+		ElConCore.registerMod(ACReference.NAME, new ElConMod(ACReference.NAME, ACReference.VERSION, ACReference.VERSION_URL, event.getSourceFile(), event.getSuggestedConfigurationFile(), ACConfig.class, new ACSaveHandler()));
 		
 		ACLog.init();
 		

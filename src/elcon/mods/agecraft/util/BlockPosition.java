@@ -20,10 +20,10 @@ public class BlockPosition {
 		this.z = z;
 	}
 
-	public BlockPosition(BlockPosition p) {
-		x = p.x;
-		y = p.y;
-		z = p.z;
+	public BlockPosition(BlockPosition pos) {
+		x = pos.x;
+		y = pos.y;
+		z = pos.z;
 	}
 
 	public BlockPosition(NBTTagCompound nbt) {
@@ -36,6 +36,12 @@ public class BlockPosition {
 		x = tile.xCoord;
 		y = tile.yCoord;
 		z = tile.zCoord;
+	}
+	
+	public BlockPosition(int[] coords) {
+		x = coords[0];
+		y = coords[1];
+		z = coords[2];
 	}
 
 	public BlockPosition copy() {

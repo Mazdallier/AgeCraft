@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.weather;
+package elcon.mods.agecraft.core.weather;
 
 public class Seasons {
 
