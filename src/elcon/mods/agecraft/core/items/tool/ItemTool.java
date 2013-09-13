@@ -209,6 +209,7 @@ public class ItemTool extends Item {
 		if(pass == 0 && tool.hasRod) {
 			return ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].icons[tool.id];
 		} else if(pass == 1 && tool.hasHead) {
+			System.out.println(tool.id + " | " + getToolMaterial(stack));
 			return ToolRegistry.toolMaterials[getToolMaterial(stack)].icons[tool.id];
 		} else if(pass == 2 && tool.hasEnhancements) {
 			return ResourcesCore.emptyTexture;
