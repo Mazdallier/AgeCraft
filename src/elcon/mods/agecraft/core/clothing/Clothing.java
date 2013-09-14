@@ -8,10 +8,10 @@ public class Clothing {
 	public int id;
 	public String name;
 	public ClothingType type;
-	public int category;
+	public ClothingCategory category;
 	public boolean[] colors = new boolean[16];
 	
-	public Clothing(int id, String name, ClothingType type, int category) {
+	public Clothing(int id, String name, ClothingType type, ClothingCategory category) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
@@ -19,13 +19,13 @@ public class Clothing {
 		enableAllColors();
 	}
 	
-	public Clothing(int id, String name, ClothingType type, int category, boolean[] colors) {
+	public Clothing(int id, String name, ClothingType type, ClothingCategory category, boolean[] colors) {
 		this(id, name, type, category);
 		this.colors = colors;
 	}
 	
 	public String getFileLocation(int color) {
-		return ClothingRegistry.categories[category].name + "/" + type.name + "/" + getFileName(color);
+		return category.name + "/" + type.name + "/" + getFileName(color);
 	}
 	
 	public String getFileName(int color) {
@@ -33,7 +33,7 @@ public class Clothing {
 	}
 	
 	public String getLocalizedName() {
-		return LanguageManager.getLocalization("clothing." + category + "." + type.name + "." + ClothingRegistry.categories[category].name);
+		return LanguageManager.getLocalization("clothing." + category.name + "." + type.name + "." + name);
 	}
 	
 	public void enableColor(int color) {
