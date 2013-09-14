@@ -107,6 +107,7 @@ tools.materials.woodOak=Oak Wood
 tools.materials.woodBirch=Birch Wood
 tools.materials.woodSpruce=Spruce Wood
 tools.materials.woodJungle=Jungle Wood
+tools.materials.stone=Stone
 
 tile.ageTeleporter.name=Age Teleporter
 tile.ageTeleporterBlock.name=Age Teleporter Block
