@@ -6,7 +6,8 @@ AgeCraft is a Minecraft mod that adds ages and evolution
 
 ### Folder strcuture
 
-`mcp-forge
+```
+mcp-forge
 
 	mcp
 	
@@ -33,4 +34,5 @@ source
 		
 		src
 		
-		...`
+		...
+```		
