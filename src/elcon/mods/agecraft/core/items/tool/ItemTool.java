@@ -89,7 +89,7 @@ public class ItemTool extends Item {
 	}
 
 	public boolean canHarvestBlock(ItemStack stack, Block block, int meta) {
-		return false;
+		return canHarvestBlock(block, stack);
 	}
 	
 	@Override
@@ -97,6 +97,7 @@ public class ItemTool extends Item {
 		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
 		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
 			if(blocksEffectiveAgainst[i].blockID == block.blockID) {
+				System.out.println("canHarvestBlock: yes");
 				return true;
 			}
 		}
@@ -293,7 +294,10 @@ public class ItemTool extends Item {
 
 	public int getToolAttackStrength(ItemStack stack) {
 		NBTTagCompound nbt = getToolNBT(stack);
-		return ToolRegistry.toolMaterials[getToolMaterial(stack)].attackStrength + ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].attackStrength;
+		if(!ToolRegistry.tools[getToolType(stack)].hasHead) {
+			return ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].attackStrength;
+		}
+		return ToolRegistry.toolMaterials[getToolMaterial(stack)].attackStrength;
 	}
 	
 	public int getToolHarvestLevel(ItemStack stack) {

@@ -22,7 +22,7 @@ public class ItemPickaxe extends ItemTool {
 	@Override
 	public boolean canHarvestBlock(ItemStack stack, Block block, int meta) {
 		if(block instanceof BlockStoneLayered) {
-			return getToolHarvestLevel(stack) >= (6 - meta);
+			return getToolHarvestLevel(stack) >= (5 - meta);
 		} else if(block instanceof BlockStoneOre) {
 			return getToolHarvestLevel(stack) >= MetalRegistry.metals[meta].harvestLevel;
 		} else if(block instanceof BlockOreStorage) {
