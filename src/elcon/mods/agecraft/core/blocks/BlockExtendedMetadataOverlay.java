@@ -51,6 +51,9 @@ public class BlockExtendedMetadataOverlay extends BlockContainerOverlay implemen
 	
 	@Override
 	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
+		if(player.getCurrentEquippedItem() == null) {
+			return super.getPlayerRelativeBlockHardness(player, world, x, y, z);
+		}
 		return player.getCurrentEquippedItem().getItem().getStrVsBlock(player.getCurrentEquippedItem(), this, getMetadata(world, x, y, z)) / getBlockHardness(world, x, y, z) / 30F;
 	}
 	

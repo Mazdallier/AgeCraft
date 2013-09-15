@@ -67,7 +67,6 @@ public class Tools extends ACComponent {
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(2, "woodSpruce", "tools.materials.woodSpruce", new ItemStack(Trees.stick, 1, 2), 27, 0.25F, 0));
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(3, "woodJungle", "tools.materials.woodJungle", new ItemStack(Trees.stick, 1, 3), 27, 0.25F, 0));
 
-		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(127, "stone", "tools.materials.stone", new ItemStack(Block.cobblestone, 1, 0), 96, 0.5F, 1));
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(128, "copper", "metals.copper", new ItemStack(Metals.stick, 1, 0), 92, 0.75F, 1));
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(130, "bronze", "metals.bronze", new ItemStack(Metals.stick, 1, 2), 111, 1.0F, 2));
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(131, "silver", "metals.silver", new ItemStack(Metals.stick, 1, 3), 104, 1.25F, 2));
@@ -87,7 +86,11 @@ public class Tools extends ACComponent {
 					for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
 						if(ToolRegistry.toolMaterials[j] != null) {
 							if(tool.hasRod) {
-								ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, j, 0));
+								if(j == 127) {
+									ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, 0, 0));
+								} else {
+									ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, j, 0));
+								}
 							} else {
 								ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, 0, 0));
 							}

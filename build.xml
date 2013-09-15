@@ -65,6 +65,8 @@
 	</target>
 
 	<target name="replace_tokens">
+		<replace file="${build.mcp_location}/src/minecraft/mcmod.info" token="@VERSION@" value="${build.mod_version}" />
+		<replace file="${build.mcp_location}/src/minecraft/mcmod.info" token="@BUILD_NUMBER@" value="${build_number.build_number}" />
 		<replace dir="${build.mcp_location}/src/minecraft/elcon/mods" token="@VERSION@" value="${build.mod_version}" />
 		<replace dir="${build.mcp_location}/src/minecraft/elcon/mods" token="@FINGERPRINT@" value="${private.fingerprint_signature}" />
 		<replace dir="${build.mcp_location}/src/minecraft/elcon/mods" token="@BUILD_NUMBER@" value="${build_number.build_number}" />
