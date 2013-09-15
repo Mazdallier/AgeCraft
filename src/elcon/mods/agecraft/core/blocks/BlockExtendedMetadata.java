@@ -51,7 +51,7 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 	
 	@Override
 	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
-		return player.getCurrentEquippedItem().getItem().getStrVsBlock(player.getCurrentEquippedItem(), this, world.getBlockMetadata(x, y, z)) / getBlockHardness(world, x, y, z) / 30F;
+		return player.getCurrentEquippedItem().getItem().getStrVsBlock(player.getCurrentEquippedItem(), this, getMetadata(world, x, y, z)) / getBlockHardness(world, x, y, z) / 30F;
 	}
 
 	@Override

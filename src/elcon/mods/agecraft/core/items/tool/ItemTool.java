@@ -81,9 +81,7 @@ public class ItemTool extends Item {
 	public float getStrVsBlock(ItemStack stack, Block block, int metadata) {
 		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
 		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
-			System.out.println("canHarvest (meta: " + metadata + "): " + canHarvestBlock(stack, block, metadata));
 			if(blocksEffectiveAgainst[i].blockID == block.blockID && canHarvestBlock(stack, block, metadata)) {
-				System.out.println("full eff");
 				return getToolEfficiency(stack);
 			}
 		}
