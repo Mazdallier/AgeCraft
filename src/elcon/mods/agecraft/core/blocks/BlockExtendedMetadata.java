@@ -2,9 +2,6 @@ package elcon.mods.agecraft.core.blocks;
 
 import java.util.ArrayList;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -19,6 +16,8 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
 
 public class BlockExtendedMetadata extends BlockContainer implements IBlockExtendedMetadata {
@@ -48,6 +47,11 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 	@Override
 	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
 		return meta;
+	}
+	
+	@Override
+	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
+		return player.getCurrentEquippedItem().getItem().getStrVsBlock(player.getCurrentEquippedItem(), this, world.getBlockMetadata(x, y, z)) / getBlockHardness(world, x, y, z) / 30F;
 	}
 
 	@Override
@@ -85,7 +89,7 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 			drops = block2.getBlockDropped(world, x, y, z, getMetadata(world, x, y, z), EnchantmentHelper.getFortuneModifier(player));
 		}
 		boolean hasBeenBroken = world.setBlockToAir(x, y, z);
-		if(hasBeenBroken && !world.isRemote && drops.size() > 0 && (player == null || !player.capabilities.isCreativeMode) && shouldDropItems(world, x, y, z, getMetadata(world, x, y, z), player, player.getCurrentEquippedItem())) {
+		if(hasBeenBroken && !world.isRemote && drops.size() > 0 && (player == null || !player.capabilities.isCreativeMode) && shouldDropItems(world, x, y, z, tile.getTileMetadata(), player, player.getCurrentEquippedItem())) {
 			for(ItemStack drop : drops) {
 				block.dropAsStack(world, x, y, z, drop);
 			}

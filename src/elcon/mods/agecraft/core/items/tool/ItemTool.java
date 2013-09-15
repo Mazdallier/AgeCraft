@@ -81,7 +81,9 @@ public class ItemTool extends Item {
 	public float getStrVsBlock(ItemStack stack, Block block, int metadata) {
 		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
 		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
-			if(blocksEffectiveAgainst[i] == block) {
+			System.out.println("canHarvest (meta: " + metadata + "): " + canHarvestBlock(stack, block, metadata));
+			if(blocksEffectiveAgainst[i].blockID == block.blockID && canHarvestBlock(stack, block, metadata)) {
+				System.out.println("full eff");
 				return getToolEfficiency(stack);
 			}
 		}
@@ -96,7 +98,7 @@ public class ItemTool extends Item {
 	public boolean canHarvestBlock(Block block, ItemStack stack) {
 		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
 		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
-			if(blocksEffectiveAgainst[i] == block) {
+			if(blocksEffectiveAgainst[i].blockID == block.blockID) {
 				return true;
 			}
 		}
@@ -111,7 +113,7 @@ public class ItemTool extends Item {
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
 		if(entity.canAttackWithItem()) {
 			if(!entity.hitByEntity(player)) {
-				float damage = (float) (getToolAttackStrength(stack) * getBaseAttackDamage(stack));
+				float damage = (float) (getBaseAttackDamage(stack) + getToolAttackStrength(stack));
 				int i = 0;
 				float extraDamage = 0.0F;
 				if(entity instanceof EntityLivingBase) {
@@ -209,7 +211,6 @@ public class ItemTool extends Item {
 		if(pass == 0 && tool.hasRod) {
 			return ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].icons[tool.id];
 		} else if(pass == 1 && tool.hasHead) {
-			System.out.println(tool.id + " | " + getToolMaterial(stack));
 			return ToolRegistry.toolMaterials[getToolMaterial(stack)].icons[tool.id];
 		} else if(pass == 2 && tool.hasEnhancements) {
 			return ResourcesCore.emptyTexture;

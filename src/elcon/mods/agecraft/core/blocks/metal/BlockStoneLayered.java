@@ -61,6 +61,11 @@ public class BlockStoneLayered extends BlockStone {
 	}
 	
 	@Override
+	public float getPlayerRelativeBlockHardness(EntityPlayer player, World world, int x, int y, int z) {
+		return player.getCurrentEquippedItem().getItem().getStrVsBlock(player.getCurrentEquippedItem(), this, world.getBlockMetadata(x, y, z)) / getBlockHardness(world, x, y, z) / 30F;
+	}
+	
+	@Override
 	public boolean canHarvestBlock(EntityPlayer player, int meta) {
 		return true;
 	}

@@ -239,7 +239,7 @@ public class BlockMetalDoor extends BlockExtendedMetadata {
 
 	@Override
 	public int idDropped(int meta, Random random, int fortune) {
-		return (meta & 8) != 0 ? 0 : blockID;
+		return blockID;
 	}
 
 	public int getFullMetadata(IBlockAccess blockAccess, int x, int y, int z) {
