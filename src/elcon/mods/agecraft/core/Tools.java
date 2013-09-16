@@ -8,6 +8,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
+import elcon.mods.agecraft.core.ToolRegistry.ToolEnhancementMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
 import elcon.mods.agecraft.core.items.tool.ItemAxe;
@@ -26,7 +27,7 @@ public class Tools extends ACComponent {
 	public static ItemTool axe;
 	public static ItemTool shovel;
 	public static ItemTool hoe;
-	public static ItemTool battleAxe;
+	public static ItemTool battleaxe;
 
 	@Override
 	public void preInit() {
@@ -35,7 +36,7 @@ public class Tools extends ACComponent {
 		axe = (ItemTool) new ItemAxe(12522).setUnlocalizedName("tools_axe");
 		shovel = (ItemTool) new ItemShovel(12523).setUnlocalizedName("tools_shovel");
 		hoe = (ItemTool) new ItemHoe(12524).setUnlocalizedName("tools_hoe");
-		battleAxe = (ItemTool) new ItemBattleAxe(12525).setUnlocalizedName("tools_battleAxe");
+		battleaxe = (ItemTool) new ItemBattleAxe(12525).setUnlocalizedName("tools_battleAxe");
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class Tools extends ACComponent {
 		}));
 		ToolRegistry.registerTool(new Tool(4, "hoe", hoe, 2, 2, true, true, true, new Block[]{
 		}));
-		ToolRegistry.registerTool(new Tool(5, "battleAxe", battleAxe, 1, 1, true, true, true, ToolRegistry.tools[2].blocksEffectiveAgainst));
+		ToolRegistry.registerTool(new Tool(5, "battleaxe", battleaxe, 1, 1, true, true, true, ToolRegistry.tools[2].blocksEffectiveAgainst));
 
 		// register tool materials
 		ToolRegistry.registerToolMaterial(new ToolMaterial(127, "stone", "tools.materials.stone", new ItemStack(Block.cobblestone, 1, 0), 138, 1.5F, 2, 1));
@@ -144,7 +145,12 @@ public class Tools extends ACComponent {
 					}
 				}
 				if(tool.hasEnhancements) {
-					// TODO: add tool enhancements
+					for(int j = 0; j < ToolRegistry.toolEnhancementMaterials.length; j++) {
+						ToolEnhancementMaterial toolEnhancementMaterial = ToolRegistry.toolEnhancementMaterials[j];
+						if(toolEnhancementMaterial != null) {
+							toolEnhancementMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/enhancements/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolEnhancementMaterial.name));
+						}
+					}
 				}
 			}
 		}

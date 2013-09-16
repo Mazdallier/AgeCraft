@@ -97,7 +97,6 @@ public class ItemTool extends Item {
 		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
 		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
 			if(blocksEffectiveAgainst[i].blockID == block.blockID) {
-				System.out.println("canHarvestBlock: yes");
 				return true;
 			}
 		}
@@ -212,9 +211,7 @@ public class ItemTool extends Item {
 		} else if(pass == 1 && tool.hasHead) {
 			return ToolRegistry.toolMaterials[getToolMaterial(stack)].icons[tool.id];
 		} else if(pass == 2 && tool.hasEnhancements) {
-			return ResourcesCore.emptyTexture;
-			//TODO
-			//return ToolRegistry.toolEnhancementMaterials[getToolEnhancementMaterial(stack)].icons[tool.id];
+			return ToolRegistry.toolEnhancementMaterials[getToolEnhancementMaterial(stack)].icons[tool.id];
 		}
 		return ResourcesCore.emptyTexture;
 	}
@@ -276,7 +273,6 @@ public class ItemTool extends Item {
 		return nbt.getInteger("RodMaterial");
 	}
 
-	// TODO: add enhancement functionality
 	public int getToolEnhancementMaterial(ItemStack stack) {
 		NBTTagCompound nbt = getToolNBT(stack);
 		return nbt.getInteger("EnhancementMaterial");
@@ -284,12 +280,14 @@ public class ItemTool extends Item {
 
 	public int getToolDurability(ItemStack stack) {
 		NBTTagCompound nbt = getToolNBT(stack);
-		return ToolRegistry.toolMaterials[getToolMaterial(stack)].durability + ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].durability;
+		Tool tool = ToolRegistry.tools[getToolType(stack)];
+		return (tool.hasHead ? ToolRegistry.toolMaterials[getToolMaterial(stack)].durability : 0) + (tool.hasRod ? ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].durability : 0);
 	}
 
 	public float getToolEfficiency(ItemStack stack) {
 		NBTTagCompound nbt = getToolNBT(stack);
-		return ToolRegistry.toolMaterials[getToolMaterial(stack)].efficiency + ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].efficiency;
+		Tool tool = ToolRegistry.tools[getToolType(stack)];
+		return (tool.hasHead ? ToolRegistry.toolMaterials[getToolMaterial(stack)].efficiency : 0) + (tool.hasRod ? ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].efficiency : 0);
 	}
 
 	public int getToolAttackStrength(ItemStack stack) {
@@ -302,6 +300,7 @@ public class ItemTool extends Item {
 	
 	public int getToolHarvestLevel(ItemStack stack) {
 		NBTTagCompound nbt = getToolNBT(stack);
-		return ToolRegistry.toolMaterials[getToolMaterial(stack)].harvestLevel;
+		Tool tool = ToolRegistry.tools[getToolType(stack)];
+		return (tool.hasHead ? ToolRegistry.toolMaterials[getToolMaterial(stack)].harvestLevel : 0);
 	}
 }
