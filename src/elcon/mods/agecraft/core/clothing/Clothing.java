@@ -16,7 +16,7 @@ public class Clothing {
 		this.name = name;
 		this.type = type;
 		this.category = category;
-		enableAllColors();
+		disableAllColors();
 	}
 	
 	public Clothing(int id, String name, ClothingType type, ClothingCategory category, boolean[] colors) {

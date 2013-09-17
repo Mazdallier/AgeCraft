@@ -38,4 +38,22 @@ public class ClothingRegistry {
 	public static void registerClothing(Clothing clothing) {
 		clothing.category.registerClothing(clothing);
 	}
+
+	public static ClothingType getClothingType(String name) {
+		for(int i = 0; i < types.length; i++) {
+			if(types[i] != null && types[i].name.equals(name)) {
+				return types[i];
+			}
+		}
+		return null;
+	}
+	
+	public static ClothingCategory getClothingCategory(String name) {
+		for(int i = 0; i < categories.length; i++) {
+			if(categories[i] != null && categories[i].name.equals(name)) {
+				return categories[i];
+			}
+		}
+		return null;
+	}
 }

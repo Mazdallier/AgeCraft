@@ -20,6 +20,7 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.AgeCraftCore;
+import elcon.mods.agecraft.core.clothing.ClothingManager;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
 import elcon.mods.agecraft.ranks.ACRankManager;
 import elcon.mods.agecraft.tech.TechTree;
@@ -35,7 +36,7 @@ public class AgeCraft {
 
 	@SidedProxy(clientSide = ACReference.CLIENT_PROXY_CLASS, serverSide = ACReference.SERVER_PROXY_CLASS)
 	public static ACCommonProxy proxy;
-	
+
 	public static File minecraftDir;
 
 	public ArrayList<ACComponent> components = new ArrayList<ACComponent>();
@@ -47,16 +48,16 @@ public class AgeCraft {
 	public ACWorldGenerator worldGenerator;
 
 	public ACRankManager rankManager;
-	
+
 	public static TechTree techTree;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		minecraftDir = ElConCore.minecraftDir;
 		ElConCore.registerMod(ACReference.NAME, new ElConMod(ACReference.NAME, ACReference.VERSION, ACReference.VERSION_URL, event.getSourceFile(), event.getSuggestedConfigurationFile(), ACConfig.class, new ACSaveHandler()));
-		
+
 		ACLog.init();
-		
+
 		core = new AgeCraftCore();
 
 		for(int i = 0; i < Age.ages.length; i++) {
@@ -79,39 +80,39 @@ public class AgeCraft {
 		for(ACComponent component : components) {
 			component.init();
 		}
-		
-		//init rank manager
+
+		// init rank manager
 		rankManager = new ACRankManager();
 		rankManager.init();
 
-		// init tech tree
+		//init tech tree
 		techTree = new TechTree();
 		techTree.init();
 
-		// init tick handlers
+		//init tick handlers
 		tickHandler = new ACTickHandler();
 		tickHandlerClient = new ACTickHandlerClient();
 
-		// register server tick handler
+		//register server tick handler
 		TickRegistry.registerTickHandler(AgeCraft.instance.tickHandler, Side.SERVER);
 
-		// register packet handler
+		//register packet handler
 		packetHandler = new ACPacketHandler();
 		NetworkRegistry.instance().registerConnectionHandler(packetHandler);
 		NetworkRegistry.instance().registerGuiHandler(this, proxy);
 
-		// register event handler
+		//register event handler
 		ACEventHandler eventHandler = new ACEventHandler();
 		MinecraftForge.EVENT_BUS.register(eventHandler);
 
-		// register crafting handler
+		//register crafting handler
 		GameRegistry.registerCraftingHandler(eventHandler);
 
-		// add world generator
+		//add world generator
 		worldGenerator = new ACWorldGenerator();
 		GameRegistry.registerWorldGenerator(worldGenerator);
-		
-		// register dimensions
+
+		//register dimensions
 		DimensionManager.registerProviderType(10, PrehistoryProvider.class, false);
 		DimensionManager.registerDimension(10, 10);
 
@@ -129,6 +130,10 @@ public class AgeCraft {
 		for(ACComponent component : components) {
 			component.postInit();
 		}
+
+		//load clothing
+		ClothingManager clothingManager = new ClothingManager(new File(ElConCore.minecraftDir, File.separator + "clothing"));
+		clothingManager.excecute();
 	}
 
 	@SideOnly(Side.CLIENT)
