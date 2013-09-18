@@ -21,6 +21,9 @@ import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBeam;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBlock;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterChest;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneLayered;
+import elcon.mods.agecraft.core.clothing.ClothingCategory;
+import elcon.mods.agecraft.core.clothing.ClothingRegistry;
+import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
@@ -71,9 +74,18 @@ public class AgeCraftCore extends ACComponent {
 	}
 	
 	public void init() {
-		//TODO: change in-game gui and inventory
-		//GuiIngameForge.renderExperiance = false;
-		//GuiIngameForge.renderJumpBar = false;
+		//register clothing types
+		ClothingRegistry.registerClothingType(new ClothingType(0, "skin"));
+		ClothingRegistry.registerClothingType(new ClothingType(1, "hair"));
+		ClothingRegistry.registerClothingType(new ClothingType(2, "mouth"));
+		ClothingRegistry.registerClothingType(new ClothingType(3, "eyes"));
+		ClothingRegistry.registerClothingType(new ClothingType(4, "facialHair"));
+		ClothingRegistry.registerClothingType(new ClothingType(5, "shirt"));
+		ClothingRegistry.registerClothingType(new ClothingType(6, "pants"));
+		ClothingRegistry.registerClothingType(new ClothingType(7, "boots"));
+		
+		//register clothing categories
+		ClothingRegistry.registerClothingCategory(new ClothingCategory(0, "test", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/test.zip"));
 	}
 	
 	public void postInit() {

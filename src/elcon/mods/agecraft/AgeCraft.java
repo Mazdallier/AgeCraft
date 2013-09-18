@@ -20,7 +20,7 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.AgeCraftCore;
-import elcon.mods.agecraft.core.clothing.ClothingManager;
+import elcon.mods.agecraft.core.clothing.ClothingUpdater;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
 import elcon.mods.agecraft.ranks.ACRankManager;
 import elcon.mods.agecraft.tech.TechTree;
@@ -132,7 +132,7 @@ public class AgeCraft {
 		}
 
 		//load clothing
-		ClothingManager clothingManager = new ClothingManager(new File(ElConCore.minecraftDir, File.separator + "clothing"));
+		ClothingUpdater clothingManager = new ClothingUpdater(new File(ElConCore.minecraftDir, File.separator + "clothing"));
 		clothingManager.excecute();
 	}
 

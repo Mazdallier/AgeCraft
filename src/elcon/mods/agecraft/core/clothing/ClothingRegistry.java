@@ -9,12 +9,9 @@ public class ClothingRegistry {
 		public int id;
 		public String name;
 		
-		public boolean changeableStandard;
-		
-		public ClothingType(int id, String name, boolean changeableStandard) {
+		public ClothingType(int id, String name) {
 			this.id = id;
 			this.name = name;
-			this.changeableStandard = changeableStandard;
 		}
 	}
 	

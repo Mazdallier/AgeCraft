@@ -21,7 +21,7 @@ import elcon.mods.agecraft.ACLog;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.core.ElConCore;
 
-public class ClothingManager implements Runnable {
+public class ClothingUpdater implements Runnable {
 
 	public static class ClothingCategoryVersion {
 
@@ -34,13 +34,13 @@ public class ClothingManager implements Runnable {
 		}
 	}
 
-	public static ClothingManager instance;
+	public static ClothingUpdater instance;
 	public HashMap<String, ClothingCategoryVersion> localVersions = new HashMap<String, ClothingCategoryVersion>();
 	public HashMap<String, ClothingCategoryVersion> versions = new HashMap<String, ClothingCategoryVersion>();
 	public ArrayList<String> versionURLsChecked = new ArrayList<String>();
 	public File clothingDir;
 
-	public ClothingManager(File clothingDir) {
+	public ClothingUpdater(File clothingDir) {
 		this.clothingDir = clothingDir;
 		instance = this;
 	}	
@@ -97,9 +97,11 @@ public class ClothingManager implements Runnable {
 				BufferedReader reader = new BufferedReader(new FileReader(file));
 				String line;
 				while((line = reader.readLine()) != null) {
-					String[] split = line.split("|");
-					if(split.length >= 2) {
-						localVersions.put(split[0], new ClothingCategoryVersion(split[0], split[1]));
+					if(line.length() > 1) {
+						String[] split = line.split("|");
+						if(split.length >= 2) {
+							localVersions.put(split[0], new ClothingCategoryVersion(split[0], split[1]));
+						}
 					}
 				}
 				reader.close();
@@ -118,9 +120,11 @@ public class ClothingManager implements Runnable {
 							BufferedReader reader = new BufferedReader(new FileReader(tempFile));
 							String line;
 							while((line = reader.readLine()) != null) {
-								String[] split = line.split("|");
-								if(split.length >= 2) {
-									versions.put(split[0], new ClothingCategoryVersion(split[0], split[1]));
+								if(line.length() > 1) {
+									String[] split = line.split("|");
+									if(split.length >= 2) {
+										versions.put(split[0], new ClothingCategoryVersion(split[0], split[1]));
+									}
 								}
 							}
 							reader.close();
