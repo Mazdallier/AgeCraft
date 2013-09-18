@@ -1,19 +1,17 @@
 package elcon.mods.agecraft.core.clothing;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.FileWriter;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.FileUtils;
 
@@ -34,15 +32,13 @@ public class ClothingUpdater implements Runnable {
 		}
 	}
 
-	public static ClothingUpdater instance;
 	public HashMap<String, ClothingCategoryVersion> localVersions = new HashMap<String, ClothingCategoryVersion>();
 	public HashMap<String, ClothingCategoryVersion> versions = new HashMap<String, ClothingCategoryVersion>();
-	public ArrayList<String> versionURLsChecked = new ArrayList<String>();
+	public ArrayList<ClothingCategory> downloadCategories = new ArrayList<ClothingCategory>();
 	public File clothingDir;
 
 	public ClothingUpdater(File clothingDir) {
 		this.clothingDir = clothingDir;
-		instance = this;
 	}	
 	
 	public void load() {
@@ -91,7 +87,7 @@ public class ClothingUpdater implements Runnable {
 		if(!clothingDir.exists()) {
 			clothingDir.mkdirs();
 		}
-		File file = new File(ElConCore.minecraftDir, "clothing_version.dat");
+		File file = new File(ElConCore.minecraftDir, "clothing_versions.dat");
 		if(file.exists()) {
 			try {
 				BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -109,12 +105,12 @@ public class ClothingUpdater implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		ArrayList<String> versionURLsChecked = new ArrayList<String>();
 		for(int i = 0; i < ClothingRegistry.categories.length; i++) {
 			if(ClothingRegistry.categories[i] != null) {
 				ClothingCategory category = ClothingRegistry.categories[i];
-				System.out.println("checking category: " + category.name);
+				ACLog.info("[Clothing] Checking version for category: " + category.name);
 				if(!versionURLsChecked.contains(category.versionURL)) {
-					System.out.println("checking");
 					try {
 						File tempFile = new File(ElConCore.minecraftDir, "clothing_version_temp.dat");
 						FileUtils.copyURLToFile(new URL(category.versionURL), tempFile);
@@ -122,11 +118,9 @@ public class ClothingUpdater implements Runnable {
 							BufferedReader reader = new BufferedReader(new FileReader(tempFile));
 							String line;
 							while((line = reader.readLine()) != null) {
-								System.out.println("line: " + line);
 								if(line.length() > 1) {
 									String[] split = line.split("=");
 									if(split.length >= 2) {
-										System.out.println(split[0] + " | " + split[1]);
 										versions.put(split[0], new ClothingCategoryVersion(split[0], split[1]));
 									}
 								}
@@ -141,31 +135,55 @@ public class ClothingUpdater implements Runnable {
 						e.printStackTrace();
 					}
 				}
-				System.out.println(versions.containsKey(category.name) + " | " + localVersions.containsKey(category.name));
 				if(versions.containsKey(category.name) && (!localVersions.containsKey(category.name) || shouldUpdate(localVersions.get(category.name), versions.get(category.name)))) {
-					try {
-						ACLog.info("[Clothing] Updating category " + category.name + " to version " + versions.get(category.name));
-						File clothingZip = new File(clothingDir, category.name + ".zip");
-						clothingZip.createNewFile();
-						FileUtils.copyURLToFile(new URL(category.updateURL), clothingZip);
-						ACLog.info("[Clothing] Downloaded " + clothingZip.getName() + " from " + category.updateURL);
-						if(clothingZip.exists()) {
-							extractZip(clothingZip, new File(clothingDir, File.separator + category.name));
-							ACLog.info("[Clothing] Extracted " + clothingZip.getName() + " to " + new File(clothingDir, File.separator + category.name).getAbsolutePath());
-						}
-						clothingZip.delete();
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
+					downloadCategories.add(category);
 				}
+			}
+		}
+	}
+	
+	public void download() {
+		ArrayList<String> lines = new ArrayList<String>();
+		for(ClothingCategory category : downloadCategories) {
+			try {
+				ACLog.info("[Clothing] Updating category " + category.name + " to version " + versions.get(category.name));
+				File clothingZip = new File(clothingDir, category.name + ".zip");
+				clothingZip.createNewFile();
+				FileUtils.copyURLToFile(new URL(category.updateURL), clothingZip);
+				ACLog.info("[Clothing] Downloaded " + clothingZip.getName() + " from " + category.updateURL);
+				if(clothingZip.exists()) {
+					extractZip(clothingZip, new File(clothingDir, File.separator + category.name));
+					ACLog.info("[Clothing] Extracted " + clothingZip.getName() + " to " + new File(clothingDir, File.separator + category.name).getAbsolutePath());
+				}
+				clothingZip.delete();
+				lines.add(category.name + "=" + versions.get(category.name).version);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(!lines.isEmpty()) {
+			try {
+				File file = new File(ElConCore.minecraftDir, "clothing_versions.dat");
+				if(file.exists()) {
+					file.delete();
+				}
+				file.createNewFile();
+				FileWriter writer = new FileWriter(file);
+				for(String line : lines) {
+					writer.write(line);
+					writer.write("\n");
+				}
+				writer.close();
+			} catch(Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
 
 	private boolean shouldUpdate(ClothingCategoryVersion localVersion, ClothingCategoryVersion version) {
 		boolean update = false;
-		String[] localSplit = localVersion.version.split(".");
-		String[] split = version.version.split(".");
+		String[] localSplit = localVersion.version.split("\\.");
+		String[] split = version.version.split("\\.");
 		for(int i = 0; i < split.length; i++) {
 			if(localSplit.length > i) {
 				update = true;
@@ -181,30 +199,30 @@ public class ClothingUpdater implements Runnable {
 	}
 
 	private void extractZip(File zip, File dest) {
+		byte[] buffer = new byte[1024];
 		try {
-			if(!dest.exists()) {
-				dest.mkdirs();
+			if(dest.exists()) {
+				dest.delete();
 			}
-			ZipFile zipFile = new ZipFile(zip);
-			Enumeration<ZipEntry> entries = (Enumeration<ZipEntry>) zipFile.entries();
-			while(entries.hasMoreElements()) {
-				ZipEntry entry = (ZipEntry) entries.nextElement();
-				if(entry.isDirectory()) {
-					(new File(entry.getName())).mkdir();
-					continue;
-				}
-				File file = new File(dest, entry.getName());
-				InputStream in = zipFile.getInputStream(entry);
-				OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
-				byte[] buffer = new byte[1024];
+			dest.mkdirs();
+			ZipInputStream zis = new ZipInputStream(new FileInputStream(zip));
+			ZipEntry ze = zis.getNextEntry();
+
+			while(ze != null) {
+				String fileName = ze.getName();
+				File newFile = new File(dest, fileName);
+				new File(newFile.getParent()).mkdirs();
+
+				FileOutputStream fos = new FileOutputStream(newFile);
 				int len;
-				while((len = in.read(buffer)) >= 0) {
-					out.write(buffer, 0, len);
+				while((len = zis.read(buffer)) > 0) {
+					fos.write(buffer, 0, len);
 				}
-				in.close();
-				out.close();
+				fos.close();
+				ze = zis.getNextEntry();
 			}
-			zipFile.close();
+			zis.closeEntry();
+			zis.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 			return;
@@ -215,10 +233,11 @@ public class ClothingUpdater implements Runnable {
 	public void run() {
 		ACLog.info("[Clothing] Loading clothing...");
 		update();
+		download();
 		load();
 	}
 	
 	public void excecute() {
-		new Thread(instance).start();
+		new Thread(this).start();
 	}
 }

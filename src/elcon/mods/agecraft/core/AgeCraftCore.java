@@ -1,5 +1,6 @@
 package elcon.mods.agecraft.core;
 
+import java.io.File;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -23,6 +24,7 @@ import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterChest;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneLayered;
 import elcon.mods.agecraft.core.clothing.ClothingCategory;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry;
+import elcon.mods.agecraft.core.clothing.ClothingUpdater;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
@@ -33,6 +35,7 @@ import elcon.mods.agecraft.core.tileentities.TileEntityNBT;
 import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterBeamRenderer;
 import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterChestRenderer;
 import elcon.mods.agecraft.prehistory.world.WorldGenTeleportSphere;
+import elcon.mods.core.ElConCore;
 
 public class AgeCraftCore extends ACComponent {
 	
@@ -85,7 +88,11 @@ public class AgeCraftCore extends ACComponent {
 		ClothingRegistry.registerClothingType(new ClothingType(7, "boots"));
 		
 		//register clothing categories
-		ClothingRegistry.registerClothingCategory(new ClothingCategory(0, "test", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/test.zip"));
+		ClothingRegistry.registerClothingCategory(new ClothingCategory(0, "test", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/test/test.zip"));
+
+		//load clothing
+		ClothingUpdater clothingManager = new ClothingUpdater(new File(ElConCore.minecraftDir, File.separator + "clothing"));
+		clothingManager.excecute();
 	}
 	
 	public void postInit() {
