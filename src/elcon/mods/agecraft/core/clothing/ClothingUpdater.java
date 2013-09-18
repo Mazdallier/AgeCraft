@@ -98,7 +98,7 @@ public class ClothingUpdater implements Runnable {
 				String line;
 				while((line = reader.readLine()) != null) {
 					if(line.length() > 1) {
-						String[] split = line.split("|");
+						String[] split = line.split("=");
 						if(split.length >= 2) {
 							localVersions.put(split[0], new ClothingCategoryVersion(split[0], split[1]));
 						}
@@ -112,7 +112,9 @@ public class ClothingUpdater implements Runnable {
 		for(int i = 0; i < ClothingRegistry.categories.length; i++) {
 			if(ClothingRegistry.categories[i] != null) {
 				ClothingCategory category = ClothingRegistry.categories[i];
+				System.out.println("checking category: " + category.name);
 				if(!versionURLsChecked.contains(category.versionURL)) {
+					System.out.println("checking");
 					try {
 						File tempFile = new File(ElConCore.minecraftDir, "clothing_version_temp.dat");
 						FileUtils.copyURLToFile(new URL(category.versionURL), tempFile);
@@ -120,14 +122,17 @@ public class ClothingUpdater implements Runnable {
 							BufferedReader reader = new BufferedReader(new FileReader(tempFile));
 							String line;
 							while((line = reader.readLine()) != null) {
+								System.out.println("line: " + line);
 								if(line.length() > 1) {
-									String[] split = line.split("|");
+									String[] split = line.split("=");
 									if(split.length >= 2) {
+										System.out.println(split[0] + " | " + split[1]);
 										versions.put(split[0], new ClothingCategoryVersion(split[0], split[1]));
 									}
 								}
 							}
 							reader.close();
+							tempFile.delete();
 							versionURLsChecked.add(category.versionURL);
 						} catch(Exception e) {
 							e.printStackTrace();
@@ -136,6 +141,7 @@ public class ClothingUpdater implements Runnable {
 						e.printStackTrace();
 					}
 				}
+				System.out.println(versions.containsKey(category.name) + " | " + localVersions.containsKey(category.name));
 				if(versions.containsKey(category.name) && (!localVersions.containsKey(category.name) || shouldUpdate(localVersions.get(category.name), versions.get(category.name)))) {
 					try {
 						ACLog.info("[Clothing] Updating category " + category.name + " to version " + versions.get(category.name));
