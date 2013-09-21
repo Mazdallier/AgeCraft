@@ -41,6 +41,7 @@ public class PlayerClothing implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String player;
+	public int glTextureID = -1;
 	public HashMap<Integer, ArrayList<ClothingPiece>> clothingPiecesOwned = new HashMap<Integer, ArrayList<ClothingPiece>>();
 	public HashMap<Integer, ClothingPiece> clothingPiecesWorn = new HashMap<Integer, ClothingPiece>();
 	

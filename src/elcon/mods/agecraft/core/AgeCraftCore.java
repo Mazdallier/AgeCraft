@@ -24,8 +24,10 @@ import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterChest;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneLayered;
 import elcon.mods.agecraft.core.clothing.ClothingCategory;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry;
-import elcon.mods.agecraft.core.clothing.ClothingUpdater;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
+import elcon.mods.agecraft.core.clothing.ClothingUpdater;
+import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
+import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
@@ -133,6 +135,10 @@ public class AgeCraftCore extends ACComponent {
 	
 	@SideOnly(Side.CLIENT)
 	public void clientProxy() {
+		//init player clothing client
+		PlayerClothingClient.clothingDir = new File(ElConCore.minecraftDir, File.separator + "clothing");
+		PlayerClothingClient.clothingFileDir = new File(ElConCore.minecraftDir, File.separator + "playerSkins");
+		
 		//register block rendering handler
 		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();
 		ACBlockRenderingHandlerWithIcon blockRenderingHandlerWithIcon = new ACBlockRenderingHandlerWithIcon();
@@ -160,7 +166,9 @@ public class AgeCraftCore extends ACComponent {
 	}
 	
 	public void serverProxy() {
-		
+		//init player clothing server
+		PlayerClothingServer.clothingDir = new File(ElConCore.minecraftDir, File.separator + "clothing");
+		PlayerClothingServer.clothingFileDir = new File(ElConCore.minecraftDir, File.separator + "playerSkins");
 	}
 	
 	public void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {

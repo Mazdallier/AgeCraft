@@ -8,6 +8,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import elcon.mods.agecraft.core.player.ACPlayerClient;
+import elcon.mods.agecraft.core.player.ACPlayerRender;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.overlay.BlockOverlayRenderingHandler;
@@ -43,7 +44,7 @@ public class ACClientProxy extends ACCommonProxy {
 	public void registerPlayerAPI() {
 		PlayerAPI.register(PlayerCoreType.CLIENT, ACPlayerClient.class);
 		PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
-		//PlayerAPI.register(PlayerCoreType.RENDER, ACPlayerRender.class);
+		PlayerAPI.register(PlayerCoreType.RENDER, ACPlayerRender.class);
 	}
 
 	@Override
