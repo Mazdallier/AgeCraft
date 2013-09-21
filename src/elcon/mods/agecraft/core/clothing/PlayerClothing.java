@@ -1,8 +1,15 @@
 package elcon.mods.agecraft.core.clothing;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
+
+import elcon.mods.agecraft.ACLog;
 
 public class PlayerClothing implements Serializable {
 
@@ -39,6 +46,41 @@ public class PlayerClothing implements Serializable {
 	
 	public PlayerClothing(String player) {
 		this.player = player;
+	}
+	
+	public String getClothingFileName() {
+		return player + ".png";
+	}
+	
+	public File getClothingFile(File clothingFileDir) {
+		return new File(clothingFileDir, getClothingFileName());
+	}
+	
+	public void createClothingFile(File clothingDir, File clothingFileDir) {
+		try {
+			if(!clothingFileDir.exists()) {
+				clothingFileDir.mkdirs();
+			}
+			File outputFile = new File(clothingFileDir, getClothingFileName());
+			BufferedImage outputImage = new BufferedImage(64, 32, BufferedImage.TYPE_INT_ARGB);
+			Graphics g = outputImage.getGraphics();
+			
+			for(int i = 0; i < ClothingRegistry.typesSorted.length; i++) {
+				if(ClothingRegistry.typesSorted[i] != null) {
+					ClothingPiece piece = clothingPiecesWorn.get(ClothingRegistry.typesSorted[i].id);
+					BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID)));
+					g.drawImage(image, 0, 0, null);
+				}
+			}
+			if(outputFile.exists()) {
+				outputFile.delete();
+			}
+			outputFile.createNewFile();
+			ImageIO.write(outputImage, "PNG", outputFile);
+			ACLog.info("[Clothing] Created clothing file for " + player);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void addClothingPiece(ClothingPiece piece) {

@@ -8,14 +8,17 @@ public class ClothingRegistry {
 
 		public int id;
 		public String name;
+		public int sortedID;
 		
-		public ClothingType(int id, String name) {
+		public ClothingType(int id, String name, int sortedID) {
 			this.id = id;
 			this.name = name;
+			this.sortedID = sortedID;
 		}
 	}
 	
 	public static ClothingType[] types = new ClothingType[16];
+	public static ClothingType[] typesSorted = new ClothingType[16];
 	public static ClothingCategory[] categories = new ClothingCategory[64];
 	
 	public static void registerClothingType(ClothingType type) {
@@ -23,6 +26,7 @@ public class ClothingRegistry {
 			ACLog.warning("[ClothingRegistry] Overriding existing clothing type (" + types[type.id] + ": " + types[type.id].name.toUpperCase() + ") with new clothing type (" + type.id + ": " + type.name.toUpperCase() + ")");
 		}
 		types[type.id]= type;
+		typesSorted[type.sortedID] = type;
 	}
 	
 	public static void registerClothingCategory(ClothingCategory category) {

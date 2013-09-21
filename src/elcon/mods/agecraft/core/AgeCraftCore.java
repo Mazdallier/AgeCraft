@@ -78,14 +78,14 @@ public class AgeCraftCore extends ACComponent {
 	
 	public void init() {
 		//register clothing types
-		ClothingRegistry.registerClothingType(new ClothingType(0, "skin"));
-		ClothingRegistry.registerClothingType(new ClothingType(1, "hair"));
-		ClothingRegistry.registerClothingType(new ClothingType(2, "mouth"));
-		ClothingRegistry.registerClothingType(new ClothingType(3, "eyes"));
-		ClothingRegistry.registerClothingType(new ClothingType(4, "facialHair"));
-		ClothingRegistry.registerClothingType(new ClothingType(5, "shirt"));
-		ClothingRegistry.registerClothingType(new ClothingType(6, "pants"));
-		ClothingRegistry.registerClothingType(new ClothingType(7, "boots"));
+		ClothingRegistry.registerClothingType(new ClothingType(0, "skin", 0));
+		ClothingRegistry.registerClothingType(new ClothingType(1, "hair", 3));
+		ClothingRegistry.registerClothingType(new ClothingType(2, "mouth", 1));
+		ClothingRegistry.registerClothingType(new ClothingType(3, "eyes", 2));
+		ClothingRegistry.registerClothingType(new ClothingType(4, "facialHair", 4));
+		ClothingRegistry.registerClothingType(new ClothingType(5, "shirt", 7));
+		ClothingRegistry.registerClothingType(new ClothingType(6, "pants", 6));
+		ClothingRegistry.registerClothingType(new ClothingType(7, "boots", 5));
 		
 		//register clothing categories
 		ClothingRegistry.registerClothingCategory(new ClothingCategory(0, "test", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/test/test.zip"));
