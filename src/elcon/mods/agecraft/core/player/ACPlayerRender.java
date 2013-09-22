@@ -3,6 +3,7 @@ package elcon.mods.agecraft.core.player;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 
 import org.lwjgl.opengl.GL11;
 
@@ -25,6 +26,12 @@ public class ACPlayerRender extends PlayerCoreRender {
 		}
 	}
 
+	@Override
+	public void renderFirstPersonArm(EntityPlayer player) {
+		bindPlayerClothingTexture((AbstractClientPlayer) player);
+		super.renderFirstPersonArm(player);
+	}
+	
 	@Override
 	protected void renderModel(EntityLivingBase entity, float par2, float par3, float par4, float par5, float par6, float par7) {
 		bindPlayerClothingTexture((AbstractClientPlayer) entity);

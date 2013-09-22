@@ -67,6 +67,7 @@ public class AgeCraft {
 		for(ACComponent component : components) {
 			component.preInit();
 		}
+		proxy.registerPlayerAPI();
 	}
 
 	@EventHandler
@@ -114,9 +115,9 @@ public class AgeCraft {
 		//register dimensions
 		DimensionManager.registerProviderType(10, PrehistoryProvider.class, false);
 		DimensionManager.registerDimension(10, 10);
-
+		
+		//register render information
 		proxy.registerRenderInformation();
-		proxy.registerPlayerAPI();
 	}
 
 	@EventHandler

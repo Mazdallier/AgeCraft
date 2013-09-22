@@ -6,12 +6,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
-import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.prehistory.gui.ContainerSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
-import elcon.mods.core.player.PlayerAPI;
-import elcon.mods.core.player.PlayerAPI.PlayerCoreType;
 
 public class ACCommonProxy implements IGuiHandler {
 
@@ -27,7 +24,7 @@ public class ACCommonProxy implements IGuiHandler {
 	}
 
 	public void registerPlayerAPI() {
-		PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
+		//PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
 	}
 	
 	@Override
