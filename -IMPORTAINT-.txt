@@ -1,0 +1,1 @@
+Before releasing this publicly, we must fix the Block.stone issue, as our current patch is editing the Block file for stone removing the final, but doing so is a base class edit and before release we must find another fix.
