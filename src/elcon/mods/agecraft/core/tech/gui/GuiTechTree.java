@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.tech.gui;
+package elcon.mods.agecraft.core.tech.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,9 +27,9 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
-import elcon.mods.agecraft.tech.TechTree;
-import elcon.mods.agecraft.tech.TechTreeClient;
-import elcon.mods.agecraft.tech.TechTreeComponent;
+import elcon.mods.agecraft.core.tech.TechTree;
+import elcon.mods.agecraft.core.tech.TechTreeClient;
+import elcon.mods.agecraft.core.tech.TechTreeComponent;
 
 public class GuiTechTree extends GuiScreen {
 

@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
-import elcon.mods.agecraft.tech.TechTreeServer;
+import elcon.mods.agecraft.core.tech.TechTreeServer;
 import elcon.mods.core.IElConSaveHandler;
 
 public class ACSaveHandler implements IElConSaveHandler {

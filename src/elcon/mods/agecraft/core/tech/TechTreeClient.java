@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.tech;
+package elcon.mods.agecraft.core.tech;
 
 import java.util.ArrayList;
 

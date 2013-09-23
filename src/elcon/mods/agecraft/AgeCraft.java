@@ -20,9 +20,9 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.AgeCraftCore;
+import elcon.mods.agecraft.core.ranks.ACRankManager;
+import elcon.mods.agecraft.core.tech.TechTree;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
-import elcon.mods.agecraft.ranks.ACRankManager;
-import elcon.mods.agecraft.tech.TechTree;
 import elcon.mods.core.ElConCore;
 import elcon.mods.core.ElConMod;
 

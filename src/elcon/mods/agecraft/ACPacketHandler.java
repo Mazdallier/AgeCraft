@@ -27,11 +27,11 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.core.tech.TechTreeClient;
+import elcon.mods.agecraft.core.tech.TechTreeServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
 import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
 import elcon.mods.agecraft.core.tileentities.TileEntityNBT;
-import elcon.mods.agecraft.tech.TechTreeClient;
-import elcon.mods.agecraft.tech.TechTreeServer;
 
 public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 	

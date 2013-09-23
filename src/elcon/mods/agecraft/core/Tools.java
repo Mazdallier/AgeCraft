@@ -97,19 +97,19 @@ public class Tools extends ACComponent {
 						if(ToolRegistry.toolMaterials[j] != null) {
 							if(tool.hasRod) {
 								if(j == 127) {
-									ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, 0, 0));
+									ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, 0, -1));
 								} else {
-									ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, j, 0));
+									ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, j, -1));
 								}
 							} else {
-								ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, 0, 0));
+								ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, -1, -1));
 							}
 						}
 					}
 				} else {
 					for(int j = 0; j < ToolRegistry.toolRodMaterials.length; j++) {
 						if(ToolRegistry.toolRodMaterials[j] != null) {
-							ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, 0, j, 0));
+							ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, -1, j, -1));
 						}
 					}
 				}

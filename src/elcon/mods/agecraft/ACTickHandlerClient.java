@@ -7,7 +7,7 @@ import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
-import elcon.mods.agecraft.tech.gui.GuiTechTreePopup;
+import elcon.mods.agecraft.core.tech.gui.GuiTechTreePopup;
 
 public class ACTickHandlerClient implements ITickHandler {
 

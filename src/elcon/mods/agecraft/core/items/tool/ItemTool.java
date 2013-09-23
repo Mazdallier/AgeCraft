@@ -207,11 +207,20 @@ public class ItemTool extends Item {
 	public Icon getIcon(ItemStack stack, int pass) {
 		Tool tool = ToolRegistry.tools[getToolType(stack)];
 		if(pass == 0 && tool.hasRod) {
-			return ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].icons[tool.id];
+			int toolRodMaterial = getToolRodMaterial(stack);
+			if(toolRodMaterial != -1 && ToolRegistry.toolRodMaterials[toolRodMaterial] != null) {
+				return ToolRegistry.toolRodMaterials[toolRodMaterial].icons[tool.id];
+			}
 		} else if(pass == 1 && tool.hasHead) {
-			return ToolRegistry.toolMaterials[getToolMaterial(stack)].icons[tool.id];
+			int toolMaterial = getToolMaterial(stack);
+			if(toolMaterial != -1 && ToolRegistry.toolMaterials[toolMaterial] != null) {
+				return ToolRegistry.toolMaterials[toolMaterial].icons[tool.id];
+			}
 		} else if(pass == 2 && tool.hasEnhancements) {
-			return ToolRegistry.toolEnhancementMaterials[getToolEnhancementMaterial(stack)].icons[tool.id];
+			int toolEnhancement = getToolEnhancementMaterial(stack);
+			if(toolEnhancement != -1 && ToolRegistry.toolEnhancementMaterials[toolEnhancement] != null) {
+				return ToolRegistry.toolEnhancementMaterials[toolEnhancement].icons[tool.id];
+			}
 		}
 		return ResourcesCore.emptyTexture;
 	}
@@ -250,9 +259,9 @@ public class ItemTool extends Item {
 		if(!nbt.hasKey("Tool")) {
 			NBTTagCompound nbt2 = new NBTTagCompound();
 			nbt2.setInteger("Type", 0);
-			nbt2.setInteger("Material", 0);
-			nbt2.setInteger("RodMaterial", 0);
-			nbt2.setInteger("EnhancementMaterial", 0);
+			nbt2.setInteger("Material", -1);
+			nbt2.setInteger("RodMaterial", -1);
+			nbt2.setInteger("EnhancementMaterial", -1);
 			nbt.setCompoundTag("Tool", nbt2);
 		}
 		return nbt.getCompoundTag("Tool");

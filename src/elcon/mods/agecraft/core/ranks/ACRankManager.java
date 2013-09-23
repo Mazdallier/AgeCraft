@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.ranks;
+package elcon.mods.agecraft.core.ranks;
 
 import java.util.ArrayList;
 

@@ -9,7 +9,7 @@ import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
-import elcon.mods.agecraft.tech.gui.GuiTechTree;
+import elcon.mods.agecraft.core.tech.gui.GuiTechTree;
 
 public class ACKeyHandler extends KeyHandler {
 
