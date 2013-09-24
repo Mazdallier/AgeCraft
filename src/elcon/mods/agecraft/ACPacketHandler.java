@@ -91,6 +91,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 	}
 
+	@Deprecated
 	private void handleTechTreeComponentPacket(ByteArrayDataInput dat) {
 		short size = dat.readShort();
 		StringBuilder var3 = new StringBuilder();
@@ -107,6 +108,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 	}
 
+	@Deprecated
 	public static void sendTechTreeComponentPacket(String key, boolean unlock, EntityPlayerMP player) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -126,7 +128,8 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@Deprecated
 	private void handleAllTechTreeComponentsPacket(ByteArrayDataInput dat) {
 		short size = dat.readShort();
 		ArrayList<String> ll = new ArrayList<String>();
@@ -143,6 +146,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 	}
 
+	@Deprecated
 	public static void sendAllTechTreeComponentsPacket(EntityPlayerMP player) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();

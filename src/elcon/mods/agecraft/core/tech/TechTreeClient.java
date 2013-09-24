@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import elcon.mods.agecraft.ACTickHandlerClient;
 
+@Deprecated
 public class TechTreeClient {
 	
 	public static ArrayList<String> unlockedTechComponents = new ArrayList<String>();

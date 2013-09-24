@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import elcon.mods.agecraft.ACPacketHandler;
 import elcon.mods.agecraft.AgeCraft;
 
+@Deprecated
 public class TechTreeServer {
 
 	public static ArrayList<String> unlockedTechComponents = new ArrayList<String>();

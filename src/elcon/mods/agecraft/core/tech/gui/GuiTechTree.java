@@ -31,6 +31,7 @@ import elcon.mods.agecraft.core.tech.TechTree;
 import elcon.mods.agecraft.core.tech.TechTreeClient;
 import elcon.mods.agecraft.core.tech.TechTreeComponent;
 
+@Deprecated
 public class GuiTechTree extends GuiScreen {
 
 	private static final int guiMapTop = TechTree.minDisplayColumn * 24 - 112;

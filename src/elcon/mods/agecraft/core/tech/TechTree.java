@@ -6,6 +6,7 @@ import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
+@Deprecated
 public class TechTree {
 
 	public static int minDisplayColumn;

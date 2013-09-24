@@ -14,6 +14,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.tech.TechTreeComponent;
 
+@Deprecated
 public class GuiTechTreePopup extends Gui {
 
 	private static final ResourceLocation achievementBackground = new ResourceLocation("textures/gui/achievement/achievement_background.png");

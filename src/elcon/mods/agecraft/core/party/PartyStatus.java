@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.party;
+package elcon.mods.agecraft.core.party;
 
 public enum PartyStatus {
 
