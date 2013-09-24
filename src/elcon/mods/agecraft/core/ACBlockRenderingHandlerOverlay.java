@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.overlay;
+package elcon.mods.agecraft.core;
 
 import org.lwjgl.opengl.GL11;
 
@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import elcon.mods.agecraft.core.blocks.BlockOverlay;
 
-public class BlockOverlayRenderingHandler implements ISimpleBlockRenderingHandler {
+public class ACBlockRenderingHandlerOverlay implements ISimpleBlockRenderingHandler {
 
 	public static final double OVERLAY_SHIFT = 0.001D;
 	

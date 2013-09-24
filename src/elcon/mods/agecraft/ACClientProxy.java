@@ -7,9 +7,11 @@ import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+import elcon.mods.agecraft.core.ACBlockRenderingHandlerOverlay;
+import elcon.mods.agecraft.core.player.ACPlayerClient;
 import elcon.mods.agecraft.core.player.ACPlayerRender;
+import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
-import elcon.mods.agecraft.overlay.BlockOverlayRenderingHandler;
 import elcon.mods.agecraft.prehistory.gui.GuiSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
 import elcon.mods.core.player.PlayerAPI;
@@ -26,7 +28,7 @@ public class ACClientProxy extends ACCommonProxy {
 		KeyBindingRegistry.registerKeyBinding(new ACKeyHandler());
 
 		//register block handlers
-		RenderingRegistry.registerBlockHandler(ACConfig.BLOCK_OVERLAY_RENDER_ID, new BlockOverlayRenderingHandler());
+		RenderingRegistry.registerBlockHandler(ACConfig.BLOCK_OVERLAY_RENDER_ID, new ACBlockRenderingHandlerOverlay());
 		
 		for(int i = 0; i < Age.ages.length; i++) {
 			if(Age.ages[i] != null) {
@@ -40,10 +42,10 @@ public class ACClientProxy extends ACCommonProxy {
 	
 	@Override
 	public void registerPlayerAPI() {
-		//PlayerAPI.register(PlayerCoreType.CLIENT, ACPlayerClient.class);
-		//PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
-		ACLog.info("Registering PlayerAPI classes");
+		PlayerAPI.register(PlayerCoreType.CLIENT, ACPlayerClient.class);
+		PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
 		PlayerAPI.register(PlayerCoreType.RENDER, ACPlayerRender.class);
+		ACLog.info("Registered PlayerAPI classes");
 	}
 
 	@Override
