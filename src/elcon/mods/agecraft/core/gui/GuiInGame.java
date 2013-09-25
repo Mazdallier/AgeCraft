@@ -18,6 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GuiInGame extends GuiIngameForge {
 
 	public int offsetY;
+	public int offsetYTarget;
 	
 	public GuiInGame(Minecraft mc) {
 		super(mc);
@@ -26,7 +27,10 @@ public class GuiInGame extends GuiIngameForge {
 
 	@Override
 	public void renderGameOverlay(float partialTicks, boolean hasScreen, int mouseX, int mouseY) {
-		offsetY = renderJumpBar ? 0 : 6;
+		offsetYTarget = renderJumpBar ? 0 : 6;
+		if(offsetY != offsetYTarget) {
+			offsetY -= (int) Math.round((offsetY - offsetYTarget) * partialTicks);
+		}
 		super.renderGameOverlay(partialTicks, hasScreen, mouseX, mouseY);
 	}
 	
