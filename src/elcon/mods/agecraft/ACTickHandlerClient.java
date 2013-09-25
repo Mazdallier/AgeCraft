@@ -7,6 +7,7 @@ import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
+import elcon.mods.agecraft.core.gui.GuiInGame;
 import elcon.mods.agecraft.core.tech.gui.GuiTechTreePopup;
 
 public class ACTickHandlerClient implements ITickHandler {
@@ -32,6 +33,9 @@ public class ACTickHandlerClient implements ITickHandler {
 			
 		}
 		if(type.contains(TickType.CLIENT)) {
+			if(!(Minecraft.getMinecraft().ingameGUI instanceof GuiInGame)) {
+				Minecraft.getMinecraft().ingameGUI = new GuiInGame(Minecraft.getMinecraft());
+			}
 			if(((BlockLeaves) Trees.leaves).fancyGraphics != mc.gameSettings.fancyGraphics) {
 				((BlockLeaves) Trees.leaves).fancyGraphics = mc.gameSettings.fancyGraphics;
 			}

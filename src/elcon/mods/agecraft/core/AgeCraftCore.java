@@ -134,7 +134,7 @@ public class AgeCraftCore extends ACComponent {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void clientProxy() {
+	public void clientProxy() {		
 		//init player clothing client
 		PlayerClothingClient.clothingDir = new File(ElConCore.minecraftDir, File.separator + "clothing");
 		PlayerClothingClient.clothingFileDir = new File(ElConCore.minecraftDir, File.separator + "playerSkins");
