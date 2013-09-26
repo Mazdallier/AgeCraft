@@ -51,5 +51,4 @@ public class ACTickHandlerClient implements ITickHandler {
 	public String getLabel() {
 		return "AgeCraftTickHandler";
 	}
-
 }
