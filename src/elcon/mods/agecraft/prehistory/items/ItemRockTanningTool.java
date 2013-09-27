@@ -9,6 +9,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.core.lang.LanguageManager;
 
+@Deprecated
 public class ItemRockTanningTool extends Item {
 
 	private Icon icon;

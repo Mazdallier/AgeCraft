@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.core.lang.LanguageManager;
 
+@Deprecated
 public class ItemRockTool extends Item {
 
 	public static Block[] blocksEffectiveAgainst = new Block[]{};

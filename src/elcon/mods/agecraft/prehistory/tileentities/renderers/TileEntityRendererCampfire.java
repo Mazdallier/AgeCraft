@@ -13,6 +13,7 @@ import elcon.mods.agecraft.assets.resources.ResourcesPrehistory;
 import elcon.mods.agecraft.prehistory.blocks.models.BlockModelCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 
+@Deprecated
 public class TileEntityRendererCampfire extends TileEntitySpecialRenderer {
 
 	public BlockModelCampfire model;

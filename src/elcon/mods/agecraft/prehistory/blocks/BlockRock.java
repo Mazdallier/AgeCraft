@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 import elcon.mods.core.lang.LanguageManager;
 
+@Deprecated
 public class BlockRock extends Block {
 
 	private Icon icon;
@@ -94,7 +95,7 @@ public class BlockRock extends Block {
 	
 	@Override
 	public int getRenderType() {
-		return 201;
+		return 200;
 	}
 	
 	@Override

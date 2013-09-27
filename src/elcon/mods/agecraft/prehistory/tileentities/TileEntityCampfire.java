@@ -12,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import elcon.mods.agecraft.prehistory.CampfireRecipes;
 import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
 
+@Deprecated
 public class TileEntityCampfire extends TileEntity {
 
 	public int tick = 0;

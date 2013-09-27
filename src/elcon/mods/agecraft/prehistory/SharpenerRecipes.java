@@ -8,6 +8,7 @@ public class SharpenerRecipes {
 
 	public static ArrayList<SharpenerRecipe> recipes = new ArrayList<SharpenerRecipe>();
 	
+	@Deprecated
 	public static SharpenerRecipe getRecipe(boolean[] input) {
 		for(SharpenerRecipe r : recipes) {
 			if(r != null) {

@@ -24,6 +24,7 @@ public class PrehistoryPacketHandler implements IACPacketHandler {
 		
 	}
 	
+	@Deprecated
 	private void handleTileEntityCampfire(World world, ByteArrayDataInput dat) {
 		int x = dat.readInt();
 		int y = dat.readInt();

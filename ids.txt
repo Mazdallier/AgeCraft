@@ -123,8 +123,8 @@
 	110 Door
 	111 Ladders	
 200-299		Prehistory
-	200 Campfire
-	201 Rock
+	200 Rock
+	201 Campfire
 300-399		Agriculture Age
 400-499		Ancient Egypt
 500-599		Ancient China

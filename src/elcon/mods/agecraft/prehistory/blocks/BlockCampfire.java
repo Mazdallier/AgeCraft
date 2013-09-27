@@ -22,6 +22,7 @@ import elcon.mods.agecraft.prehistory.PrehistoryAge;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.core.lang.LanguageManager;
 
+@Deprecated
 public class BlockCampfire extends BlockContainer {
 
 	public boolean onFire = false;
@@ -221,7 +222,7 @@ public class BlockCampfire extends BlockContainer {
 	
 	@Override
 	public int getRenderType() {
-		return 200;
+		return 201;
 	}
 	
 	@Override
