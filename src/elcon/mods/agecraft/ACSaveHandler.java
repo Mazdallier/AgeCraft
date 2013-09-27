@@ -3,7 +3,8 @@ package elcon.mods.agecraft;
 import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import net.minecraft.nbt.NBTTagCompound;
 import elcon.mods.agecraft.core.tech.TechTreeServer;
@@ -24,12 +25,8 @@ public class ACSaveHandler implements IElConSaveHandler {
 	@Override
 	public void load(String fileName, File file, ObjectInputStream in) {
 		if(fileName.equals("tech_tree")) {
-			try { 
-				List<String> loaded = (List<String>) in.readObject();
-				TechTreeServer.unlockedTechComponents.clear();
-				for (String key : loaded) {
-					TechTreeServer.unlockedTechComponents.add(key);
-				}
+			try {
+				TechTreeServer.players = (HashMap<String, HashMap<String, ArrayList<String>>>) in.readObject();
 				ACLog.info("Loaded the Tech Tree");
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -41,7 +38,8 @@ public class ACSaveHandler implements IElConSaveHandler {
 	public void save(String fileName, File file, ObjectOutputStream out) {
 		if(fileName.equals("tech_tree")) {
 			try {
-				out.writeObject(TechTreeServer.unlockedTechComponents);
+				out.writeObject(TechTreeServer.players);
+				ACLog.info("Saved the Tech Tree");
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

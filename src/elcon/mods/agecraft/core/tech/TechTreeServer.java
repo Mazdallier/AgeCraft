@@ -1,70 +1,75 @@
 package elcon.mods.agecraft.core.tech;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import elcon.mods.agecraft.ACPacketHandler;
-import elcon.mods.agecraft.AgeCraft;
 
-@Deprecated
 public class TechTreeServer {
 
-	public static ArrayList<String> unlockedTechComponents = new ArrayList<String>();
-	
-	public static void unlockComponent(String key) {
-		if((unlockedTechComponents == null) || (!unlockedTechComponents.contains(key))) {
-			if(unlockedTechComponents == null) {
-				unlockedTechComponents = new ArrayList();
-			}
-			TechTreeComponent[] t = TechTree.getTechTreeComponent(key).parents;
-			if(t != null) {
-				for(int i=0; i<t.length; i++) {
-					if(t[i] != null) {
-						if(!unlockedTechComponents.contains(t[i].key)) {
-							return;
-						}
-					}
-				}	
-			}
-			unlockedTechComponents.add(key);
-			for(int i = 0; i < AgeCraft.proxy.getMCServer().worldServers.length; i++) {
-				if(AgeCraft.proxy.getMCServer().worldServerForDimension(i) != null) {
-					for(Object o :AgeCraft.proxy.getMCServer().worldServerForDimension(i).playerEntities) {
-						EntityPlayerMP player = null;
-						if(o instanceof EntityPlayerMP) {
-							player = (EntityPlayerMP) o;
-							ACPacketHandler.sendTechTreeComponentPacket(key, true, player);
-						}	
-					}
-				}
-			}
+	public static HashMap<String, HashMap<String, ArrayList<String>>> players = new HashMap<String, HashMap<String, ArrayList<String>>>();
+
+	public static boolean hasUnlockedComponent(String player, String pageName, String name) {
+		HashMap<String, ArrayList<String>> pages;
+		if(players.containsKey(player)) {
+			pages = new HashMap<String, ArrayList<String>>();
+			players.put(player, pages);
+		} else {
+			pages = players.get(player);
 		}
+		ArrayList<String> components;
+		if(!pages.containsKey(pageName)) {
+			components = new ArrayList<String>();
+		} else {
+			components = pages.get(pageName);
+		}
+		return components.contains(name);
 	}
 	
-	public static void lockComponent(String key) {
-		if((unlockedTechComponents == null) || (unlockedTechComponents.contains(key))) {
-			if(unlockedTechComponents == null) {
-				unlockedTechComponents = new ArrayList();
-				return;
-			}
-			TechTreeComponent[] t = TechTree.getTechTreeComponent(key).parents;
-			for(int i=0; i<t.length; i++) {
-				if(!unlockedTechComponents.contains(t[i].key)) {
+	public static void unlockComponent(String player, String pageName, String name) {
+		HashMap<String, ArrayList<String>> pages;
+		if(players.containsKey(player)) {
+			pages = new HashMap<String, ArrayList<String>>();
+			players.put(player, pages);
+		} else {
+			pages = players.get(player);
+		}
+		ArrayList<String> components;
+		if(!pages.containsKey(pageName)) {
+			components = new ArrayList<String>();
+		} else {
+			components = pages.get(pageName);
+		}
+		if(!components.contains(name)) {
+			TechTreeComponent component = TechTree.getComponent(pageName, name);
+			for(TechTreeComponent parent : component.parents) {
+				if(!hasUnlockedComponent(player, parent.pageName, parent.name)) {
 					return;
 				}
 			}
-			unlockedTechComponents.remove(key);
-			for(int i = 0; i < AgeCraft.proxy.getMCServer().worldServers.length; i++) {
-				if(AgeCraft.proxy.getMCServer().worldServerForDimension(i) != null) {
-					for(Object o :AgeCraft.proxy.getMCServer().worldServerForDimension(i).playerEntities) {
-						EntityPlayerMP player = null;
-						if(o instanceof EntityPlayerMP) {
-							player = (EntityPlayerMP) o;
-							ACPacketHandler.sendTechTreeComponentPacket(key, false, player);
-						}	
-					}
-				}
-			}
+			components.add(name);
 		}
+		PacketDispatcher.sendPacketToAllPlayers(ACPacketHandler.getTechTreeComponentPacket(player, pageName, name, true));
+	}
+	
+	public static void lockComponent(String player, String pageName, String name) {
+		HashMap<String, ArrayList<String>> pages;
+		if(players.containsKey(player)) {
+			pages = new HashMap<String, ArrayList<String>>();
+			players.put(player, pages);
+		} else {
+			pages = players.get(player);
+		}
+		ArrayList<String> components;
+		if(!pages.containsKey(pageName)) {
+			components = new ArrayList<String>();
+		} else {
+			components = pages.get(pageName);
+		}
+		if(components.contains(name)) {
+			components.remove(name);
+		}
+		PacketDispatcher.sendPacketToAllPlayers(ACPacketHandler.getTechTreeComponentPacket(player, pageName, name, false));
 	}
 }

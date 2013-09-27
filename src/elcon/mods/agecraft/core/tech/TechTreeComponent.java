@@ -1,120 +1,106 @@
 package elcon.mods.agecraft.core.tech;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import java.util.ArrayList;
 
-@Deprecated
+import elcon.mods.core.lang.LanguageManager;
+
+import net.minecraft.item.ItemStack;
+
 public class TechTreeComponent {
 
-	public final String key;
+	public String pageName;
 	public String name;
-	public String description;
-	public TechTreeComponent[] parents = null;
-	public TechTreeComponent[] siblings = null;
-	public final int displayColumn;
-	public final int displayRow;
-	public final ItemStack itemStack;
-	public final int iconIndex;
-	private boolean isSpecial;
-	private boolean isStub;
-	private boolean isHidden;
+	public ArrayList<TechTreeComponent> parents = new ArrayList<TechTreeComponent>();
+	public ArrayList<TechTreeComponent> siblings = new ArrayList<TechTreeComponent>();
 
-	public TechTreeComponent(String key, String dispName, String desc, int column, int row, int icon) {
-		this(key, dispName, desc, column, row, (ItemStack) null, icon);
+	public int displayColumn;
+	public int displayRow;
+	public ItemStack stack;
+	public int iconIndex;
+
+	public boolean isSpecial;
+	public boolean isIndependent;
+	public boolean isHidden;
+
+	public TechTreeComponent(String pageName, String name, int displayColumn, int displayRow, ItemStack stack) {
+		this(name, pageName, displayColumn, displayRow, stack, -1);
 	}
-
-	public TechTreeComponent(String key, String dispName, String desc, int column, int row, ItemStack itemStack) {
-		this(key, dispName, desc, column, row, itemStack, -1);
+	
+	public TechTreeComponent(String pageName, String name, int displayColumn, int displayRow, int iconIndex) {
+		this(name, pageName, displayColumn, displayRow, null, iconIndex);
 	}
+	
+	public TechTreeComponent(String pageName, String name, int displayColumn, int displayRow, ItemStack stack, int iconIndex) {
+		this.pageName = pageName;
+		this.name = name;
+		this.displayColumn = displayColumn;
+		this.displayRow = displayRow;
+		this.stack = stack;
+		this.iconIndex = iconIndex;
 
-	public TechTreeComponent(String key, String dispName, String desc, int column, int row, Item item) {
-		this(key, dispName, desc, column, row, new ItemStack(item), -1);
-	}
-
-	public TechTreeComponent(String key, String dispName, String desc, int column, int row, Block block) {
-		this(key, dispName, desc, column, row, new ItemStack(block), -1);
-	}
-
-	public TechTreeComponent(String key, String dispName, String desc, int column, int row, ItemStack itemStack, int icon) {
-		this.key = key;
-		this.name = "agecraft.techtree.component." + key + ".name";
-		this.description = "agecraft.techtree.component." + key + ".description";
-		this.itemStack = itemStack;
-		this.iconIndex = icon;
-		this.displayColumn = column;
-		this.displayRow = row;
-		
-		LanguageRegistry.instance().addStringLocalization(name, "en_US", dispName);
-		LanguageRegistry.instance().addStringLocalization(description, "en_US", desc);
-
-		if (column < TechTree.minDisplayColumn) {
-			TechTree.minDisplayColumn = column;
+		if(displayColumn < TechTree.minDisplayColumn) {
+			TechTree.minDisplayColumn = displayColumn;
 		}
-
-		if (row < TechTree.minDisplayRow) {
-			TechTree.minDisplayRow = row;
+		if(displayRow < TechTree.minDisplayRow) {
+			TechTree.minDisplayRow = displayRow;
 		}
-
-		if (column > TechTree.maxDisplayColumn) {
-			TechTree.maxDisplayColumn = column;
+		if(displayColumn > TechTree.maxDisplayColumn) {
+			TechTree.maxDisplayColumn = displayColumn;
 		}
-
-		if (row > TechTree.maxDisplayRow) {
-			TechTree.maxDisplayRow = row;
+		if(displayRow > TechTree.maxDisplayRow) {
+			TechTree.maxDisplayRow = displayRow;
 		}
+		TechTree.registerComponent(this);
 	}
-
-	public TechTreeComponent setSpecial() {
-		this.isSpecial = true;
-		return this;
-	}
-
-	public TechTreeComponent setStub() {
-		this.isStub = true;
-		return this;
-	}
-
-	public TechTreeComponent setHidden() {
-		this.isHidden = true;
-		return this;
-	}
-
-	public TechTreeComponent setParents(TechTreeComponent [] par) {
-		this.parents = par;
-		return this;
-	}
-
-	public TechTreeComponent setSiblings(TechTreeComponent [] sib) {
-		this.siblings = sib;
-		return this;
-	}
-
-	public TechTreeComponent registerTechTreeComponent() {
-		TechTree.techTreeComponents.put(key, this);
-		return this;
-	}
-
+	
 	public String getName() {
-		String s = LanguageRegistry.instance().getStringLocalization(name);
-		return s != "" ? s : LanguageRegistry.instance().getStringLocalization(name, "en_US");
+		return LanguageManager.getLocalization("techtree." + pageName + "." + name + ".name");
 	}
 	
 	public String getDescription() {
-		String s = LanguageRegistry.instance().getStringLocalization(description);
-		return s != "" ? s : LanguageRegistry.instance().getStringLocalization(description, "en_US");
+		return LanguageManager.getLocalization("techtree." + pageName + "." + name + ".description");
 	}
-
-	public boolean getSpecial() {
-		return isSpecial;
+	
+	public TechTreeComponent setSpecial() {
+		isSpecial = true;
+		return this;
 	}
-
-	public boolean getStub() {
-		return isStub;
+	
+	public TechTreeComponent setIndependent() {
+		isIndependent = true;
+		return this;
 	}
-
-	public boolean getHidden() {
-		return isHidden;
+	
+	public TechTreeComponent setHidden() {
+		isHidden = true;
+		return this;
+	}
+	
+	public void addParents(TechTreeComponent... components) {
+		for(int i = 0; i < components.length; i++) {
+			parents.add(components[i]);
+		}
+	}
+	
+	public void addSiblings(TechTreeComponent... components) {
+		for(int i = 0; i < components.length; i++) {
+			siblings.add(components[i]);
+		}
+	}
+	
+	public void addParent(TechTreeComponent component) {
+		parents.add(component);
+	}
+	
+	public void addSibling(TechTreeComponent component) {
+		siblings.add(component);
+	}
+	
+	public void removeParent(TechTreeComponent component) {
+		parents.remove(component);
+	}
+	
+	public void removeSibling(TechTreeComponent component) {
+		siblings.remove(component);
 	}
 }

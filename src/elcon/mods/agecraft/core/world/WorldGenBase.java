@@ -2,11 +2,10 @@ package elcon.mods.agecraft.core.world;
 
 import java.util.Random;
 
-import elcon.mods.agecraft.util.BlockPosition;
-
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import elcon.mods.core.util.BlockPosition;
 
 public abstract class WorldGenBase extends WorldGenerator {
 

@@ -21,7 +21,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.AgeCraftCore;
 import elcon.mods.agecraft.core.ranks.ACRankManager;
-import elcon.mods.agecraft.core.tech.TechTree;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
 import elcon.mods.core.ElConCore;
 import elcon.mods.core.ElConMod;
@@ -47,9 +46,7 @@ public class AgeCraft {
 	public ACWorldGenerator worldGenerator;
 
 	public ACRankManager rankManager;
-
-	public static TechTree techTree;
-
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		minecraftDir = ElConCore.minecraftDir;
@@ -84,10 +81,6 @@ public class AgeCraft {
 		// init rank manager
 		rankManager = new ACRankManager();
 		rankManager.init();
-
-		//init tech tree
-		techTree = new TechTree();
-		techTree.init();
 
 		//init tick handlers
 		tickHandler = new ACTickHandler();

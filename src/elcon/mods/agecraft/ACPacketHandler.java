@@ -2,17 +2,17 @@ package elcon.mods.agecraft;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.NetLoginHandler;
 import net.minecraft.network.packet.NetHandler;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet1Login;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
@@ -24,6 +24,7 @@ import com.google.common.io.ByteStreams;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.IPacketHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -53,11 +54,11 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		World world = Minecraft.getMinecraft().theWorld;
 		
 		switch(packetID) {
-		case 1:
-			handleTechTreeComponentPacket(dat);
+		case 0:
+			handleTechTreeComponent(dat);
 			return;
-		case 2:
-			handleAllTechTreeComponentsPacket(dat);
+		case 1:
+			handleTechTreeAllComponents(dat);
 			return;
 		case 90:
 			handleTileEntityNBT(world, dat);
@@ -80,100 +81,29 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 	}
 	
-	private void handlePacketServer(int packetID, ByteArrayDataInput dat) {
-		for(ACComponent component : AgeCraft.instance.components) {
-			if(component != null) {
-				IACPacketHandler packetHandler = component.getPacketHandler();
-				if(packetHandler != null) {
-					packetHandler.handlePacketServer(packetID, dat);
-				}
+	private void handleTechTreeComponent(ByteArrayDataInput dat) {
+		boolean unlocked = dat.readBoolean();
+		String player = dat.readUTF();
+		if(Minecraft.getMinecraft().thePlayer.username.equals(player)) {
+			if(unlocked) {
+				TechTreeClient.unlockComponent(dat.readUTF(), dat.readUTF());
+			} else {
+				TechTreeClient.lockComponent(dat.readUTF(), dat.readUTF());
 			}
-		}
-	}
-
-	@Deprecated
-	private void handleTechTreeComponentPacket(ByteArrayDataInput dat) {
-		short size = dat.readShort();
-		StringBuilder var3 = new StringBuilder();
-		for(int var4 = 0; var4 < size; var4++) {
-			var3.append(dat.readChar());
-		}
-		String key = var3.toString();
-		boolean unlock = dat.readBoolean();
-
-		if(unlock) {
-			TechTreeClient.unlockComponent(key);
-		} else {
-			TechTreeClient.lockComponent(key);
-		}
-	}
-
-	@Deprecated
-	public static void sendTechTreeComponentPacket(String key, boolean unlock, EntityPlayerMP player) {
-		try {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			DataOutputStream dos = new DataOutputStream(bos);
-			Packet250CustomPayload packet = new Packet250CustomPayload();
-			dos.writeInt(1);
-			dos.writeShort(key.length());
-			dos.writeChars(key);
-			dos.writeBoolean(unlock);
-			dos.close();
-			packet.channel = "ACTech";
-			packet.data = bos.toByteArray();
-			packet.length = bos.size();
-			packet.isChunkDataPacket = false;
-			player.playerNetServerHandler.sendPacketToPlayer(packet);
-		} catch(IOException e) {
-			e.printStackTrace();
 		}
 	}
 	
-	@Deprecated
-	private void handleAllTechTreeComponentsPacket(ByteArrayDataInput dat) {
-		short size = dat.readShort();
-		ArrayList<String> ll = new ArrayList<String>();
-		for(int a = 0; a < size; a++) {
-			short ss = dat.readShort();
-			StringBuilder var3 = new StringBuilder();
-			for(int var4 = 0; var4 < ss; var4++) {
-				var3.append(dat.readChar());
+	private void handleTechTreeAllComponents(ByteArrayDataInput dat) {
+		int pages = dat.readInt();
+		for(int i = 0; i < pages; i++) {
+			String pageName = dat.readUTF();
+			int components = dat.readInt();
+			for(int j = 0; j < components; j++) {
+				TechTreeClient.unlockComponent(pageName, dat.readUTF());
 			}
-			ll.add(var3.toString());
-		}
-		for(String key : ll) {
-			TechTreeClient.unlockComponentStartup(key);
 		}
 	}
-
-	@Deprecated
-	public static void sendAllTechTreeComponentsPacket(EntityPlayerMP player) {
-		try {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			DataOutputStream dos = new DataOutputStream(bos);
-			Packet250CustomPayload packet = new Packet250CustomPayload();
-			dos.writeInt(2);
-			ArrayList<String> ll = TechTreeServer.unlockedTechComponents;
-			if((ll != null) && (ll.size() > 0)) {
-				dos.writeShort(ll.size());
-				for(String s : ll) {
-					if(s != null) {
-						dos.writeShort(s.length());
-						dos.writeChars(s);
-					}
-				}
-				dos.close();
-				packet.channel = "ACTech";
-				packet.data = bos.toByteArray();
-				packet.length = bos.size();
-				packet.isChunkDataPacket = false;
-				player.playerNetServerHandler.sendPacketToPlayer(packet);
-			}
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
-
+	
 	private void handleTileEntityNBT(World world, ByteArrayDataInput dat) {
 		int x = dat.readInt();
 		int y = dat.readInt();
@@ -231,15 +161,76 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		tile.setTileMetadata(dat.readInt());
 		world.markBlockForUpdate(x, y, z);
 	}
+	
+	private void handlePacketServer(int packetID, ByteArrayDataInput dat) {
+		for(ACComponent component : AgeCraft.instance.components) {
+			if(component != null) {
+				IACPacketHandler packetHandler = component.getPacketHandler();
+				if(packetHandler != null) {
+					packetHandler.handlePacketServer(packetID, dat);
+				}
+			}
+		}
+	}
+	
+	public static Packet getTechTreeComponentPacket(String player, String pageName, String name, boolean unlocked) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(0);
+			dos.writeUTF(player);
+			dos.writeUTF(pageName);
+			dos.writeUTF(name);
+			dos.writeBoolean(unlocked);
+			dos.close();
+			packet.channel = "ACTech";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Packet getTechTreeAllComponentsPacket(String player) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(0);
+			if(TechTreeServer.players.containsKey(player)) {
+				HashMap<String, ArrayList<String>> pages = TechTreeServer.players.get(player);
+				dos.writeInt(pages.size());
+				for(String pageName : pages.keySet()) {
+					ArrayList<String> components = pages.get(pageName);
+					dos.writeUTF(pageName);
+					dos.writeInt(components.size());
+					for(String name : components) {
+						dos.writeUTF(name);
+					}
+				}
+			} else {
+				dos.writeInt(0);
+			}
+			dos.close();
+			packet.channel = "ACTech";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	// SERVER
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
-		try {
-			sendAllTechTreeComponentsPacket((EntityPlayerMP) netHandler.getPlayer());
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		PacketDispatcher.sendPacketToPlayer(getTechTreeAllComponentsPacket(netHandler.getPlayer().username), player);
 	}
 
 	@Override

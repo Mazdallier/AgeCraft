@@ -29,6 +29,7 @@ import elcon.mods.agecraft.core.clothing.ClothingUpdater;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.items.ItemBlockName;
+import elcon.mods.agecraft.core.tech.TechTree;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
@@ -41,6 +42,7 @@ import elcon.mods.core.ElConCore;
 
 public class AgeCraftCore extends ACComponent {
 	
+	public TechTree techTree;
 	public Metals ores;
 	public Trees trees;
 	public Tools tools;
@@ -52,6 +54,7 @@ public class AgeCraftCore extends ACComponent {
 	
 	public AgeCraftCore() {
 		super();
+		techTree = new TechTree();
 		ores = new Metals();
 		trees = new Trees();
 		tools = new Tools();

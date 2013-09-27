@@ -8,11 +8,11 @@ import cpw.mods.fml.common.TickType;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
 import elcon.mods.agecraft.core.gui.GuiInGame;
-import elcon.mods.agecraft.core.tech.gui.GuiTechTreePopup;
+import elcon.mods.agecraft.core.tech.old.gui.GuiTechTreePopupOld;
 
 public class ACTickHandlerClient implements ITickHandler {
 
-	public static GuiTechTreePopup techTreePopup = null;
+	public static GuiTechTreePopupOld techTreePopup = null;
 	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
@@ -25,7 +25,7 @@ public class ACTickHandlerClient implements ITickHandler {
 		//long time = System.currentTimeMillis();
 		
 		if(techTreePopup == null) {
-			techTreePopup = new GuiTechTreePopup(mc);
+			techTreePopup = new GuiTechTreePopupOld(mc);
 		}
 		techTreePopup.updateTechTreeWindow();
 		

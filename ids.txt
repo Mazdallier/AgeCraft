@@ -97,8 +97,8 @@
 
 ======= Packet IDs ======
 0-74	Server to client packets
-	1 TechTree Component
-	2 TechTree All Components
+	0 TechTree Component
+	1 TechTree All Components
 75-90	Client to server packets
 90+ 	TileEntity packets
 	90 NBT

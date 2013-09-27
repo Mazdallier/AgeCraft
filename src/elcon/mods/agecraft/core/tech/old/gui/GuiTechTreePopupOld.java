@@ -1,4 +1,4 @@
-package elcon.mods.agecraft.core.tech.gui;
+package elcon.mods.agecraft.core.tech.old.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -12,10 +12,10 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
-import elcon.mods.agecraft.core.tech.TechTreeComponent;
+import elcon.mods.agecraft.core.tech.old.TechTreeComponentOld;
 
 @Deprecated
-public class GuiTechTreePopup extends Gui {
+public class GuiTechTreePopupOld extends Gui {
 
 	private static final ResourceLocation achievementBackground = new ResourceLocation("textures/gui/achievement/achievement_background.png");
 	
@@ -27,18 +27,18 @@ public class GuiTechTreePopup extends Gui {
 	private String achievementGetLocalText;
 	private String achievementStatName;
 
-	private TechTreeComponent theComponent;
+	private TechTreeComponentOld theComponent;
 	private long popupTime;
 
 	private RenderItem itemRender;
 	private boolean haveTech;
 
-	public GuiTechTreePopup(Minecraft par1Minecraft) {
+	public GuiTechTreePopupOld(Minecraft par1Minecraft) {
 		theGame = par1Minecraft;
 		itemRender = new RenderItem();
 	}
 
-	public void queueTakenTechTreeComponent(TechTreeComponent tech) {
+	public void queueTakenTechTreeComponent(TechTreeComponentOld tech) {
 		String s = LanguageRegistry.instance().getStringLocalization("agecraft.techtree.popup");
 		String st = s != "" ? s : LanguageRegistry.instance().getStringLocalization("agecraft.techtree.popup", "en_US");
 		achievementGetLocalText = st;
@@ -46,8 +46,8 @@ public class GuiTechTreePopup extends Gui {
 		popupTime = Minecraft.getSystemTime();
 		theComponent = tech;
 		haveTech = false;
-		GuiTechTree.lastX = tech.displayColumn;
-		GuiTechTree.lastY = tech.displayRow;
+		GuiTechTreeOld.lastX = tech.displayColumn;
+		GuiTechTreeOld.lastY = tech.displayRow;
 	}
 
 	/*private void queueTechTreeComponentInformation(TechTreeComponent tech) {
