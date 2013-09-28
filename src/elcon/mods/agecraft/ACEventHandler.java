@@ -1,18 +1,31 @@
 package elcon.mods.agecraft;
 
+import java.util.ArrayList;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.ICraftingHandler;
+import elcon.mods.agecraft.core.tech.TechTree;
+import elcon.mods.agecraft.core.tech.TechTreeComponent;
+import elcon.mods.agecraft.core.tech.TechTreeServer;
 
 public class ACEventHandler implements ICraftingHandler {
 
 	@Override
-	public void onCrafting(EntityPlayer player, ItemStack item, IInventory craftMatrix) {
-		
+	public void onCrafting(EntityPlayer player, ItemStack stack, IInventory craftMatrix) {
+		if(!player.worldObj.isRemote) {
+			for(ArrayList<TechTreeComponent> components : TechTree.pages.values()) {
+				for(TechTreeComponent component : components) {
+					if(ACUtil.areItemStacksEqualNoSizeNoTags(component.stack, stack)) {
+						TechTreeServer.unlockComponent(player.username, component.pageName, component.name);
+					}
+				}
+			}
+		}
 	}
 
 	@Override
-	public void onSmelting(EntityPlayer player, ItemStack item) {
+	public void onSmelting(EntityPlayer player, ItemStack stack) {
 	}
 }

@@ -23,11 +23,11 @@ public class TechTreeComponent {
 	public boolean isHidden;
 
 	public TechTreeComponent(String pageName, String name, int displayColumn, int displayRow, ItemStack stack) {
-		this(name, pageName, displayColumn, displayRow, stack, -1);
+		this(pageName, name, displayColumn, displayRow, stack, -1);
 	}
 	
 	public TechTreeComponent(String pageName, String name, int displayColumn, int displayRow, int iconIndex) {
-		this(name, pageName, displayColumn, displayRow, null, iconIndex);
+		this(pageName, name, displayColumn, displayRow, null, iconIndex);
 	}
 	
 	public TechTreeComponent(String pageName, String name, int displayColumn, int displayRow, ItemStack stack, int iconIndex) {

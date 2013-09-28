@@ -12,7 +12,7 @@ public class TechTreeServer {
 
 	public static boolean hasUnlockedComponent(String player, String pageName, String name) {
 		HashMap<String, ArrayList<String>> pages;
-		if(players.containsKey(player)) {
+		if(!players.containsKey(player)) {
 			pages = new HashMap<String, ArrayList<String>>();
 			players.put(player, pages);
 		} else {
@@ -21,6 +21,7 @@ public class TechTreeServer {
 		ArrayList<String> components;
 		if(!pages.containsKey(pageName)) {
 			components = new ArrayList<String>();
+			pages.put(pageName, components);
 		} else {
 			components = pages.get(pageName);
 		}
@@ -29,7 +30,7 @@ public class TechTreeServer {
 	
 	public static void unlockComponent(String player, String pageName, String name) {
 		HashMap<String, ArrayList<String>> pages;
-		if(players.containsKey(player)) {
+		if(!players.containsKey(player)) {
 			pages = new HashMap<String, ArrayList<String>>();
 			players.put(player, pages);
 		} else {
@@ -38,6 +39,7 @@ public class TechTreeServer {
 		ArrayList<String> components;
 		if(!pages.containsKey(pageName)) {
 			components = new ArrayList<String>();
+			pages.put(pageName, components);
 		} else {
 			components = pages.get(pageName);
 		}
@@ -55,7 +57,7 @@ public class TechTreeServer {
 	
 	public static void lockComponent(String player, String pageName, String name) {
 		HashMap<String, ArrayList<String>> pages;
-		if(players.containsKey(player)) {
+		if(!players.containsKey(player)) {
 			pages = new HashMap<String, ArrayList<String>>();
 			players.put(player, pages);
 		} else {
@@ -64,6 +66,7 @@ public class TechTreeServer {
 		ArrayList<String> components;
 		if(!pages.containsKey(pageName)) {
 			components = new ArrayList<String>();
+			pages.put(pageName, components);
 		} else {
 			components = pages.get(pageName);
 		}

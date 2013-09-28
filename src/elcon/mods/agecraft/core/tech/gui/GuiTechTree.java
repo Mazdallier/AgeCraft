@@ -31,10 +31,10 @@ import elcon.mods.core.lang.LanguageManager;
 @SideOnly(Side.CLIENT)
 public class GuiTechTree extends GuiScreen {
 
-	private static int guiMapTop = AchievementList.minDisplayColumn * 24 - 112;
-	private static int guiMapLeft = AchievementList.minDisplayRow * 24 - 112;
-	private static int guiMapBottom = AchievementList.maxDisplayColumn * 24 - 77;
-	private static int guiMapRight = AchievementList.maxDisplayRow * 24 - 77;
+	private static int guiMapTop = TechTree.minDisplayColumn * 24 - 112;
+	private static int guiMapLeft = TechTree.minDisplayRow * 24 - 112;
+	private static int guiMapBottom = TechTree.maxDisplayColumn * 24 - 77;
+	private static int guiMapRight = TechTree.maxDisplayRow * 24 - 77;
 	
 	protected int paneWidth = 256;
 	protected int paneHeight = 202;
@@ -53,18 +53,21 @@ public class GuiTechTree extends GuiScreen {
 	private int pageIndex;
 	private String pageName = TechTree.PAGE_GENERAL;
 	private ArrayList<TechTreeComponent> components = new ArrayList<TechTreeComponent>();
-
-	public GuiTechTree() {		
+	
+	public GuiTechTree() {	
+		guiMapTop = TechTree.minDisplayColumn * 24 - 112;
+		guiMapLeft = TechTree.minDisplayRow * 24 - 112;
+		guiMapBottom = TechTree.maxDisplayColumn * 24 - 77;
+		guiMapRight = TechTree.maxDisplayRow * 24 - 77;
+		
 		field_74117_m = guiMapX = field_74124_q = (double) (AchievementList.openInventory.displayColumn * 24 - 141 / 2 - 12);
 		field_74115_n = guiMapY = field_74123_r = (double) (AchievementList.openInventory.displayRow * 24 - 141 / 2);
 		components.clear();
 		
 		pages.clear();
-		System.out.println(TechTree.pages.get("planks"));
 		pages.addAll(TechTree.pages.keySet());
 		pageIndex = 0;
 		pageName = pages.get(pageIndex);
-		
 		components.clear();
 		components.addAll(TechTree.pages.get(pageName));
 	}
@@ -170,7 +173,7 @@ public class GuiTechTree extends GuiScreen {
 	protected void drawTitle() {
 		int i = (width - paneWidth) / 2;
 		int j = (height - paneHeight) / 2;
-		fontRenderer.drawString("Achievements", i + 15, j + 5, 4210752);
+		fontRenderer.drawString(LanguageManager.getLocalization("techtree.name"), i + 15, j + 5, 4210752);
 	}
 
 	protected void genAchievementBackground(int par1, int par2, float par3) {
@@ -241,7 +244,6 @@ public class GuiTechTree extends GuiScreen {
 				} else {
 					icon = Block.bedrock.getIcon(0, 0);
 				}
-
 				mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
 				drawTexturedModelRectFromIcon(k1 + k3 * 16 - k2, l1 + i3 * 16 - l2, icon, 16, 16);
 			}
@@ -253,7 +255,6 @@ public class GuiTechTree extends GuiScreen {
 		int l3;
 		int i4;
 		int j4;
-
 		for(TechTreeComponent component : components) {
 			if(!component.parents.isEmpty()) {
 				for(TechTreeComponent parentComponent : component.parents) {
@@ -309,7 +310,6 @@ public class GuiTechTree extends GuiScreen {
 				}
 			}
 		}
-
 		TechTreeComponent currentHighlight = null;
 		RenderItem renderitem = new RenderItem();
 		RenderHelper.enableGUIStandardItemLighting();
@@ -318,7 +318,6 @@ public class GuiTechTree extends GuiScreen {
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		int l4;
 		int i5;
-
 		for(TechTreeComponent component : components) {
 			j4 = component.displayColumn * 24 - paneX;
 			l3 = component.displayRow * 24 - paneY;
@@ -343,7 +342,9 @@ public class GuiTechTree extends GuiScreen {
 				i5 = k1 + j4;
 				l4 = l1 + l3;
 
-				if(component.isSpecial) {
+				if(component.isIndependent) {
+					drawTexturedModalRect(i5 - 2, l4 - 2, 52, 202, 26, 26);
+				} else if(component.isSpecial) {
 					drawTexturedModalRect(i5 - 2, l4 - 2, 26, 202, 26, 26);
 				} else {
 					drawTexturedModalRect(i5 - 2, l4 - 2, 0, 202, 26, 26);
@@ -400,7 +401,7 @@ public class GuiTechTree extends GuiScreen {
 				drawGradientRect(j4 - 3, l3 - 3, j4 + i5 + 3, l3 + l4 + 3 + 12, -1073741824, -1073741824);
 				fontRenderer.drawSplitString(s1, j4, l3 + 12, i5, -6250336);
 				if(TechTreeClient.hasUnlockedComponent(currentHighlight.pageName, currentHighlight.name)) {
-					fontRenderer.drawStringWithShadow(I18n.getString("achievement.taken"), j4, l3 + l4 + 4, -7302913);
+					fontRenderer.drawStringWithShadow(LanguageManager.getLocalization("techtree.unlocked"), j4, l3 + l4 + 4, -7302913);
 				}
 			} else {
 				i5 = Math.max(fontRenderer.getStringWidth(s), 120);

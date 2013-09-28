@@ -67,8 +67,8 @@ public class ACPacketHandlerClient implements IPacketHandler {
 	}
 	
 	private void handleTechTreeComponent(ByteArrayDataInput dat) {
-		boolean unlocked = dat.readBoolean();
 		String player = dat.readUTF();
+		boolean unlocked = dat.readBoolean();
 		if(Minecraft.getMinecraft().thePlayer.username.equals(player)) {
 			if(unlocked) {
 				TechTreeClient.unlockComponent(dat.readUTF(), dat.readUTF());
@@ -80,6 +80,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 	
 	private void handleTechTreeAllComponents(ByteArrayDataInput dat) {
 		int pages = dat.readInt();
+		System.out.println("received all components " + pages);
 		for(int i = 0; i < pages; i++) {
 			String pageName = dat.readUTF();
 			int components = dat.readInt();

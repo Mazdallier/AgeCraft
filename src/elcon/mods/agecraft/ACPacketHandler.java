@@ -55,9 +55,9 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			Packet250CustomPayload packet = new Packet250CustomPayload();
 			dos.writeInt(0);
 			dos.writeUTF(player);
+			dos.writeBoolean(unlocked);
 			dos.writeUTF(pageName);
 			dos.writeUTF(name);
-			dos.writeBoolean(unlocked);
 			dos.close();
 			packet.channel = "ACTech";
 			packet.data = bos.toByteArray();
@@ -75,7 +75,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			DataOutputStream dos = new DataOutputStream(bos);
 			Packet250CustomPayload packet = new Packet250CustomPayload();
-			dos.writeInt(0);
+			dos.writeInt(1);
 			if(TechTreeServer.players.containsKey(player)) {
 				HashMap<String, ArrayList<String>> pages = TechTreeServer.players.get(player);
 				dos.writeInt(pages.size());
@@ -106,6 +106,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 	// SERVER
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
 		PacketDispatcher.sendPacketToPlayer(getTechTreeAllComponentsPacket(netHandler.getPlayer().username), player);
+		ACLog.info("[TechTree] Send all components to " + netHandler.getPlayer().username);
 	}
 
 	@Override

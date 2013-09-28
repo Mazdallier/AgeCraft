@@ -66,6 +66,8 @@ public class TechTree extends ACComponent {
 	
 		planks.addParent(paper);
 		book.addParent(paper);
+		planks.addSibling(book);
+		book.addSibling(planks);
 		bookShelf.addParents(planks, book);
 		enchantmentTable.addParent(bookShelf);
 		enchantedBook.addParent(enchantmentTable);
