@@ -102,8 +102,8 @@ public class ItemMetalDoor extends ItemBlockExtendedMetadata {
 	public void registerIcons(IconRegister iconRegister) {
 		String[] doorTypes = new String[]{"Standard", "Solid", "Double", "Full"};
 		for(int i = 0; i < doorTypes.length; i++) {
-			icons[i] = iconRegister.registerIcon("agecraft:door/door" + doorTypes[i]);
+			icons[i] = iconRegister.registerIcon("agecraft:door/metal/door" + doorTypes[i]);
 		}
-		iconOverlay = iconRegister.registerIcon("agecraft:door/doorOverlay");
+		iconOverlay = iconRegister.registerIcon("agecraft:door/metal/doorOverlay");
 	}
 }

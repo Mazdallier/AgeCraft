@@ -71,7 +71,8 @@ public class PlayerClothing implements Serializable {
 				if(ClothingRegistry.typesSorted[i] != null) {
 					ClothingPiece piece = clothingPiecesWorn.get(ClothingRegistry.typesSorted[i].id);
 					if(piece != null) {
-						BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID)));
+						System.out.println((new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id)))).getAbsolutePath());
+						BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id))));
 						g.drawImage(image, 0, 0, null);
 					}
 				}
@@ -85,6 +86,11 @@ public class PlayerClothing implements Serializable {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void addClothingPieceAndWear(ClothingPiece piece, int color) {
+		addClothingPiece(piece);
+		setCurrentClothingPiece(piece, color);
 	}
 	
 	public void addClothingPiece(ClothingPiece piece) {

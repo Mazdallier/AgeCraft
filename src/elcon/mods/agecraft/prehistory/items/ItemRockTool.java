@@ -90,7 +90,7 @@ public class ItemRockTool extends Item {
 	}
 	
 	public int getAttackDamage(ItemStack stack) {
-		if(stack.hasTagCompound() && stack.stackTagCompound.getInteger("Type") == 1) {
+		if(stack.hasTagCompound() && stack.stackTagCompound.getInteger("Type") == 0) {
 			return 2;
 		}
 		return 1;

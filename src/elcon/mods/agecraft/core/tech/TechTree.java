@@ -71,5 +71,11 @@ public class TechTree extends ACComponent {
 		bookShelf.addParents(planks, book);
 		enchantmentTable.addParent(bookShelf);
 		enchantedBook.addParent(enchantmentTable);
+		
+		int size = 0;
+		for(ArrayList<TechTreeComponent> components : pages.values()) {
+			size += components.size();
+		}
+		ACLog.info("[TechTree] Loaded " + size + " components in " + pages.size() + " pages (Average: " + (size / pages.size()) + " components/page)");
 	}
 }
