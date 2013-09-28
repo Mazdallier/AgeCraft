@@ -3,6 +3,8 @@ techtree.locked=Unkown Technology
 techtree.unlocked=Discovered Technology
 techtree.popup=Technology Discovered!
 
+techtree.general.name=General
+
 techtree.general.paper.name=Paper
 techtree.general.paper.description=Paper is needed for books
 techtree.general.planks.name=Planks

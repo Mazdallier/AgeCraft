@@ -19,8 +19,8 @@ import elcon.mods.core.lang.LanguageManager;
 @SideOnly(Side.CLIENT)
 public class GuiTechTreeComponent extends Gui {
 
-	private static final ResourceLocation backgroundTexture = new ResourceLocation("textures/Ogui/achievement/achievement_background.png");
-
+	private static final ResourceLocation backgroundTexture = new ResourceLocation("textures/gui/achievement/achievement_background.png");
+	
 	public static GuiTechTreeComponent instance;
 	
 	private Minecraft mc;
@@ -45,7 +45,7 @@ public class GuiTechTreeComponent extends Gui {
 		componentTime = Minecraft.getSystemTime();
 	}
 
-	private void updateAchievementWindowScale() {
+	private void updateTechTreeWindowScale() {
 		GL11.glViewport(0, 0, mc.displayWidth, mc.displayHeight);
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -65,14 +65,14 @@ public class GuiTechTreeComponent extends Gui {
 		GL11.glTranslatef(0.0F, 0.0F, -2000.0F);
 	}
 
-	public void updateAchievementWindow() {
+	public void updateTechTreeWindow() {
 		if(hasComponent && componentTime != 0L) {
 			double deltaTime = (double) (Minecraft.getSystemTime() - componentTime) / 3000.0D;
 			if(deltaTime < 0.0D || deltaTime > 1.0D) {
 				componentTime = 0L;
 				hasComponent = false;
 			} else {
-				updateAchievementWindowScale();
+				updateTechTreeWindowScale();
 				GL11.glDisable(GL11.GL_DEPTH_TEST);
 				GL11.glDepthMask(false);
 				
@@ -109,6 +109,7 @@ public class GuiTechTreeComponent extends Gui {
 				} else {
 					mc.renderEngine.bindTexture(ResourcesCore.guiTechTreeIcons);
 					drawTexturedModalRect(i + 8, i + 8, TechTree.getComponent(pageName, name).iconIndex % 16 * 16, TechTree.getComponent(pageName, name).iconIndex / 16 * 16, 16, 16);
+					mc.getTextureManager().bindTexture(backgroundTexture);
 				}
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDepthMask(true);

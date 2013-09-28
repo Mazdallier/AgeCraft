@@ -9,7 +9,7 @@ import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
-import elcon.mods.agecraft.core.tech.old.gui.GuiTechTreeOld;
+import elcon.mods.agecraft.core.tech.gui.GuiTechTree;
 
 public class ACKeyHandler extends KeyHandler {
 
@@ -23,7 +23,7 @@ public class ACKeyHandler extends KeyHandler {
 	public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
 		if(Minecraft.getMinecraft().currentScreen == null) {
 			if(kb.keyCode == techTree.keyCode) {
-				Minecraft.getMinecraft().displayGuiScreen(new GuiTechTreeOld());
+				Minecraft.getMinecraft().displayGuiScreen(new GuiTechTree());
 			}
 		}
 	}

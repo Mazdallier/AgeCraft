@@ -30,6 +30,11 @@ public class BlockAgeTeleporter extends BlockAgeTeleporterBlock {
 	public String getUnlocalizedName() {
 		return "tile.ageTeleporter.name";
 	}
+	
+	@Override
+	public int onBlockPlaced(World world, int x, int y, int z, int side, float xx, float yy, float zz, int meta) {
+		return 1;
+	}
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xx, float yy, float zz) {
@@ -37,7 +42,9 @@ public class BlockAgeTeleporter extends BlockAgeTeleporterBlock {
 			EntityPlayerMP playerMP = (EntityPlayerMP) player;
 			if(playerMP != null) {
 				if(playerMP.dimension < 10) {
-					AgeTeleport.teleportList.put(player.username, AgeTeleport.create(world, x - 3, y - 3, z - 6));
+					if(world.getBlockMetadata(x, y, z) == 0) {
+						AgeTeleport.teleportList.put(player.username, AgeTeleport.create(world, x - 3, y - 3, z - 6));
+					}
 					playerMP.mcServer.getConfigurationManager().transferPlayerToDimension(playerMP, 10, new TeleporterAC(playerMP.mcServer.worldServerForDimension(10), 10, true));
 				} else {
 					playerMP.mcServer.getConfigurationManager().transferPlayerToDimension(playerMP, 0, new TeleporterAC(playerMP.mcServer.worldServerForDimension(0), 0, true));

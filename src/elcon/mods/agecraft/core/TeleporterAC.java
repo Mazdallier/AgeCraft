@@ -34,7 +34,7 @@ public class TeleporterAC extends Teleporter {
 			player.playerNetServerHandler.setPlayerLocation(x + 0.5D, MathHelper.floor_double(y), z + 0.5D, entity.rotationYaw, entity.rotationPitch);
 		}		
 		
-		if(player != null && chests) {
+		if(player != null && chests && AgeTeleport.teleportList.containsKey(player.username)) {
 			AgeTeleport t = AgeTeleport.teleportList.get(player.username);
 			if(t != null) {
 				t.placeChests(world, x - 2, y - 1, z - 2);
