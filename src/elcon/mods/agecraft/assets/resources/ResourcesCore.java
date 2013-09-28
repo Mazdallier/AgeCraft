@@ -21,6 +21,8 @@ import net.minecraft.util.ResourceLocation;
 @SideOnly(Side.CLIENT)
 public class ResourcesCore extends Resources {
 	
+	public static ResourceLocation guiIcons = new ResourceLocation("agecraft", "textures/gui/icons.png");
+	
 	public static ResourceLocation guiTechTree = new ResourceLocation("agecraft", "textures/gui/tech_tree.png");
 	public static ResourceLocation guiTechTreeIcons = new ResourceLocation("agecraft", "textures/gui/tech_tree_icons.png");
 	

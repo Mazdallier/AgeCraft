@@ -11,15 +11,19 @@ import net.minecraft.util.FoodStats;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.common.ForgeHooks;
+
+import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.assets.resources.ResourcesCore;
 
 @SideOnly(Side.CLIENT)
 public class GuiInGame extends GuiIngameForge {
 
 	public int offsetY;
 	public int offsetYTarget;
-	
+
 	public GuiInGame(Minecraft mc) {
 		super(mc);
 		renderExperiance = false;
@@ -33,14 +37,13 @@ public class GuiInGame extends GuiIngameForge {
 		}
 		super.renderGameOverlay(partialTicks, hasScreen, mouseX, mouseY);
 	}
-	
+
 	@Override
 	protected void renderArmor(int width, int height) {
 		mc.mcProfiler.startSection("armor");
 
 		int left = width / 2 - 91;
 		int top = height - left_height + offsetY;
-
 		int level = ForgeHooks.getTotalArmorValue(mc.thePlayer);
 		for(int i = 1; level > 0 && i < 20; i += 2) {
 			if(i < level) {
@@ -57,6 +60,30 @@ public class GuiInGame extends GuiIngameForge {
 		mc.mcProfiler.endSection();
 	}
 
+	public void renderHealthBar(int width, int height) {
+		mc.getTextureManager().bindTexture(ResourcesCore.guiIcons);
+		mc.mcProfiler.startSection("health");
+
+		int health = MathHelper.ceiling_float_int(mc.thePlayer.getHealth());
+		int healthMax = MathHelper.ceiling_float_int(mc.thePlayer.getMaxHealth());
+
+		int x = width / 2 - 91;
+		int y = height - left_height + offsetY - 1;
+
+		drawTexturedModalRect(x, y, 0, 0, 100, 10);
+		int barType = 1;
+		if(mc.thePlayer.isPotionActive(Potion.poison)) {
+			barType = 3;
+		} else if(mc.thePlayer.isPotionActive(Potion.wither)) {
+			barType = 4;
+		}
+		drawTexturedModalRect(x, y, 0, barType * 10, health, 10);
+		left_height += 11;
+
+		mc.mcProfiler.endSection();
+		mc.getTextureManager().bindTexture(icons);
+	}
+	
 	@Override
 	public void renderHealth(int width, int height) {
 		mc.getTextureManager().bindTexture(icons);
@@ -70,11 +97,9 @@ public class GuiInGame extends GuiIngameForge {
 		int health = MathHelper.ceiling_float_int(mc.thePlayer.getHealth() / 5);
 		int healthLast = MathHelper.ceiling_float_int(mc.thePlayer.prevHealth / 5);
 		float healthMax = (float) (attrMaxHealth.getAttributeValue() / 5);
-		float absorb = this.mc.thePlayer.getAbsorptionAmount();
-
+		float absorb = mc.thePlayer.getAbsorptionAmount();
 		int healthRows = MathHelper.ceiling_float_int((healthMax + absorb) / 2.0F / 10.0F);
 		int rowHeight = Math.max(10 - (healthRows - 2), 3);
-
 		rand.setSeed((long) (updateCounter * 312871));
 
 		int left = width / 2 - 91;
@@ -83,7 +108,7 @@ public class GuiInGame extends GuiIngameForge {
 		if(rowHeight != 10) {
 			left_height += 10 - rowHeight;
 		}
-
+		
 		int regen = -1;
 		if(mc.thePlayer.isPotionActive(Potion.regeneration)) {
 			regen = updateCounter % 25;
@@ -97,20 +122,21 @@ public class GuiInGame extends GuiIngameForge {
 		} else if(mc.thePlayer.isPotionActive(Potion.wither)) {
 			MARGIN += 72;
 		}
-
 		float absorbRemaining = absorb;
-		for(int i = MathHelper.ceiling_float_int((healthMax + absorb) / 2.0F) - 1; i >= 0; i--) {
+
+		for(int i = MathHelper.ceiling_float_int((healthMax + absorb) / 2.0F) - 1; i >= 0; --i) {
 			int b0 = (highlight ? 1 : 0);
 			int row = MathHelper.ceiling_float_int((float) (i + 1) / 10.0F) - 1;
 			int x = left + i % 10 * 8;
 			int y = top - row * rowHeight;
+
 			if(health <= 4) {
 				y += rand.nextInt(2);
 			}
 			if(i == regen) {
 				y -= 2;
 			}
-
+				
 			drawTexturedModalRect(x, y, BACKGROUND, TOP, 9, 9);
 			if(highlight) {
 				if(i * 2 + 1 < healthLast) {
@@ -207,11 +233,32 @@ public class GuiInGame extends GuiIngameForge {
 	}
 
 	@Override
+	protected void renderJumpBar(int width, int height) {
+		mc.getTextureManager().bindTexture(icons);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+		mc.mcProfiler.startSection("jumpBar");
+		float charge = mc.thePlayer.getHorseJumpPower();
+		final int barWidth = 182;
+		int x = (width / 2) - (barWidth / 2);
+		int filled = (int) (charge * (float) (barWidth + 1));
+		int top = height - 32 + 3;
+
+		drawTexturedModalRect(x, top, 0, 84, barWidth, 5);
+		if(filled > 0) {
+			drawTexturedModalRect(x, top, 0, 89, filled, 5);
+		}
+
+		mc.mcProfiler.endSection();
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+	}
+
+	@Override
 	protected void renderHealthMount(int width, int height) {
 		Entity tmp = mc.thePlayer.ridingEntity;
 		if(!(tmp instanceof EntityLivingBase)) {
 			return;
-		}			
+		}
 		mc.getTextureManager().bindTexture(icons);
 
 		boolean unused = false;
