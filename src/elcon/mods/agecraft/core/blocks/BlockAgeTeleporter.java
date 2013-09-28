@@ -7,7 +7,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.AgeCraft;
+import elcon.mods.agecraft.assets.resources.Resources;
 import elcon.mods.agecraft.core.AgeTeleport;
 import elcon.mods.agecraft.core.TeleporterAC;
 import elcon.mods.core.lang.LanguageManager;
@@ -69,6 +69,6 @@ public class BlockAgeTeleporter extends BlockAgeTeleporterBlock {
 		icon = iconRegister.registerIcon("agecraft:ageTeleporterBlock");
 		iconFront = iconRegister.registerIcon("agecraft:ageTeleporter");
 		
-		AgeCraft.instance.registerBlockIcons(iconRegister);
+		Resources.instance.registerBlockIcons(iconRegister);
 	}
 }

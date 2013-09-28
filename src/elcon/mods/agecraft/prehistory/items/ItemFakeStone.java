@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.AgeCraft;
+import elcon.mods.agecraft.assets.resources.Resources;
 import elcon.mods.core.lang.LanguageManager;
 
 public class ItemFakeStone extends Item {
@@ -43,6 +43,6 @@ public class ItemFakeStone extends Item {
 	public void registerIcons(IconRegister iconRegister) {
 		icon = iconRegister.registerIcon("agecraft:ages/prehistory/fake_stone");
 		
-		AgeCraft.instance.registerItemIcons(iconRegister);
+		Resources.instance.registerItemIcons(iconRegister);
 	}
 }

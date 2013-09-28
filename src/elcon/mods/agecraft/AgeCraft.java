@@ -3,7 +3,6 @@ package elcon.mods.agecraft;
 import java.io.File;
 import java.util.ArrayList;
 
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Mod;
@@ -15,10 +14,10 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.AgeCraftCore;
 import elcon.mods.agecraft.core.ranks.ACRankManager;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
@@ -26,7 +25,7 @@ import elcon.mods.core.ElConCore;
 import elcon.mods.core.ElConMod;
 
 @Mod(modid = ACReference.MOD_ID, name = ACReference.NAME, version = ACReference.VERSION, acceptedMinecraftVersions = ACReference.MC_VERSION, dependencies = ACReference.DEPENDENCIES)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, packetHandler = ACPacketHandler.class, channels = {"ACTech", "ACTile"})
+@NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = {"ACTile", "ACTech"}, packetHandler = ACPacketHandlerClient.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = {"ACTile", "ACTech"}, packetHandler = ACPacketHandler.class))
 public class AgeCraft {
 
 	@Instance(ACReference.MOD_ID)
@@ -53,7 +52,7 @@ public class AgeCraft {
 		ElConCore.registerMod(ACReference.NAME, new ElConMod(ACReference.NAME, ACReference.VERSION, ACReference.VERSION_URL, event.getSourceFile(), event.getSuggestedConfigurationFile(), ACConfig.class, new ACSaveHandler()));
 
 		ACLog.init();
-
+		
 		core = new AgeCraftCore();
 
 		for(int i = 0; i < Age.ages.length; i++) {
@@ -64,6 +63,7 @@ public class AgeCraft {
 		for(ACComponent component : components) {
 			component.preInit();
 		}
+		proxy.registerResources();
 		proxy.registerPlayerAPI();
 	}
 
@@ -84,7 +84,6 @@ public class AgeCraft {
 
 		//init tick handlers
 		tickHandler = new ACTickHandler();
-		tickHandlerClient = new ACTickHandlerClient();
 
 		//register server tick handler
 		TickRegistry.registerTickHandler(AgeCraft.instance.tickHandler, Side.SERVER);
@@ -122,30 +121,6 @@ public class AgeCraft {
 		}
 		for(ACComponent component : components) {
 			component.postInit();
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IconRegister iconRegister) {
-		for(int i = 0; i < Age.ages.length; i++) {
-			if(Age.ages[i] != null) {
-				Age.ages[i].registerBlockIcons(iconRegister);
-			}
-		}
-		for(ACComponent component : components) {
-			component.registerBlockIcons(iconRegister);
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void registerItemIcons(IconRegister iconRegister) {
-		for(int i = 0; i < Age.ages.length; i++) {
-			if(Age.ages[i] != null) {
-				Age.ages[i].registerItemIcons(iconRegister);
-			}
-		}
-		for(ACComponent component : components) {
-			component.registerItemIcons(iconRegister);
 		}
 	}
 }

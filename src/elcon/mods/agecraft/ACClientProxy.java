@@ -1,45 +1,103 @@
 package elcon.mods.agecraft;
 
+import java.io.File;
+
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+import elcon.mods.agecraft.assets.resources.Resources;
+import elcon.mods.agecraft.core.ACBlockRenderingHandler;
 import elcon.mods.agecraft.core.ACBlockRenderingHandlerOverlay;
+import elcon.mods.agecraft.core.ACBlockRenderingHandlerWithIcon;
+import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.player.ACPlayerClient;
 import elcon.mods.agecraft.core.player.ACPlayerRender;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
+import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
+import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterBeamRenderer;
+import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterChestRenderer;
+import elcon.mods.agecraft.prehistory.PrehistoryBlockRenderingHandler;
 import elcon.mods.agecraft.prehistory.gui.GuiSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
+import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererCampfire;
+import elcon.mods.core.ElConCore;
 import elcon.mods.core.player.PlayerAPI;
 import elcon.mods.core.player.PlayerAPI.PlayerCoreType;
 
 public class ACClientProxy extends ACCommonProxy {
 
 	@Override
+	public void registerResources() {
+		Resources.instance = new Resources();
+	}
+
+	@Override
 	public void registerRenderInformation() {
 		// register client tick handler
+		AgeCraft.instance.tickHandlerClient = new ACTickHandlerClient();
 		TickRegistry.registerTickHandler(AgeCraft.instance.tickHandlerClient, Side.CLIENT);
+
+		// register event handler
+		ACEventHandlerClient eventHandler = new ACEventHandlerClient();
+		MinecraftForge.EVENT_BUS.register(eventHandler);
 
 		// register key handler
 		KeyBindingRegistry.registerKeyBinding(new ACKeyHandler());
 
-		//register block handlers
+		// register block handlers
 		RenderingRegistry.registerBlockHandler(ACConfig.BLOCK_OVERLAY_RENDER_ID, new ACBlockRenderingHandlerOverlay());
+
+		// init player clothing client
+		PlayerClothingClient.clothingDir = new File(ElConCore.minecraftDir, File.separator + "clothing");
+		PlayerClothingClient.clothingFileDir = new File(ElConCore.minecraftDir, File.separator + "playerSkins");
+
+		// register block rendering handler
+		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();
+		ACBlockRenderingHandlerWithIcon blockRenderingHandlerWithIcon = new ACBlockRenderingHandlerWithIcon();
+		RenderingRegistry.registerBlockHandler(99, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(100, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(101, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(102, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(103, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(104, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(105, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(106, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(107, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(108, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(109, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(110, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(111, blockRenderingHandlerWithIcon);
+
+		// register item rendering handler
+		// ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();
+		// MinecraftForgeClient.registerItemRenderer(itemID, itemRenderingHandler);
+
+		// register tile entity renderers
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterBeam.class, new TileEntityAgeTeleporterBeamRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterChest.class, new TileEntityAgeTeleporterChestRenderer());
 		
-		for(int i = 0; i < Age.ages.length; i++) {
-			if(Age.ages[i] != null) {
-				Age.ages[i].clientProxy();
-			}
-		}
-		for(ACComponent component : AgeCraft.instance.components) {
-			component.clientProxy();
-		}
+		prehistory();
 	}
 	
+	private void prehistory() {
+		PrehistoryBlockRenderingHandler blockRenderingHandler = new PrehistoryBlockRenderingHandler();
+		
+		//register block rendering handler
+		RenderingRegistry.registerBlockHandler(200, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(201, blockRenderingHandler);
+		
+		//register tile entity renderers
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());
+	}
+
 	@Override
 	public void registerPlayerAPI() {
 		PlayerAPI.register(PlayerCoreType.CLIENT, ACPlayerClient.class);

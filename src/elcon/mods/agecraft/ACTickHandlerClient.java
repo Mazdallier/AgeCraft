@@ -5,11 +5,14 @@ import java.util.EnumSet;
 import net.minecraft.client.Minecraft;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
 import elcon.mods.agecraft.core.gui.GuiInGame;
 import elcon.mods.agecraft.core.tech.gui.GuiTechTreeComponent;
 
+@SideOnly(Side.CLIENT)
 public class ACTickHandlerClient implements ITickHandler {
 
 	@Override

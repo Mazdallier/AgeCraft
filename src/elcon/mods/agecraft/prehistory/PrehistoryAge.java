@@ -2,11 +2,7 @@ package elcon.mods.agecraft.prehistory;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.Age;
 import elcon.mods.agecraft.IACPacketHandler;
@@ -17,12 +13,9 @@ import elcon.mods.agecraft.prehistory.items.ItemRock;
 import elcon.mods.agecraft.prehistory.items.ItemRockTanningTool;
 import elcon.mods.agecraft.prehistory.items.ItemRockTool;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
-import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererCampfire;
 
 public class PrehistoryAge extends Age {
-	
-	public PrehistoryBlockRenderingHandler blockRenderingHandler;
-	
+		
 	public PrehistoryPacketHandler packetHandler;
 	
 	public static Block campfireOff;
@@ -71,19 +64,6 @@ public class PrehistoryAge extends Age {
 		//add recipes
 		CampfireRecipes.addRecipes();
 		SharpenerRecipes.addRecipes();
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void clientProxy() {
-		blockRenderingHandler = new PrehistoryBlockRenderingHandler();
-		
-		//register block rendering handler
-		RenderingRegistry.registerBlockHandler(200, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(201, blockRenderingHandler);
-		
-		//register tile entity renderers
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());
 	}
 	
 	public IACPacketHandler getPacketHandler() {

@@ -2,7 +2,7 @@ package elcon.mods.agecraft.assets.resources;
 
 import net.minecraft.util.ResourceLocation;
 
-public class ResourcesPrehistory {
+public class ResourcesPrehistory extends Resources {
 	
 	public static ResourceLocation guiSharpener = new ResourceLocation("agecraft", "textures/gui/sharpener.png");
 

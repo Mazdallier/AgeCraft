@@ -4,19 +4,14 @@ import java.io.File;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.IconFlipped;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlockWithMetadata;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
-import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporter;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBeam;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBlock;
@@ -26,8 +21,6 @@ import elcon.mods.agecraft.core.clothing.ClothingCategory;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.clothing.ClothingUpdater;
-import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
-import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.tech.TechTree;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
@@ -35,8 +28,6 @@ import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
 import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
 import elcon.mods.agecraft.core.tileentities.TileEntityNBT;
-import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterBeamRenderer;
-import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterChestRenderer;
 import elcon.mods.agecraft.prehistory.world.WorldGenTeleportSphere;
 import elcon.mods.core.ElConCore;
 
@@ -106,72 +97,9 @@ public class AgeCraftCore extends ACComponent {
 		Item.itemsList[1] = new ItemBlockWithMetadata(1 - 256, Block.stone).setUnlocalizedName("stone");
 	}
 	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IconRegister iconRegister) {
-		String[] doorTypes = new String[]{"Standard", "Solid", "Double", "Full"};
-		for(int i = 0; i < doorTypes.length; i++) {
-			ResourcesCore.doorWoodIcons[i][0][0] = iconRegister.registerIcon("agecraft:door/wood/door" + doorTypes[i] + "Lower");
-			ResourcesCore.doorWoodIcons[i][1][0] = iconRegister.registerIcon("agecraft:door/wood/door" + doorTypes[i] + "Upper");
-			ResourcesCore.doorWoodIcons[i][0][1] = new IconFlipped(ResourcesCore.doorWoodIcons[i][0][0], true, false);
-			ResourcesCore.doorWoodIcons[i][1][1] = new IconFlipped(ResourcesCore.doorWoodIcons[i][1][0], true, false);
-		}
-		ResourcesCore.trapdoorWoodIcons[0] = iconRegister.registerIcon("agecraft:door/wood/trapdoorStandard");
-		ResourcesCore.trapdoorWoodIcons[1] = iconRegister.registerIcon("agecraft:door/wood/trapdoorSolid");
-		
-		for(int i = 0; i < doorTypes.length; i++) {
-			ResourcesCore.doorMetalIcons[i][0][0] = iconRegister.registerIcon("agecraft:door/metal/doorMetal" + doorTypes[i] + "Lower");
-			ResourcesCore.doorMetalIcons[i][1][0] = iconRegister.registerIcon("agecraft:door/metal/doorMetal" + doorTypes[i] + "Upper");
-			ResourcesCore.doorMetalIcons[i][0][1] = new IconFlipped(ResourcesCore.doorMetalIcons[i][0][0], true, false);
-			ResourcesCore.doorMetalIcons[i][1][1] = new IconFlipped(ResourcesCore.doorMetalIcons[i][1][0], true, false);
-		}
-		ResourcesCore.trapdoorMetalIcons[0] = iconRegister.registerIcon("agecraft:door/metal/trapdoorMetalStandard");
-		ResourcesCore.trapdoorMetalIcons[1] = iconRegister.registerIcon("agecraft:door/metal/trapdoorMetalSolid");
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerItemIcons(IconRegister iconRegister) {
-		ResourcesCore.missingTexture = iconRegister.registerIcon("agecraft:missingTexture");
-		ResourcesCore.emptyTexture = iconRegister.registerIcon("agecraft:emptyTexture");
-	}
-	
 	@SideOnly(Side.CLIENT)
 	public void clientProxy() {		
-		//init player clothing client
-		PlayerClothingClient.clothingDir = new File(ElConCore.minecraftDir, File.separator + "clothing");
-		PlayerClothingClient.clothingFileDir = new File(ElConCore.minecraftDir, File.separator + "playerSkins");
 		
-		//register block rendering handler
-		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();
-		ACBlockRenderingHandlerWithIcon blockRenderingHandlerWithIcon = new ACBlockRenderingHandlerWithIcon();
-		RenderingRegistry.registerBlockHandler(99, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(100, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(101, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(102, blockRenderingHandlerWithIcon);
-		RenderingRegistry.registerBlockHandler(103, blockRenderingHandlerWithIcon);
-		RenderingRegistry.registerBlockHandler(104, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(105, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(106, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(107, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(108, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(109, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(110, blockRenderingHandlerWithIcon);
-		RenderingRegistry.registerBlockHandler(111, blockRenderingHandlerWithIcon);
-		
-		//register item rendering handler
-		//ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();
-		//MinecraftForgeClient.registerItemRenderer(itemID, itemRenderingHandler);
-				
-		//register tile entity renderers
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterBeam.class, new TileEntityAgeTeleporterBeamRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterChest.class, new TileEntityAgeTeleporterChestRenderer());
-	}
-	
-	public void serverProxy() {
-		//init player clothing server
-		PlayerClothingServer.clothingDir = new File(ElConCore.minecraftDir, File.separator + "clothing");
-		PlayerClothingServer.clothingFileDir = new File(ElConCore.minecraftDir, File.separator + "playerSkins");
 	}
 	
 	public void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {

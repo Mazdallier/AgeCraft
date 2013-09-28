@@ -60,6 +60,7 @@ public class GuiTechTree extends GuiScreen {
 		components.clear();
 		
 		pages.clear();
+		System.out.println(TechTree.pages.get("planks"));
 		pages.addAll(TechTree.pages.keySet());
 		pageIndex = 0;
 		pageName = pages.get(pageIndex);

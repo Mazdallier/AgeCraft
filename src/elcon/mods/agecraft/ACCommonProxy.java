@@ -1,29 +1,32 @@
 package elcon.mods.agecraft;
 
+import java.io.File;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
+import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.prehistory.gui.ContainerSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
+import elcon.mods.core.ElConCore;
 import elcon.mods.core.player.PlayerAPI;
 import elcon.mods.core.player.PlayerAPI.PlayerCoreType;
 
 public class ACCommonProxy implements IGuiHandler {
 
-	public void registerRenderInformation() {
-		for(int i = 0; i < Age.ages.length; i++) {
-			if(Age.ages[i] != null) {
-				Age.ages[i].serverProxy();
-			}
-		}
-		for(ACComponent component : AgeCraft.instance.components) {
-			component.serverProxy();
-		}
+	public void registerResources() {
+		
+	}
+	
+	public void registerRenderInformation() {	
+		//init player clothing server
+		PlayerClothingServer.clothingDir = new File(ElConCore.minecraftDir, File.separator + "clothing");
+		PlayerClothingServer.clothingFileDir = new File(ElConCore.minecraftDir, File.separator + "playerSkins");
 	}
 
 	public void registerPlayerAPI() {
