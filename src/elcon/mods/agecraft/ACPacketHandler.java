@@ -22,6 +22,9 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
+import elcon.mods.agecraft.core.clothing.PlayerClothing;
+import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
+import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.tech.TechTreeServer;
 
 public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
@@ -101,12 +104,92 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 		return null;
 	}
+	
+	public static Packet getClothingUpdatePacket(PlayerClothing clothing) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(2);
+			dos.writeUTF(clothing.player);
+			dos.writeInt(clothing.clothingPiecesOwned.size());
+			for(int typeID : clothing.clothingPiecesOwned.keySet()) {
+				ArrayList<ClothingPiece> pieces = clothing.clothingPiecesOwned.get(typeID);
+				dos.writeInt(pieces.size());
+				for(ClothingPiece piece : pieces) {
+					dos.writeInt(piece.categoryID);
+					dos.writeInt(piece.clothingID);
+					for(int i = 0; i < 16; i++) {
+						dos.writeBoolean(piece.colors[i]);
+					}
+					if(clothing.clothingPiecesWorn.containsValue(piece)) {
+						dos.writeBoolean(true);
+						dos.writeInt(clothing.clothingPiecesWornColor.get(typeID));
+					} else {
+						dos.writeBoolean(false);
+					}
+				}
+			}			
+			dos.close();
+			packet.channel = "ACClothing";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Packet getClothingAllUpdatePacket() {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(3);
+			dos.writeInt(PlayerClothingServer.players.size());
+			for(PlayerClothing clothing : PlayerClothingServer.players.values()) {
+				dos.writeUTF(clothing.player);
+				dos.writeInt(clothing.clothingPiecesOwned.size());
+				for(int typeID : clothing.clothingPiecesOwned.keySet()) {
+					ArrayList<ClothingPiece> pieces = clothing.clothingPiecesOwned.get(typeID);
+					dos.writeInt(pieces.size());
+					for(ClothingPiece piece : pieces) {
+						dos.writeInt(piece.categoryID);
+						dos.writeInt(piece.clothingID);
+						for(int i = 0; i < 16; i++) {
+							dos.writeBoolean(piece.colors[i]);
+						}
+						if(clothing.clothingPiecesWorn.containsValue(piece)) {
+							dos.writeBoolean(true);
+							dos.writeInt(clothing.clothingPiecesWornColor.get(typeID));
+						} else {
+							dos.writeBoolean(false);
+						}
+					}
+				}
+			}
+			dos.close();
+			packet.channel = "ACClothing";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	// SERVER
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
 		PacketDispatcher.sendPacketToPlayer(getTechTreeAllComponentsPacket(netHandler.getPlayer().username), player);
 		ACLog.info("[TechTree] Send all components to " + netHandler.getPlayer().username);
+		PlayerClothingServer.createDefaultClothing(netHandler.getPlayer().username);
+		PacketDispatcher.sendPacketToPlayer(getClothingAllUpdatePacket(), player);
+		ACLog.info("[Clothing] Send all clothing to " + netHandler.getPlayer().username);
 	}
 
 	@Override

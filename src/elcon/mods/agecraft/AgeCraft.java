@@ -25,7 +25,7 @@ import elcon.mods.core.ElConCore;
 import elcon.mods.core.ElConMod;
 
 @Mod(modid = ACReference.MOD_ID, name = ACReference.NAME, version = ACReference.VERSION, acceptedMinecraftVersions = ACReference.MC_VERSION, dependencies = ACReference.DEPENDENCIES)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = {"ACTile", "ACTech"}, packetHandler = ACPacketHandlerClient.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = {"ACTile", "ACTech"}, packetHandler = ACPacketHandler.class))
+@NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = {"ACTile", "ACTech", "ACClothing"}, packetHandler = ACPacketHandlerClient.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = {"ACTile", "ACTech", "ACClothing"}, packetHandler = ACPacketHandler.class))
 public class AgeCraft {
 
 	@Instance(ACReference.MOD_ID)

@@ -27,7 +27,7 @@ public class PlayerClothing implements Serializable {
 			this.categoryID = categoryID;
 			this.clothingID = clothingID;
 		}
-		
+
 		public ClothingPiece(int typeID, int categoryID, int clothingID, int... colors) {
 			this.typeID = typeID;
 			this.categoryID = categoryID;
@@ -44,6 +44,7 @@ public class PlayerClothing implements Serializable {
 	public int glTextureID = -1;
 	public HashMap<Integer, ArrayList<ClothingPiece>> clothingPiecesOwned = new HashMap<Integer, ArrayList<ClothingPiece>>();
 	public HashMap<Integer, ClothingPiece> clothingPiecesWorn = new HashMap<Integer, ClothingPiece>();
+	public HashMap<Integer, Integer> clothingPiecesWornColor = new HashMap<Integer, Integer>();
 	
 	public PlayerClothing(String player) {
 		this.player = player;
@@ -69,8 +70,10 @@ public class PlayerClothing implements Serializable {
 			for(int i = 0; i < ClothingRegistry.typesSorted.length; i++) {
 				if(ClothingRegistry.typesSorted[i] != null) {
 					ClothingPiece piece = clothingPiecesWorn.get(ClothingRegistry.typesSorted[i].id);
-					BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID)));
-					g.drawImage(image, 0, 0, null);
+					if(piece != null) {
+						BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID)));
+						g.drawImage(image, 0, 0, null);
+					}
 				}
 			}
 			if(outputFile.exists()) {
@@ -116,7 +119,15 @@ public class PlayerClothing implements Serializable {
 		return null;
 	}
 	
-	public void setCurrentClothingPiece(ClothingPiece piece) {
+	public int getCurrentClothingPieceColor(int typeID) {
+		if(clothingPiecesWornColor.containsKey(typeID)) {
+			return clothingPiecesWornColor.get(typeID);
+		}
+		return 0;
+	}
+	
+	public void setCurrentClothingPiece(ClothingPiece piece, int color) {
 		clothingPiecesWorn.put(piece.typeID, piece);
+		clothingPiecesWornColor.put(piece.typeID, color);
 	}
 }

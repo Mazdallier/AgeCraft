@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.nbt.NBTTagCompound;
+import elcon.mods.agecraft.core.clothing.PlayerClothing;
+import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.tech.TechTreeServer;
 import elcon.mods.core.IElConSaveHandler;
 
@@ -14,7 +16,7 @@ public class ACSaveHandler implements IElConSaveHandler {
 
 	@Override
 	public String[] getSaveFiles() {
-		return new String[]{"tech_tree"};
+		return new String[]{"tech_tree", "clothing"};
 	}
 
 	@Override
@@ -27,7 +29,14 @@ public class ACSaveHandler implements IElConSaveHandler {
 		if(fileName.equals("tech_tree")) {
 			try {
 				TechTreeServer.players = (HashMap<String, HashMap<String, ArrayList<String>>>) in.readObject();
-				ACLog.info("Loaded the Tech Tree");
+				ACLog.info("[TechTree] Loaded the Tech Tree");
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		} else if(fileName.equals("clothing")) {
+			try {
+				PlayerClothingServer.players = (HashMap<String, PlayerClothing>) in.readObject();
+				ACLog.info("[Clothing] Loaded the clothing");
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -39,7 +48,14 @@ public class ACSaveHandler implements IElConSaveHandler {
 		if(fileName.equals("tech_tree")) {
 			try {
 				out.writeObject(TechTreeServer.players);
-				ACLog.info("Saved the Tech Tree");
+				ACLog.info("[TechTree] Saved the Tech Tree");
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		} else if(fileName.equals("clothing")) {
+			try {
+				out.writeObject(PlayerClothingServer.players);
+				ACLog.info("[Clothing] Saved the clothing");
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

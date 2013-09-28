@@ -16,6 +16,9 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.core.clothing.PlayerClothing;
+import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
+import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.tech.TechTreeClient;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
 import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
@@ -41,10 +44,16 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		switch(packetID) {
 		case 0:
 			handleTechTreeComponent(dat);
-			return;
+			break;
 		case 1:
 			handleTechTreeAllComponents(dat);
-			return;
+			break;
+		case 2:
+			handleClothingUpdate(dat);
+			break;
+		case 3:
+			handleClothingAllUpdate(dat);
+			break;
 		case 90:
 			handleTileEntityNBT(world, dat);
 			break;
@@ -54,7 +63,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		case 92:
 			handleTileEntityMetadata(world, dat);
 			break;
-		}	
+		}
 		
 		for(ACComponent component : AgeCraft.instance.components) {
 			if(component != null) {
@@ -80,13 +89,61 @@ public class ACPacketHandlerClient implements IPacketHandler {
 	
 	private void handleTechTreeAllComponents(ByteArrayDataInput dat) {
 		int pages = dat.readInt();
-		System.out.println("received all components " + pages);
 		for(int i = 0; i < pages; i++) {
 			String pageName = dat.readUTF();
 			int components = dat.readInt();
 			for(int j = 0; j < components; j++) {
 				TechTreeClient.unlockComponent(pageName, dat.readUTF());
 			}
+		}
+	}
+	
+	private void handleClothingUpdate(ByteArrayDataInput dat) {
+		String player = dat.readUTF();
+		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(player);
+		if(clothing == null) {
+			clothing = new PlayerClothing(player);
+		}
+		int types = dat.readInt();
+		for(int i = 0; i < types; i++) {
+			int pieces = dat.readInt();
+			for(int j = 0; j < pieces; j++) {
+				ClothingPiece piece = new ClothingPiece(i, dat.readInt(), dat.readInt());
+				for(int k = 0; k < 16; k++) {
+					piece.colors[k] = dat.readBoolean();
+				}
+				clothing.addClothingPiece(piece);
+				if(dat.readBoolean()) {
+					clothing.setCurrentClothingPiece(piece, dat.readInt());
+				}
+			}
+		}
+		PlayerClothingClient.addPlayerClothing(clothing);
+	}
+	
+	private void handleClothingAllUpdate(ByteArrayDataInput dat) {
+		int players = dat.readInt();
+		for(int i = 0; i < players; i++) {
+			String player = dat.readUTF();
+			PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(player);
+			if(clothing == null) {
+				clothing = new PlayerClothing(player);
+			}
+			int types = dat.readInt();
+			for(int j = 0; j < types; j++) {
+				int pieces = dat.readInt();
+				for(int k = 0; k < pieces; k++) {
+					ClothingPiece piece = new ClothingPiece(j, dat.readInt(), dat.readInt());
+					for(int l = 0; l < 16; l++) {
+						piece.colors[l] = dat.readBoolean();
+					}
+					clothing.addClothingPiece(piece);
+					if(dat.readBoolean()) {
+						clothing.setCurrentClothingPiece(piece, dat.readInt());
+					}
+				}
+			}
+			PlayerClothingClient.addPlayerClothing(clothing);
 		}
 	}
 	
