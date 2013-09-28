@@ -43,6 +43,6 @@ public class ItemFakeStone extends Item {
 	public void registerIcons(IconRegister iconRegister) {
 		icon = iconRegister.registerIcon("agecraft:ages/prehistory/fake_stone");
 		
-		Resources.instance.registerItemIcons(iconRegister);
+		Resources.instance.registerItemIconsCall(iconRegister);
 	}
 }

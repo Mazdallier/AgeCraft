@@ -69,6 +69,6 @@ public class BlockAgeTeleporter extends BlockAgeTeleporterBlock {
 		icon = iconRegister.registerIcon("agecraft:ageTeleporterBlock");
 		iconFront = iconRegister.registerIcon("agecraft:ageTeleporter");
 		
-		Resources.instance.registerBlockIcons(iconRegister);
+		Resources.instance.registerBlockIconsCall(iconRegister);
 	}
 }

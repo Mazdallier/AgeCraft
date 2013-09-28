@@ -12,6 +12,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import elcon.mods.agecraft.assets.resources.Resources;
+import elcon.mods.agecraft.assets.resources.ResourcesCore;
+import elcon.mods.agecraft.assets.resources.ResourcesPrehistory;
 import elcon.mods.agecraft.core.ACBlockRenderingHandler;
 import elcon.mods.agecraft.core.ACBlockRenderingHandlerOverlay;
 import elcon.mods.agecraft.core.ACBlockRenderingHandlerWithIcon;
@@ -37,6 +39,8 @@ public class ACClientProxy extends ACCommonProxy {
 	@Override
 	public void registerResources() {
 		Resources.instance = new Resources();
+		new ResourcesCore();
+		new ResourcesPrehistory();
 	}
 
 	@Override

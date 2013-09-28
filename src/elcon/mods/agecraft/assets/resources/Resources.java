@@ -16,15 +16,23 @@ public class Resources {
 		resources.add(this);
 	}
 	
-	public void registerBlockIcons(IconRegister iconRegister) {
+	public void registerBlockIconsCall(IconRegister iconRegister) {
 		for(Resources resource : resources) {
 			resource.registerBlockIcons(iconRegister);
 		}
 	}
 
-	public void registerItemIcons(IconRegister iconRegister) {
+	public void registerItemIconsCall(IconRegister iconRegister) {
 		for(Resources resource : resources) {
 			resource.registerItemIcons(iconRegister);
 		}
+	}
+	
+	public void registerBlockIcons(IconRegister iconRegister) {
+		
+	}
+
+	public void registerItemIcons(IconRegister iconRegister) {
+		
 	}
 }
