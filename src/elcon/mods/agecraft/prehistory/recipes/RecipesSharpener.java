@@ -1,24 +1,36 @@
-package elcon.mods.agecraft.prehistory;
+package elcon.mods.agecraft.prehistory.recipes;
 
 import java.util.ArrayList;
 
+import elcon.mods.agecraft.prehistory.PrehistoryAge;
+
 import net.minecraft.item.ItemStack;
 
-public class SharpenerRecipes {
+public class RecipesSharpener {
 
-	public static ArrayList<SharpenerRecipe> recipes = new ArrayList<SharpenerRecipe>();
+	public static class RecipeSharpener {
+
+		public boolean[] input = new boolean[64];
+		public ItemStack output;
+		
+		public RecipeSharpener(boolean[] in, ItemStack out) {
+			input = in;
+			output = out;
+		}
+	}
 	
-	@Deprecated
-	public static SharpenerRecipe getRecipe(boolean[] input) {
-		for(SharpenerRecipe r : recipes) {
+	public static ArrayList<RecipeSharpener> recipes = new ArrayList<RecipeSharpener>();
+	
+	public static RecipeSharpener getRecipe(boolean[] input) {
+		for(RecipeSharpener r : recipes) {
 			if(r != null) {
-				boolean good = true;
-				for(int i = 0; i < 64; i++) {
+				boolean equal = true;
+				for(int i = 0; i < r.input.length; i++) {
 					if(input[i] != r.input[i]) {
-						good = false;
+						equal = false;
 					}
 				}
-				if(good) {
+				if(equal) {
 					return r;
 				}
 			}
@@ -27,7 +39,7 @@ public class SharpenerRecipes {
 	}
 	
 	public static void addRecipe(boolean[] input, ItemStack output) {
-		recipes.add(new SharpenerRecipe(input, output));
+		recipes.add(new RecipeSharpener(input, output));
 	}
 	
 	public static void addRecipes() {
@@ -40,7 +52,7 @@ public class SharpenerRecipes {
 		r[40] = true; r[41] = true; r[42] = true; r[43] = true; r[44] = true; r[45] = true; r[46] = true; r[47] = true;
 		r[49] = true; r[50] = true; r[51] = true; r[52] = true; r[53] = true; r[54] = true;
 		r[58] = true; r[59] = true; r[60] = true; r[61] = true;		
-		SharpenerRecipes.addRecipe(r, new ItemStack(PrehistoryAge.rockTool));
+		RecipesSharpener.addRecipe(r, new ItemStack(PrehistoryAge.rockTool));
 		
 		r = new boolean[64];
 		r[1] = true; r[2] = true;
@@ -51,17 +63,6 @@ public class SharpenerRecipes {
 		r[41] = true; r[42] = true; r[43] = true; r[44] = true; r[45] = true; r[46] = true;
 		r[49] = true; r[50] = true; r[51] = true; r[52] = true; r[53] = true;
 		r[58] = true; r[59] = true; r[60] = true;	
-		SharpenerRecipes.addRecipe(r, new ItemStack(PrehistoryAge.rockTanningTool));
-	}
-	
-	public static class SharpenerRecipe {
-
-		public boolean[] input = new boolean[64];
-		public ItemStack output;
-		
-		public SharpenerRecipe(boolean[] in, ItemStack out) {
-			input = in;
-			output = out;
-		}
+		RecipesSharpener.addRecipe(r, new ItemStack(PrehistoryAge.rockTanningTool));
 	}
 }

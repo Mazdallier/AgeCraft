@@ -9,7 +9,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.core.lang.LanguageManager;
 
-@Deprecated
 public class ItemRockTanningTool extends Item {
 
 	private Icon icon;
@@ -45,7 +44,7 @@ public class ItemRockTanningTool extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		icon = iconRegister.registerIcon("agecraft:ages/prehistory/rock_tanning_tool");
+		icon = iconRegister.registerIcon("agecraft:ages/prehistory/rockTanningTool");
 	}
 	
 	@Override

@@ -12,6 +12,7 @@ import elcon.mods.agecraft.prehistory.items.ItemFakeStone;
 import elcon.mods.agecraft.prehistory.items.ItemRock;
 import elcon.mods.agecraft.prehistory.items.ItemRockTanningTool;
 import elcon.mods.agecraft.prehistory.items.ItemRockTool;
+import elcon.mods.agecraft.prehistory.recipes.RecipesSharpener;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 
 public class PrehistoryAge extends Age {
@@ -63,7 +64,7 @@ public class PrehistoryAge extends Age {
 	public void postInit() {
 		//add recipes
 		CampfireRecipes.addRecipes();
-		SharpenerRecipes.addRecipes();
+		RecipesSharpener.addRecipes();
 	}
 	
 	public IACPacketHandler getPacketHandler() {

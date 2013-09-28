@@ -41,7 +41,7 @@ public class ItemFakeStone extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		icon = iconRegister.registerIcon("agecraft:ages/prehistory/fake_stone");
+		icon = iconRegister.registerIcon("agecraft:ages/prehistory/fakeStone");
 		
 		Resources.instance.registerItemIconsCall(iconRegister);
 	}

@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import elcon.mods.agecraft.prehistory.blocks.BlockRock;
+import elcon.mods.agecraft.prehistory.blocks.BlockRock.RockShape;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 
 public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHandler {
@@ -25,7 +27,8 @@ public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHan
 	}
 	
 	private boolean renderBlockRock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
-		renderer.setRenderBounds(0.35D, 0.0D, 0.35D, 0.75D, 0.2D, 0.75D);
+		RockShape shape = BlockRock.shapes[blockAccess.getBlockMetadata(x, y, z)];
+		renderer.setRenderBounds(shape.minX, shape.minY, shape.minZ, shape.maxX, shape.maxY, shape.maxZ);
 		renderer.renderStandardBlock(block, x, y, z);
 		return true;
 	}

@@ -16,16 +16,16 @@ import elcon.mods.agecraft.prehistory.PrehistoryAge;
 public class ItemRock extends ItemBlock {
 
 	private Icon icon;
-	
+
 	public ItemRock(int i) {
 		super(i);
 	}
-	
+
 	@Override
 	public String getItemDisplayName(ItemStack stack) {
 		return getItemStackDisplayName(stack);
 	}
-	
+
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
 		return Block.blocksList[getBlockID()].getLocalizedName();
@@ -35,12 +35,25 @@ public class ItemRock extends ItemBlock {
 	public String getUnlocalizedName(ItemStack stack) {
 		return Block.blocksList[getBlockID()].getUnlocalizedName();
 	}
-	
+
 	@Override
 	public String getUnlocalizedName() {
 		return Block.blocksList[getBlockID()].getUnlocalizedName();
 	}
-	
+
+	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+		if(player.isSneaking()) {
+			if(!world.isRemote) {
+				if(hasTwoRocks(player.inventory)) {
+					player.openGui(AgeCraft.instance, 10, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+				}
+			}
+			return true;
+		}
+		return super.onItemUse(stack, player, world, x, y, z, side, hitX, hitY, hitZ);
+	}
+
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if(!world.isRemote) {
@@ -59,7 +72,7 @@ public class ItemRock extends ItemBlock {
 	public int getSpriteNumber() {
 		return 1;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIconFromDamage(int i) {
@@ -71,7 +84,7 @@ public class ItemRock extends ItemBlock {
 	public void registerIcons(IconRegister iconRegister) {
 		icon = iconRegister.registerIcon("agecraft:ages/prehistory/rock");
 	}
-	
+
 	private boolean hasTwoRocks(InventoryPlayer inv) {
 		int count = 0;
 		for(int i = 0; i < inv.getSizeInventory(); i++) {

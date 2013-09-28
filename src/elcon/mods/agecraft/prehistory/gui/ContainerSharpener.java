@@ -8,8 +8,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
-import elcon.mods.agecraft.prehistory.SharpenerRecipes;
-import elcon.mods.agecraft.prehistory.SharpenerRecipes.SharpenerRecipe;
+import elcon.mods.agecraft.prehistory.recipes.RecipesSharpener;
+import elcon.mods.agecraft.prehistory.recipes.RecipesSharpener.RecipeSharpener;
 
 public class ContainerSharpener extends Container {
 
@@ -40,7 +40,6 @@ public class ContainerSharpener extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int i) {
-		//ItemStack itemstack = null;
         Slot slot = (Slot)inventorySlots.get(i);
         slot.onPickupFromSlot(player, slot.getStack());
         slot.onSlotChanged();
@@ -55,7 +54,7 @@ public class ContainerSharpener extends Container {
 			rockRemoved = true;
 		}
 		if(initDone) {
-			SharpenerRecipe r = SharpenerRecipes.getRecipe(blocks);
+			RecipeSharpener r = RecipesSharpener.getRecipe(blocks);
 			if(r != null) {
 				Random rand = new Random();
 				inventory.setInventorySlotContents(1, new ItemStack(r.output.itemID, 1, rand.nextInt(8)));
