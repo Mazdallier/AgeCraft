@@ -103,7 +103,8 @@ public class Tools extends ACComponent {
 		}));
 		ToolRegistry.registerTool(new Tool(10, "spear", spear, 2, 1, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Tool(11, "sickle", sickle, 1, 2, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(11, "sickle", sickle, 1, 2, true, true, true, new Block[]{
+			Block.web, Block.tallGrass, Block.deadBush, Block.vine, Trees.leaves
 		}));
 		ToolRegistry.registerTool(new Tool(12, "hammer", hammer, 2, 2, true, true, true, new Block[]{	
 		}));

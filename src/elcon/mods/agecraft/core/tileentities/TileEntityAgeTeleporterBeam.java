@@ -26,13 +26,12 @@ public class TileEntityAgeTeleporterBeam extends TileEntity {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-
 		List<Entity> list = worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1.0, yCoord + (134 - yCoord), zCoord + 1.0));
 		Iterator<Entity> i = list.iterator();
 		while(i.hasNext()) {
 			Entity e = i.next();
 			if(e != null) {
-				e.setVelocity(e.motionX, 0.20, e.motionZ);
+				e.setVelocity(e.motionX, 0.20D, e.motionZ);
 			}
 		}
 	}

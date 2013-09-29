@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
+import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.ToolRegistry;
 import elcon.mods.agecraft.core.ToolRegistry.Tool;
@@ -63,16 +64,17 @@ public class ItemTool extends Item {
 	public String getUnlocalizedName() {
 		return "tools.type.default";
 	}
-
+	
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase entityLiving, EntityLivingBase entity) {
-		stack.damageItem(ToolRegistry.tools[getToolType(stack)].damageEntity, entity);
+		System.out.println(ToolRegistry.tools[getToolType(stack)].damageEntity);
+		ACUtil.damageItem(stack, ToolRegistry.tools[getToolType(stack)].damageEntity, entity);
 		return true;
 	}
 
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World world, int blockID, int x, int y, int z, EntityLivingBase entity) {
-		stack.damageItem(ToolRegistry.tools[getToolType(stack)].damageBlock, entity);
+		ACUtil.damageItem(stack, ToolRegistry.tools[getToolType(stack)].damageBlock, entity);
 		return true;
 	}
 
@@ -88,13 +90,7 @@ public class ItemTool extends Item {
 
 	@Override
 	public float getStrVsBlock(ItemStack stack, Block block, int metadata) {
-		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
-		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
-			if(blocksEffectiveAgainst[i].blockID == block.blockID && canHarvestBlock(stack, block, metadata)) {
-				return getToolEfficiency(stack);
-			}
-		}
-		return 1.0F;
+		return isEffectiveAgainstBlock(stack, block) && canHarvestBlock(stack, block, metadata) ? getToolEfficiency(stack) : 1.0F;
 	}
 
 	public boolean canHarvestBlock(ItemStack stack, Block block, int meta) {
@@ -103,15 +99,9 @@ public class ItemTool extends Item {
 	
 	@Override
 	public boolean canHarvestBlock(Block block, ItemStack stack) {
-		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
-		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
-			if(blocksEffectiveAgainst[i].blockID == block.blockID) {
-				return true;
-			}
-		}
-		return false;
+		return isEffectiveAgainstBlock(stack, block);
 	}
-	
+
 	public int getBaseAttackDamage(ItemStack stack) {
 		return 0;
 	}
@@ -193,6 +183,16 @@ public class ItemTool extends Item {
 			}
 		}
 		return true;
+	}
+	
+	public boolean isEffectiveAgainstBlock(ItemStack stack, Block block) {
+		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
+		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
+			if(blocksEffectiveAgainst[i].blockID == block.blockID) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
