@@ -47,9 +47,13 @@ public class ItemTool extends Item {
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		return LanguageManager.getLocalization(ToolRegistry.toolMaterials[getToolMaterial(stack)].localization) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		if(ToolRegistry.tools[getToolType(stack)].hasHead) {
+			return LanguageManager.getLocalization(ToolRegistry.toolMaterials[getToolMaterial(stack)].localization) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		} else {
+			return LanguageManager.getLocalization(ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].localization) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		}
 	}
-
+		
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		return "tools.type." + ToolRegistry.tools[getToolType(stack)].name;
@@ -75,6 +79,11 @@ public class ItemTool extends Item {
 	@Override
 	public int getMaxDamage(ItemStack stack) {
 		return getToolDurability(stack);
+	}
+	
+	@Override
+	public int getMaxDamage() {
+		return 1;
 	}
 
 	@Override
@@ -112,7 +121,6 @@ public class ItemTool extends Item {
 		if(entity.canAttackWithItem()) {
 			if(!entity.hitByEntity(player)) {
 				float damage = (float) (getBaseAttackDamage(stack) + getToolAttackStrength(stack));
-				System.out.println(damage);
 				int i = 0;
 				float extraDamage = 0.0F;
 				if(entity instanceof EntityLivingBase) {

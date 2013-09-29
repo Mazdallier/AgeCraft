@@ -81,6 +81,20 @@
 	12522 Axe
 	12523 Shovel
 	12524 Hoe
+	12525 Battleaxe
+	12526 Warhammer
+	12527 Mace
+	12528 Dagger
+	12529 Knife
+	12530 Spear
+	12531 Sickle
+	12532 Hammer
+	12533 Chisel
+	12534 Handsaw
+	12535 Saw
+	12536 Bow
+	12537 Crossbow
+	12538 Fishing Rod
 13000-13099		Prehistory
 	13000 Rock Tool
 	13001 Rock Tanning Tool
