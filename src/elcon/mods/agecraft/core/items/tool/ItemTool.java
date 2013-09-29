@@ -112,6 +112,7 @@ public class ItemTool extends Item {
 		if(entity.canAttackWithItem()) {
 			if(!entity.hitByEntity(player)) {
 				float damage = (float) (getBaseAttackDamage(stack) + getToolAttackStrength(stack));
+				System.out.println(damage);
 				int i = 0;
 				float extraDamage = 0.0F;
 				if(entity instanceof EntityLivingBase) {

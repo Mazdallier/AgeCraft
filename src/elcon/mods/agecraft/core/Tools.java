@@ -9,11 +9,24 @@ import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
 import elcon.mods.agecraft.core.items.tool.ItemAxe;
 import elcon.mods.agecraft.core.items.tool.ItemBattleAxe;
+import elcon.mods.agecraft.core.items.tool.ItemBow;
+import elcon.mods.agecraft.core.items.tool.ItemChisel;
+import elcon.mods.agecraft.core.items.tool.ItemCrossbow;
+import elcon.mods.agecraft.core.items.tool.ItemDagger;
+import elcon.mods.agecraft.core.items.tool.ItemFishingRod;
+import elcon.mods.agecraft.core.items.tool.ItemHammer;
+import elcon.mods.agecraft.core.items.tool.ItemHandSaw;
 import elcon.mods.agecraft.core.items.tool.ItemHoe;
+import elcon.mods.agecraft.core.items.tool.ItemKnife;
+import elcon.mods.agecraft.core.items.tool.ItemMace;
 import elcon.mods.agecraft.core.items.tool.ItemPickaxe;
+import elcon.mods.agecraft.core.items.tool.ItemSaw;
 import elcon.mods.agecraft.core.items.tool.ItemShovel;
+import elcon.mods.agecraft.core.items.tool.ItemSickle;
+import elcon.mods.agecraft.core.items.tool.ItemSpear;
 import elcon.mods.agecraft.core.items.tool.ItemSword;
 import elcon.mods.agecraft.core.items.tool.ItemTool;
+import elcon.mods.agecraft.core.items.tool.ItemWarhammer;
 
 public class Tools extends ACComponent {
 
@@ -23,6 +36,19 @@ public class Tools extends ACComponent {
 	public static ItemTool shovel;
 	public static ItemTool hoe;
 	public static ItemTool battleaxe;
+	public static ItemTool warhammer;
+	public static ItemTool mace;
+	public static ItemTool dagger;
+	public static ItemTool knife;
+	public static ItemTool spear;
+	public static ItemTool sickle;
+	public static ItemTool hammer;
+	public static ItemTool chisel;
+	public static ItemTool handSaw;
+	public static ItemTool saw;
+	public static ItemTool bow;
+	public static ItemTool crossbow;
+	public static ItemTool fishingRod;
 
 	@Override
 	public void preInit() {
@@ -32,6 +58,19 @@ public class Tools extends ACComponent {
 		shovel = (ItemTool) new ItemShovel(12523).setUnlocalizedName("tools_shovel");
 		hoe = (ItemTool) new ItemHoe(12524).setUnlocalizedName("tools_hoe");
 		battleaxe = (ItemTool) new ItemBattleAxe(12525).setUnlocalizedName("tools_battleAxe");
+		warhammer = (ItemTool) new ItemWarhammer(12526).setUnlocalizedName("tools_warhammer");
+		mace = (ItemTool) new ItemMace(12527).setUnlocalizedName("tools_mace");
+		dagger = (ItemTool) new ItemDagger(12528).setUnlocalizedName("tools_dagger");
+		knife = (ItemTool) new ItemKnife(12529).setUnlocalizedName("tools_knife");
+		spear = (ItemTool) new ItemSpear(12530).setUnlocalizedName("tools_spear");
+		sickle = (ItemTool) new ItemSickle(12531).setUnlocalizedName("tools_sickle");
+		hammer = (ItemTool) new ItemHammer(12532).setUnlocalizedName("tools_hammer");
+		chisel = (ItemTool) new ItemChisel(12533).setUnlocalizedName("tools_chisel");
+		handSaw = (ItemTool) new ItemHandSaw(12534).setUnlocalizedName("tools_handSaw");
+		saw = (ItemTool) new ItemSaw(12535).setUnlocalizedName("tools_saw");
+		bow = (ItemTool) new ItemBow(12536).setUnlocalizedName("tools_bow");
+		crossbow = (ItemTool) new ItemCrossbow(12537).setUnlocalizedName("tools_crossbow");
+		fishingRod = (ItemTool) new ItemFishingRod(12538).setUnlocalizedName("tools_fishingRod");
 	}
 
 	@Override
@@ -52,6 +91,34 @@ public class Tools extends ACComponent {
 		ToolRegistry.registerTool(new Tool(4, "hoe", hoe, 2, 2, true, true, true, new Block[]{
 		}));
 		ToolRegistry.registerTool(new Tool(5, "battleaxe", battleaxe, 1, 1, true, true, true, ToolRegistry.tools[2].blocksEffectiveAgainst));
+		ToolRegistry.registerTool(new Tool(6, "warhammer", warhammer, 2, 1, true, true, true, new Block[]{	
+		}));
+		ToolRegistry.registerTool(new Tool(7, "mace", mace, 2, 1, true, true, true, new Block[]{	
+		}));
+		ToolRegistry.registerTool(new Tool(8, "dagger", dagger, 2, 1, true, true, true, new Block[]{	
+			Block.web
+		}));
+		ToolRegistry.registerTool(new Tool(9, "knife", knife, 2, 1, true, true, true, new Block[]{	
+			Block.web
+		}));
+		ToolRegistry.registerTool(new Tool(10, "spear", spear, 2, 1, true, true, true, new Block[]{	
+		}));
+		ToolRegistry.registerTool(new Tool(11, "sickle", sickle, 1, 2, true, true, true, new Block[]{	
+		}));
+		ToolRegistry.registerTool(new Tool(12, "hammer", hammer, 2, 2, true, true, true, new Block[]{	
+		}));
+		ToolRegistry.registerTool(new Tool(13, "chisel", chisel, 2, 2, true, true, true, new Block[]{	
+		}));
+		ToolRegistry.registerTool(new Tool(14, "handSaw", handSaw, 2, 2, true, true, true, new Block[]{	
+		}));
+		ToolRegistry.registerTool(new Tool(15, "saw", saw, 2, 2, true, true, true, new Block[]{	
+		}));
+		ToolRegistry.registerTool(new Tool(16, "bow", bow, 2, 1, false, true, true, new Block[]{	
+		}));
+		ToolRegistry.registerTool(new Tool(17, "crossbow", crossbow, 2, 1, false, true, true, new Block[] {
+		}));
+		ToolRegistry.registerTool(new Tool(18, "fishingRod", fishingRod, 2, 2, false, true, true, new Block[]{	
+		}));
 
 		// register tool materials
 		ToolRegistry.registerToolMaterial(new ToolMaterial(127, "stone", "tools.materials.stone", new ItemStack(Block.cobblestone, 1, 0), 138, 1.5F, 2, 1));

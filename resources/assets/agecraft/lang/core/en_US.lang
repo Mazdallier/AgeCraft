@@ -97,6 +97,7 @@ tools.type.pickaxe=Pickaxe
 tools.type.axe=Axe
 tools.type.shovel=Shovel
 tools.type.hoe=Hoe
+tools.type.battleaxe=Battleaxe
 
 tools.materials.woodOak=Oak Wood
 tools.materials.woodBirch=Birch Wood
