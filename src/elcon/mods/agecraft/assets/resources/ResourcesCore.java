@@ -135,19 +135,21 @@ public class ResourcesCore extends Resources {
 		for(int i = 0; i < ToolRegistry.tools.length; i++) {
 			Tool tool = ToolRegistry.tools[i];
 			if(tool != null) {
-				if(tool.hasHead) {
-					for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
-						ToolMaterial toolMaterial = ToolRegistry.toolMaterials[j];
-						if(toolMaterial != null) {
-							toolMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolMaterial.name));
+				if(tool.id != 16 && tool.id != 17) {
+					if(tool.hasHead) {
+						for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
+							ToolMaterial toolMaterial = ToolRegistry.toolMaterials[j];
+							if(toolMaterial != null) {
+								toolMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolMaterial.name));
+							}
 						}
 					}
-				}
-				if(tool.hasRod) {
-					for(int j = 0; j < ToolRegistry.toolRodMaterials.length; j++) {
-						ToolRodMaterial toolRodMaterial = ToolRegistry.toolRodMaterials[j];
-						if(toolRodMaterial != null) {
-							toolRodMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/sticks/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolRodMaterial.name));
+					if(tool.hasRod) {
+						for(int j = 0; j < ToolRegistry.toolRodMaterials.length; j++) {
+							ToolRodMaterial toolRodMaterial = ToolRegistry.toolRodMaterials[j];
+							if(toolRodMaterial != null) {
+								toolRodMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/sticks/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolRodMaterial.name));
+							}
 						}
 					}
 				}

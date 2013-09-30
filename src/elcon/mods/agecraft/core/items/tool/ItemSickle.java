@@ -22,6 +22,7 @@ public class ItemSickle extends ItemTool {
 	    } else if(harvestLevel >= 4) {
 	    	radius = 2;
 	    }
+	   
 		for(int xx = x - radius; xx <= x + radius; xx++) {
 			for(int yy = y - radius; yy <= y + radius; yy++) {
 				for(int zz = z - radius; zz <= z + radius; zz++) {
@@ -29,6 +30,9 @@ public class ItemSickle extends ItemTool {
 					Block localBlock = Block.blocksList[localBlockID];
 					if(localBlock != null && isEffectiveAgainstBlock(stack, localBlock)) {						
 						int localMetadata = world.getBlockMetadata(xx, yy, zz);
+						 if(world.isRemote) {
+							world.playAuxSFX(2001, xx, yy, zz, localBlockID + (localMetadata << 12));
+						}
 						if(!player.capabilities.isCreativeMode) {
 							onBlockDestroyed(stack, world, localBlockID, xx, yy, zz, player);
 						}
@@ -42,7 +46,7 @@ public class ItemSickle extends ItemTool {
 					}
 				}
 			}
-		}
+		}		
 		return super.onBlockStartBreak(stack, x, y, z, player);
 	}
 }
