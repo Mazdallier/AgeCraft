@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import elcon.mods.agecraft.creativetabs.CreativeTabAgeAgriculture;
 import elcon.mods.agecraft.creativetabs.CreativeTabAgeCraft;
 import elcon.mods.agecraft.creativetabs.CreativeTabAgePrehistory;
+import elcon.mods.agecraft.creativetabs.CreativeTabArmor;
 import elcon.mods.agecraft.creativetabs.CreativeTabMetal;
 import elcon.mods.agecraft.creativetabs.CreativeTabTools;
 import elcon.mods.agecraft.creativetabs.CreativeTabWood;
@@ -15,9 +16,10 @@ public class ACCreativeTabs {
 	public static CreativeTabs metals = new CreativeTabMetal(13, "Metals");
 	public static CreativeTabs wood = new CreativeTabWood(14, "Wood");
 	public static CreativeTabs tools = new CreativeTabTools(15, "Tools");
+	public static CreativeTabs armor = new CreativeTabArmor(16, "Armor");
 	
-	public static CreativeTabs prehistoryAge = new CreativeTabAgePrehistory(16, "Prehistory");
-	public static CreativeTabs agricultureAge = new CreativeTabAgeAgriculture(17, "Agriculture");
+	public static CreativeTabs prehistoryAge = new CreativeTabAgePrehistory(17, "Prehistory");
+	public static CreativeTabs agricultureAge = new CreativeTabAgeAgriculture(18, "Agriculture");
 	public static CreativeTabs ancientEgyptAge;
 	public static CreativeTabs ancientChinaAge;
 	public static CreativeTabs romanGreekAge;
