@@ -7,6 +7,7 @@ import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
 import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
+import elcon.mods.agecraft.core.items.tool.ItemArrow;
 import elcon.mods.agecraft.core.items.tool.ItemAxe;
 import elcon.mods.agecraft.core.items.tool.ItemBattleAxe;
 import elcon.mods.agecraft.core.items.tool.ItemBow;
@@ -48,6 +49,7 @@ public class Tools extends ACComponent {
 	public static ItemTool saw;
 	public static ItemTool bow;
 	public static ItemTool crossbow;
+	public static ItemTool arrow;
 	public static ItemTool fishingRod;
 
 	@Override
@@ -70,7 +72,8 @@ public class Tools extends ACComponent {
 		saw = (ItemTool) new ItemSaw(12535).setUnlocalizedName("tools_saw");
 		bow = (ItemTool) new ItemBow(12536).setUnlocalizedName("tools_bow");
 		crossbow = (ItemTool) new ItemCrossbow(12537).setUnlocalizedName("tools_crossbow");
-		fishingRod = (ItemTool) new ItemFishingRod(12538).setUnlocalizedName("tools_fishingRod");
+		arrow = (ItemTool) new ItemArrow(12538).setUnlocalizedName("tools_arrow");
+		fishingRod = (ItemTool) new ItemFishingRod(12539).setUnlocalizedName("tools_fishingRod");
 	}
 
 	@Override
@@ -118,7 +121,9 @@ public class Tools extends ACComponent {
 		}));
 		ToolRegistry.registerTool(new Tool(17, "crossbow", crossbow, 2, 1, false, true, true, new Block[] {
 		}));
-		ToolRegistry.registerTool(new Tool(18, "fishingRod", fishingRod, 2, 2, false, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(18, "arrow", arrow, 0, 0, false, true, true, new Block[] {
+		}));
+		ToolRegistry.registerTool(new Tool(19, "fishingRod", fishingRod, 2, 2, false, true, true, new Block[]{	
 		}));
 
 		// register tool materials
