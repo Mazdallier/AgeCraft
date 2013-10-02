@@ -13,6 +13,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.ArmorRegistry;
+import elcon.mods.agecraft.core.ArmorRegistry.ArmorMaterial;
 import elcon.mods.agecraft.core.ArmorRegistry.ArmorType;
 import elcon.mods.core.lang.LanguageManager;
 
@@ -48,6 +49,15 @@ public class ItemArmor extends Item {
 	public int getMaxDamage(ItemStack stack) {
 		return getArmorDurability(stack);
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getColorFromItemStack(ItemStack stack, int pass) {
+		if(pass == 1) {
+			return hasArmorColor(stack) ? getArmorColor(stack) : 0xFFFFFF;
+		}
+		return 0xFFFFFF;
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -62,11 +72,15 @@ public class ItemArmor extends Item {
 
 	@Override
 	public Icon getIcon(ItemStack stack, int pass) {
-		ArmorType armor = ArmorRegistry.armorTypes[getArmorType(stack)];
+		ArmorType armorType = ArmorRegistry.armorTypes[getArmorType(stack)];
+		ArmorMaterial armorMaterial = getArmorMaterial(stack) != -1 ? ArmorRegistry.armorMaterials[getArmorMaterial(stack)] : null;
 		if(pass == 1) {
-			int armorMaterial = getArmorMaterial(stack);
-			if(armorMaterial != -1 && ArmorRegistry.armorMaterials[armorMaterial] != null) {
-				return ArmorRegistry.armorMaterials[armorMaterial].icons[armor.id];
+			if(armorMaterial != null) {
+				return armorMaterial.icons[armorType.id];
+			}
+		} else if(pass == 2) {
+			if(armorMaterial != null && armorMaterial.hasOverlay) {
+				return armorMaterial.iconsOverlay[armorType.id];
 			}
 		}
 		return ResourcesCore.emptyTexture;
@@ -83,14 +97,19 @@ public class ItemArmor extends Item {
 		for(int i = 0; i < ArmorRegistry.armorTypes.length; i++) {
 			if(ArmorRegistry.armorTypes[i] != null) {
 				for(int j = 0; j < ArmorRegistry.armorMaterials.length; j++) {
-					ItemStack stack = new ItemStack(id, 1, 0);
-					NBTTagCompound nbt = new NBTTagCompound();
-					NBTTagCompound nbt2 = new NBTTagCompound();
-					nbt2.setInteger("Type", i);
-					nbt2.setInteger("Material", j);
-					nbt.setTag("Armor", nbt2);
-					stack.setTagCompound(nbt);
-					list.add(stack);
+					if(ArmorRegistry.armorMaterials[j] != null) {
+						ItemStack stack = new ItemStack(id, 1, 0);
+						NBTTagCompound nbt = new NBTTagCompound();
+						NBTTagCompound nbt2 = new NBTTagCompound();
+						nbt2.setInteger("Type", i);
+						nbt2.setInteger("Material", j);
+						if(ArmorRegistry.armorMaterials[j].hasColors) {
+							nbt.setInteger("Color", ArmorRegistry.armorMaterials[j].defaultColor);
+						}
+						nbt.setTag("Armor", nbt2);
+						stack.setTagCompound(nbt);
+						list.add(stack);
+					}
 				}
 			}
 		}
@@ -124,5 +143,20 @@ public class ItemArmor extends Item {
 	public int getArmorDurability(ItemStack stack) {
 		NBTTagCompound nbt = getArmorNBT(stack);
 		return ArmorRegistry.armorMaterials[getArmorMaterial(stack)].durability;
+	}
+	
+	public boolean hasArmorColor(ItemStack stack) {
+		return ArmorRegistry.armorMaterials[getArmorMaterial(stack)].hasColors;
+	}
+	
+	public int getArmorColor(ItemStack stack) {
+		NBTTagCompound nbt = getArmorNBT(stack);
+		if(hasArmorColor(stack)) {
+			if(!nbt.hasKey("Color")) {
+				nbt.setInteger("Color", ArmorRegistry.armorMaterials[getArmorMaterial(stack)].defaultColor);
+			}
+			return nbt.getInteger("Color");
+		}
+		return -1;
 	}
 }

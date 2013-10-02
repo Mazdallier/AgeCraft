@@ -30,20 +30,24 @@ public class ArmorRegistry {
 		
 		public ItemStack stack;
 		
+		public boolean hasOverlay;
+		public String overlayTexture;
 		public boolean hasColors;
 		public int defaultColor;
 		
 		public int durability;
 		
 		public Icon[] icons = new Icon[128];
+		public Icon[] iconsOverlay = new Icon[128];
 		
-		public ArmorMaterial(int id, String name, String localization, ItemStack stack, boolean hasColors, int defaultColor, int durability) {
+		public ArmorMaterial(int id, String name, String localization, ItemStack stack, boolean hasOverlay, boolean hasColors, int defaultColor, int durability) {
 			this.id = id;
 			this.name = name;
 			this.localization = localization;
 			
 			this.stack = stack;
 			
+			this.hasOverlay = hasOverlay;
 			this.hasColors = hasColors;
 			this.defaultColor = defaultColor;
 			

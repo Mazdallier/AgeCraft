@@ -1,22 +1,25 @@
 package elcon.mods.agecraft.assets.resources;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.core.MetalRegistry;
-import elcon.mods.agecraft.core.ToolRegistry;
-import elcon.mods.agecraft.core.TreeRegistry;
-import elcon.mods.agecraft.core.MetalRegistry.Metal;
-import elcon.mods.agecraft.core.MetalRegistry.OreType;
-import elcon.mods.agecraft.core.ToolRegistry.Armor;
-import elcon.mods.agecraft.core.ToolRegistry.ToolEnhancementMaterial;
-import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
-import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
-import elcon.mods.agecraft.core.TreeRegistry.Tree;
-import elcon.mods.core.ElConCore;
 import net.minecraft.client.renderer.IconFlipped;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.core.ArmorRegistry;
+import elcon.mods.agecraft.core.ArmorRegistry.ArmorMaterial;
+import elcon.mods.agecraft.core.ArmorRegistry.ArmorType;
+import elcon.mods.agecraft.core.MetalRegistry;
+import elcon.mods.agecraft.core.MetalRegistry.Metal;
+import elcon.mods.agecraft.core.MetalRegistry.OreType;
+import elcon.mods.agecraft.core.ToolRegistry;
+import elcon.mods.agecraft.core.ToolRegistry.Armor;
+import elcon.mods.agecraft.core.ToolRegistry.ToolEnhancementMaterial;
+import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
+import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
+import elcon.mods.agecraft.core.TreeRegistry;
+import elcon.mods.agecraft.core.TreeRegistry.Tree;
+import elcon.mods.core.ElConCore;
 
 @SideOnly(Side.CLIENT)
 public class ResourcesCore extends Resources {
@@ -158,6 +161,22 @@ public class ResourcesCore extends Resources {
 						ToolEnhancementMaterial toolEnhancementMaterial = ToolRegistry.toolEnhancementMaterials[j];
 						if(toolEnhancementMaterial != null) {
 							toolEnhancementMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/enhancements/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolEnhancementMaterial.name));
+						}
+					}
+				}
+			}
+		}
+		
+		//armor
+		for(int i = 0; i < ArmorRegistry.armorTypes.length; i++) {
+			ArmorType armorType = ArmorRegistry.armorTypes[i];
+			if(armorType != null) {
+				for(int j = 0; j < ArmorRegistry.armorMaterials.length; j++) {
+					ArmorMaterial armorMaterial = ArmorRegistry.armorMaterials[j];
+					if(armorMaterial != null) {
+						armorMaterial.icons[i] = iconRegister.registerIcon("agecraft:armor/" + armorType.name + "/" + armorType.name + ElConCore.firstUpperCase(armorMaterial.name));
+						if(armorMaterial.hasOverlay) {
+							armorMaterial.iconsOverlay[i] = iconRegister.registerIcon("agecraft:armor/" + armorType.name + "/" + armorType.name + ElConCore.firstUpperCase(armorMaterial.name) + "Overlay");
 						}
 					}
 				}
