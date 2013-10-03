@@ -31,7 +31,6 @@ public class ArmorRegistry {
 		public ItemStack stack;
 		
 		public boolean hasOverlay;
-		public String overlayTexture;
 		public boolean hasColors;
 		public int defaultColor;
 		

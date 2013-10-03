@@ -4,10 +4,13 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
@@ -51,6 +54,18 @@ public class ItemArmor extends Item {
 	}
 	
 	@Override
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		int armorIndex = EntityLiving.getArmorPosition(stack) - 1;
+		ItemStack currentArmor = player.getCurrentArmor(armorIndex);
+		if(currentArmor != null) {
+			player.inventory.addItemStackToInventory(currentArmor.copy());
+		}
+		player.setCurrentItemOrArmor(armorIndex + 1, stack.copy());
+		stack.stackSize = 0;
+		return stack;
+	}
+	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int pass) {
 		if(pass == 1) {
@@ -67,7 +82,7 @@ public class ItemArmor extends Item {
 
 	@Override
 	public int getRenderPasses(int metadata) {
-		return 1;
+		return 2;
 	}
 
 	@Override
