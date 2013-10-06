@@ -2,6 +2,7 @@ itemGroup.AgeCraft=AgeCraft
 itemGroup.Metals=Metals
 itemGroup.Wood=Wood
 itemGroup.Tools=Tools
+itemGroup.Armor=Armor
 
 itemGroup.Prehistory=Prehistory
 itemGroup.Agriculture=Agriculture
@@ -104,12 +105,15 @@ tools.type.dagger=Dagger
 tools.type.knife=Knife
 tools.type.spear=Spear
 tools.type.sickle=Sickle
+tools.type.pitchfork=Pitchfork
 tools.type.hammer=Hammer
 tools.type.chisel=Chisel
 tools.type.handSaw=Handsaw
 tools.type.saw=Saw
 tools.type.bow=Bow
 tools.type.crossbow=Crossbow
+tools.type.arrow=Arrow
+tools.type.bolt=Bolt
 tools.type.fishingRod=Fishing Rod
 
 tools.materials.woodOak=Oak Wood
@@ -117,6 +121,11 @@ tools.materials.woodBirch=Birch Wood
 tools.materials.woodSpruce=Spruce Wood
 tools.materials.woodJungle=Jungle Wood
 tools.materials.stone=Stone
+
+armor.type.helmet=Helmet
+armor.type.chestplate=Chestplate
+armor.type.leggings=Leggings
+armor.type.boots=Boots
 
 tile.ageTeleporter.name=Age Teleporter
 tile.ageTeleporterBlock.name=Age Teleporter Block

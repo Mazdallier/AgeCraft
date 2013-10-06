@@ -3,7 +3,7 @@ package elcon.mods.agecraft.core;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.ACComponent;
-import elcon.mods.agecraft.core.ToolRegistry.Armor;
+import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
 import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
@@ -86,55 +86,55 @@ public class Tools extends ACComponent {
 	@Override
 	public void init() {
 		// register tools
-		ToolRegistry.registerTool(new Armor(0, "sword", sword, 2, 1, true, true, true, new Block[]{
+		ToolRegistry.registerTool(new Tool(0, "sword", sword, 2, 1, true, true, true, new Block[]{
 			Block.web
 		}));
-		ToolRegistry.registerTool(new Armor(1, "pickaxe", pickaxe, 1, 2, true, true, true, new Block[]{
+		ToolRegistry.registerTool(new Tool(1, "pickaxe", pickaxe, 1, 2, true, true, true, new Block[]{
 			Block.stone, Block.cobblestone, Metals.ore, Metals.block, Metals.fence, Metals.fenceGate, Metals.door, Metals.trapdoor, Metals.ladder
 		}));
-		ToolRegistry.registerTool(new Armor(2, "axe", axe, 1, 2, true, true, true, new Block[]{
+		ToolRegistry.registerTool(new Tool(2, "axe", axe, 1, 2, true, true, true, new Block[]{
 			Trees.wood, Trees.log, Trees.woodWall, Trees.planks, Trees.fence, Trees.fenceGate, Trees.door, Trees.trapdoor, Trees.ladder
 		}));
-		ToolRegistry.registerTool(new Armor(3, "shovel", shovel, 1, 2, true, true, true, new Block[]{
+		ToolRegistry.registerTool(new Tool(3, "shovel", shovel, 1, 2, true, true, true, new Block[]{
 			Block.grass, Block.dirt, Block.sand, Block.gravel, Block.snow, Block.blockSnow
 		}));
-		ToolRegistry.registerTool(new Armor(4, "hoe", hoe, 2, 2, true, true, true, new Block[]{
+		ToolRegistry.registerTool(new Tool(4, "hoe", hoe, 2, 2, true, true, true, new Block[]{
 		}));
-		ToolRegistry.registerTool(new Armor(5, "battleaxe", battleaxe, 1, 1, true, true, true, ToolRegistry.tools[2].blocksEffectiveAgainst));
-		ToolRegistry.registerTool(new Armor(6, "warhammer", warhammer, 2, 1, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(5, "battleaxe", battleaxe, 1, 1, true, true, true, ToolRegistry.tools[2].blocksEffectiveAgainst));
+		ToolRegistry.registerTool(new Tool(6, "warhammer", warhammer, 2, 1, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Armor(7, "mace", mace, 2, 1, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(7, "mace", mace, 2, 1, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Armor(8, "dagger", dagger, 2, 1, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(8, "dagger", dagger, 2, 1, true, true, true, new Block[]{	
 			Block.web
 		}));
-		ToolRegistry.registerTool(new Armor(9, "knife", knife, 2, 1, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(9, "knife", knife, 2, 1, true, true, true, new Block[]{	
 			Block.web
 		}));
-		ToolRegistry.registerTool(new Armor(10, "spear", spear, 2, 1, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(10, "spear", spear, 2, 1, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Armor(11, "sickle", sickle, 1, 2, true, true, true, new Block[]{
+		ToolRegistry.registerTool(new Tool(11, "sickle", sickle, 1, 2, true, true, true, new Block[]{
 			Block.web, Block.tallGrass, Block.deadBush, Block.vine, Trees.leaves
 		}));
-		ToolRegistry.registerTool(new Armor(12, "pitchfork", pitchfork, 1, 2, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(12, "pitchfork", pitchfork, 1, 2, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Armor(13, "hammer", hammer, 2, 2, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(13, "hammer", hammer, 2, 2, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Armor(14, "chisel", chisel, 2, 2, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(14, "chisel", chisel, 2, 2, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Armor(15, "handSaw", handSaw, 2, 2, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(15, "handSaw", handSaw, 2, 2, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Armor(16, "saw", saw, 2, 2, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(16, "saw", saw, 2, 2, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Armor(17, "bow", bow, 2, 1, false, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(17, "bow", bow, 2, 1, false, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Armor(18, "crossbow", crossbow, 2, 1, false, true, true, new Block[] {
+		ToolRegistry.registerTool(new Tool(18, "crossbow", crossbow, 2, 1, false, true, true, new Block[] {
 		}));
-		ToolRegistry.registerTool(new Armor(19, "arrow", arrow, 0, 0, true, true, false, new Block[] {
+		ToolRegistry.registerTool(new Tool(19, "arrow", arrow, 0, 0, true, true, false, new Block[] {
 		}));
-		ToolRegistry.registerTool(new Armor(20, "bolt", bolt, 0, 0, true, true, false, new Block[] {
+		ToolRegistry.registerTool(new Tool(20, "bolt", bolt, 0, 0, true, true, false, new Block[] {
 		}));
-		ToolRegistry.registerTool(new Armor(21, "fishingRod", fishingRod, 2, 2, false, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(21, "fishingRod", fishingRod, 2, 2, false, true, true, new Block[]{	
 		}));
 
 		// register tool materials
@@ -170,7 +170,7 @@ public class Tools extends ACComponent {
 		// register tool creative entries
 		for(int i = 0; i < ToolRegistry.tools.length; i++) {
 			if(ToolRegistry.tools[i] != null) {
-				Armor tool = ToolRegistry.tools[i];
+				Tool tool = ToolRegistry.tools[i];
 				if(tool.hasHead) {
 					for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
 						if(ToolRegistry.toolMaterials[j] != null) {

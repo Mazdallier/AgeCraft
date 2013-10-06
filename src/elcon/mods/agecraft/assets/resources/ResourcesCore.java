@@ -13,7 +13,7 @@ import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.MetalRegistry.Metal;
 import elcon.mods.agecraft.core.MetalRegistry.OreType;
 import elcon.mods.agecraft.core.ToolRegistry;
-import elcon.mods.agecraft.core.ToolRegistry.Armor;
+import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolEnhancementMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
@@ -140,9 +140,9 @@ public class ResourcesCore extends Resources {
 		
 		//tools
 		for(int i = 0; i < ToolRegistry.tools.length; i++) {
-			Armor tool = ToolRegistry.tools[i];
+			Tool tool = ToolRegistry.tools[i];
 			if(tool != null) {
-				if(tool.id != 16 && tool.id != 17) {
+				if(tool.id != 17 && tool.id != 18 && tool.id != 19 && tool.id != 20) {
 					if(tool.hasHead) {
 						for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
 							ToolMaterial toolMaterial = ToolRegistry.toolMaterials[j];

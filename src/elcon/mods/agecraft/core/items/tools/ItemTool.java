@@ -29,7 +29,7 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.ToolRegistry;
-import elcon.mods.agecraft.core.ToolRegistry.Armor;
+import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
 import elcon.mods.core.lang.LanguageManager;
 
@@ -209,7 +209,7 @@ public class ItemTool extends Item {
 
 	@Override
 	public Icon getIcon(ItemStack stack, int pass) {
-		Armor tool = ToolRegistry.tools[getToolType(stack)];
+		Tool tool = ToolRegistry.tools[getToolType(stack)];
 		if(pass == 0 && tool.hasRod) {
 			int toolRodMaterial = getToolRodMaterial(stack);
 			if(toolRodMaterial != -1 && ToolRegistry.toolRodMaterials[toolRodMaterial] != null) {
@@ -293,13 +293,13 @@ public class ItemTool extends Item {
 
 	public int getToolDurability(ItemStack stack) {
 		NBTTagCompound nbt = getToolNBT(stack);
-		Armor tool = ToolRegistry.tools[getToolType(stack)];
+		Tool tool = ToolRegistry.tools[getToolType(stack)];
 		return (tool.hasHead ? ToolRegistry.toolMaterials[getToolMaterial(stack)].durability : 0) + (tool.hasRod ? ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].durability : 0);
 	}
 
 	public float getToolEfficiency(ItemStack stack) {
 		NBTTagCompound nbt = getToolNBT(stack);
-		Armor tool = ToolRegistry.tools[getToolType(stack)];
+		Tool tool = ToolRegistry.tools[getToolType(stack)];
 		return (tool.hasHead ? ToolRegistry.toolMaterials[getToolMaterial(stack)].efficiency : 0) + (tool.hasRod ? ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].efficiency : 0);
 	}
 
@@ -313,7 +313,7 @@ public class ItemTool extends Item {
 	
 	public int getToolHarvestLevel(ItemStack stack) {
 		NBTTagCompound nbt = getToolNBT(stack);
-		Armor tool = ToolRegistry.tools[getToolType(stack)];
+		Tool tool = ToolRegistry.tools[getToolType(stack)];
 		return (tool.hasHead ? ToolRegistry.toolMaterials[getToolMaterial(stack)].harvestLevel : 0);
 	}
 }

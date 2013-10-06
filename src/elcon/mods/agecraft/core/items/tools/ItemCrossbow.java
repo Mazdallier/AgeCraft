@@ -11,7 +11,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.ToolRegistry;
-import elcon.mods.agecraft.core.ToolRegistry.Armor;
+import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.core.ElConCore;
 
 public class ItemCrossbow extends ItemTool {
@@ -40,8 +40,8 @@ public class ItemCrossbow extends ItemTool {
 	
 	@Override
 	public Icon getIcon(ItemStack stack, int pass) {
-		Armor tool = ToolRegistry.tools[getToolType(stack)];
-		if(pass == 0 && tool.hasRod) {
+		Tool tool = ToolRegistry.tools[getToolType(stack)];
+		if(pass == 1) {
 			int toolRodMaterial = getToolRodMaterial(stack);
 			if(toolRodMaterial != -1 && icons[toolRodMaterial][0] != null) {
 				if(Minecraft.getMinecraft().thePlayer.getItemInUse() != null && Minecraft.getMinecraft().thePlayer.getItemInUse().itemID == itemID) {
@@ -56,7 +56,7 @@ public class ItemCrossbow extends ItemTool {
 				}
 				return icons[toolRodMaterial][0];
 			}
-		} else if(pass == 2 && tool.hasEnhancements) {
+		} else if(pass == 2) {
 			int toolEnhancement = getToolEnhancementMaterial(stack);
 			if(toolEnhancement != -1 && ToolRegistry.toolEnhancementMaterials[toolEnhancement] != null) {
 				return ToolRegistry.toolEnhancementMaterials[toolEnhancement].icons[tool.id];

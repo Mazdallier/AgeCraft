@@ -11,7 +11,7 @@ import elcon.mods.agecraft.core.items.tools.ItemTool;
 
 public class ToolRegistry {
 
-	public static class Armor {
+	public static class Tool {
 		
 		public int id;
 		public String name;
@@ -27,7 +27,7 @@ public class ToolRegistry {
 		
 		public Block[] blocksEffectiveAgainst;
 		
-		public Armor(int id, String name, ItemTool item, int damageBlock, int damageEntity, boolean hasHead, boolean hasRod, boolean hasEnhancements, Block[] blocksEffectiveAgainst) {
+		public Tool(int id, String name, ItemTool item, int damageBlock, int damageEntity, boolean hasHead, boolean hasRod, boolean hasEnhancements, Block[] blocksEffectiveAgainst) {
 			this.id = id;
 			this.name = name;
 			
@@ -134,13 +134,13 @@ public class ToolRegistry {
 		}
 	}
 	
-	public static Armor[] tools = new Armor[128];
+	public static Tool[] tools = new Tool[128];
 	public static ToolMaterial[] toolMaterials = new ToolMaterial[256];
 	public static ToolRodMaterial[] toolRodMaterials = new ToolRodMaterial[256];
 	public static ToolEnhancementMaterial[] toolEnhancementMaterials = new ToolEnhancementMaterial[256];
 	public static HashMap<Integer, ArrayList<ToolCreativeEntry>> toolCreativeEntries = new HashMap<Integer, ArrayList<ToolCreativeEntry>>();
 	
-	public static void registerTool(Armor tool) {
+	public static void registerTool(Tool tool) {
 		if(tools[tool.id] != null) {
 			ACLog.warning("[ToolRegistry] Overriding existing tool (" + tools[tool.id] + ": " + tools[tool.id].name.toUpperCase() + ") with new tool (" + tool.id + ": " + tool.name.toUpperCase() + ")");
 		}
