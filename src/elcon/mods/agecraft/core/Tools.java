@@ -48,14 +48,13 @@ public class Tools extends ACComponent {
 	public static ItemTool pitchfork;
 	public static ItemTool hammer;
 	public static ItemTool chisel;
-	public static ItemTool handSaw;
+	public static ItemTool handsaw;
 	public static ItemTool saw;
 	public static ItemTool bow;
 	public static ItemTool crossbow;
 	public static ItemTool arrow;
 	public static ItemTool bolt;
 	public static ItemTool fishingRod;
-	
 
 	@Override
 	public void preInit() {
@@ -74,7 +73,7 @@ public class Tools extends ACComponent {
 		pitchfork = (ItemTool) new ItemPitchfork(12532).setUnlocalizedName("tools_pitchfork");
 		hammer = (ItemTool) new ItemHammer(12533).setUnlocalizedName("tools_hammer");
 		chisel = (ItemTool) new ItemChisel(12534).setUnlocalizedName("tools_chisel");
-		handSaw = (ItemTool) new ItemHandSaw(12535).setUnlocalizedName("tools_handSaw");
+		handsaw = (ItemTool) new ItemHandSaw(12535).setUnlocalizedName("tools_handsaw");
 		saw = (ItemTool) new ItemSaw(12536).setUnlocalizedName("tools_saw");
 		bow = (ItemTool) new ItemBow(12537).setUnlocalizedName("tools_bow");
 		crossbow = (ItemTool) new ItemCrossbow(12538).setUnlocalizedName("tools_crossbow");
@@ -122,7 +121,7 @@ public class Tools extends ACComponent {
 		}));
 		ToolRegistry.registerTool(new Tool(14, "chisel", chisel, 2, 2, true, true, true, new Block[]{	
 		}));
-		ToolRegistry.registerTool(new Tool(15, "handSaw", handSaw, 2, 2, true, true, true, new Block[]{	
+		ToolRegistry.registerTool(new Tool(15, "handsaw", handsaw, 2, 2, true, true, true, new Block[]{	
 		}));
 		ToolRegistry.registerTool(new Tool(16, "saw", saw, 2, 2, true, true, true, new Block[]{	
 		}));
