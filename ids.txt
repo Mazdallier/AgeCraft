@@ -88,13 +88,21 @@
 	12529 Knife
 	12530 Spear
 	12531 Sickle
-	12532 Hammer
-	12533 Chisel
-	12534 Handsaw
-	12535 Saw
-	12536 Bow
-	12537 Crossbow
-	12538 Fishing Rod
+	12532 Pitchfork
+	12533 Hammer
+	12534 Chisel
+	12535 Handsaw
+	12536 Saw
+	12537 Bow
+	12538 Crossbow
+	12539 Arrow
+	12540 Bolt
+	12541 Fishing Rod
+	
+	12600 Helmet
+	12601 Chestplate
+	12602 Leggings
+	12603 Boots
 13000-13099		Prehistory
 	13000 Rock Tool
 	13001 Rock Tanning Tool

@@ -22,7 +22,7 @@ public class CreativeTabArmor extends CreativeTabs {
 
 	@Override
 	public ItemStack getIconItemStack() {
-		ItemStack stack = new ItemStack(Armor.chestplate, 1, 0);
+		ItemStack stack = new ItemStack(Armor.chestplate.itemID, 1, 0);
 		NBTTagCompound nbt = new NBTTagCompound();
 		NBTTagCompound nbt2 = new NBTTagCompound();
 		nbt2.setInteger("Type", 0);

@@ -22,7 +22,7 @@ public class CreativeTabTools extends CreativeTabs {
 
 	@Override
 	public ItemStack getIconItemStack() {
-		ItemStack stack = new ItemStack(Tools.sword, 1, 0);
+		ItemStack stack = new ItemStack(Tools.sword.itemID, 1, 0);
 		NBTTagCompound nbt = new NBTTagCompound();
 		NBTTagCompound nbt2 = new NBTTagCompound();
 		nbt2.setInteger("Type", 0);

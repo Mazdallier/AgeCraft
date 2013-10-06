@@ -37,6 +37,7 @@ public class AgeCraftCore extends ACComponent {
 	public Metals ores;
 	public Trees trees;
 	public Tools tools;
+	public Armor armor;
 	
 	public static Block ageTeleporter;
 	public static Block ageTeleporterBlock;
@@ -49,6 +50,7 @@ public class AgeCraftCore extends ACComponent {
 		ores = new Metals();
 		trees = new Trees();
 		tools = new Tools();
+		armor = new Armor();
 	}
 	
 	public void preInit() {

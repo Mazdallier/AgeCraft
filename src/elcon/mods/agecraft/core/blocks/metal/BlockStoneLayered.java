@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.core.items.tool.ItemTool;
+import elcon.mods.agecraft.core.items.tools.ItemTool;
 
 public class BlockStoneLayered extends BlockStone {
 

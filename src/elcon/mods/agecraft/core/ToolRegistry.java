@@ -7,7 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import elcon.mods.agecraft.ACLog;
-import elcon.mods.agecraft.core.items.tool.ItemTool;
+import elcon.mods.agecraft.core.items.tools.ItemTool;
 
 public class ToolRegistry {
 

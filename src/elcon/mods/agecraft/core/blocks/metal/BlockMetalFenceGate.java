@@ -18,7 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
-import elcon.mods.agecraft.core.items.tool.ItemTool;
+import elcon.mods.agecraft.core.items.tools.ItemTool;
 import elcon.mods.core.lang.LanguageManager;
 
 public class BlockMetalFenceGate extends BlockExtendedMetadata {
