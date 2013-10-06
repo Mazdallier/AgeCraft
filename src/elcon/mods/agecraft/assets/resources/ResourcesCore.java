@@ -142,7 +142,7 @@ public class ResourcesCore extends Resources {
 		for(int i = 0; i < ToolRegistry.tools.length; i++) {
 			Tool tool = ToolRegistry.tools[i];
 			if(tool != null) {
-				if(tool.id != 17 && tool.id != 18 && tool.id != 19 && tool.id != 20) {
+				if(tool.id != 17 && tool.id != 18 && tool.id != 19 && tool.id != 20 && tool.id != 21) {
 					if(tool.hasHead) {
 						for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
 							ToolMaterial toolMaterial = ToolRegistry.toolMaterials[j];

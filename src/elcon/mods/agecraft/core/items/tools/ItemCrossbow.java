@@ -44,7 +44,7 @@ public class ItemCrossbow extends ItemTool {
 		if(pass == 1) {
 			int toolRodMaterial = getToolRodMaterial(stack);
 			if(toolRodMaterial != -1 && icons[toolRodMaterial][0] != null) {
-				if(Minecraft.getMinecraft().thePlayer.getItemInUse() != null && Minecraft.getMinecraft().thePlayer.getItemInUse().itemID == itemID) {
+				if(Minecraft.getMinecraft().thePlayer.getItemInUse() != null && ItemStack.areItemStacksEqual(stack, Minecraft.getMinecraft().thePlayer.getItemInUse())) {
 					int duration = Minecraft.getMinecraft().thePlayer.getItemInUseDuration();
 					if(duration >= 18) {
 						return icons[toolRodMaterial][3];
