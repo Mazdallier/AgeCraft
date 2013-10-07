@@ -32,11 +32,11 @@ public class ContainerInventory extends Container {
 		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 2, 89, 26, 1));
 		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 3, 89, 44, 2));
 		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 4, 89, 62, 3));
-		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 5, 71, 18, 6));
-		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 6, 71, 36, 7));
-		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 7, 71, 54, 8));
-		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 8, 107, 18, 4));
-		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 9, 107, 36, 5));
+		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 7, 71, 18, 6));
+		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 8, 71, 36, 7));
+		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 9, 71, 54, 8));
+		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 5, 107, 18, 4));
+		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 6, 107, 36, 5));
 		addSlotToContainer(new SlotArmor(this, inventory, inventory.getSizeInventory() - 10, 107, 54, 8));
 
 		for(int i = 0; i < 3; ++i) {
