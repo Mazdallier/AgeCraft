@@ -33,6 +33,11 @@ public class Armor extends ACComponent {
 		ArmorRegistry.registerArmorType(new ArmorType(1, "chestplate", true));
 		ArmorRegistry.registerArmorType(new ArmorType(2, "leggings", false));
 		ArmorRegistry.registerArmorType(new ArmorType(3, "boots", false));
+		//ArmorRegistry.registerArmorType(new ArmorType(4, "cape", false));
+		//ArmorRegistry.registerArmorType(new ArmorType(5, "gloves", false));
+		//ArmorRegistry.registerArmorType(new ArmorType(6, "necklace", false));
+		//ArmorRegistry.registerArmorType(new ArmorType(7, "bracelet", false));
+		//ArmorRegistry.registerArmorType(new ArmorType(8, "ring", false));
 		
 		//register armor materials
 		ArmorRegistry.registerArmorMaterial(new ArmorMaterial(128, "copper", "metals.copper", new ItemStack(Metals.ingot, 1, 0), false, false, 0xFFFFFF, 153));

@@ -168,7 +168,7 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 			if(par1World.isRemote) {
 				return true;
 			} else {
-				par5EntityPlayer.openGui(AgeCraft.instance, 0, par1World, par2, par3, par4);
+				par5EntityPlayer.openGui(AgeCraft.instance, 10, par1World, par2, par3, par4);
 				return true;
 			}
 		}

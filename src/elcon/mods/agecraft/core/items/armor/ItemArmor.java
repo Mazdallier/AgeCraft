@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -53,6 +54,16 @@ public class ItemArmor extends Item {
 		return getArmorDurability(stack);
 	}
 	
+	//TODO: change this to use armor materials
+	public int getDamageReduceAmount(ItemStack stack) {
+		return 0;
+	}
+	
+	@Override
+	public boolean isValidArmor(ItemStack stack, int armorType, Entity entity) {
+		return armorType == getArmorType(stack);
+	}
+	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		int armorIndex = EntityLiving.getArmorPosition(stack) - 1;
@@ -97,6 +108,13 @@ public class ItemArmor extends Item {
 			if(armorMaterial != null && armorMaterial.hasOverlay) {
 				return armorMaterial.iconsOverlay[armorType.id];
 			}
+		}
+		return ResourcesCore.emptyTexture;
+	}
+	
+	public static Icon getBackgroundIcon(int armorTypeID) {
+		if(ArmorRegistry.armorTypes[armorTypeID] != null) {
+			return ArmorRegistry.armorTypes[armorTypeID].backgroundIcon;
 		}
 		return ResourcesCore.emptyTexture;
 	}

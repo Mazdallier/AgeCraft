@@ -161,13 +161,17 @@
 
 ======= GUI IDs ======
 0-9			Core
-10-19		Prehistory Age
-20-29		Agriculture Age
-30-39		Ancient Egypt
-40-49		Ancient China
-50-59		Roman/Greek Age
-60-69		Middle Ages
-70-79		Early Modern Age
-80-89		Industrial Age
-90-99		Modern Age
-100-199		Future
+	0 Inventory
+10-19		Core blocks
+	10 Age Teleporter chest
+20-29		Prehistory Age
+	20 Rock sharpener
+30-39		Agriculture Age
+40-49		Ancient Egypt
+50-59		Ancient China
+60-69		Roman/Greek Age
+70-79		Middle Ages
+80-89		Early Modern Age
+90-99		Industrial Age
+100-109		Modern Age
+110-119		Future

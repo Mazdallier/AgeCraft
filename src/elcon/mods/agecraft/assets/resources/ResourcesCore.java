@@ -25,6 +25,7 @@ import elcon.mods.core.ElConCore;
 public class ResourcesCore extends Resources {
 	
 	public static ResourceLocation guiIcons = new ResourceLocation("agecraft", "textures/gui/icons.png");
+	public static ResourceLocation guiInventory = new ResourceLocation("agecraft", "textures/gui/inventory.png");
 	
 	public static ResourceLocation guiTechTree = new ResourceLocation("agecraft", "textures/gui/tech_tree.png");
 	public static ResourceLocation guiTechTreeIcons = new ResourceLocation("agecraft", "textures/gui/tech_tree_icons.png");
@@ -175,6 +176,7 @@ public class ResourcesCore extends Resources {
 		for(int i = 0; i < ArmorRegistry.armorTypes.length; i++) {
 			ArmorType armorType = ArmorRegistry.armorTypes[i];
 			if(armorType != null) {
+				armorType.backgroundIcon = iconRegister.registerIcon("agecraft:armor/slot/slot" + ElConCore.firstUpperCase(armorType.name));
 				for(int j = 0; j < ArmorRegistry.armorMaterials.length; j++) {
 					ArmorMaterial armorMaterial = ArmorRegistry.armorMaterials[j];
 					if(armorMaterial != null) {

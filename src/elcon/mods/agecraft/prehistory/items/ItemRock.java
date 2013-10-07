@@ -46,7 +46,7 @@ public class ItemRock extends ItemBlock {
 		if(player.isSneaking()) {
 			if(!world.isRemote) {
 				if(hasTwoRocks(player.inventory)) {
-					player.openGui(AgeCraft.instance, 10, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+					player.openGui(AgeCraft.instance, 20, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 				}
 			}
 			return true;
@@ -59,7 +59,7 @@ public class ItemRock extends ItemBlock {
 		if(!world.isRemote) {
 			if(player.isSneaking()) {
 				if(hasTwoRocks(player.inventory)) {
-					player.openGui(AgeCraft.instance, 10, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+					player.openGui(AgeCraft.instance, 20, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 					return stack;
 				}
 			}

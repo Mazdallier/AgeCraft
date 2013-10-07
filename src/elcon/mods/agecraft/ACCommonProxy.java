@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
 import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
+import elcon.mods.agecraft.core.gui.ContainerInventory;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.prehistory.gui.ContainerSharpener;
@@ -37,8 +38,10 @@ public class ACCommonProxy implements IGuiHandler {
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		if(id == 0) {
-			return new ContainerChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
+			return new ContainerInventory();
 		} else if(id == 10) {
+			return new ContainerChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
+		} else if(id == 20) {
 			return new ContainerSharpener(player, new InventorySharpener());
 		} 
 		return null;
