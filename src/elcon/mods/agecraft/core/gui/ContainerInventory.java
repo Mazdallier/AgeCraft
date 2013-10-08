@@ -1,26 +1,29 @@
 package elcon.mods.agecraft.core.gui;
 
-import elcon.mods.agecraft.core.items.armor.ItemArmor;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
+import elcon.mods.agecraft.core.items.armor.ItemArmor;
 
-public class ContainerInventory extends Container {
+public class ContainerInventory extends ContainerPlayer {
 
 	public InventoryCraftMatrix craftMatrix;
 	public InventoryCraftResult craftResult;
-	public boolean isLocalWorld;
 	public EntityPlayer player;
 
 	public ContainerInventory(InventoryPlayer inventory, boolean isLocalWorld, EntityPlayer player) {
+		super(inventory, isLocalWorld, player);
 		this.isLocalWorld = isLocalWorld;
 		this.player = player;
 		craftMatrix = new InventoryCraftMatrix(this, 2, 2);
 		craftResult = new InventoryCraftResult();
 
+		inventorySlots.clear();
+		//inventoryItemStacks.clear();
+		
 		addSlotToContainer(new SlotCrafting(inventory.player, craftMatrix, craftResult, 0, 143, 63));
 		for(int i = 0; i < 2; ++i) {
 			for(int j = 0; j < 2; ++j) {
@@ -75,16 +78,16 @@ public class ContainerInventory extends Container {
 			ItemStack stackInSlot = slot.getStack();
 			stack = stackInSlot.copy();
 			if(slotID == 0) {
-				if(!mergeItemStack(stackInSlot, 9, 45, true)) {
+				if(!mergeItemStack(stackInSlot, 15, 51, true)) {
 					return null;
 				}
 				slot.onSlotChange(stackInSlot, stack);
 			} else if(slotID >= 1 && slotID < 5) {
-				if(!mergeItemStack(stackInSlot, 9, 45, false)) {
+				if(!mergeItemStack(stackInSlot, 15, 51, false)) {
 					return null;
 				}
-			} else if(slotID >= 5 && slotID < 9) {
-				if(!mergeItemStack(stackInSlot, 9, 45, false)) {
+			} else if(slotID >= 5 && slotID < 15) {
+				if(!mergeItemStack(stackInSlot, 15, 51, false)) {
 					return null;
 				}
 			} else if(stack.getItem() instanceof ItemArmor && !((Slot) inventorySlots.get(5 + ((ItemArmor) stack.getItem()).getArmorType(stack))).getHasStack()) {

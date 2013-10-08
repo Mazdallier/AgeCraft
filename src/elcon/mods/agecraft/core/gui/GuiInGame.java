@@ -2,17 +2,21 @@ package elcon.mods.agecraft.core.gui;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeInstance;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.common.ForgeHooks;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -21,12 +25,64 @@ import elcon.mods.agecraft.assets.resources.ResourcesCore;
 @SideOnly(Side.CLIENT)
 public class GuiInGame extends GuiIngameForge {
 
+	private static final ResourceLocation WIDGITS = new ResourceLocation("textures/gui/widgets.png");
+
 	public int offsetY;
 	public int offsetYTarget;
 
 	public GuiInGame(Minecraft mc) {
 		super(mc);
 		renderExperiance = false;
+	}
+
+	@Override
+	protected void renderInventorySlot(int slot, int x, int y, float partialTicks) {
+		ItemStack stack = mc.thePlayer.inventory.getStackInSlot(slot);
+		if(stack != null) {
+			float animation = (float) stack.animationsToGo - partialTicks;
+			if(animation > 0.0F) {
+				GL11.glPushMatrix();
+				float f2 = 1.0F + animation / 5.0F;
+				GL11.glTranslatef((float) (x + 8), (float) (y + 12), 0.0F);
+				GL11.glScalef(1.0F / f2, (f2 + 1.0F) / 2.0F, 1.0F);
+				GL11.glTranslatef((float) (-(x + 8)), (float) (-(y + 12)), 0.0F);
+			}
+			itemRenderer.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x, y);
+			if(animation > 0.0F) {
+				GL11.glPopMatrix();
+			}
+			itemRenderer.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), stack, x, y);
+		}
+	}
+
+	@Override
+	protected void renderHotbar(int width, int height, float partialTicks) {
+		mc.mcProfiler.startSection("actionBar");
+
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		mc.renderEngine.bindTexture(WIDGITS);
+
+		drawTexturedModalRect(width / 2 - 91, height - 22, 0, 0, 182, 22);
+		if(mc.thePlayer.inventory instanceof InventoryPlayer) {
+			InventoryPlayer inv = (InventoryPlayer) mc.thePlayer.inventory;
+			drawTexturedModalRect(width / 2 - 91 - 1 + inv.currentItem * 20, height - 22 - 1, 0, 22, 24, 22);
+		}
+
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		RenderHelper.enableGUIStandardItemLighting();
+
+		for(int i = 0; i < 9; ++i) {
+			int x = width / 2 - 90 + i * 20 + 2;
+			int z = height - 16 - 3;
+			renderInventorySlot(i, x, z, partialTicks);
+		}
+
+		RenderHelper.disableStandardItemLighting();
+		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+		mc.mcProfiler.endSection();
 	}
 
 	@Override
@@ -83,7 +139,7 @@ public class GuiInGame extends GuiIngameForge {
 		mc.mcProfiler.endSection();
 		mc.getTextureManager().bindTexture(icons);
 	}
-	
+
 	@Override
 	public void renderHealth(int width, int height) {
 		mc.getTextureManager().bindTexture(icons);
@@ -108,7 +164,7 @@ public class GuiInGame extends GuiIngameForge {
 		if(rowHeight != 10) {
 			left_height += 10 - rowHeight;
 		}
-		
+
 		int regen = -1;
 		if(mc.thePlayer.isPotionActive(Potion.regeneration)) {
 			regen = updateCounter % 25;
@@ -136,7 +192,7 @@ public class GuiInGame extends GuiIngameForge {
 			if(i == regen) {
 				y -= 2;
 			}
-				
+
 			drawTexturedModalRect(x, y, BACKGROUND, TOP, 9, 9);
 			if(highlight) {
 				if(i * 2 + 1 < healthLast) {

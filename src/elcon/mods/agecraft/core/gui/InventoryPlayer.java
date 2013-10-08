@@ -14,17 +14,13 @@ import elcon.mods.agecraft.core.items.armor.ItemArmor;
 
 public class InventoryPlayer extends net.minecraft.entity.player.InventoryPlayer implements IInventory {
 
-	public ItemStack[] mainInventory = new ItemStack[36];
-	public ItemStack[] armorInventory = new ItemStack[10];
-	public int currentItem;
 	private ItemStack currentItemStack;
-	public EntityPlayer player;
-	public ItemStack itemStack;
-	public boolean inventoryChanged;
+	private ItemStack itemStack;
 
 	public InventoryPlayer(EntityPlayer player) {
 		super(player);
-		this.player = player;
+		mainInventory = new ItemStack[26];
+		armorInventory = new ItemStack[10];
 	}
 
 	@Override

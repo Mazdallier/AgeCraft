@@ -18,8 +18,6 @@ import elcon.mods.agecraft.core.ACBlockRenderingHandler;
 import elcon.mods.agecraft.core.ACBlockRenderingHandlerOverlay;
 import elcon.mods.agecraft.core.ACBlockRenderingHandlerWithIcon;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
-import elcon.mods.agecraft.core.gui.ContainerInventory;
-import elcon.mods.agecraft.core.gui.GuiInventory;
 import elcon.mods.agecraft.core.player.ACPlayerClient;
 import elcon.mods.agecraft.core.player.ACPlayerRender;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
@@ -114,9 +112,7 @@ public class ACClientProxy extends ACCommonProxy {
 
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		if(id == 0) {
-			return new GuiInventory(new ContainerInventory(), player);
-		} else if(id == 10) {
+		if(id == 10) {
 			return new GuiChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
 		} else if(id == 20) {
 			return new GuiSharpener(new InventorySharpener());

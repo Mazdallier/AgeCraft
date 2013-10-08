@@ -176,7 +176,7 @@ public class ResourcesCore extends Resources {
 		for(int i = 0; i < ArmorRegistry.armorTypes.length; i++) {
 			ArmorType armorType = ArmorRegistry.armorTypes[i];
 			if(armorType != null) {
-				armorType.backgroundIcon = iconRegister.registerIcon("agecraft:armor/slot/slot" + ElConCore.firstUpperCase(armorType.name));
+				armorType.backgroundIcon = iconRegister.registerIcon("agecraft:armor/slots/slot" + ElConCore.firstUpperCase(armorType.name));
 				for(int j = 0; j < ArmorRegistry.armorMaterials.length; j++) {
 					ArmorMaterial armorMaterial = ArmorRegistry.armorMaterials[j];
 					if(armorMaterial != null) {

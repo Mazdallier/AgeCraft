@@ -1,5 +1,0 @@
-===== FOLDERS =====
-<armor>
-
-===== FILES =====
-<armor>/<armor><Material>.png

@@ -3,14 +3,12 @@ package elcon.mods.agecraft.core.gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.stats.AchievementList;
 
 import org.lwjgl.opengl.GL11;
@@ -21,10 +19,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 
 @SideOnly(Side.CLIENT)
-public class GuiInventory extends GuiContainer {
+public class GuiInventory extends net.minecraft.client.gui.inventory.GuiInventory {
 
-	public GuiInventory(Container container, EntityPlayer player) {
-		super(container);
+	public GuiInventory(EntityPlayer player) {
+		super(player);
 		allowUserInput = true;
 		player.addStat(AchievementList.openInventory, 1);
 	}
@@ -51,9 +49,13 @@ public class GuiInventory extends GuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.getTextureManager().bindTexture(ResourcesCore.guiInventory);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-		drawEntityLiving(guiLeft + 51, guiTop + 75, 30, (float) (guiLeft + 51) - mouseX, (float) (guiTop + 75 - 50) - mouseY, mc.thePlayer);
+		drawEntityLiving(guiLeft + 33, guiTop + 75, 30, (float) (guiLeft + 51) - mouseX, (float) (guiTop + 75 - 50) - mouseY, mc.thePlayer);
 	}
 
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+	}
+	
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		if(button.id == 0) {
