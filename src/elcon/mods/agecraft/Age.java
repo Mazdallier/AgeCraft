@@ -1,6 +1,7 @@
 package elcon.mods.agecraft;
 
-import net.minecraft.creativetab.CreativeTabs;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 
 public class Age {
@@ -21,18 +22,11 @@ public class Age {
 	public int ageID;
 	public String ageName;
 	
-	public CreativeTabs tab;
-	
 	public Age(int id, String name) {
 		ageID = id;
 		ageName = name;
 		
 		ages[ageID] = this;
-	}
-	
-	public Age(int id, String name, CreativeTabs creativeTab) {
-		this(id, name);
-		tab = creativeTab;
 	}
 	
 	public void preInit() {
@@ -45,5 +39,14 @@ public class Age {
 	
 	public void postInit() {
 		
+	}
+	
+	public IACPacketHandler getPacketHandler() {
+		return null;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public IACPacketHandlerClient getPacketHandlerClient() {
+		return null;
 	}
 }

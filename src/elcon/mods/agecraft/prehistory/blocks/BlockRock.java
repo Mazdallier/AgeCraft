@@ -15,6 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 import elcon.mods.core.lang.LanguageManager;
 
@@ -65,6 +66,7 @@ public class BlockRock extends Block {
 		setHardness(0.4F);
 		setStepSound(Block.soundStoneFootstep);
 		setBlockBounds(0.35F, 0.0F, 0.35F, 0.75F, 0.2F, 0.75F);
+		setCreativeTab(ACCreativeTabs.prehistoryAge);
 	}
 	
 	@Override

@@ -73,6 +73,14 @@ public class ACPacketHandlerClient implements IPacketHandler {
 				}
 			}
 		}
+		for(int i = 0; i < Age.ages.length; i++) {
+			if(Age.ages[i] != null) {
+				IACPacketHandlerClient packetHandler = Age.ages[i].getPacketHandlerClient();
+				if(packetHandler != null) {
+					packetHandler.handlePacketClient(packetID, dat, world);
+				}
+			}
+		}
 	}
 	
 	private void handleTechTreeComponent(ByteArrayDataInput dat) {

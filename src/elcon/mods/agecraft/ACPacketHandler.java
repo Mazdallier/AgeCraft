@@ -49,6 +49,14 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 				}
 			}
 		}
+		for(int i = 0; i < Age.ages.length; i++) {
+			if(Age.ages[i] != null) {
+				IACPacketHandler packetHandler = Age.ages[i].getPacketHandler();
+				if(packetHandler != null) {
+					packetHandler.handlePacketServer(packetID, dat);
+				}
+			}
+		}
 	}
 	
 	public static Packet getTechTreeComponentPacket(String player, String pageName, String name, boolean unlocked) {

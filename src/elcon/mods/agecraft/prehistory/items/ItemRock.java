@@ -10,6 +10,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 
@@ -19,6 +20,7 @@ public class ItemRock extends ItemBlock {
 
 	public ItemRock(int i) {
 		super(i);
+		setCreativeTab(ACCreativeTabs.prehistoryAge);
 	}
 
 	@Override

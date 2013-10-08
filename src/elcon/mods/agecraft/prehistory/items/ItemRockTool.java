@@ -21,6 +21,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.core.lang.LanguageManager;
 
@@ -36,6 +37,7 @@ public class ItemRockTool extends Item {
 		setMaxDamage(32);
 		setMaxStackSize(1);
 		setDamage(new ItemStack(this), 1);
+		setCreativeTab(ACCreativeTabs.prehistoryAge);
 	}
 	
 	@Override

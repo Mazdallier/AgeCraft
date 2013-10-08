@@ -28,6 +28,8 @@ import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterCh
 import elcon.mods.agecraft.prehistory.PrehistoryBlockRenderingHandler;
 import elcon.mods.agecraft.prehistory.gui.GuiSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
+import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererCampfire;
 import elcon.mods.core.ElConCore;
 import elcon.mods.core.player.PlayerAPI;
 import elcon.mods.core.player.PlayerAPI.PlayerCoreType;
@@ -97,7 +99,7 @@ public class ACClientProxy extends ACCommonProxy {
 		RenderingRegistry.registerBlockHandler(201, blockRenderingHandler);
 		
 		//register tile entity renderers
-		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());
 	}
 
 	@Override

@@ -1,10 +1,9 @@
 package elcon.mods.agecraft.prehistory.recipes;
 
-import java.util.ArrayList;
-
-import elcon.mods.agecraft.prehistory.PrehistoryAge;
+import java.util.LinkedList;
 
 import net.minecraft.item.ItemStack;
+import elcon.mods.agecraft.prehistory.PrehistoryAge;
 
 public class RecipesSharpener {
 
@@ -19,7 +18,7 @@ public class RecipesSharpener {
 		}
 	}
 	
-	public static ArrayList<RecipeSharpener> recipes = new ArrayList<RecipeSharpener>();
+	public static LinkedList<RecipeSharpener> recipes = new LinkedList<RecipeSharpener>();
 	
 	public static RecipeSharpener getRecipe(boolean[] input) {
 		for(RecipeSharpener r : recipes) {

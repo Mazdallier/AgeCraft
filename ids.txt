@@ -52,9 +52,8 @@
 	2998 Age Teleporter Beam
 	2999 Age Teleporter Chest
 3000-3099	Prehistory
-	3000 Campfire off
-	3001 Campfire on
-	3002 Rock
+	3000 Campfire
+	3001 Rock
 3100-3199	Agriculture Age
 3200-3299	Ancient Egypt
 3300-3399	Ancient China

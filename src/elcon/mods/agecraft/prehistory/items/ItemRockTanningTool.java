@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.core.lang.LanguageManager;
 
 public class ItemRockTanningTool extends Item {
@@ -18,6 +19,7 @@ public class ItemRockTanningTool extends Item {
 		setMaxDamage(32);
 		setMaxStackSize(1);
 		setDamage(new ItemStack(this), 1);
+		setCreativeTab(ACCreativeTabs.prehistoryAge);
 	}
 	
 	@Override
