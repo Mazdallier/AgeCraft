@@ -6,7 +6,6 @@ import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock.RockShape;
-import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 
 public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 
@@ -33,8 +32,11 @@ public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHan
 		return true;
 	}
 	
-	@Deprecated
 	private boolean renderBlockCampfire(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
+		return false;
+	}
+	
+	/*private boolean renderBlockCampfire(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
 		TileEntityCampfire tile = (TileEntityCampfire) blockAccess.getBlockTileEntity(x, y, z);
 		if(tile.hasSpit) {
 			renderer.setOverrideBlockTexture(Block.planks.getIcon(0, 0));
@@ -68,7 +70,7 @@ public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHan
 			renderer.clearOverrideBlockTexture();
 		}
 		return true;
-	}
+	}*/
 
 	@Override
 	public boolean shouldRender3DInInventory() {

@@ -7,8 +7,6 @@ import net.minecraft.util.Session;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.core.gui.ContainerInventory;
-import elcon.mods.agecraft.core.gui.InventoryPlayer;
 import elcon.mods.core.player.PlayerCoreClient;
 
 @SideOnly(Side.CLIENT)
@@ -17,7 +15,7 @@ public class ACPlayerClient extends PlayerCoreClient {
 	public ACPlayerClient(Minecraft mc, World world, Session session, NetClientHandler netClientHandler, int playerCoreIndex, PlayerCoreClient entityPlayerSP) {
 		super(mc, world, session, netClientHandler, playerCoreIndex, entityPlayerSP);
 		player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setAttribute(100.0D);
-		player.inventory = new InventoryPlayer(player);
-		player.inventoryContainer = new ContainerInventory((InventoryPlayer) player.inventory, !player.worldObj.isRemote, player);
+		//player.inventory = new InventoryPlayer(player);
+		//player.inventoryContainer = new ContainerInventory((InventoryPlayer) player.inventory, !player.worldObj.isRemote, player);
 	}
 }

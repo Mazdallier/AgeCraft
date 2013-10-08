@@ -4,30 +4,29 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-
-import org.lwjgl.opengl.GL11;
-
-import elcon.mods.agecraft.assets.resources.ResourcesPrehistory;
 import elcon.mods.agecraft.prehistory.blocks.models.BlockModelCampfire;
-import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 
-@Deprecated
 public class TileEntityRendererCampfire extends TileEntitySpecialRenderer {
 
 	public BlockModelCampfire model;
 
-	private final EntityItem dummyEntityItem = new EntityItem(null);
+	private final EntityItem dummyEntityItem;
 	private final RenderItem customRenderItem;
 	
 	public TileEntityRendererCampfire() {
 		model = new BlockModelCampfire();
+		dummyEntityItem = new EntityItem(null);
 		customRenderItem = new RenderItem();
 	    customRenderItem.setRenderManager(RenderManager.instance);
 	}
 
-	public void renderAModelAt(TileEntityCampfire tile, double x, double y, double z, float f) {
+	@Override
+	public void renderTileEntityAt(TileEntity tileentity, double d0, double d1, double d2, float f) {
+		
+	}
+
+	/*public void renderAModelAt(TileEntityCampfire tile, double x, double y, double z, float f) {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y, z);
 		GL11.glTranslatef(0.5F, -0.5F, 0.5F);
@@ -72,5 +71,5 @@ public class TileEntityRendererCampfire extends TileEntitySpecialRenderer {
 		RenderItem.renderInFrame = false;
 		
 		GL11.glPopMatrix();
-	}
+	}*/
 }

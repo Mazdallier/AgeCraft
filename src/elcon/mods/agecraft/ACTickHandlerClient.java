@@ -10,7 +10,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
 import elcon.mods.agecraft.core.gui.GuiInGame;
-import elcon.mods.agecraft.core.gui.GuiInventory;
 import elcon.mods.agecraft.core.tech.gui.GuiTechTreeComponent;
 
 @SideOnly(Side.CLIENT)
@@ -33,9 +32,9 @@ public class ACTickHandlerClient implements ITickHandler {
 			if(!(Minecraft.getMinecraft().ingameGUI instanceof GuiInGame)) {
 				Minecraft.getMinecraft().ingameGUI = new GuiInGame(Minecraft.getMinecraft());
 			}
-			if(Minecraft.getMinecraft().currentScreen instanceof net.minecraft.client.gui.inventory.GuiInventory && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)) {
-				Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(Minecraft.getMinecraft().thePlayer));
-			}
+			//if(Minecraft.getMinecraft().currentScreen instanceof net.minecraft.client.gui.inventory.GuiInventory && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)) {
+			//	Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(Minecraft.getMinecraft().thePlayer));
+			//}
 			if(((BlockLeaves) Trees.leaves).fancyGraphics != mc.gameSettings.fancyGraphics) {
 				((BlockLeaves) Trees.leaves).fancyGraphics = mc.gameSettings.fancyGraphics;
 			}

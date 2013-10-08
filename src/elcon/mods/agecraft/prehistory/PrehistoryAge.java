@@ -6,14 +6,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.Age;
 import elcon.mods.agecraft.IACPacketHandler;
-import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.items.ItemFakeStone;
 import elcon.mods.agecraft.prehistory.items.ItemRock;
 import elcon.mods.agecraft.prehistory.items.ItemRockTanningTool;
 import elcon.mods.agecraft.prehistory.items.ItemRockTool;
 import elcon.mods.agecraft.prehistory.recipes.RecipesSharpener;
-import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 
 public class PrehistoryAge extends Age {
 		
@@ -36,8 +34,8 @@ public class PrehistoryAge extends Age {
 	@Override
 	public void preInit() {
 		//init blocks
-		campfireOff = new BlockCampfire(3000, false).setCreativeTab(tab).setUnlocalizedName("campfireOff");
-		campfireOn = new BlockCampfire(3001, true).setUnlocalizedName("campfireOn");
+		//campfireOff = new BlockCampfire(3000, false).setCreativeTab(tab).setUnlocalizedName("campfireOff");
+		//campfireOn = new BlockCampfire(3001, true).setUnlocalizedName("campfireOn");
 		rockBlock = new BlockRock(3002).setCreativeTab(tab).setUnlocalizedName("rock");
 		
 		//register blocks
@@ -52,7 +50,7 @@ public class PrehistoryAge extends Age {
 		rockTanningTool = new ItemRockTanningTool(13001).setCreativeTab(tab).setUnlocalizedName("rockTanningTool");
 		
 		//register tile entities
-		GameRegistry.registerTileEntity(TileEntityCampfire.class, "Campfire");
+		//GameRegistry.registerTileEntity(TileEntityCampfire.class, "Campfire");
 	}
 	
 	@Override
@@ -63,7 +61,7 @@ public class PrehistoryAge extends Age {
 	@Override
 	public void postInit() {
 		//add recipes
-		CampfireRecipes.addRecipes();
+		//RecipesCampfire.addRecipes();
 		RecipesSharpener.addRecipes();
 	}
 	
