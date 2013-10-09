@@ -6,6 +6,7 @@ import elcon.mods.core.lang.LanguageManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
@@ -42,6 +43,16 @@ public class BlockCampfire extends BlockContainer {
 			tile = new TileEntityCampfire();
 		}
 		return tile.isBurning() ? 15 : 0;
+	}
+	
+	@Override
+	public void onEntityWalking(World world, int x, int y, int z, Entity entity) {
+		TileEntityCampfire tile = (TileEntityCampfire) world.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityCampfire();
+			world.setBlockTileEntity(x, y, z, tile);
+		}
+		entity.setFire(8);
 	}
 	
 	@Override

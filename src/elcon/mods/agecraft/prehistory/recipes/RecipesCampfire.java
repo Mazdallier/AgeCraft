@@ -15,10 +15,16 @@ public class RecipesCampfire {
 		public ItemStack cooked;
 		public ItemStack burned;
 		
-		public RecipeCampfire(ItemStack raw, ItemStack cooked, ItemStack burned) {
+		public int cookTime;
+		public int burnTime;
+		
+		public RecipeCampfire(ItemStack raw, ItemStack cooked, ItemStack burned, int cookTime, int burnTime) {
 			this.raw = raw;
 			this.cooked = cooked;
 			this.burned = burned;
+			
+			this.cookTime = cookTime;
+			this.burnTime = burnTime;
 		}
 	}
 	
@@ -34,7 +40,7 @@ public class RecipesCampfire {
 	}
 	
 	public static void addRecipe(ItemStack raw, ItemStack cooked, ItemStack burned) {
-		recipes.add(new RecipeCampfire(raw, cooked, burned));
+		recipes.add(new RecipeCampfire(raw, cooked, burned, 200, 100));
 	}
 	
 	public static void addRecipes() {
