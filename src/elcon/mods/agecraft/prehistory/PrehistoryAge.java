@@ -32,6 +32,7 @@ public class PrehistoryAge extends Age {
 	public PrehistoryAge(int id) {
 		super(id, "prehistory");
 		packetHandler = new PrehistoryPacketHandler();
+		packetHandlerClient = new PrehistoryPacketHandlerClient();
 	}
 	
 	@Override

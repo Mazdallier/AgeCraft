@@ -48,7 +48,9 @@ public class ModelCampfire extends ModelBase {
 	}
 
 	public void renderModel(float f, int logCount) {
-		logCenter.render(f);
+		if(logCount > 0) {
+			logCenter.render(f);
+		}
 		if(logCount >= 1) {
 			log1.render(f);
 		}

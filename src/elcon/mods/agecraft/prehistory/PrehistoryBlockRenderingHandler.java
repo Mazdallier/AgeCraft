@@ -4,8 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock.RockShape;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 
 public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 
@@ -33,7 +35,39 @@ public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHan
 	}
 	
 	private boolean renderBlockCampfire(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
-		return false;
+		TileEntityCampfire tile = (TileEntityCampfire) blockAccess.getBlockTileEntity(x, y, z);
+		if(tile.frameStage > 0) {
+			renderer.setOverrideBlockTexture(Trees.planks.getIcon(0, tile.frameType));
+			if(tile.frameDirection == 0) {
+				if(tile.frameStage >= 1) {
+					renderer.setRenderBounds(0.0D, 0.0D, 0.4D, 0.1D, 1.0D, 0.6D);
+					renderer.renderStandardBlock(block, x, y, z);
+				}
+				if(tile.frameStage >= 2) {
+					renderer.setRenderBounds(0.9D, 0.0D, 0.4D, 1.0D, 1.0D, 0.6D);
+					renderer.renderStandardBlock(block, x, y, z);
+				}
+				if(tile.frameStage >= 3) {
+					renderer.setRenderBounds(0.1D, 0.9D, 0.45D, 0.9D, 1.0D, 0.55D);
+					renderer.renderStandardBlock(block, x, y, z);
+				}
+			} else if(tile.frameDirection == 1) {
+				if(tile.frameStage >= 1) {
+					renderer.setRenderBounds(0.4D, 0.0D, 0.0D, 0.6D, 1.0D, 0.1D);
+					renderer.renderStandardBlock(block, x, y, z);
+				}
+				if(tile.frameStage >= 2) {
+					renderer.setRenderBounds(0.4D, 0.0D, 0.9D, 0.6D, 1.0D, 1.0D);
+					renderer.renderStandardBlock(block, x, y, z);
+				}
+				if(tile.frameStage >= 3) {
+					renderer.setRenderBounds(0.45D, 0.9D, 0.1D, 0.55D, 1.0D, 0.9D);
+					renderer.renderStandardBlock(block, x, y, z);
+				}
+			}
+			renderer.clearOverrideBlockTexture();
+		}
+		return true;
 	}
 	
 	/*private boolean renderBlockCampfire(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {

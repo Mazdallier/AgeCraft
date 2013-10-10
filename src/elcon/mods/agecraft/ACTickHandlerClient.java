@@ -14,7 +14,7 @@ import elcon.mods.agecraft.core.tech.gui.GuiTechTreeComponent;
 
 @SideOnly(Side.CLIENT)
 public class ACTickHandlerClient implements ITickHandler {
-
+	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
 	}
