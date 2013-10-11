@@ -120,12 +120,13 @@ public class BlockCampfire extends BlockContainer {
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		System.out.println("activate");
 		if(!world.isRemote) {
 			TileEntityCampfire tile = (TileEntityCampfire) world.getBlockTileEntity(x, y, z);
 			if(tile == null) {
 				tile = new TileEntityCampfire();
 				world.setBlockTileEntity(x, y, z, tile);
-			}
+			}			
 			return tile.onBlockActivated(player.rotationYaw, player.getCurrentEquippedItem());
 		}
 		return false;

@@ -92,7 +92,7 @@ public class TileEntityCampfire extends TileEntity {
 	public void updateEntity() {
 		if(!worldObj.isRemote) {
 			if(isBurning()) {				
-				//burnTime--;
+				burnTime--;
 				if(burnTime <= 0) {
 					burnTime = 0;
 					cookTime = 0;
@@ -113,7 +113,7 @@ public class TileEntityCampfire extends TileEntity {
 					}
 				}
 				if(currentLogIndex != -1) {
-					//logBurnTime--;
+					logBurnTime--;
 					if(logBurnTime <= 0) {
 						logBurnTime = 0;
 						logs[currentLogIndex]--;

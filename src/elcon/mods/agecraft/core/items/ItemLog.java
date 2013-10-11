@@ -20,11 +20,59 @@ public class ItemLog extends ItemBlockExtendedMetadata {
 	public int getPlaceBlockID() {
 		return PrehistoryAge.campfire.blockID;
 	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public boolean canPlaceItemBlockOnSide(World world, int x, int y, int z, int side, EntityPlayer player, ItemStack stack) {
+		System.out.println("canPlace");
+		int id = world.getBlockId(x, y, z);
+		if(id == getPlaceBlockID()) {
+			System.out.println("NOPE");
+			return false;
+		} else {
+			if(id == Block.snow.blockID) {
+				side = 1;
+			} else if(id != Block.vine.blockID && id != Block.tallGrass.blockID && id != Block.deadBush.blockID && (Block.blocksList[id] == null || !Block.blocksList[id].isBlockReplaceable(world, x, y, z))) {
+				if(side == 0) {
+					y--;
+				}
+				if(side == 1) {
+					y++;
+				}
+				if(side == 2) {
+					z--;
+				}
+				if(side == 3) {
+					z++;
+				}
+				if(side == 4) {
+					x--;
+				}
+				if(side == 5) {
+					x++;
+				}
+			}
+			return world.canPlaceEntityOnSide(getPlaceBlockID(), x, y, z, false, side, (Entity) null, stack);
+		}
+	}
+
+	@Override
+	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
+		System.out.println("derp");
+		if(!world.setBlock(x, y, z, getPlaceBlockID(), metadata, 3)) {
+			return false;
+		}
+		if(world.getBlockId(x, y, z) == getPlaceBlockID()) {
+			Block.blocksList[getPlaceBlockID()].onBlockPlacedBy(world, x, y, z, player, stack);
+			Block.blocksList[getPlaceBlockID()].onPostBlockPlaced(world, x, y, z, metadata);
+		}
+		return true;
+	}
 	
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+		System.out.println("use");
 		int id = world.getBlockId(x, y, z);
-		System.out.println(id);
 		if(id == getPlaceBlockID()) {
 			return false;
 		} else {
@@ -69,47 +117,6 @@ public class ItemLog extends ItemBlockExtendedMetadata {
 				return false;
 			}
 		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public boolean canPlaceItemBlockOnSide(World world, int x, int y, int z, int side, EntityPlayer player, ItemStack stack) {
-		int id = world.getBlockId(x, y, z);
-		if(id == Block.snow.blockID) {
-			side = 1;
-		} else if(id != Block.vine.blockID && id != Block.tallGrass.blockID && id != Block.deadBush.blockID && (Block.blocksList[id] == null || !Block.blocksList[id].isBlockReplaceable(world, x, y, z))) {
-			if(side == 0) {
-				y--;
-			}
-			if(side == 1) {
-				y++;
-			}
-			if(side == 2) {
-				z--;
-			}
-			if(side == 3) {
-				z++;
-			}
-			if(side == 4) {
-				x--;
-			}
-			if(side == 5) {
-				x++;
-			}
-		}
-		return world.canPlaceEntityOnSide(getPlaceBlockID(), x, y, z, false, side, (Entity) null, stack);
-	}
-
-	@Override
-	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata) {
-		if(!world.setBlock(x, y, z, getPlaceBlockID(), metadata, 3)) {
-			return false;
-		}
-		if(world.getBlockId(x, y, z) == getPlaceBlockID()) {
-			Block.blocksList[getPlaceBlockID()].onBlockPlacedBy(world, x, y, z, player, stack);
-			Block.blocksList[getPlaceBlockID()].onPostBlockPlaced(world, x, y, z, metadata);
-		}
-		return true;
 	}
 
 	@Override
