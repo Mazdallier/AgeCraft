@@ -21,6 +21,12 @@ public class ItemLog extends ItemBlockExtendedMetadata {
 		}
 		return false;
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getSpriteNumber() {
+		return 1;
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
