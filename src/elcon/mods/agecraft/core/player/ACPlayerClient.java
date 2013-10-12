@@ -15,7 +15,5 @@ public class ACPlayerClient extends PlayerCoreClient {
 	public ACPlayerClient(Minecraft mc, World world, Session session, NetClientHandler netClientHandler, int playerCoreIndex, PlayerCoreClient entityPlayerSP) {
 		super(mc, world, session, netClientHandler, playerCoreIndex, entityPlayerSP);
 		player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setAttribute(100.0D);
-		//player.inventory = new InventoryPlayer(player);
-		//player.inventoryContainer = new ContainerInventory((InventoryPlayer) player.inventory, !player.worldObj.isRemote, player);
 	}
 }

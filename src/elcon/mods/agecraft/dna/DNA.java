@@ -8,6 +8,7 @@ import elcon.mods.agecraft.dna.storage.DNAStorage;
 import elcon.mods.agecraft.dna.storage.DNAStorageChromosome;
 import elcon.mods.agecraft.dna.storage.DNAStorageGene;
 import elcon.mods.agecraft.dna.structure.DNAObject;
+import elcon.mods.core.color.ColorRGBA;
 
 public class DNA {
 
@@ -96,10 +97,15 @@ public class DNA {
 				ReproCell r1 = d1.chromosomes[i].genes[j].getReproCell();
 				ReproCell r2 = d2.chromosomes[i].genes[j].getReproCell();
 				
-				if(dnaObjects.get(d1.id).chromosomes[d1.chromosomes[i].id].genes[d1.chromosomes[i].genes[j].id].blend) {
+				if(dnaObjects.get(d1.id).chromosomes[d1.chromosomes[i].id].genes[d1.chromosomes[i].genes[j].id].avarage) {
 					int blend = (r1.allel + r2.allel) / 2;
 					r1.allel = blend;
 					r2.allel = blend;
+				} else if(dnaObjects.get(d1.id).chromosomes[d1.chromosomes[i].id].genes[d1.chromosomes[i].genes[j].id].blend) {
+					ColorRGBA color = new ColorRGBA(r1.allel);
+					color.multiply(new ColorRGBA(r2.allel));
+					r1.allel = color.rgb();
+					r2.allel = color.rgb();
 				} else if(dnaObjects.get(d1.id).mutationCount > 0) {
 					for(int k = 0; k < dnaObjects.get(d1.id).mutationCount; k++) {
 						if(dnaObjects.get(d1.id).mutations[k] != null && dnaObjects.get(d1.id).mutations[k].chromosomeID == d1.chromosomes[i].id && dnaObjects.get(d1.id).mutations[k].geneID == d1.chromosomes[i].genes[j].id) {

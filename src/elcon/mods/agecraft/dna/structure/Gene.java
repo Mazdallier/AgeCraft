@@ -6,6 +6,7 @@ public class Gene {
 	public String name;
 	public int maxValue;
 	public boolean hidden;
+	public boolean avarage;
 	public boolean blend;
 	
 	public Gene(int id, String name) {
@@ -20,8 +21,9 @@ public class Gene {
 		this.maxValue = maxValue;
 	}
 	
-	public Gene(int id, String name, int maxValue, boolean blend) {
+	public Gene(int id, String name, int maxValue, boolean avarage, boolean blend) {
 		this(id, name, maxValue);
+		this.avarage = avarage;
 		this.blend = blend;
 	}
 	
