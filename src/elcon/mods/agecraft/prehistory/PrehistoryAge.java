@@ -54,7 +54,7 @@ public class PrehistoryAge extends Age {
 		rockTanningTool = new ItemRockTanningTool(13001).setUnlocalizedName("rockTanningTool");
 		
 		//register tile entities
-		GameRegistry.registerTileEntity(TileEntityCampfire.class, "Campfire");
+		GameRegistry.registerTileEntity(TileEntityCampfire.class, "TileCampfire");
 	}
 	
 	@Override

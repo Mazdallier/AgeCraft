@@ -20,9 +20,17 @@ import elcon.mods.agecraft.core.items.ItemBlockLeaves;
 import elcon.mods.agecraft.core.items.ItemLog;
 import elcon.mods.agecraft.core.items.ItemWoodDoor;
 import elcon.mods.agecraft.core.items.ItemWoodStick;
+import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
+import elcon.mods.agecraft.dna.structure.Chromosome;
+import elcon.mods.agecraft.dna.structure.DNAObject;
+import elcon.mods.agecraft.dna.structure.Gene;
 
 public class Trees extends ACComponent {
 
+	public static final int MAX_TRUNK_SIZE = 2;
+	public static final int MAX_LEAVE_SIZE = 10;
+	public static final int MAX_HEIGHT = 32;
+	
 	public static Block wood;
 	public static Block log;
 	public static Block planks;
@@ -35,6 +43,34 @@ public class Trees extends ACComponent {
 	public static Block ladder;
 	
 	public static Item stick;
+	
+	public static DNAObject treeDNA = new DNAObject(0, "tree", TileEntityDNATree.class, new Chromosome[] {
+		new Chromosome(0, "species", new Gene[] {
+			new Gene(0, "woodType", TreeRegistry.trees.length),
+			new Gene(1, "leaveType", TreeRegistry.trees.length),
+			new Gene(2, "leaveColor", 0xFFFFFF, false, true)
+		}),
+		new Chromosome(1, "habitat", new Gene[] {
+			new Gene(0, "temperature", 4),
+			new Gene(1, "humidity", 4)
+		}),
+		new Chromosome(2, "growth", new Gene[] {
+			new Gene(0, "saplingGrowSpeed", 4),
+			new Gene(1, "grrowSpeed", 4),
+			new Gene(2, "breedingSpeed", 4)
+		}),
+		new Chromosome(3, "appearance", new Gene[] {
+			new Gene(0, "trunkSize", MAX_TRUNK_SIZE - 1),
+			new Gene(1, "leaveSize", MAX_LEAVE_SIZE - 1),
+			new Gene(2, "height", MAX_HEIGHT - 1)
+		}),
+		new Chromosome(4, "drops", new Gene[] {
+			new Gene(0, "saplingDropRate"),
+			new Gene(1, "sappiness"),
+			new Gene(2, "fruit"),
+			new Gene(3, "fruitDropRate")
+		})
+	});
 	
 	@Override
 	public void preInit() {
@@ -76,6 +112,9 @@ public class Trees extends ACComponent {
 		
 		//init items
 		stick = new ItemWoodStick(12510).setUnlocalizedName("trees_stick");
+		
+		//register tileentities
+		GameRegistry.registerTileEntity(TileEntityDNATree.class, "TileDNATree");
 	}
 	
 	@Override

@@ -19,7 +19,7 @@ public class TileEntityDNA extends TileEntityNBT implements IDNAOwner {
 		return DNA.getDNAObject(dnaID);
 	}
 	
-	public void setDNAObject(int id) {
+	public void setDNAObjectID(int id) {
 		dnaID = id;
 		createDNA(getDNAObject());
 	}
@@ -47,7 +47,7 @@ public class TileEntityDNA extends TileEntityNBT implements IDNAOwner {
 	public DNAStorageGene getGene(int chromosomeID, int geneID) {
 		return dna.chromosomes[chromosomeID].genes[geneID];
 	}
-	
+
 	public void setGene(int chromosomeID, int geneID, DNAStorageGene gene) {
 		dna.chromosomes[chromosomeID].genes[geneID] = gene;
 	}
