@@ -44,7 +44,9 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		
 		tile.frameDirection = dat.readByte();
 		tile.frameStage = dat.readByte();
-		tile.frameType = dat.readInt();
+		tile.frameType[0] = dat.readInt();
+		tile.frameType[1] = dat.readInt();
+		tile.frameType[2] = dat.readInt();
 		
 		if(dat.readBoolean()) {
 			tile.spitStack = new ItemStack(dat.readInt(), 1, dat.readInt());

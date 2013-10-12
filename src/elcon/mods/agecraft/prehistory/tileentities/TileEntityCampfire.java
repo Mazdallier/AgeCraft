@@ -36,7 +36,7 @@ public class TileEntityCampfire extends TileEntity {
 	
 	public byte frameDirection = -1;
 	public byte frameStage = 0;
-	public int frameType = 0;
+	public int[] frameType = new int[3];
 	
 	@Override
 	public Packet getDescriptionPacket() {
@@ -56,7 +56,9 @@ public class TileEntityCampfire extends TileEntity {
 			
 			dos.writeByte(frameDirection);
 			dos.writeByte(frameStage);
-			dos.writeInt(frameType);
+			dos.writeInt(frameType[0]);
+			dos.writeInt(frameType[1]);
+			dos.writeInt(frameType[2]);
 			
 			dos.writeBoolean(spitStack != null);
 			if(spitStack != null) {
@@ -99,6 +101,9 @@ public class TileEntityCampfire extends TileEntity {
 					hasFire = false;
 					dropSpitStack();
 					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+					if(frameStage == 0) {	
+						worldObj.setBlockToAir(xCoord, yCoord, zCoord);
+					}
 				}
 				if(isCooking()) {
 					cookTime--;
@@ -198,8 +203,8 @@ public class TileEntityCampfire extends TileEntity {
 					if(frameDirection == -1) {
 						frameDirection = (byte) (MathHelper.floor_double((double)(rotationYaw * 4.0F / 360.0F) + 2.5D) & 1);
 					}
+					frameType[frameStage] = stack.getItemDamage();
 					frameStage++;
-					frameType = stack.getItemDamage();
 					stack.stackSize--;
 					if(stack.stackSize <= 0) {
 						stack = null;
@@ -273,7 +278,6 @@ public class TileEntityCampfire extends TileEntity {
 		burnTime = nbt.getInteger("BurnTime");
 		cookTime = nbt.getInteger("CookTime");
 		cookTimeStart = nbt.getInteger("CookTimeStart");
-	
 		hasFire = nbt.getBoolean("HasFire");
 		
 		logs = nbt.getIntArray("Logs");
@@ -288,7 +292,7 @@ public class TileEntityCampfire extends TileEntity {
 		
 		frameDirection = nbt.getByte("FrameDirection");
 		frameStage = nbt.getByte("FrameStage");
-		frameType = nbt.getInteger("FrameType");
+		frameType = nbt.getIntArray("FrameType");
 	}
 	
 	@Override
@@ -315,6 +319,6 @@ public class TileEntityCampfire extends TileEntity {
 		
 		nbt.setByte("FrameDirection", frameDirection);
 		nbt.setByte("FrameStage", frameStage);
-		nbt.setInteger("FrameType", frameType);
+		nbt.setIntArray("FrameType", frameType);
 	}
 }

@@ -2,10 +2,12 @@ package elcon.mods.agecraft.prehistory;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.Age;
 import elcon.mods.agecraft.IACPacketHandler;
 import elcon.mods.agecraft.IACPacketHandlerClient;
+import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.items.ItemFakeStone;
@@ -57,7 +59,7 @@ public class PrehistoryAge extends Age {
 	
 	@Override
 	public void init() {
-		
+		GameRegistry.addRecipe(new ItemStack(campfire.blockID, 1, 0), "##", '#', Trees.log);
 	}
 	
 	@Override

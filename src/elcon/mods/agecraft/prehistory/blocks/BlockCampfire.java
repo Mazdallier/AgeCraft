@@ -107,20 +107,18 @@ public class BlockCampfire extends BlockContainer {
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		if(!world.isRemote) {
-			if(stack != null && stack.itemID == Trees.log.blockID) {
-				TileEntityCampfire tile = (TileEntityCampfire) world.getBlockTileEntity(x, y, z);
-				if(tile == null) {
-					tile = new TileEntityCampfire();
-					world.setBlockTileEntity(x, y, z, tile);
-				}
-				tile.onBlockActivated(entity.rotationYaw, stack);
+			TileEntityCampfire tile = (TileEntityCampfire) world.getBlockTileEntity(x, y, z);
+			if(tile == null) {
+				tile = new TileEntityCampfire();
+				world.setBlockTileEntity(x, y, z, tile);
 			}
+			tile.onBlockActivated(entity.rotationYaw, new ItemStack(Trees.log));
+			tile.onBlockActivated(entity.rotationYaw, new ItemStack(Trees.log));
 		}
 	}
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		System.out.println("activate");
 		if(!world.isRemote) {
 			TileEntityCampfire tile = (TileEntityCampfire) world.getBlockTileEntity(x, y, z);
 			if(tile == null) {
@@ -129,7 +127,7 @@ public class BlockCampfire extends BlockContainer {
 			}			
 			return tile.onBlockActivated(player.rotationYaw, player.getCurrentEquippedItem());
 		}
-		return false;
+		return true;
 	}
 	
 	@Override

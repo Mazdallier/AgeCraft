@@ -35,8 +35,10 @@ public class TileEntityRendererCampfire extends TileEntitySpecialRenderer {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x, y, z);
 		GL11.glTranslatef(0.5F, -0.5F, 0.5F);
-		//TODO: change texture based on logs
-		bindTexture(ResourcesPrehistory.campfire);
+		bindTexture(ResourcesPrehistory.campfire[0]);
+		if(tile.currentLogIndex > 0) {
+			bindTexture(ResourcesPrehistory.campfire[tile.currentLogIndex]);
+		}		
 		GL11.glPushMatrix();
 		model.renderModel(0.0625F, tile.getLogCount());
 		GL11.glPopMatrix();
