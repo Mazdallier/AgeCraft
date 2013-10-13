@@ -1,7 +1,6 @@
 package elcon.mods.agecraft.prehistory.blocks;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -94,11 +93,6 @@ public class BlockRock extends Block {
 	@Override
 	public boolean canHarvestBlock(EntityPlayer player, int meta) {
 		return true;
-	}
-	
-	@Override
-	public int idDropped(int i, Random random, int j) {
-		return PrehistoryAge.rock.itemID;
 	}
 	
 	@Override

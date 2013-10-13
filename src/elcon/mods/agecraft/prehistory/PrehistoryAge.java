@@ -8,6 +8,7 @@ import elcon.mods.agecraft.Age;
 import elcon.mods.agecraft.IACPacketHandler;
 import elcon.mods.agecraft.IACPacketHandlerClient;
 import elcon.mods.agecraft.core.Trees;
+import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.items.ItemFakeStone;
@@ -44,12 +45,12 @@ public class PrehistoryAge extends Age {
 		rockBlock = new BlockRock(3001).setUnlocalizedName("rock");
 		
 		//register blocks
-		GameRegistry.registerBlock(campfire, "AC_prehistory_campfire");
-		GameRegistry.registerBlock(rockBlock, "AC_prehistory_rock");
+		GameRegistry.registerBlock(campfire, ItemBlockName.class, "AC_prehistory_campfire");
+		GameRegistry.registerBlock(rockBlock, ItemRock.class, "AC_prehistory_rock");
 		
 		//init items
 		fakeStone = new ItemFakeStone(11000).setUnlocalizedName("fakeStone");
-		rock = new ItemRock(rockBlock.blockID - 256).setUnlocalizedName("rock");
+		//rock = new ItemRock(rockBlock.blockID - 256).setUnlocalizedName("rock");
 		rockTool = new ItemRockTool(13000).setUnlocalizedName("rockTool");
 		rockTanningTool = new ItemRockTanningTool(13001).setUnlocalizedName("rockTanningTool");
 		

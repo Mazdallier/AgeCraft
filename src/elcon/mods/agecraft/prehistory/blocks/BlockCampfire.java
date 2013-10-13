@@ -32,7 +32,7 @@ public class BlockCampfire extends BlockContainer {
 		setCreativeTab(ACCreativeTabs.prehistoryAge);
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.2F, 1.0F);
 	}
-
+	
 	@Override
 	public String getLocalizedName() {
 		return LanguageManager.getLocalization(getUnlocalizedName());
