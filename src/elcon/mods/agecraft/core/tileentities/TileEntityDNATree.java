@@ -20,7 +20,7 @@ public class TileEntityDNATree extends TileEntityDNA {
 		return getGene(0, 2).getActive();
 	}
 	
-	public float getBiome() {
+	public int getBiome() {
 		return getGene(1, 0).getActive();
 	}
 	

@@ -15,6 +15,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.IPlantable;
@@ -121,13 +122,13 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 	
 	@Override
 	public boolean canBlockStay(World world, int x, int y, int z) {
-		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityDNATree();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
 		Block soil = Block.blocksList[world.getBlockId(x, y - 1, z)];
-		return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this)) && BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), tile.getBiome(), tile.getTemperature()) && BiomeRegistry.canSurviveHumidity(world.getBiomeGenForCoords(x, z), tile.getBiome(), tile.getHumidity());
+		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
+		if(tile != null) {
+			System.out.println("T: " + BiomeRegistry.getTemperature(world.getBiomeGenForCoords(x, z)) + " PT: " + BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]) + " R: " + BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature()));
+			return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this)) && BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature()) && BiomeRegistry.canSurviveHumidity(world.getBiomeGenForCoords(x, z), BiomeRegistry.getHumidity(BiomeGenBase.biomeList[tile.getBiome()]), tile.getHumidity());
+		}		
+		return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this));
 	}
 	
 	@Override

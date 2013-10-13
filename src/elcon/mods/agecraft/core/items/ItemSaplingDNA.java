@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 
 import org.lwjgl.input.Keyboard;
 
@@ -71,7 +72,8 @@ public class ItemSaplingDNA extends ItemBlockName {
 				list.add(Color.TEXT_COLOR_PREFIX_DARK_BLUE + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 0).getActive()].name) + "-" + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 0).getInActive()].name) + " Wood");
 				list.add(Color.TEXT_COLOR_PREFIX_DARK_BLUE + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 1).getActive()].name) + "-" + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 1).getInActive()].name) + " Leaves");
 				list.add(Integer.toString(dna.getGene(0, 2).getActive(), 16));
-				list.add("T: " + DNAUtil.intToPlusMin(dna.getGene(1, 0).getActive()) + " H: " + DNAUtil.intToPlusMin(dna.getGene(1, 1).getActive()));
+				list.add(BiomeGenBase.biomeList[dna.getGene(1, 1).getActive()].biomeName);
+				list.add("T: " + DNAUtil.intToPlusMin(dna.getGene(1, 1).getActive()) + " H: " + DNAUtil.intToPlusMin(dna.getGene(1, 2).getActive()));
 				list.add("S: " + DNAUtil.intToSpeed(dna.getGene(2, 0).getActive()) + " T: " + DNAUtil.intToSpeed(dna.getGene(2, 1).getActive()) + " B: " + DNAUtil.intToSpeed(dna.getGene(2, 2).getActive()));
 				list.add(Integer.toString(dna.getGene(2, 0).getActive() + 1) + "x" + Integer.toString(dna.getGene(2, 0).getActive() + 1));
 			}
