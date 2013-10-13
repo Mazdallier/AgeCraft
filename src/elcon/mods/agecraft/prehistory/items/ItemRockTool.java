@@ -71,6 +71,11 @@ public class ItemRockTool extends Item {
 	}
 	
 	@Override
+	public Icon getIcon(ItemStack stack, int pass) {
+		return getIconIndex(stack);
+	}
+	
+	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		if(!world.isRemote) {
 			if(entityplayer.isSneaking()) {

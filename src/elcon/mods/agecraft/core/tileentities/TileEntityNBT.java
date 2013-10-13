@@ -8,9 +8,8 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityNBT extends TileEntity {
+public class TileEntityNBT extends TileEntityExtended {
 
 	public NBTTagCompound nbt;
 	

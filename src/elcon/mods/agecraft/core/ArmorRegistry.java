@@ -59,14 +59,14 @@ public class ArmorRegistry {
 	
 	public static void registerArmorType(ArmorType armorType) {
 		if(armorTypes[armorType.id] != null) {
-			ACLog.warning("[ArmorRegistry] Overriding existing armor type (" + armorTypes[armorType.id] + ": " + armorTypes[armorType.id].name.toUpperCase() + ") with new armor type (" + armorType.id + ": " + armorType.name.toUpperCase() + ")");
+			ACLog.warning("[ArmorRegistry] Overriding existing armor type (" + armorTypes[armorType.id].id + ": " + armorTypes[armorType.id].name.toUpperCase() + ") with new armor type (" + armorType.id + ": " + armorType.name.toUpperCase() + ")");
 		}
 		armorTypes[armorType.id]= armorType;
 	}
 	
 	public static void registerArmorMaterial(ArmorMaterial armorMaterial) {
 		if(armorMaterials[armorMaterial.id] != null) {
-			ACLog.warning("[ArmorRegistry] Overriding existing armor material (" + armorMaterials[armorMaterial.id] + ": " + armorMaterials[armorMaterial.id].name.toUpperCase() + ") with new armor material (" + armorMaterial.id + ": " + armorMaterial.name.toUpperCase() + ")");
+			ACLog.warning("[ArmorRegistry] Overriding existing armor material (" + armorMaterials[armorMaterial.id].id + ": " + armorMaterials[armorMaterial.id].name.toUpperCase() + ") with new armor material (" + armorMaterial.id + ": " + armorMaterial.name.toUpperCase() + ")");
 		}
 		armorMaterials[armorMaterial.id]= armorMaterial;
 	}

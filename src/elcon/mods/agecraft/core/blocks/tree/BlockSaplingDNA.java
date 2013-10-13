@@ -1,13 +1,15 @@
 package elcon.mods.agecraft.core.blocks.tree;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
@@ -19,10 +21,14 @@ import net.minecraftforge.common.IPlantable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
+import elcon.mods.agecraft.core.BiomeRegistry;
 import elcon.mods.agecraft.core.TreeRegistry;
+import elcon.mods.agecraft.core.Trees;
+import elcon.mods.agecraft.core.blocks.BlockExtendedContainer;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
+import elcon.mods.agecraft.dna.storage.DNAStorage;
 
-public class BlockSaplingDNA extends BlockContainer implements IPlantable {
+public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantable {
 
 	public BlockSaplingDNA(int id) {
 		super(id, Material.plants);
@@ -49,6 +55,40 @@ public class BlockSaplingDNA extends BlockContainer implements IPlantable {
 	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityDNATree();
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+		if(!world.isRemote) {
+			if(stack.hasTagCompound() && stack.getTagCompound().hasKey("DNA")) {
+				TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
+				if(tile == null) {
+					tile = new TileEntityDNATree();
+					world.setBlockTileEntity(x, y, z, tile);
+				}
+				DNAStorage dna = new DNAStorage(Trees.treeDNA.id);
+				dna.readFromNBT(stack.getTagCompound().getCompoundTag("DNA"));
+				tile.setDNA(dna);
+			}
+		}
+	}
+	
+	@Override
+	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
+		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityDNATree();
+			world.setBlockTileEntity(x, y, z, tile);
+		}
+		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+		ItemStack stack = new ItemStack(idDropped(metadata, world.rand, fortune), quantityDropped(metadata, fortune, world.rand), damageDropped(metadata));
+		NBTTagCompound nbt = new NBTTagCompound();
+		NBTTagCompound tag = new NBTTagCompound();
+		tile.getDNA().writeToNBT(tag);
+		nbt.setCompoundTag("DNA", tag);
+		stack.setTagCompound(nbt);
+		list.add(stack);
+		return list;
 	}
 	
 	@Override
@@ -81,9 +121,13 @@ public class BlockSaplingDNA extends BlockContainer implements IPlantable {
 	
 	@Override
 	public boolean canBlockStay(World world, int x, int y, int z) {
-		//TODO: check the biome (temperature and humidity)
+		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityDNATree();
+			world.setBlockTileEntity(x, y, z, tile);
+		}
 		Block soil = Block.blocksList[world.getBlockId(x, y - 1, z)];
-		return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this));
+		return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this)) && BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), tile.getBiome(), tile.getTemperature()) && BiomeRegistry.canSurviveHumidity(world.getBiomeGenForCoords(x, z), tile.getBiome(), tile.getHumidity());
 	}
 	
 	@Override
@@ -108,7 +152,7 @@ public class BlockSaplingDNA extends BlockContainer implements IPlantable {
 	
 	@Override
 	public int getRenderType() {
-		return 1;
+		return 90;
 	}
 
 	@Override

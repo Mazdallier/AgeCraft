@@ -24,6 +24,22 @@ public class DNAStorage implements Serializable {
 		this.id = id;
 	}
 	
+	public DNAStorageChromosome getChromosome(int chromosomeID) {
+		return chromosomes[chromosomeID];
+	}
+	
+	public void setChromosome(int chromosomeID, DNAStorageChromosome chromosome) {
+		chromosomes[chromosomeID] = chromosome;
+	}
+	
+	public DNAStorageGene getGene(int chromosomeID, int geneID) {
+		return chromosomes[chromosomeID].genes[geneID];
+	}
+
+	public void setGene(int chromosomeID, int geneID, DNAStorageGene gene) {
+		chromosomes[chromosomeID].genes[geneID] = gene;
+	}
+	
 	public void readFromNBT(NBTTagCompound nbt) {
 		id = nbt.getInteger("ID");
 		NBTTagList nbtList = nbt.getTagList("Chromosomes");

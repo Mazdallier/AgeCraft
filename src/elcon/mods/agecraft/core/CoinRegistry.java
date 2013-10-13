@@ -25,7 +25,7 @@ public class CoinRegistry {
 	
 	public static void registerCoin(Coin coin) {
 		if(coins[coin.id] != null) {
-			ACLog.warning("[CoinRegistry] Overriding existing coin (" + coins[coin.id] + ": " + coins[coin.id].name.toUpperCase() + ") with new coin (" + coin.id + ": " + coin.name.toUpperCase() + ")");
+			ACLog.warning("[CoinRegistry] Overriding existing coin (" + coins[coin.id].id + ": " + coins[coin.id].name.toUpperCase() + ") with new coin (" + coin.id + ": " + coin.name.toUpperCase() + ")");
 		}
 		coins[coin.id]= coin;
 	}

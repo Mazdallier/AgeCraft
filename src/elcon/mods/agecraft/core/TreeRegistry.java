@@ -38,7 +38,7 @@ public class TreeRegistry {
 	
 	public static void registerTree(Tree tree) {
 		if(trees[tree.id] != null) {
-			ACLog.warning("[TreeRegistry] Overriding existing tree (" + trees[tree.id] + ": " + trees[tree.id].name.toUpperCase() + ") with new tree (" + tree.id + ": " + tree.name.toUpperCase() + ")");
+			ACLog.warning("[TreeRegistry] Overriding existing tree (" + trees[tree.id].id + ": " + trees[tree.id].name.toUpperCase() + ") with new tree (" + tree.id + ": " + tree.name.toUpperCase() + ")");
 		}
 		trees[tree.id]= tree;
 	}

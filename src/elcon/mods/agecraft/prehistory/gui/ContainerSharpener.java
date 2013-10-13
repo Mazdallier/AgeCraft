@@ -50,7 +50,7 @@ public class ContainerSharpener extends Container {
 	public void onCraftMatrixChanged(IInventory inv) {
 		super.onCraftMatrixChanged(inv);
 		if(!rockRemoved) {
-			player.inventory.consumeInventoryItem(PrehistoryAge.rock.itemID);
+			player.inventory.consumeInventoryItem(PrehistoryAge.rock.blockID);
 			rockRemoved = true;
 		}
 		if(initDone) {
@@ -73,7 +73,7 @@ public class ContainerSharpener extends Container {
 	public void onContainerClosed(EntityPlayer player) {
 		super.onContainerClosed(player);
 		if(!rockRemoved) {
-			player.inventory.consumeInventoryItem(PrehistoryAge.rock.itemID);
+			player.inventory.consumeInventoryItem(PrehistoryAge.rock.blockID);
 			rockRemoved = true;
 		}
 		if(inventory.getStackInSlot(1) != null) {

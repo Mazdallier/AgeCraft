@@ -82,7 +82,7 @@ public class MetalRegistry {
 	
 	public static void registerMetal(Metal ore) {
 		if(metals[ore.id] != null) {
-			ACLog.warning("[MetalRegistry] Overriding existing ore (" + metals[ore.id] + ": " + metals[ore.id].name.toUpperCase() + ") with new ore (" + ore.id + ": " + ore.name.toUpperCase() + ")");
+			ACLog.warning("[MetalRegistry] Overriding existing ore (" + metals[ore.id].id + ": " + metals[ore.id].name.toUpperCase() + ") with new ore (" + ore.id + ": " + ore.name.toUpperCase() + ")");
 		}
 		metals[ore.id]= ore;
 	}

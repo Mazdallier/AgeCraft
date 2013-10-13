@@ -18,6 +18,7 @@ agecraft.version.mc_version_not_found=Unable to find a version of @MOD_NAME@ for
 trees.wood=Wood
 trees.leaves=Leaves
 trees.log=Log
+trees.sapling=Sapling
 trees.planks=Planks
 trees.wall=Wall
 trees.fence=Fence

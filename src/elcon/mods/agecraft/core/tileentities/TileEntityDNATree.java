@@ -20,12 +20,16 @@ public class TileEntityDNATree extends TileEntityDNA {
 		return getGene(0, 2).getActive();
 	}
 	
-	public int getTemperature() {
+	public float getBiome() {
 		return getGene(1, 0).getActive();
 	}
 	
-	public int getHumidity() {
+	public int getTemperature() {
 		return getGene(1, 1).getActive();
+	}
+	
+	public int getHumidity() {
+		return getGene(1, 2).getActive();
 	}
 	
 	public int getSaplingGrowSpeed() {

@@ -26,7 +26,7 @@ public class BiomeDecoratorACPrehistory {
 		rocksPerChunk = 1;
 		grassPerChunk = 1;
 
-		rockGen = new WorldGenFlowers(PrehistoryAge.rockBlock.blockID);
+		rockGen = new WorldGenFlowers(PrehistoryAge.rock.blockID);
 	}
 
 	public void decorate(World world, Random random, int i, int j) {

@@ -112,7 +112,7 @@ public class BlockRock extends Block {
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, int id) {
 		if(!canBlockStay(world, x, y, z)) {
-			dropBlockAsItem_do(world, x, y, z, new ItemStack(PrehistoryAge.rock.itemID, 1, 0));
+			dropBlockAsItem_do(world, x, y, z, new ItemStack(PrehistoryAge.rock.blockID, 1, 0));
             world.setBlockToAir(x, y, z);
 		}
 	}
@@ -120,7 +120,7 @@ public class BlockRock extends Block {
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
 		if(!canBlockStay(world, x, y, z)) {
-			dropBlockAsItem_do(world, x, y, z, new ItemStack(PrehistoryAge.rock.itemID, 1, 0));
+			dropBlockAsItem_do(world, x, y, z, new ItemStack(PrehistoryAge.rock.blockID, 1, 0));
             world.setBlockToAir(x, y, z);
 		}
 	}

@@ -25,10 +25,9 @@ public class PrehistoryAge extends Age {
 	public PrehistoryPacketHandlerClient packetHandlerClient;
 	
 	public static Block campfire;
-	public static Block rockBlock;
+	public static Block rock;
 	
 	public static Item fakeStone;
-	public static Item rock;
 	public static Item rockTool;
 	public static Item rockTanningTool;
 	
@@ -42,15 +41,14 @@ public class PrehistoryAge extends Age {
 	public void preInit() {
 		//init blocks
 		campfire = new BlockCampfire(3000).setUnlocalizedName("campfire");
-		rockBlock = new BlockRock(3001).setUnlocalizedName("rock");
+		rock = new BlockRock(3001).setUnlocalizedName("rock");
 		
 		//register blocks
 		GameRegistry.registerBlock(campfire, ItemBlockName.class, "AC_prehistory_campfire");
-		GameRegistry.registerBlock(rockBlock, ItemRock.class, "AC_prehistory_rock");
+		GameRegistry.registerBlock(rock, ItemRock.class, "AC_prehistory_rock");
 		
 		//init items
 		fakeStone = new ItemFakeStone(11000).setUnlocalizedName("fakeStone");
-		//rock = new ItemRock(rockBlock.blockID - 256).setUnlocalizedName("rock");
 		rockTool = new ItemRockTool(13000).setUnlocalizedName("rockTool");
 		rockTanningTool = new ItemRockTanningTool(13001).setUnlocalizedName("rockTanningTool");
 		

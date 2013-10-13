@@ -16,6 +16,8 @@ public class ACBlockRenderingHandlerWithIcon implements ISimpleBlockRenderingHan
 	@Override
 	public boolean renderWorldBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
 		switch(modelID) {
+		case 90:
+			return renderBlockCrossedSquares(blockAccess, x, y, z, block, modelID, renderer);
 		case 102:
 			return renderer.renderStandardBlock(block, x, y, z);
 		case 103:
@@ -27,7 +29,73 @@ public class ACBlockRenderingHandlerWithIcon implements ISimpleBlockRenderingHan
 		}
 		return false;
 	}
-	
+
+	private boolean renderBlockCrossedSquares(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
+		Tessellator tessellator = Tessellator.instance;
+		tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, x, y, z));
+		float f = 1.0F;
+		int l = block.colorMultiplier(blockAccess, x, y, z);
+		float f1 = (float) (l >> 16 & 255) / 255.0F;
+		float f2 = (float) (l >> 8 & 255) / 255.0F;
+		float f3 = (float) (l & 255) / 255.0F;
+
+		if(EntityRenderer.anaglyphEnable) {
+			float f4 = (f1 * 30.0F + f2 * 59.0F + f3 * 11.0F) / 100.0F;
+			float f5 = (f1 * 30.0F + f2 * 70.0F) / 100.0F;
+			float f6 = (f1 * 30.0F + f3 * 70.0F) / 100.0F;
+			f1 = f4;
+			f2 = f5;
+			f3 = f6;
+		}
+
+		tessellator.setColorOpaque_F(f * f1, f * f2, f * f3);
+		double xx = (double) x;
+		double yy = (double) y;
+		double zz = (double) z;
+		if(block == Block.tallGrass) {
+			long i1 = (long) (x * 3129871) ^ (long) z * 116129781L ^ (long) y;
+			i1 = i1 * i1 * 42317861L + i1 * 11L;
+			xx += ((double) ((float) (i1 >> 16 & 15L) / 15.0F) - 0.5D) * 0.5D;
+			yy += ((double) ((float) (i1 >> 20 & 15L) / 15.0F) - 1.0D) * 0.2D;
+			zz += ((double) ((float) (i1 >> 24 & 15L) / 15.0F) - 0.5D) * 0.5D;
+		}
+		drawCrossedSquares(blockAccess, xx, yy, zz, 1.0F, block, blockAccess.getBlockMetadata(x, y, z), renderer);
+		return true;
+	}
+
+	private void drawCrossedSquares(IBlockAccess blockAccess, double x, double y, double z, float size, Block block, int meta, RenderBlocks renderer) {
+		Tessellator tessellator = Tessellator.instance;
+		Icon icon = renderer.getBlockIcon(block, blockAccess, (int) x, (int) y, (int) z, meta);
+		if(renderer.hasOverrideBlockTexture()) {
+			icon = renderer.overrideBlockTexture;
+		}
+		double minU = (double) icon.getMinU();
+		double minV = (double) icon.getMinV();
+		double maxU = (double) icon.getMaxU();
+		double maxV = (double) icon.getMaxV();
+		double scaledSize = 0.45D * (double) size;
+		double minX = x + 0.5D - scaledSize;
+		double maxX = x + 0.5D + scaledSize;
+		double minZ = z + 0.5D - scaledSize;
+		double maxZ = z + 0.5D + scaledSize;
+		tessellator.addVertexWithUV(minX, y + (double) size, minZ, minU, minV);
+		tessellator.addVertexWithUV(minX, y + 0.0D, minZ, minU, maxV);
+		tessellator.addVertexWithUV(maxX, y + 0.0D, maxZ, maxU, maxV);
+		tessellator.addVertexWithUV(maxX, y + (double) size, maxZ, maxU, minV);
+		tessellator.addVertexWithUV(maxX, y + (double) size, maxZ, minU, minV);
+		tessellator.addVertexWithUV(maxX, y + 0.0D, maxZ, minU, maxV);
+		tessellator.addVertexWithUV(minX, y + 0.0D, minZ, maxU, maxV);
+		tessellator.addVertexWithUV(minX, y + (double) size, minZ, maxU, minV);
+		tessellator.addVertexWithUV(minX, y + (double) size, maxZ, minU, minV);
+		tessellator.addVertexWithUV(minX, y + 0.0D, maxZ, minU, maxV);
+		tessellator.addVertexWithUV(maxX, y + 0.0D, minZ, maxU, maxV);
+		tessellator.addVertexWithUV(maxX, y + (double) size, minZ, maxU, minV);
+		tessellator.addVertexWithUV(maxX, y + (double) size, minZ, minU, minV);
+		tessellator.addVertexWithUV(maxX, y + 0.0D, minZ, minU, maxV);
+		tessellator.addVertexWithUV(minX, y + 0.0D, maxZ, maxU, maxV);
+		tessellator.addVertexWithUV(minX, y + (double) size, maxZ, maxU, minV);
+	}
+
 	private boolean renderBlockMetalLadder(IBlockAccess blockAccess, int x, int y, int z, BlockMetalLadder block, int modelID, RenderBlocks renderer) {
 		int color = block.colorMultiplier(blockAccess, x, y, z);
 		float r = (float) (color >> 16 & 255) / 255.0F;

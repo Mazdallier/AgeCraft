@@ -77,7 +77,7 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 		for(int i = 0; i < count; i++) {
 			int id = idDropped(metadata, world.rand, fortune);
 			if(id > 0) {
-				ret.add(new ItemStack(id, 1, getDroppedMetadata(world, x, y, z, metadata, fortune)));
+				ret.add(new ItemStack(id, quantityDropped(metadata, fortune, world.rand), getDroppedMetadata(world, x, y, z, metadata, fortune)));
 			}
 		}
 		return ret;
@@ -85,7 +85,6 @@ public class BlockExtendedMetadata extends BlockContainer implements IBlockExten
 
 	public boolean breakBlock(IBlockExtendedMetadata block, EntityPlayer player, World world, int x, int y, int z) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-
 		Block block2 = (Block) block;
 		TileEntityMetadata tile = (TileEntityMetadata) world.getBlockTileEntity(x, y, z);
 		if(tile != null && !tile.droppedBlock) {

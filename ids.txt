@@ -131,8 +131,10 @@
 	200 Campfire
 
 ======= Block Render IDs ======
+90-98   Common blocks
+	90 Crossed Squares
 99-199 	Core blocks
-	99 Age Teleporter Chest
+	99  Age Teleporter Chest
 	100 Fence
 	101 Fence gate
 	102 Door

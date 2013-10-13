@@ -9,8 +9,6 @@ import net.minecraft.item.ItemBlockWithMetadata;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporter;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBeam;
@@ -97,11 +95,9 @@ public class AgeCraftCore extends ACComponent {
 		Block.blocksList[1] = null;
 		Block.stone = new BlockStoneLayered(1).setUnlocalizedName("stone").setTextureName("stone");
 		Item.itemsList[1] = new ItemBlockWithMetadata(1 - 256, Block.stone).setUnlocalizedName("stone");
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public void clientProxy() {		
 		
+		//register biomes
+		BiomeRegistry.registerBiomes();
 	}
 	
 	public void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {

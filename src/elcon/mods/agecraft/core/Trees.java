@@ -8,6 +8,7 @@ import elcon.mods.agecraft.core.TreeRegistry.Tree;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeavesDNA;
 import elcon.mods.agecraft.core.blocks.tree.BlockLog;
+import elcon.mods.agecraft.core.blocks.tree.BlockLogDNA;
 import elcon.mods.agecraft.core.blocks.tree.BlockPlanks;
 import elcon.mods.agecraft.core.blocks.tree.BlockSaplingDNA;
 import elcon.mods.agecraft.core.blocks.tree.BlockWood;
@@ -32,6 +33,11 @@ import elcon.mods.agecraft.dna.structure.Gene;
 
 public class Trees extends ACComponent {
 
+	public static final int MAX_WOOD_TYPE = 3;
+	public static final int MAX_LEAVE_TYPE = 3;
+	
+	public static final int MAX_BIOME_TYPE = 22;
+	
 	public static final int MAX_TRUNK_SIZE = 2;
 	public static final int MAX_LEAVE_SIZE = 10;
 	public static final int MAX_HEIGHT = 32;
@@ -56,13 +62,14 @@ public class Trees extends ACComponent {
 	
 	public static DNAObject treeDNA = new DNAObject(0, "tree", TileEntityDNATree.class, new Chromosome[] {
 		new Chromosome(0, "species", new Gene[] {
-			new Gene(0, "woodType", TreeRegistry.trees.length),
-			new Gene(1, "leaveType", TreeRegistry.trees.length),
+			new Gene(0, "woodType", MAX_WOOD_TYPE),
+			new Gene(1, "leaveType", MAX_LEAVE_TYPE),
 			new Gene(2, "leaveColor", 0xFFFFFF, false, true)
 		}),
 		new Chromosome(1, "habitat", new Gene[] {
-			new Gene(0, "temperature", 4),
-			new Gene(1, "humidity", 4)
+			new Gene(0, "biome", MAX_BIOME_TYPE),
+			new Gene(1, "temperature", 4),
+			new Gene(2, "humidity", 4)
 		}),
 		new Chromosome(2, "growth", new Gene[] {
 			new Gene(0, "saplingGrowSpeed", 4),
@@ -70,9 +77,9 @@ public class Trees extends ACComponent {
 			new Gene(2, "breedingSpeed", 4)
 		}),
 		new Chromosome(3, "appearance", new Gene[] {
-			new Gene(0, "trunkSize", MAX_TRUNK_SIZE - 1),
-			new Gene(1, "leaveSize", MAX_LEAVE_SIZE - 1),
-			new Gene(2, "height", MAX_HEIGHT - 1)
+			new Gene(0, "trunkSize", MAX_TRUNK_SIZE),
+			new Gene(1, "leaveSize", MAX_LEAVE_SIZE),
+			new Gene(2, "height", MAX_HEIGHT)
 		}),
 		new Chromosome(4, "drops", new Gene[] {
 			new Gene(0, "saplingDropRate"),
@@ -97,7 +104,7 @@ public class Trees extends ACComponent {
 		ladder = new BlockWoodLadder(2519).setUnlocalizedName("trees_ladder");
 		
 		woodDNA = new BlockWoodDNA(2530).setUnlocalizedName("tree_woodDNA");
-		//logDNA = new BlockLogDNA(2531).setUnlocalizedName("tree_logDNA");
+		logDNA = new BlockLogDNA(2531).setUnlocalizedName("tree_logDNA");
 		leavesDNA = new BlockLeavesDNA(2532).setUnlocalizedName("tree_leavesDNA");
 		saplingDNA = new BlockSaplingDNA(2533).setUnlocalizedName("tree_saplingDNA");
 		

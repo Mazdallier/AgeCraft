@@ -92,7 +92,7 @@ public class ItemRock extends ItemBlock {
 		for(int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if(stack != null) {
-				if(stack.itemID == PrehistoryAge.rock.itemID) {
+				if(stack.itemID == PrehistoryAge.rock.blockID) {
 					count += stack.stackSize;
 				}
 			}
