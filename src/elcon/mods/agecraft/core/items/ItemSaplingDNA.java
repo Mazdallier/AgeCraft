@@ -73,7 +73,7 @@ public class ItemSaplingDNA extends ItemBlockName {
 				list.add(Color.TEXT_COLOR_PREFIX_DARK_BLUE + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 1).getActive()].name) + "-" + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 1).getInActive()].name) + " Leaves");
 				list.add(Integer.toString(dna.getGene(0, 2).getActive(), 16));
 				list.add(BiomeGenBase.biomeList[dna.getGene(1, 1).getActive()].biomeName);
-				list.add("T: " + DNAUtil.intToPlusMin(dna.getGene(1, 1).getActive()) + " H: " + DNAUtil.intToPlusMin(dna.getGene(1, 2).getActive()));
+				list.add("T: " + DNAUtil.intToPlusMin(dna.getGene(1, 1).getActive()) + Color.TEXT_COLOR_PREFIX_GRAY + " H: " + DNAUtil.intToPlusMin(dna.getGene(1, 2).getActive()));
 				list.add("S: " + DNAUtil.intToSpeed(dna.getGene(2, 0).getActive()) + " T: " + DNAUtil.intToSpeed(dna.getGene(2, 1).getActive()) + " B: " + DNAUtil.intToSpeed(dna.getGene(2, 2).getActive()));
 				list.add(Integer.toString(dna.getGene(2, 0).getActive() + 1) + "x" + Integer.toString(dna.getGene(2, 0).getActive() + 1));
 			}

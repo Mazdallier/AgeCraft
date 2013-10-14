@@ -21,8 +21,8 @@ public class BiomeRegistry {
 			
 			this.biome = biome;
 			
-			this.temperature = temperature;
-			this.humidity = humidity;
+			this.temperature = (float) Math.round(temperature * 10F) / 10F;
+			this.humidity = (float) Math.round(humidity * 10F) / 10F;
 		}
 	}
 	

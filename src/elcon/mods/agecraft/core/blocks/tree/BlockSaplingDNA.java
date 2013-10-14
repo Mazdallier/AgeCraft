@@ -125,9 +125,13 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		Block soil = Block.blocksList[world.getBlockId(x, y - 1, z)];
 		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
 		if(tile != null) {
+			System.out.println(world.getBiomeGenForCoords(x, z).biomeName);
+			System.out.println(BiomeGenBase.biomeList[tile.getBiome()].biomeName);
 			System.out.println("T: " + BiomeRegistry.getTemperature(world.getBiomeGenForCoords(x, z)) + " PT: " + BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]) + " R: " + BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature()));
-			return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this)) && BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature()) && BiomeRegistry.canSurviveHumidity(world.getBiomeGenForCoords(x, z), BiomeRegistry.getHumidity(BiomeGenBase.biomeList[tile.getBiome()]), tile.getHumidity());
-		}		
+			return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this)) 
+					&& BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature()) 
+					&& BiomeRegistry.canSurviveHumidity(world.getBiomeGenForCoords(x, z), BiomeRegistry.getHumidity(BiomeGenBase.biomeList[tile.getBiome()]), tile.getHumidity());
+		}
 		return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this));
 	}
 	
