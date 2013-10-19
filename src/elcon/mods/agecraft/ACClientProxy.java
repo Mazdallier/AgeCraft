@@ -18,11 +18,13 @@ import elcon.mods.agecraft.core.ACBlockRenderingHandler;
 import elcon.mods.agecraft.core.ACBlockRenderingHandlerOverlay;
 import elcon.mods.agecraft.core.ACBlockRenderingHandlerWithIcon;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
+import elcon.mods.agecraft.core.entity.EntityBlock;
 import elcon.mods.agecraft.core.gui.ContainerWorkbench;
 import elcon.mods.agecraft.core.gui.GuiWorkbench;
 import elcon.mods.agecraft.core.player.ACPlayerClient;
 import elcon.mods.agecraft.core.player.ACPlayerRender;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
+import elcon.mods.agecraft.core.render.RenderEntityBlock;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
@@ -32,7 +34,9 @@ import elcon.mods.agecraft.prehistory.PrehistoryBlockRenderingHandler;
 import elcon.mods.agecraft.prehistory.gui.GuiSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererCampfire;
+import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererPot;
 import elcon.mods.core.ElConCore;
 import elcon.mods.core.player.PlayerAPI;
 import elcon.mods.core.player.PlayerAPI.PlayerCoreType;
@@ -88,9 +92,12 @@ public class ACClientProxy extends ACCommonProxy {
 		// ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();
 		// MinecraftForgeClient.registerItemRenderer(itemID, itemRenderingHandler);
 
-		// register tile entity renderers
+		// register tileentity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterBeam.class, new TileEntityAgeTeleporterBeamRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterChest.class, new TileEntityAgeTeleporterChestRenderer());
+		
+		//register entity renderers
+		RenderingRegistry.registerEntityRenderingHandler(EntityBlock.class, RenderEntityBlock.instance);
 		
 		prehistory();
 	}
@@ -101,9 +108,11 @@ public class ACClientProxy extends ACCommonProxy {
 		//register block rendering handler
 		RenderingRegistry.registerBlockHandler(200, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(201, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(202, blockRenderingHandler);
 		
 		//register tile entity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPot.class, new TileEntityRendererPot());
 	}
 
 	@Override

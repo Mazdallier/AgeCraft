@@ -5,6 +5,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 import com.google.common.io.ByteArrayDataInput;
 
@@ -12,6 +13,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.IACPacketHandlerClient;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 
 @SideOnly(Side.CLIENT)
 public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
@@ -21,6 +23,9 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		switch(packetID) {
 		case 200:
 			handleTileEntityCampfire(world, dat);
+			break;
+		case 201:
+			handleTileEntityPot(world, dat);
 			break;
 		}
 	}
@@ -62,5 +67,38 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		}
 		world.markBlockForRenderUpdate(x, y, z);
 		world.updateLightByType(EnumSkyBlock.Block, x, y, z);
+	}
+	
+	private void handleTileEntityPot(World world, ByteArrayDataInput dat) {
+		int x = dat.readInt();
+		int y = dat.readInt();
+		int z = dat.readInt();
+		
+		TileEntityPot tile = (TileEntityPot) world.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityPot();
+			world.setBlockTileEntity(x, y, z, tile);
+		}
+		
+		tile.hasLid = dat.readBoolean();
+		
+		if(dat.readBoolean()) {
+			tile.fluid.setFluid(new FluidStack(dat.readInt(), dat.readInt()));
+		} else {
+			tile.fluid.setFluid(null);
+		}
+		
+		if(dat.readBoolean()) {
+			tile.dust = new ItemStack(dat.readInt(), dat.readInt(), dat.readInt());
+			if(dat.readBoolean()) {
+				try {
+					tile.dust.setTagCompound((NBTTagCompound) NBTBase.readNamedTag(dat));
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			tile.dust = null;
+		}
 	}
 }

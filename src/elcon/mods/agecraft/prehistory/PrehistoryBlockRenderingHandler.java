@@ -5,9 +5,11 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import elcon.mods.agecraft.core.Trees;
+import elcon.mods.agecraft.prehistory.blocks.BlockPot;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock.RockShape;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 
 public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 
@@ -23,6 +25,8 @@ public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHan
 			return renderBlockRock(blockAccess, x, y, z, block, modelID, renderer);
 		case 201:
 			return renderBlockCampfire(blockAccess, x, y, z, block, modelID, renderer);
+		case 202:
+			return renderBlockPot(blockAccess, x, y, z, (BlockPot) block, modelID, renderer);
 		}
 		return false;
 	}
@@ -75,6 +79,42 @@ public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHan
 		return true;
 	}
 
+	private boolean renderBlockPot(IBlockAccess blockAccess, int x, int y, int z, BlockPot block, int modelID, RenderBlocks renderer) {
+		TileEntityPot tile = (TileEntityPot) blockAccess.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityPot();
+		}
+		
+		block.renderSolid = true;
+		renderer.setRenderBounds(0.125D, 0.0D, 0.125D, 0.875D, 0.0625D, 0.875D);
+		renderer.renderStandardBlock(block, x, y, z);
+		block.renderSolid = false;
+		
+		renderer.setRenderBounds(0.125D, 0.0625D, 0.125D, 0.875D, 0.625D, 0.1875D);
+		renderer.renderStandardBlock(block, x, y, z);
+		
+		renderer.setRenderBounds(0.8125D, 0.0625D, 0.1875D, 0.875D, 0.625D, 0.8125D);
+		renderer.renderStandardBlock(block, x, y, z);
+		
+		renderer.setRenderBounds(0.125D, 0.0625D, 0.8125D, 0.875D, 0.625D, 0.875D);
+		renderer.renderStandardBlock(block, x, y, z);
+		
+		renderer.setRenderBounds(0.125D, 0.0625D, 0.1875D, 0.1875D, 0.625D, 0.8125D);
+		renderer.renderStandardBlock(block, x, y, z);
+		
+		if(tile.hasLid) {
+			renderer.setRenderBounds(0.125D, 0.625D, 0.125D, 0.875D, 0.6875D, 0.875D);
+			renderer.renderStandardBlock(block, x, y, z);
+		}
+		if(tile.hasDust()) {
+			//renderer.setOverrideBlockTexture();
+			renderer.setRenderBounds(0.1875D, 0.0625D, 0.1875D, 0.8125D, 0.625D, 0.8125D);
+			renderer.renderStandardBlock(block, x, y, z);
+			renderer.clearOverrideBlockTexture();
+		}		
+		return true;
+	}
+	
 	@Override
 	public boolean shouldRender3DInInventory() {
 		return false;

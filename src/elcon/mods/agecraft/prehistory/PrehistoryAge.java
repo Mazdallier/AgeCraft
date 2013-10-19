@@ -13,6 +13,7 @@ import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.items.ItemDummy;
 import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
+import elcon.mods.agecraft.prehistory.blocks.BlockPot;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.items.ItemFakeStone;
 import elcon.mods.agecraft.prehistory.items.ItemRock;
@@ -22,6 +23,7 @@ import elcon.mods.agecraft.prehistory.items.ItemRockTool;
 import elcon.mods.agecraft.prehistory.recipes.RecipesCampfire;
 import elcon.mods.agecraft.prehistory.recipes.RecipesSharpener;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 
 public class PrehistoryAge extends Age {
 		
@@ -30,6 +32,7 @@ public class PrehistoryAge extends Age {
 	
 	public static Block campfire;
 	public static Block rock;
+	public static Block pot;
 	
 	public static Item fakeStone;
 	public static Item rockTool;
@@ -48,10 +51,12 @@ public class PrehistoryAge extends Age {
 		//init blocks
 		campfire = new BlockCampfire(3000).setUnlocalizedName("prehistory_campfire");
 		rock = new BlockRock(3001).setUnlocalizedName("prehistory_rock");
+		pot = new BlockPot(3002).setUnlocalizedName("prehistory_pot");
 		
 		//register blocks
 		GameRegistry.registerBlock(campfire, ItemBlockName.class, "AC_prehistory_campfire");
 		GameRegistry.registerBlock(rock, ItemRock.class, "AC_prehistory_rock");
+		GameRegistry.registerBlock(pot, ItemBlockName.class, "AC_prehistory_pot");
 		
 		//init items
 		fakeStone = new ItemFakeStone(11000).setUnlocalizedName("prehistory_fakeStone");
@@ -62,6 +67,7 @@ public class PrehistoryAge extends Age {
 		
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntityCampfire.class, "TileCampfire");
+		GameRegistry.registerTileEntity(TileEntityPot.class, "TilePot");
 	}
 	
 	@Override
@@ -73,7 +79,6 @@ public class PrehistoryAge extends Age {
 				GameRegistry.addRecipe(new ItemStack(rockPickaxe.itemID, 1, 0), "#", "I", '#', rockPickaxeHead, 'I', new ItemStack(Trees.stick.itemID, 1, i));
 			}
 		}
-			
 		RecipesCampfire.addRecipes();
 		RecipesSharpener.addRecipes();
 	}

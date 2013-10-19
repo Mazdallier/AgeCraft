@@ -36,7 +36,6 @@ public class Crafting extends ACComponent {
 				GameRegistry.addRecipe(new ItemStack(workbench.blockID, 1, i), "##", "##", '#', new ItemStack(Trees.planks, 1, i));
 			}
 		}
-			
 		RecipesWorkbench.addRecipes();
 	}
 }
