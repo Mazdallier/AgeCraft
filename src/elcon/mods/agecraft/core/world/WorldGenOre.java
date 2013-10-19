@@ -2,14 +2,12 @@ package elcon.mods.agecraft.core.world;
 
 import java.util.Random;
 
-import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
 
 public class WorldGenOre extends WorldGenerator {
 
@@ -81,7 +79,7 @@ public class WorldGenOre extends WorldGenerator {
 								if(d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && (block != null && block.isGenMineableReplaceable(world, xx, yy, zz, blockToReplace))) {
 									if(extendedMetadata) {
 										world.setBlock(xx, yy, zz, minableBlockId, 0, 2);
-										TileEntity tile = ((BlockContainer) Block.blocksList[minableBlockId]).createNewTileEntity(world);
+										TileEntity tile = Block.blocksList[minableBlockId].createTileEntity(world, 0);
 										if(tile instanceof TileEntityMetadata) {
 											((TileEntityMetadata) tile).setTileMetadata(minableBlockMeta);
 											world.setBlockTileEntity(xx, yy, zz, tile);

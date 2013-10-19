@@ -11,7 +11,7 @@ import elcon.mods.agecraft.core.Tools;
 
 public class ContainerWorkbench extends Container {
 
-	public InventoryWorkbench inventoryWorkbench;
+	public InventoryBasic inventoryWorkbench;
 	public InventoryCraftMatrix craftMatrix;
 	public InventoryCraftResult craftResult;
 	private World world;
@@ -24,7 +24,7 @@ public class ContainerWorkbench extends Container {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		inventoryWorkbench = new InventoryWorkbench(this);
+		inventoryWorkbench = new InventoryBasic(this, 2, "container.workbench");
 		craftMatrix = new InventoryCraftMatrix(this, 3, 3);
 		craftResult = new InventoryCraftResult();
 

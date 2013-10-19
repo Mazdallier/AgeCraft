@@ -6,14 +6,16 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-public class InventoryWorkbench implements IInventory {
+public class InventoryBasic implements IInventory {
 
 	private Container container;
 	private ItemStack[] stacks;
+	private String unlocalizedName;
 	
-	public InventoryWorkbench(Container container) {
+	public InventoryBasic(Container container, int size, String unlocalizedName) {
 		this.container = container;
-		stacks = new ItemStack[2];
+		this.stacks = new ItemStack[size];
+		this.unlocalizedName = unlocalizedName;
 	}
 	
 	@Override
@@ -67,7 +69,7 @@ public class InventoryWorkbench implements IInventory {
 
 	@Override
 	public String getInvName() {
-		return LanguageManager.getLocalization("container.workbench");
+		return LanguageManager.getLocalization(unlocalizedName);
 	}
 
 	@Override
