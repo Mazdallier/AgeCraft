@@ -12,6 +12,7 @@ import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.gui.ContainerWorkbench;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
+import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
 import elcon.mods.agecraft.prehistory.gui.ContainerSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
 import elcon.mods.core.ElConCore;
@@ -40,7 +41,7 @@ public class ACCommonProxy implements IGuiHandler {
 		if(id == 10) {
 			return new ContainerChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
 		} else if(id == 11) {
-			return new ContainerWorkbench(player.inventory, world, x, y, z);
+			return new ContainerWorkbench(player, player.inventory, (TileEntityWorkbench) world.getBlockTileEntity(x, y, z), world, x, y, z);
 		} else if(id == 30) {
 			return new ContainerSharpener(player, new InventorySharpener());
 		} 

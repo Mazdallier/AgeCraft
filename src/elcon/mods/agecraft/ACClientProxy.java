@@ -25,6 +25,7 @@ import elcon.mods.agecraft.core.player.ACPlayerRender;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
+import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
 import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterBeamRenderer;
 import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterChestRenderer;
 import elcon.mods.agecraft.prehistory.PrehistoryBlockRenderingHandler;
@@ -118,7 +119,7 @@ public class ACClientProxy extends ACCommonProxy {
 		if(id == 10) {
 			return new GuiChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
 		} else if(id == 11) {
-			return new GuiWorkbench(new ContainerWorkbench(player.inventory, world, x, y, z));
+			return new GuiWorkbench(new ContainerWorkbench(player, player.inventory, (TileEntityWorkbench) world.getBlockTileEntity(x, y, z), world, x, y, z));
 		} else if(id == 30) {
 			return new GuiSharpener(new InventorySharpener());
 		}

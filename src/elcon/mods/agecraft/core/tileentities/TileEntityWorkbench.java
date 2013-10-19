@@ -1,25 +1,27 @@
-package elcon.mods.agecraft.core.gui;
+package elcon.mods.agecraft.core.tileentities;
 
-import elcon.mods.core.lang.LanguageManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import elcon.mods.core.lang.LanguageManager;
 
-public class InventoryBasic implements IInventory {
+public class TileEntityWorkbench extends TileEntityMetadata implements IInventory {
 
-	private Container container;
+	public Container container;
 	private ItemStack[] stacks;
-	private String unlocalizedName;
-	
-	public InventoryBasic(Container container, int size, String unlocalizedName) {
-		this.container = container;
-		this.stacks = new ItemStack[size];
-		this.unlocalizedName = unlocalizedName;
+
+	public TileEntityWorkbench() {
+		stacks = new ItemStack[2];
 	}
-	
+
+	public TileEntityWorkbench(Container container) {
+		this();
+		this.container = container;
+	}
+
 	@Override
 	public int getSizeInventory() {
 		return stacks.length;
@@ -47,14 +49,18 @@ public class InventoryBasic implements IInventory {
 			if(stacks[slot].stackSize <= amount) {
 				stack = stacks[slot];
 				stacks[slot] = null;
-				container.onCraftMatrixChanged(this);
+				if(container != null) {
+					container.onCraftMatrixChanged(this);
+				}
 				return stack;
 			} else {
 				stack = stacks[slot].splitStack(amount);
 				if(stacks[slot].stackSize == 0) {
 					stacks[slot] = null;
 				}
-				container.onCraftMatrixChanged(this);
+				if(container != null) {
+					container.onCraftMatrixChanged(this);
+				}
 				return stack;
 			}
 		}
@@ -65,13 +71,15 @@ public class InventoryBasic implements IInventory {
 	public void setInventorySlotContents(int slot, ItemStack stack) {
 		if(slot < getSizeInventory()) {
 			stacks[slot] = stack;
-			container.onCraftMatrixChanged(this);
+			if(container != null) {
+				container.onCraftMatrixChanged(this);
+			}
 		}
 	}
 
 	@Override
 	public String getInvName() {
-		return LanguageManager.getLocalization(unlocalizedName);
+		return LanguageManager.getLocalization("container.workbench");
 	}
 
 	@Override
@@ -88,12 +96,12 @@ public class InventoryBasic implements IInventory {
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
 	}
-	
+
 	@Override
 	public void onInventoryChanged() {
 	}
@@ -105,19 +113,27 @@ public class InventoryBasic implements IInventory {
 	@Override
 	public void closeChest() {
 	}
-	
-	public void readFromNBT(NBTTagList list) {
-		for(int i = 0; i < list.tagCount(); i++) {
-			NBTTagCompound tag = (NBTTagCompound) list.tagAt(i);
-			int slot = tag.getByte("Slot") & 255;
-			ItemStack stack = ItemStack.loadItemStackFromNBT(tag);
-			if(stack != null && slot >= 0 && slot < getSizeInventory()) {
-				stacks[slot] = stack;
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		if(nbt.hasKey("Inventory")) {
+			NBTTagList list = nbt.getTagList("Inventory");
+			for(int i = 0; i < list.tagCount(); ++i) {
+				NBTTagCompound tag = (NBTTagCompound) list.tagAt(i);
+				int slot = tag.getByte("Slot") & 255;
+				ItemStack stack = ItemStack.loadItemStackFromNBT(tag);
+				if(stack != null && slot >= 0 && slot < getSizeInventory()) {
+					stacks[slot] = stack;
+				}
 			}
 		}
 	}
-	
-	public void writeToNBT(NBTTagList list) {
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		NBTTagList list = new NBTTagList();
 		for(int i = 0; i < getSizeInventory(); i++) {
 			if(stacks[i] != null) {
 				NBTTagCompound tag = new NBTTagCompound();
@@ -126,5 +142,6 @@ public class InventoryBasic implements IInventory {
 				list.appendTag(tag);
 			}
 		}
+		nbt.setTag("Inventory", list);
 	}
 }

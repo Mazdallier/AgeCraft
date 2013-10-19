@@ -20,6 +20,7 @@ import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.clothing.ClothingUpdater;
 import elcon.mods.agecraft.core.items.ItemBlockName;
+import elcon.mods.agecraft.core.recipes.RecipesWorkbench;
 import elcon.mods.agecraft.core.tech.TechTree;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
@@ -100,6 +101,9 @@ public class AgeCraftCore extends ACComponent {
 		
 		//register biomes
 		BiomeRegistry.registerBiomes();
+		
+		//add recipes
+		RecipesWorkbench.addRecipes();
 	}
 	
 	public void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {

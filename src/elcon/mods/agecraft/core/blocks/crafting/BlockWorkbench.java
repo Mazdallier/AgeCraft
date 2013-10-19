@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -18,6 +19,7 @@ import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.blocks.BlockExtendedMetadataOverlay;
+import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
 import elcon.mods.core.lang.LanguageManager;
 
 public class BlockWorkbench extends BlockExtendedMetadataOverlay {
@@ -32,6 +34,11 @@ public class BlockWorkbench extends BlockExtendedMetadataOverlay {
 		setResistance(5.0F);
 		setStepSound(Block.soundWoodFootstep);
 		setCreativeTab(ACCreativeTabs.wood);
+	}
+	
+	@Override
+	public TileEntity createNewTileEntity(World world) {
+		return new TileEntityWorkbench();
 	}
 	
 	@Override

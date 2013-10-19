@@ -5,6 +5,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.core.blocks.crafting.BlockWorkbench;
 import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
+import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
 
 public class Crafting extends ACComponent {
 	
@@ -20,5 +21,8 @@ public class Crafting extends ACComponent {
 		
 		//register block flammability
 		Block.setBurnProperties(workbench.blockID, 5, 20);
+		
+		//register tileentities
+		GameRegistry.registerTileEntity(TileEntityWorkbench.class, "TileWorkbench");
 	}
 }

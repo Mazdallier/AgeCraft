@@ -7,31 +7,42 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.Tools;
+import elcon.mods.agecraft.core.recipes.RecipeWorkbenchShaped;
+import elcon.mods.agecraft.core.recipes.RecipeWorkbenchShapeless;
+import elcon.mods.agecraft.core.recipes.RecipesWorkbench;
+import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
+import elcon.mods.agecraft.recipes.Recipe;
 
 public class ContainerWorkbench extends Container {
 
-	public InventoryBasic inventoryWorkbench;
+	public TileEntityWorkbench workbench;
 	public InventoryCraftMatrix craftMatrix;
 	public InventoryCraftResult craftResult;
+	private EntityPlayer player;
 	private World world;
 	private int x;
 	private int y;
 	private int z;
+	private int damageHammer;
+	private int damageSaw;
 
-	public ContainerWorkbench(InventoryPlayer inventory, World world, int x, int y, int z) {
+	public ContainerWorkbench(EntityPlayer player, InventoryPlayer inventory, TileEntityWorkbench tile, World world, int x, int y, int z) {
+		this.player = player;
 		this.world = world;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		inventoryWorkbench = new InventoryBasic(this, 2, "container.workbench");
+		workbench = tile;
+		workbench.container = this;
 		craftMatrix = new InventoryCraftMatrix(this, 3, 3);
 		craftResult = new InventoryCraftResult();
 
-		addSlotToContainer(new SlotTool(inventoryWorkbench, 0, 15, 17, 13));
-		addSlotToContainer(new SlotTool(inventoryWorkbench, 1, 15, 53, 15));
+		addSlotToContainer(new SlotTool(workbench, 0, 15, 17, 13));
+		addSlotToContainer(new SlotTool(workbench, 1, 15, 53, 15));
 
-		addSlotToContainer(new SlotCrafting(inventory.player, craftMatrix, craftResult, 0, 138, 35));
+		addSlotToContainer(new SlotCraftingWorkbench(inventory.player, this, craftMatrix, craftResult, 0, 138, 35));
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
 				addSlotToContainer(new Slot(craftMatrix, i + j * 3, 44 + i * 18, 17 + j * 18));
@@ -51,7 +62,34 @@ public class ContainerWorkbench extends Container {
 
 	@Override
 	public void onCraftMatrixChanged(IInventory inventory) {
-		// craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(craftMatrix, world));
+		Recipe recipe = RecipesWorkbench.findMatchingRecipe(craftMatrix);
+		if(recipe != null) {
+			if(recipe instanceof RecipeWorkbenchShaped) {
+				damageHammer = ((RecipeWorkbenchShaped) recipe).hammerDamage;
+				damageSaw = ((RecipeWorkbenchShaped) recipe).sawDamage;
+			} else if(recipe instanceof RecipeWorkbenchShapeless) {
+				damageHammer = ((RecipeWorkbenchShapeless) recipe).hammerDamage;
+				damageSaw = ((RecipeWorkbenchShapeless) recipe).sawDamage;
+			}
+			craftResult.setInventorySlotContents(0, RecipesWorkbench.getRecipeOutput(craftMatrix, workbench));
+		} else {
+			craftResult.setInventorySlotContents(0, null);
+		}
+	}
+	
+	public void damageTools() {
+		if(damageHammer > 0 && workbench.getStackInSlot(0) != null) {
+			ItemStack stack = workbench.getStackInSlot(0);
+			ACUtil.damageItem(stack, damageHammer, player);
+			workbench.setInventorySlotContents(1, stack);
+			damageHammer = -1;
+		}
+		if(damageSaw > 0 && workbench.getStackInSlot(1) != null) {
+			ItemStack stack = workbench.getStackInSlot(1);
+			ACUtil.damageItem(stack, damageSaw, player);
+			workbench.setInventorySlotContents(1, stack);
+			damageSaw = -1;
+		}
 	}
 
 	@Override
@@ -64,13 +102,8 @@ public class ContainerWorkbench extends Container {
 					player.dropPlayerItem(stack);
 				}
 			}
-			for(int i = 0; i < inventoryWorkbench.getSizeInventory(); i++) {
-				ItemStack stack = inventoryWorkbench.getStackInSlotOnClosing(i);
-				if(stack != null) {
-					player.dropPlayerItem(stack);
-				}
-			}
 		}
+		workbench.container = null;
 	}
 
 	@Override

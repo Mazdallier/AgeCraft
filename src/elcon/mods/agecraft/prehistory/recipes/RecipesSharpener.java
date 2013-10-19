@@ -1,20 +1,45 @@
 package elcon.mods.agecraft.prehistory.recipes;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
+import elcon.mods.agecraft.recipes.Recipe;
+import elcon.mods.agecraft.recipes.RecipeType;
 
 public class RecipesSharpener {
 
-	public static class RecipeSharpener {
+	public static class RecipeSharpener extends Recipe {
 
 		public boolean[] input = new boolean[64];
 		public ItemStack output;
 		
 		public RecipeSharpener(boolean[] in, ItemStack out) {
+			super();
 			input = in;
 			output = out;
+		}
+
+		@Override
+		public List<ItemStack> getInput() {
+			return Arrays.asList(new ItemStack(PrehistoryAge.rock.blockID, 2, 0));
+		}
+
+		@Override
+		public List<ItemStack> getOutput() {
+			return Arrays.asList(output);
+		}
+
+		@Override
+		public RecipeType getRecipeType() {
+			return RecipeType.SHARPENING;
+		}
+
+		@Override
+		public int getRecipeSize() {
+			return 1;
 		}
 	}
 	

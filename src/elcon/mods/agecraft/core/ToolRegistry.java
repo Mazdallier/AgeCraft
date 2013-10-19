@@ -27,6 +27,8 @@ public class ToolRegistry {
 		
 		public Block[] blocksEffectiveAgainst;
 		
+		public Icon outline;
+		
 		public Tool(int id, String name, ItemTool item, int damageBlock, int damageEntity, boolean hasHead, boolean hasRod, boolean hasEnhancements, Block[] blocksEffectiveAgainst) {
 			this.id = id;
 			this.name = name;

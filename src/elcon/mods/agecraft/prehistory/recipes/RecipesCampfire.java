@@ -1,7 +1,9 @@
 package elcon.mods.agecraft.prehistory.recipes;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -9,10 +11,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
+import elcon.mods.agecraft.recipes.Recipe;
+import elcon.mods.agecraft.recipes.RecipeType;
 
 public class RecipesCampfire {
 
-	public static class RecipeCampfire {
+	public static class RecipeCampfire extends Recipe {
 		
 		public ItemStack raw;
 		public ItemStack cooked;
@@ -22,6 +26,7 @@ public class RecipesCampfire {
 		public int burnTime;
 		
 		public RecipeCampfire(ItemStack raw, ItemStack cooked, ItemStack burned, int cookTime, int burnTime) {
+			super();
 			this.raw = raw;
 			this.cooked = cooked;
 			this.burned = burned;
@@ -44,6 +49,26 @@ public class RecipesCampfire {
 			NBTTagCompound tag = new NBTTagCompound();
 			raw.writeToNBT(tag);
 			nbt.setTag("Raw", tag);
+		}
+
+		@Override
+		public List<ItemStack> getInput() {
+			return Arrays.asList(raw);
+		}
+
+		@Override
+		public List<ItemStack> getOutput() {
+			return Arrays.asList(cooked);
+		}
+
+		@Override
+		public RecipeType getRecipeType() {
+			return RecipeType.COOKING;
+		}
+
+		@Override
+		public int getRecipeSize() {
+			return 1;
 		}
 	}
 	

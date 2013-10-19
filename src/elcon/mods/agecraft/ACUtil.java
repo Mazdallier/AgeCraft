@@ -11,15 +11,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ACUtil {
 
 	public static boolean areItemStacksEqualNoSize(ItemStack stack1, ItemStack stack2) {
+		System.out.println(stack1 + " vs " + stack2);
 		if(stack1 == null && stack2 == null) {
 			return true;
 		}
 		if(stack1 != null && stack2 != null) {
-			return stack1.itemID != stack2.itemID ? false : (stack1.getItemDamage() != stack2.getItemDamage() ? false : (stack1.stackTagCompound == null && stack2.stackTagCompound != null ? false : stack1.stackTagCompound == null || stack1.stackTagCompound.equals(stack2.stackTagCompound)));
+			return stack1.itemID != stack2.itemID ? false : (!areItemStacksDamageEqual(stack1, stack2) ? false : (stack1.stackTagCompound == null && stack2.stackTagCompound != null ? false : stack1.stackTagCompound == null || stack1.stackTagCompound.equals(stack2.stackTagCompound)));
 		}
 		return false;
 	}
@@ -29,7 +31,7 @@ public class ACUtil {
 			return true;
 		}
 		if(stack1 != null && stack2 != null) {
-			return stack1.stackSize != stack2.stackSize ? false : (stack1.itemID != stack2.itemID ? false : (stack1.getItemDamage() != stack2.getItemDamage() ? false : (stack1.stackTagCompound == null && stack2.stackTagCompound != null ? false : stack1.stackTagCompound == null || stack1.stackTagCompound.equals(stack2.stackTagCompound))));
+			return stack1.stackSize != stack2.stackSize ? false : (stack1.itemID != stack2.itemID ? false : (!areItemStacksDamageEqual(stack1, stack2) ? false : (stack1.stackTagCompound == null && stack2.stackTagCompound != null ? false : stack1.stackTagCompound == null || stack1.stackTagCompound.equals(stack2.stackTagCompound))));
 		}
 		return false;
 	}
@@ -39,9 +41,13 @@ public class ACUtil {
 			return true;
 		}
 		if(stack1 != null && stack2 != null) {
-			return stack1.itemID != stack2.itemID ? false : stack1.getItemDamage() == stack2.getItemDamage();
+			return stack1.itemID != stack2.itemID ? false : areItemStacksDamageEqual(stack1, stack2);
 		}
 		return false;
+	}
+	
+	public static boolean areItemStacksDamageEqual(ItemStack stack1, ItemStack stack2) {
+		return stack1.getItemDamage() == OreDictionary.WILDCARD_VALUE || stack2.getItemDamage() == OreDictionary.WILDCARD_VALUE || stack1.getItemDamage() == stack2.getItemDamage();
 	}
 	
 	public static boolean isItemStackDamageable(ItemStack stack) {
