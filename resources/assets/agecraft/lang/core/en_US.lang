@@ -15,6 +15,9 @@ agecraft.version.general_error=Error while connecting to remote version authorit
 agecraft.version.final_error=Version check stopping after three unsuccessful connection attempts
 agecraft.version.mc_version_not_found=Unable to find a version of @MOD_NAME@ for @MINECRAFT_VERSION@ in the remote version authority
 
+container.crafting=Crafting
+container.workbench=Workbench
+
 trees.wood=Wood
 trees.leaves=Leaves
 trees.log=Log

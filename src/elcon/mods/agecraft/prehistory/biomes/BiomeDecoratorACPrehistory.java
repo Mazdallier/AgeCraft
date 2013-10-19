@@ -2,9 +2,15 @@ package elcon.mods.agecraft.prehistory.biomes;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenFlowers;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable;
+import net.minecraftforge.event.terraingen.TerrainGen;
+import elcon.mods.agecraft.core.MetalRegistry;
+import elcon.mods.agecraft.core.Metals;
+import elcon.mods.agecraft.core.world.WorldGenOre;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 
 public class BiomeDecoratorACPrehistory {
@@ -19,7 +25,8 @@ public class BiomeDecoratorACPrehistory {
 	public int grassPerChunk;
 
 	public WorldGenFlowers rockGen;
-	
+	public WorldGenOre[] oreGens;
+
 	public BiomeDecoratorACPrehistory(BiomeGenACPrehistory b) {
 		biome = b;
 
@@ -27,6 +34,12 @@ public class BiomeDecoratorACPrehistory {
 		grassPerChunk = 1;
 
 		rockGen = new WorldGenFlowers(PrehistoryAge.rock.blockID);
+		oreGens = new WorldGenOre[MetalRegistry.metals.length];
+		for(int i = 0; i < MetalRegistry.metals.length; i++) {
+			if(MetalRegistry.metals[i] != null) {
+				oreGens[i] = new WorldGenOre(Metals.ore.blockID, i, true, MetalRegistry.metals[i].oreGenSize, Block.stone.blockID, MetalRegistry.metals[i].oreGenPerChunk, MetalRegistry.metals[i].oreGenMinY, MetalRegistry.metals[i].oreGenMaxY);
+			}
+		}
 	}
 
 	public void decorate(World world, Random random, int i, int j) {
@@ -38,22 +51,37 @@ public class BiomeDecoratorACPrehistory {
 	}
 
 	private void decorate() {
-		int i;
 		int x, y, z;
 		WorldGenerator gen;
-		for(i = 0; i < rocksPerChunk; i++) {
+		for(int i = 0; i < rocksPerChunk; i++) {
 			x = chunkX + rand.nextInt(16) + 8;
 			y = rand.nextInt(128);
 			z = chunkZ + rand.nextInt(16) + 8;
 			rockGen.generate(worldObj, rand, x, y, z);
 		}
-		for(i = 0; i < grassPerChunk; i++) {
+		for(int i = 0; i < grassPerChunk; i++) {
 			x = chunkX + rand.nextInt(16) + 8;
 			y = rand.nextInt(128);
 			z = chunkZ + rand.nextInt(16) + 8;
 			gen = biome.getRandomWorldGenForGrass(rand);
 			gen.generate(worldObj, rand, x, y, z);
 		}
+
+		for(int i = 0; i < oreGens.length; i++) {
+			if(oreGens[i] != null) {
+				if(TerrainGen.generateOre(worldObj, rand, oreGens[i], chunkX, chunkZ, GenerateMinable.EventType.CUSTOM)) {
+					genStandardOre(oreGens[i], oreGens[i].oreGenPerChunk, oreGens[i].oreGenMinY, oreGens[i].oreGenMaxY);
+				}
+			}
+		}
+	}
+
+	public void genStandardOre(WorldGenerator worldGen, int oreGenPerChunk, int oreGenMinY, int oreGenMaxY) {
+		for(int i = 0; i < oreGenPerChunk; i++) {
+			int x = chunkX + rand.nextInt(16);
+			int y = rand.nextInt(oreGenMaxY - oreGenMinY) + oreGenMinY;
+			int z = chunkZ + rand.nextInt(16);
+			worldGen.generate(worldObj, rand, x, y, z);
+		}
 	}
 }
-

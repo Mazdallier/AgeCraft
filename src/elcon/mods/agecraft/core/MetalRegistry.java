@@ -35,6 +35,11 @@ public class MetalRegistry {
 		
 		public int metalColor;
 		
+		public int oreGenSize;
+		public int oreGenPerChunk;
+		public int oreGenMinY;
+		public int oreGenMaxY;
+		
 		public Icon ore;
 		public Icon block;
 		public Icon ingot;
@@ -42,7 +47,7 @@ public class MetalRegistry {
 		public Icon nugget;
 		public Icon dust;
 		
-		public Metal(int id, String name, OreType type, float hardness, float resistane, int harvestLevel, float blockHardness, float blockResistane, ItemStack drop, int dropMin, int dropMax, boolean fortune, boolean hasOre, boolean hasIngot, boolean hasBlock, boolean hasDoor, boolean hasDust, int redstonePower, int fireSpreadSpeed, int flammability, int metalColor) {
+		public Metal(int id, String name, OreType type, float hardness, float resistane, int harvestLevel, float blockHardness, float blockResistane, ItemStack drop, int dropMin, int dropMax, boolean fortune, boolean hasOre, boolean hasIngot, boolean hasBlock, boolean hasDoor, boolean hasDust, int redstonePower, int fireSpreadSpeed, int flammability, int metalColor, int oreGenSize, int oreGenPerChunk, int oreGenMinY, int oreGenMaxY) {
 			this.id = id;
 			this.name = name;
 			this.type = type;
@@ -70,6 +75,11 @@ public class MetalRegistry {
 			this.flammability = flammability;
 			
 			this.metalColor = metalColor;
+			
+			this.oreGenSize = oreGenSize;
+			this.oreGenPerChunk = oreGenPerChunk;
+			this.oreGenMinY = oreGenMinY;
+			this.oreGenMaxY = oreGenMaxY;
 		}
 	}
 	

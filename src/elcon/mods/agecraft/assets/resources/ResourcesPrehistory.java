@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ResourcesPrehistory extends Resources {
 	
-	public static ResourceLocation guiSharpener = new ResourceLocation("agecraft", "textures/gui/sharpener.png");
+	public static ResourceLocation guiSharpener = new ResourceLocation("agecraft", "textures/gui/prehistory/sharpener.png");
 
 	public static ResourceLocation[] campfire = new ResourceLocation[TreeRegistry.trees.length];
 	
