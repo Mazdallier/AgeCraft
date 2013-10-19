@@ -2,13 +2,13 @@ package elcon.mods.agecraft.prehistory;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.IBlockAccess;
+
+import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.prehistory.blocks.BlockPot;
-import elcon.mods.agecraft.prehistory.blocks.BlockRock;
-import elcon.mods.agecraft.prehistory.blocks.BlockRock.RockShape;
-import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 
 public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHandler {
@@ -17,66 +17,14 @@ public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHan
 	public int getRenderId() {
 		return 200;
 	}
-	
+
 	@Override
 	public boolean renderWorldBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
 		switch(modelID) {
-		case 200:
-			return renderBlockRock(blockAccess, x, y, z, block, modelID, renderer);
-		case 201:
-			return renderBlockCampfire(blockAccess, x, y, z, block, modelID, renderer);
 		case 202:
 			return renderBlockPot(blockAccess, x, y, z, (BlockPot) block, modelID, renderer);
 		}
 		return false;
-	}
-	
-	private boolean renderBlockRock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
-		RockShape shape = BlockRock.shapes[blockAccess.getBlockMetadata(x, y, z)];
-		renderer.setRenderBounds(shape.minX, shape.minY, shape.minZ, shape.maxX, shape.maxY, shape.maxZ);
-		renderer.renderStandardBlock(block, x, y, z);
-		return true;
-	}
-	
-	private boolean renderBlockCampfire(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
-		TileEntityCampfire tile = (TileEntityCampfire) blockAccess.getBlockTileEntity(x, y, z);
-		if(tile.frameStage > 0) {
-			if(tile.frameDirection == 0) {
-				if(tile.frameStage >= 1) {
-					renderer.setOverrideBlockTexture(Trees.planks.getIcon(0, tile.frameType[0]));
-					renderer.setRenderBounds(0.0D, 0.0D, 0.4D, 0.1D, 1.0D, 0.6D);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-				if(tile.frameStage >= 2) {
-					renderer.setOverrideBlockTexture(Trees.planks.getIcon(0, tile.frameType[1]));
-					renderer.setRenderBounds(0.9D, 0.0D, 0.4D, 1.0D, 1.0D, 0.6D);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-				if(tile.frameStage >= 3) {
-					renderer.setOverrideBlockTexture(Trees.planks.getIcon(0, tile.frameType[2]));
-					renderer.setRenderBounds(0.1D, 0.9D, 0.45D, 0.9D, 1.0D, 0.55D);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-			} else if(tile.frameDirection == 1) {
-				if(tile.frameStage >= 1) {
-					renderer.setOverrideBlockTexture(Trees.planks.getIcon(0, tile.frameType[0]));
-					renderer.setRenderBounds(0.4D, 0.0D, 0.0D, 0.6D, 1.0D, 0.1D);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-				if(tile.frameStage >= 2) {
-					renderer.setOverrideBlockTexture(Trees.planks.getIcon(0, tile.frameType[1]));
-					renderer.setRenderBounds(0.4D, 0.0D, 0.9D, 0.6D, 1.0D, 1.0D);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-				if(tile.frameStage >= 3) {
-					renderer.setOverrideBlockTexture(Trees.planks.getIcon(0, tile.frameType[2]));
-					renderer.setRenderBounds(0.45D, 0.9D, 0.1D, 0.55D, 1.0D, 0.9D);
-					renderer.renderStandardBlock(block, x, y, z);
-				}
-			}
-			renderer.clearOverrideBlockTexture();
-		}
-		return true;
 	}
 
 	private boolean renderBlockPot(IBlockAccess blockAccess, int x, int y, int z, BlockPot block, int modelID, RenderBlocks renderer) {
@@ -84,43 +32,76 @@ public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHan
 		if(tile == null) {
 			tile = new TileEntityPot();
 		}
-		
+
 		block.renderSolid = true;
 		renderer.setRenderBounds(0.125D, 0.0D, 0.125D, 0.875D, 0.0625D, 0.875D);
 		renderer.renderStandardBlock(block, x, y, z);
 		block.renderSolid = false;
-		
+
 		renderer.setRenderBounds(0.125D, 0.0625D, 0.125D, 0.875D, 0.625D, 0.1875D);
 		renderer.renderStandardBlock(block, x, y, z);
-		
+
 		renderer.setRenderBounds(0.8125D, 0.0625D, 0.1875D, 0.875D, 0.625D, 0.8125D);
 		renderer.renderStandardBlock(block, x, y, z);
-		
+
 		renderer.setRenderBounds(0.125D, 0.0625D, 0.8125D, 0.875D, 0.625D, 0.875D);
 		renderer.renderStandardBlock(block, x, y, z);
-		
+
 		renderer.setRenderBounds(0.125D, 0.0625D, 0.1875D, 0.1875D, 0.625D, 0.8125D);
 		renderer.renderStandardBlock(block, x, y, z);
-		
+
 		if(tile.hasLid) {
-			renderer.setRenderBounds(0.125D, 0.625D, 0.125D, 0.875D, 0.6875D, 0.875D);
+			renderer.setRenderBounds(0.1875D, 0.625D, 0.1875D, 0.8125D, 0.6875D, 0.8125D);
 			renderer.renderStandardBlock(block, x, y, z);
 		}
 		if(tile.hasDust()) {
-			//renderer.setOverrideBlockTexture();
+			// renderer.setOverrideBlockTexture();
 			renderer.setRenderBounds(0.1875D, 0.0625D, 0.1875D, 0.8125D, 0.625D, 0.8125D);
 			renderer.renderStandardBlock(block, x, y, z);
 			renderer.clearOverrideBlockTexture();
-		}		
+		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean shouldRender3DInInventory() {
-		return false;
+		return true;
 	}
-	
+
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-	}	
+		Tessellator tessellator = Tessellator.instance;
+		block.setBlockBoundsForItemRender();
+		renderer.setRenderBoundsFromBlock(block);
+		
+		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, -1.0F, 0.0F);
+		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 0, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 1.0F, 0.0F);
+		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 0.0F, -1.0F);
+		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 2, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 0.0F, 1.0F);
+		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 3, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
+		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 4, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(1.0F, 0.0F, 0.0F);
+		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 5, metadata));
+		
+		tessellator.draw();
+		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+	}
 }

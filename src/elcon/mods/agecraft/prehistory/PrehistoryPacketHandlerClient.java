@@ -100,5 +100,6 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		} else {
 			tile.dust = null;
 		}
+		world.markBlockForRenderUpdate(x, y, z);
 	}
 }

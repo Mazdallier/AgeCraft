@@ -31,6 +31,7 @@ import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
 import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterBeamRenderer;
 import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterChestRenderer;
 import elcon.mods.agecraft.prehistory.PrehistoryBlockRenderingHandler;
+import elcon.mods.agecraft.prehistory.PrehistoryBlockRenderingHandlerWithIcon;
 import elcon.mods.agecraft.prehistory.gui.GuiSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
@@ -104,10 +105,11 @@ public class ACClientProxy extends ACCommonProxy {
 	
 	private void prehistory() {
 		PrehistoryBlockRenderingHandler blockRenderingHandler = new PrehistoryBlockRenderingHandler();
+		PrehistoryBlockRenderingHandlerWithIcon blockRenderingHandlerWithIcon = new PrehistoryBlockRenderingHandlerWithIcon();
 		
 		//register block rendering handler
-		RenderingRegistry.registerBlockHandler(200, blockRenderingHandler);
-		RenderingRegistry.registerBlockHandler(201, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(200, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(201, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(202, blockRenderingHandler);
 		
 		//register tile entity renderers
