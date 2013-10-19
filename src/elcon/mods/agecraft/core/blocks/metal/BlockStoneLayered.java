@@ -15,6 +15,8 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.items.tools.ItemTool;
+import elcon.mods.agecraft.prehistory.PrehistoryAge;
+import elcon.mods.agecraft.prehistory.items.ItemRockPickaxe;
 
 public class BlockStoneLayered extends BlockStone {
 
@@ -87,6 +89,14 @@ public class BlockStoneLayered extends BlockStone {
 			if(player.getCurrentEquippedItem() != null) {
 				if(player.getCurrentEquippedItem().getItem() instanceof ItemTool) {
 					shouldDropItems = ((ItemTool) player.getCurrentEquippedItem().getItem()).canHarvestBlock(player.getCurrentEquippedItem(), this, meta);
+				} else if(player.getCurrentEquippedItem().getItem() instanceof ItemRockPickaxe) {
+					shouldDropItems = false;
+					int chance = world.rand.nextInt(4);
+					if(chance == 2) {
+						dropBlockAsItem_do(world, x, y, z, new ItemStack(PrehistoryAge.rock));
+					} else if(chance == 3) {
+						dropBlockAsItem_do(world, x, y, z, new ItemStack(Block.cobblestone));
+					}
 				}
 			}
 			if(shouldDropItems) {

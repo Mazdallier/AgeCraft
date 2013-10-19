@@ -36,7 +36,7 @@ public class BiomeDecoratorACPrehistory {
 		rockGen = new WorldGenFlowers(PrehistoryAge.rock.blockID);
 		oreGens = new WorldGenOre[MetalRegistry.metals.length];
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
-			if(MetalRegistry.metals[i] != null) {
+			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasOre) {
 				oreGens[i] = new WorldGenOre(Metals.ore.blockID, i, true, MetalRegistry.metals[i].oreGenSize, Block.stone.blockID, MetalRegistry.metals[i].oreGenPerChunk, MetalRegistry.metals[i].oreGenMinY, MetalRegistry.metals[i].oreGenMaxY);
 			}
 		}
