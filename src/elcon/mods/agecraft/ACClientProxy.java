@@ -115,7 +115,9 @@ public class ACClientProxy extends ACCommonProxy {
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		if(id == 10) {
 			return new GuiChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
-		} else if(id == 20) {
+		} else if(id == 11) {
+			return new GuiWorkbench();
+		} else if(id == 30) {
 			return new GuiSharpener(new InventorySharpener());
 		}
 		return null;

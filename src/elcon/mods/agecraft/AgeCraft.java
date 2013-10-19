@@ -19,7 +19,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import elcon.mods.agecraft.core.AgeCraftCore;
-import elcon.mods.agecraft.core.ranks.ACRankManager;
+import elcon.mods.agecraft.core.RankManager;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
 import elcon.mods.core.ElConCore;
 import elcon.mods.core.ElConMod;
@@ -43,8 +43,6 @@ public class AgeCraft {
 	public ACTickHandler tickHandler;
 	public ACTickHandlerClient tickHandlerClient;
 	public ACWorldGenerator worldGenerator;
-
-	public ACRankManager rankManager;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -79,8 +77,7 @@ public class AgeCraft {
 		}
 
 		// init rank manager
-		rankManager = new ACRankManager();
-		rankManager.init();
+		RankManager.init();
 
 		//init tick handlers
 		tickHandler = new ACTickHandler();

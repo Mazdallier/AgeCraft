@@ -47,6 +47,8 @@
 	2532 Leaves DNA
 	2533 Sapling DNA
 	
+	2540 Workbench
+	
 	2996 Age Teleporter
 	2997 Age Teleporter Block
 	2998 Age Teleporter Beam
@@ -165,17 +167,18 @@
 	0 Inventory
 10-19		Core blocks
 	10 Age Teleporter chest
-20-29		Prehistory Age
-	20 Rock sharpener
-30-39		Agriculture Age
-40-49		Ancient Egypt
-50-59		Ancient China
-60-69		Roman/Greek Age
-70-79		Middle Ages
-80-89		Early Modern Age
-90-99		Industrial Age
-100-109		Modern Age
-110-119		Future
+	11 Crafting
+30-29		Prehistory Age
+	30 Rock sharpener
+40-49		Agriculture Age
+50-59		Ancient Egypt
+60-69		Ancient China
+70-79		Roman/Greek Age
+80-89		Middle Ages
+90-99		Early Modern Age
+110-109		Industrial Age
+110-119		Modern Age
+120-129		Future
 
 ======= DNA IDs ======
 0	Tree

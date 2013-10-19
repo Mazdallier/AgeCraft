@@ -38,7 +38,7 @@ public class ACCommonProxy implements IGuiHandler {
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		if(id == 10) {
 			return new ContainerChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
-		} else if(id == 20) {
+		} else if(id == 30) {
 			return new ContainerSharpener(player, new InventorySharpener());
 		} 
 		return null;

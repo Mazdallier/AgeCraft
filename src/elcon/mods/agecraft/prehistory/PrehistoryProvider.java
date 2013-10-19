@@ -10,11 +10,9 @@ public class PrehistoryProvider extends WorldProvider {
 	}
 
 	@Override
-	public float calculateCelestialAngle(long time, float par3) {
-		//TODO: change this based on seasons
+	public float calculateCelestialAngle(long time, float partialTickTime) {
 		int j = (int) (time % 24000L);
-		float angle = ((float) j + par3) / 24000.0F - 0.25F;
-
+		float angle = ((float) j + partialTickTime) / 24000.0F - 0.25F;
 		if(angle < 0.0F) {
 			angle++;
 		}
