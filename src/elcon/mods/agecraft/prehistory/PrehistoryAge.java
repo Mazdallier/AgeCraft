@@ -8,6 +8,7 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.Age;
 import elcon.mods.agecraft.IACPacketHandler;
 import elcon.mods.agecraft.IACPacketHandlerClient;
+import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.items.ItemDummy;
@@ -56,7 +57,7 @@ public class PrehistoryAge extends Age {
 		fakeStone = new ItemFakeStone(11000).setUnlocalizedName("prehistory_fakeStone");
 		rockTool = new ItemRockTool(13000).setUnlocalizedName("prehistory_rockTool");
 		rockTanningTool = new ItemRockTanningTool(13001).setUnlocalizedName("prehistory_rockTanningTool");
-		rockPickaxeHead = new ItemDummy(13002, "item.rockPickaxeHead.name", "agecraft:ages/prehistory/rockPickaxeHead").setCreativeTab(ACCreativeTabs.prehistoryAge).setUnlocalizedName("prehistory_rockPickaxeAxe");
+		rockPickaxeHead = new ItemDummy(13002, "item.rockPickaxeHead.name", "agecraft:ages/prehistory/rockPickaxeHead").setMaxStackSize(1).setCreativeTab(ACCreativeTabs.prehistoryAge).setUnlocalizedName("prehistory_rockPickaxeAxe");
 		rockPickaxe = new ItemRockPickaxe(13003).setUnlocalizedName("prehistory_rockPickaxe");
 		
 		//register tile entities
@@ -67,8 +68,12 @@ public class PrehistoryAge extends Age {
 	public void postInit() {
 		//add recipes
 		GameRegistry.addRecipe(new ItemStack(campfire.blockID, 1, 0), "##", '#', Trees.log);
-		GameRegistry.addRecipe(new ItemStack(rockPickaxe.itemID, 1, 0), "#", "I", '#', rockPickaxeHead, 'I', Trees.stick);
-		
+		for(int i = 0; i < TreeRegistry.trees.length; i++) {
+			if(TreeRegistry.trees[i] != null) {
+				GameRegistry.addRecipe(new ItemStack(rockPickaxe.itemID, 1, 0), "#", "I", '#', rockPickaxeHead, 'I', new ItemStack(Trees.stick.itemID, 1, i));
+			}
+		}
+			
 		RecipesCampfire.addRecipes();
 		RecipesSharpener.addRecipes();
 	}

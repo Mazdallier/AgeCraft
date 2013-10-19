@@ -6,6 +6,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlockWithMetadata;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -20,7 +21,6 @@ import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.clothing.ClothingUpdater;
 import elcon.mods.agecraft.core.items.ItemBlockName;
-import elcon.mods.agecraft.core.recipes.RecipesWorkbench;
 import elcon.mods.agecraft.core.tech.TechTree;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
@@ -73,6 +73,9 @@ public class AgeCraftCore extends ACComponent {
 		GameRegistry.registerTileEntity(TileEntityNBT.class, "TileNBT");
 		GameRegistry.registerTileEntity(TileEntityDNA.class, "TileDNA");
 		GameRegistry.registerTileEntity(TileEntityMetadata.class, "TileMetadata");
+		
+		//remove recipes
+		CraftingManager.getInstance().getRecipeList().clear();
 	}
 	
 	public void init() {
@@ -101,9 +104,6 @@ public class AgeCraftCore extends ACComponent {
 		
 		//register biomes
 		BiomeRegistry.registerBiomes();
-		
-		//add recipes
-		RecipesWorkbench.addRecipes();
 	}
 	
 	public void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {

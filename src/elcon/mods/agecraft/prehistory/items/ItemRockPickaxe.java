@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
+import elcon.mods.core.lang.LanguageManager;
 
 public class ItemRockPickaxe extends Item {
 
@@ -24,6 +25,26 @@ public class ItemRockPickaxe extends Item {
 		setMaxStackSize(1);
 		setMaxDamage(3);
 		setCreativeTab(ACCreativeTabs.prehistoryAge);
+	}
+	
+	@Override
+	public String getItemDisplayName(ItemStack stack) {
+		return getItemStackDisplayName(stack);
+	}
+	
+	@Override
+	public String getItemStackDisplayName(ItemStack stack) {
+		return LanguageManager.getLocalization(getUnlocalizedName(stack));
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return getUnlocalizedName();
+	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		return "item.rockPickaxe.name";
 	}
 
 	@Override
