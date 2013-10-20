@@ -3,6 +3,9 @@ package elcon.mods.agecraft.core;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.core.DustRegistry.Dust;
@@ -16,10 +19,11 @@ import elcon.mods.agecraft.core.blocks.metal.BlockMetalTrapdoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockOreStorage;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneOre;
 import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
-import elcon.mods.agecraft.core.items.ItemDust;
 import elcon.mods.agecraft.core.items.ItemGem;
 import elcon.mods.agecraft.core.items.ItemIngot;
+import elcon.mods.agecraft.core.items.ItemMetalBucket;
 import elcon.mods.agecraft.core.items.ItemMetalDoor;
+import elcon.mods.agecraft.core.items.ItemMetalDust;
 import elcon.mods.agecraft.core.items.ItemMetalStick;
 import elcon.mods.agecraft.core.items.ItemNugget;
 
@@ -38,6 +42,7 @@ public class Metals extends ACComponent {
 	public static Item stick;
 	public static Item nugget;
 	public static Item dust;
+	public static Item bucket;
 
 	@Override
 	public void preInit() {
@@ -64,7 +69,8 @@ public class Metals extends ACComponent {
 		gem = new ItemGem(12501).setUnlocalizedName("metal_gem");
 		stick = new ItemMetalStick(12502).setUnlocalizedName("metal_stick");
 		nugget = new ItemNugget(12503).setUnlocalizedName("metal_nugget");
-		dust = new ItemDust(12504).setUnlocalizedName("metal_dust");
+		dust = new ItemMetalDust(12504).setUnlocalizedName("metal_dust");
+		bucket = new ItemMetalBucket(12505).setUnlocalizedName("metal_bucket");
 	}
 
 	@Override
@@ -112,7 +118,18 @@ public class Metals extends ACComponent {
 		
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
 			if(MetalRegistry.metals[i] != null) {
-				DustRegistry.registerDust(new Dust(128 + i, MetalRegistry.metals[i].name, "metals." + MetalRegistry.metals[i].name, new ItemStack(dust, 1, i)));
+				DustRegistry.registerDust(new Dust(128 + i, MetalRegistry.metals[i].name, "metals." + MetalRegistry.metals[i].name, new ItemStack(dust.itemID, 1, i)));
+			}
+		}
+	}
+	
+	@Override
+	public void postInit() {
+		for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
+			for(int i = 0; i < MetalRegistry.metals.length; i++) {
+				if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasIngot) {
+					FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(bucket.itemID, 1, i));
+				}
 			}
 		}
 	}

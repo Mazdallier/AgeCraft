@@ -11,5 +11,6 @@ public class ACPlayerServer extends PlayerCoreServer {
 	public ACPlayerServer(MinecraftServer mcServer, World world, String username, ItemInWorldManager itemInWorldManager, int playerCoreIndex, PlayerCoreServer entityPlayerMP) {
 		super(mcServer, world, username, itemInWorldManager, playerCoreIndex, entityPlayerMP);
 		player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setAttribute(100.0D);
+		player.dimension = 10;
 	}
 }

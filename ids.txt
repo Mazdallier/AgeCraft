@@ -75,8 +75,11 @@
 	12502 Stick
 	12503 Nugget
 	12504 Dust
+	12505 Bucket
 	
 	12510 Stick
+	12511 Dust
+	12512 Bucket
 	
 	12520 Sword
 	12521 Pickaxe

@@ -2,8 +2,13 @@ package elcon.mods.agecraft.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACComponent;
+import elcon.mods.agecraft.core.DustRegistry.Dust;
 import elcon.mods.agecraft.core.TreeRegistry.Tree;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeavesDNA;
@@ -24,12 +29,15 @@ import elcon.mods.agecraft.core.items.ItemBlockLeaves;
 import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.items.ItemLog;
 import elcon.mods.agecraft.core.items.ItemSaplingDNA;
+import elcon.mods.agecraft.core.items.ItemWoodBucket;
 import elcon.mods.agecraft.core.items.ItemWoodDoor;
+import elcon.mods.agecraft.core.items.ItemWoodDust;
 import elcon.mods.agecraft.core.items.ItemWoodStick;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
 import elcon.mods.agecraft.dna.structure.Chromosome;
 import elcon.mods.agecraft.dna.structure.DNAObject;
 import elcon.mods.agecraft.dna.structure.Gene;
+import elcon.mods.core.ElConCore;
 
 public class Trees extends ACComponent {
 
@@ -59,6 +67,8 @@ public class Trees extends ACComponent {
 	public static Block saplingDNA;
 	
 	public static Item stick;
+	public static Item dust;
+	public static Item bucket;
 	
 	public static DNAObject treeDNA = new DNAObject(0, "tree", TileEntityDNATree.class, new Chromosome[] {
 		new Chromosome(0, "species", new Gene[] {
@@ -139,6 +149,8 @@ public class Trees extends ACComponent {
 		
 		//init items
 		stick = new ItemWoodStick(12510).setUnlocalizedName("trees_stick");
+		dust = new ItemWoodDust(12511).setUnlocalizedName("trees_dust");
+		bucket = new ItemWoodBucket(12512).setUnlocalizedName("trees_bucket");
 		
 		//register tileentities
 		GameRegistry.registerTileEntity(TileEntityDNATree.class, "TileDNATree");
@@ -151,5 +163,22 @@ public class Trees extends ACComponent {
 		TreeRegistry.registerTree(new Tree(1, "birch", 0x80A755, false, 0xD7C185));
 		TreeRegistry.registerTree(new Tree(2, "spruce", 0x619961, false, 0x785836));
 		TreeRegistry.registerTree(new Tree(3, "jungle", 0x48B518, true, 0xB1805C));
+		
+		for(int i = 0; i < TreeRegistry.trees.length; i++) {
+			if(TreeRegistry.trees[i] != null) {
+				DustRegistry.registerDust(new Dust(i, "wood" + ElConCore.firstUpperCase(TreeRegistry.trees[i].name), "trees." + TreeRegistry.trees[i].name, new ItemStack(dust.itemID, 1, i)));
+			}
+		}
+	}
+	
+	@Override
+	public void postInit() {
+		for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
+			for(int i = 0; i < TreeRegistry.trees.length; i++) {
+				if(TreeRegistry.trees[i] != null) {
+					FluidContainerRegistry.registerFluidContainer(fluid, new ItemStack(bucket.itemID, 1, i));
+				}
+			}
+		}
 	}
 }

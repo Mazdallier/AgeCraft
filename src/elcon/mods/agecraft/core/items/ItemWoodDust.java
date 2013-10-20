@@ -10,16 +10,16 @@ import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
-import elcon.mods.agecraft.core.MetalRegistry;
+import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.core.lang.LanguageManager;
 
-public class ItemDust extends Item {
+public class ItemWoodDust extends Item {
 
-	public ItemDust(int id) {
+	public ItemWoodDust(int id) {
 		super(id - 256);
 		setMaxDamage(0);
 		setHasSubtypes(true);
-		setCreativeTab(ACCreativeTabs.metals);
+		setCreativeTab(ACCreativeTabs.wood);
 	}
 	
 	@Override
@@ -29,18 +29,18 @@ public class ItemDust extends Item {
 	
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return "metals.dust";
+		return "trees.dust";
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIconFromDamage(int meta) {
-		return MetalRegistry.metals[meta].dust;
+		return TreeRegistry.trees[meta].dust;
 	}
 	
 	@Override
@@ -51,8 +51,8 @@ public class ItemDust extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int id, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < MetalRegistry.metals.length; i++) {
-			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasDust) {
+		for(int i = 0; i < TreeRegistry.trees.length; i++) {
+			if(TreeRegistry.trees[i] != null) {
 				list.add(new ItemStack(id, 1, i));
 			}
 		}

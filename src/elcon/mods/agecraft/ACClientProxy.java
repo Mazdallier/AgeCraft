@@ -100,17 +100,17 @@ public class ACClientProxy extends ACCommonProxy {
 		//register entity renderers
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlock.class, RenderEntityBlock.instance);
 		
-		prehistory();
+		registerPrehistory();
 	}
 	
-	private void prehistory() {
+	private void registerPrehistory() {
 		PrehistoryBlockRenderingHandler blockRenderingHandler = new PrehistoryBlockRenderingHandler();
 		PrehistoryBlockRenderingHandlerWithIcon blockRenderingHandlerWithIcon = new PrehistoryBlockRenderingHandlerWithIcon();
 		
 		//register block rendering handler
 		RenderingRegistry.registerBlockHandler(200, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(201, blockRenderingHandlerWithIcon);
-		RenderingRegistry.registerBlockHandler(202, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(202, blockRenderingHandlerWithIcon);
 		
 		//register tile entity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());

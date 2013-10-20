@@ -9,6 +9,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.core.lang.LanguageManager;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraftforge.fluids.Fluid;
@@ -37,7 +38,7 @@ public class ItemWoodBucket extends ItemBucket {
 	
 	@Override
 	public String getUnlocalizedName() {
-		return "tools.bucket";
+		return "trees.bucket";
 	}
 	
 	@Override
@@ -47,7 +48,17 @@ public class ItemWoodBucket extends ItemBucket {
 	}
 	
 	@Override
-	public List<Fluid> getFluidBlacklist() {
+	public List<Fluid> getFluidBlacklist(ItemStack stack) {
 		return Arrays.asList(FluidRegistry.LAVA);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(int id, CreativeTabs creativeTab, List list) {
+		for(int i = 0; i < TreeRegistry.trees.length; i++) {
+			if(TreeRegistry.trees[i] != null) {
+				list.add(new ItemStack(id, 1, i));
+			}
+		}
 	}
 }

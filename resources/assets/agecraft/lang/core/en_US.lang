@@ -34,6 +34,8 @@ trees.trapdoor.standard=Trapdoor
 trees.trapdoor.solid=Solid Trapdoor
 trees.ladder=Ladder
 trees.stick=Stick
+trees.dust=Dust
+trees.bucket=Bucket
 
 trees.oak=Oak
 trees.birch=Birch
@@ -56,6 +58,7 @@ metals.gem=Gem
 metals.stick=Stick
 metals.nugget=Nugget
 metals.dust=Dust
+metals.bucket=Bucket
 
 metals.copper=Copper
 metals.tin=Tin
@@ -132,6 +135,9 @@ armor.type.leggings=Leggings
 armor.type.boots=Boots
 
 crafting.workbench=Workbench
+
+fluid.tile.water=Water
+fluid.tile.lava=Lava
 
 tile.ageTeleporter.name=Age Teleporter
 tile.ageTeleporterBlock.name=Age Teleporter Block
