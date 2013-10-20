@@ -36,13 +36,13 @@ public class TileEntityRendererPot extends TileEntitySpecialRenderer {
 			bindTexture(FluidRenderer.getFluidSheet(liquid));
 			FluidRenderer.setColorForFluidStack(liquid);
 
-			GL11.glTranslatef((float) x + 0.125F, (float) y, (float) z + 0.125F);
-			GL11.glScalef(0.75F,  0.6249F, 0.75F);
+			GL11.glTranslatef((float) x + 0.125F, (float) y + 0.0625F, (float) z + 0.125F);
+			GL11.glScalef(0.75F, 0.5624F, 0.75F);
 
 			GL11.glCallList(displayList[(int) ((float) liquid.amount / (float) (tile.fluid.getCapacity()) * (FluidRenderer.DISPLAY_STAGES - 1))]);
 
 			GL11.glPopAttrib();
 			GL11.glPopMatrix();
-		}		
+		}
 	}
 }

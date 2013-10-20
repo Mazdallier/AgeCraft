@@ -9,6 +9,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.ArmorRegistry;
 import elcon.mods.agecraft.core.ArmorRegistry.ArmorMaterial;
 import elcon.mods.agecraft.core.ArmorRegistry.ArmorType;
+import elcon.mods.agecraft.core.DustRegistry;
+import elcon.mods.agecraft.core.DustRegistry.Dust;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.MetalRegistry.Metal;
 import elcon.mods.agecraft.core.MetalRegistry.OreType;
@@ -101,6 +103,14 @@ public class ResourcesCore extends Resources {
 				}
 			}
 		}
+		
+		//dusts
+		for(int i = 0; i < DustRegistry.dusts.length; i++) {
+			Dust dust = DustRegistry.dusts[i];
+			if(dust != null) {
+				dust.icon = iconRegister.registerIcon("agecraft:dusts/dust" + ElConCore.firstUpperCase(dust.name));
+			}
+		}
 	}
 	
 	@Override
@@ -114,6 +124,7 @@ public class ResourcesCore extends Resources {
 			if(tree != null) {
 				tree.log = iconRegister.registerIcon("agecraft:wood/logs/log" + ElConCore.firstUpperCase(tree.name));
 				tree.stick = iconRegister.registerIcon("agecraft:wood/sticks/stick" + ElConCore.firstUpperCase(tree.name));
+				tree.bucket = iconRegister.registerIcon("agecraft:wood/buckets/bucket" + ElConCore.firstUpperCase(tree.name));
 			}
 		}
 		
@@ -129,6 +140,7 @@ public class ResourcesCore extends Resources {
 						if(metal.hasDust) {
 							metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/metals/dust" + ElConCore.firstUpperCase(metal.name));
 						}
+						metal.bucket = iconRegister.registerIcon("agecraft:metals/buckets/bucket" + ElConCore.firstUpperCase(metal.name));
 					}
 				} else if(metal.type == OreType.GEM) {
 					if(metal.hasIngot) {

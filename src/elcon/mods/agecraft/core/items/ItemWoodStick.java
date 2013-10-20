@@ -40,6 +40,12 @@ public class ItemWoodStick extends Item {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
+	public boolean isFull3D() {
+		return true;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
 	public Icon getIconFromDamage(int meta) {
 		return TreeRegistry.trees[meta].stick;
 	}

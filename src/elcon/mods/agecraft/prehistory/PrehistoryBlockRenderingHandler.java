@@ -8,6 +8,7 @@ import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import elcon.mods.agecraft.core.DustRegistry;
 import elcon.mods.agecraft.prehistory.blocks.BlockPot;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 
@@ -55,8 +56,8 @@ public class PrehistoryBlockRenderingHandler implements ISimpleBlockRenderingHan
 			renderer.renderStandardBlock(block, x, y, z);
 		}
 		if(tile.hasDust()) {
-			// renderer.setOverrideBlockTexture();
-			renderer.setRenderBounds(0.1875D, 0.0625D, 0.1875D, 0.8125D, 0.625D, 0.8125D);
+			renderer.setOverrideBlockTexture(DustRegistry.getDust(tile.dust).icon);
+			renderer.setRenderBounds(0.1875D, 0.0625D, 0.1875D, 0.8125D, 0.5625D, 0.8125D);
 			renderer.renderStandardBlock(block, x, y, z);
 			renderer.clearOverrideBlockTexture();
 		}

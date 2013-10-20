@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACComponent;
+import elcon.mods.agecraft.core.DustRegistry.Dust;
 import elcon.mods.agecraft.core.MetalRegistry.Metal;
 import elcon.mods.agecraft.core.MetalRegistry.OreType;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalDoor;
@@ -108,10 +109,11 @@ public class Metals extends ACComponent {
 		MetalRegistry.registerMetal(new Metal(50, "redstone", OreType.GEM, 3.0F, 5.0F, 5, 5.0F, 10.0F, new ItemStack(gem, 1, 50), 4, 5, true, true, true, true, false, false, 15, 0, 0, 0xE3260C, 8, 8, 0, 32));
 		MetalRegistry.registerMetal(new Metal(51, "salt", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 51), 1, 1, true, true, true, false, false, false, 0, 0, 0, 0xD8D2D4, 8, 8, 0, 32));
 		MetalRegistry.registerMetal(new Metal(52, "sulphur", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(gem, 1, 52), 1, 1, true, true, true, false, false, false, 0, 0, 0, 0xF4D41F, 8, 8, 0, 32));
-	}
-
-	@Override
-	public void postInit() {
 		
+		for(int i = 0; i < MetalRegistry.metals.length; i++) {
+			if(MetalRegistry.metals[i] != null) {
+				DustRegistry.registerDust(new Dust(128 + i, MetalRegistry.metals[i].name, "metals." + MetalRegistry.metals[i].name, new ItemStack(dust, 1, i)));
+			}
+		}
 	}
 }

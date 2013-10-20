@@ -24,6 +24,7 @@ public class TreeRegistry {
 		public Icon smallSapling;
 		public Icon sapling;
 		public Icon stick;
+		public Icon bucket;
 		
 		public Tree(int id, String name, int leavesColor, boolean useBiomeColor, int woodColor) {
 			this.id = id;

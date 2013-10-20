@@ -16,7 +16,6 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ACUtil {
 
 	public static boolean areItemStacksEqualNoSize(ItemStack stack1, ItemStack stack2) {
-		System.out.println(stack1 + " vs " + stack2);
 		if(stack1 == null && stack2 == null) {
 			return true;
 		}
@@ -45,11 +44,11 @@ public class ACUtil {
 		}
 		return false;
 	}
-	
+
 	public static boolean areItemStacksDamageEqual(ItemStack stack1, ItemStack stack2) {
 		return stack1.getItemDamage() == OreDictionary.WILDCARD_VALUE || stack2.getItemDamage() == OreDictionary.WILDCARD_VALUE || stack1.getItemDamage() == stack2.getItemDamage();
 	}
-	
+
 	public static boolean isItemStackDamageable(ItemStack stack) {
 		return Item.itemsList[stack.itemID].getMaxDamage(stack) > 0;
 	}
@@ -96,6 +95,19 @@ public class ACUtil {
 			}
 			stack.setItemDamage(stack.getItemDamage() + damage);
 			return stack.getItemDamage() > stack.getMaxDamage();
+		}
+	}
+
+	public static ItemStack consumeItem(ItemStack stack) {
+		if(stack.stackSize == 1) {
+			if(stack.getItem().hasContainerItem()) {
+				return stack.getItem().getContainerItemStack(stack);
+			} else {
+				return null;
+			}
+		} else {
+			stack.splitStack(1);
+			return stack;
 		}
 	}
 }

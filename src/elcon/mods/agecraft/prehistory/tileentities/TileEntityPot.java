@@ -8,11 +8,16 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
 import elcon.mods.agecraft.core.fluids.FluidTankTile;
+import elcon.mods.agecraft.core.tileentities.TileEntityExtended;
 
-public class TileEntityPot extends TileEntity {
+public class TileEntityPot extends TileEntityExtended implements IFluidHandler {
 	
 	public boolean hasLid;
 	public FluidTankTile fluid;
@@ -104,5 +109,44 @@ public class TileEntityPot extends TileEntity {
 			dust.writeToNBT(tag);
 			nbt.setCompoundTag("Dust", tag);
 		}
+	}
+
+	@Override
+	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+		if(resource == null) {
+			return 0;
+		}
+		return fluid.fill(resource, doFill);
+	}
+
+	@Override
+	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+		if(resource == null) {
+			return null;
+		}
+		if(!resource.isFluidEqual(fluid.getFluid())) {
+			return null;
+		}
+		return drain(from, resource.amount, doDrain);
+	}
+
+	@Override
+	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+		return fluid.drain(maxDrain, doDrain);
+	}
+
+	@Override
+	public boolean canFill(ForgeDirection from, Fluid fluid) {
+		return true;
+	}
+
+	@Override
+	public boolean canDrain(ForgeDirection from, Fluid fluid) {
+		return false;
+	}
+
+	@Override
+	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+		return new FluidTankInfo[]{fluid.getInfo()};
 	}
 }

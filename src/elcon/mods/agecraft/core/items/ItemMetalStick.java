@@ -37,6 +37,12 @@ public class ItemMetalStick extends Item {
 	public String getUnlocalizedName(ItemStack stack) {
 		return "metals.stick";
 	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean isFull3D() {
+		return true;
+	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)

@@ -16,6 +16,7 @@ import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
 import elcon.mods.agecraft.prehistory.blocks.BlockPot;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.items.ItemFakeStone;
+import elcon.mods.agecraft.prehistory.items.ItemPot;
 import elcon.mods.agecraft.prehistory.items.ItemRock;
 import elcon.mods.agecraft.prehistory.items.ItemRockPickaxe;
 import elcon.mods.agecraft.prehistory.items.ItemRockTanningTool;
@@ -56,7 +57,7 @@ public class PrehistoryAge extends Age {
 		//register blocks
 		GameRegistry.registerBlock(campfire, ItemBlockName.class, "AC_prehistory_campfire");
 		GameRegistry.registerBlock(rock, ItemRock.class, "AC_prehistory_rock");
-		GameRegistry.registerBlock(pot, ItemBlockName.class, "AC_prehistory_pot");
+		GameRegistry.registerBlock(pot, ItemPot.class, "AC_prehistory_pot");
 		
 		//init items
 		fakeStone = new ItemFakeStone(11000).setUnlocalizedName("prehistory_fakeStone");
