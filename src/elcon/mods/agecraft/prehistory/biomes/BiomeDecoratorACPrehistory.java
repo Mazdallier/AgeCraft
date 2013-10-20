@@ -12,6 +12,8 @@ import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.Metals;
 import elcon.mods.agecraft.core.world.WorldGenOre;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
+import elcon.mods.agecraft.prehistory.world.WorldGenTempSmallTree;
+import elcon.mods.core.ElConCore;
 
 public class BiomeDecoratorACPrehistory {
 
@@ -23,18 +25,22 @@ public class BiomeDecoratorACPrehistory {
 
 	public int rocksPerChunk;
 	public int grassPerChunk;
+	public int smallTreesPerChunk;
 
 	public WorldGenFlowers rockGen;
 	public WorldGenOre[] oreGens;
+	public WorldGenTempSmallTree tempSmallTreeGen;
 
 	public BiomeDecoratorACPrehistory(BiomeGenACPrehistory b) {
 		biome = b;
 
 		rocksPerChunk = 1;
 		grassPerChunk = 1;
+		smallTreesPerChunk = 3;
 
 		rockGen = new WorldGenFlowers(PrehistoryAge.rock.blockID);
 		oreGens = new WorldGenOre[MetalRegistry.metals.length];
+		tempSmallTreeGen = new WorldGenTempSmallTree();
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
 			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasOre) {
 				oreGens[i] = new WorldGenOre(Metals.ore.blockID, i, true, MetalRegistry.metals[i].oreGenSize, Block.stone.blockID, MetalRegistry.metals[i].oreGenPerChunk, MetalRegistry.metals[i].oreGenMinY, MetalRegistry.metals[i].oreGenMaxY);
@@ -65,6 +71,12 @@ public class BiomeDecoratorACPrehistory {
 			z = chunkZ + rand.nextInt(16) + 8;
 			gen = biome.getRandomWorldGenForGrass(rand);
 			gen.generate(worldObj, rand, x, y, z);
+		}
+		for(int i = 0; i < smallTreesPerChunk; i++) {
+			x = chunkX + rand.nextInt(16) + 8;
+			z = chunkZ + rand.nextInt(16) + 8;
+			y = ElConCore.getFirstUncoveredBlock(worldObj, x, z);
+			tempSmallTreeGen.generate(worldObj, rand, x, y, z);
 		}
 
 		for(int i = 0; i < oreGens.length; i++) {
