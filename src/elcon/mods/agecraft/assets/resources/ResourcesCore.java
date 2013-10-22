@@ -1,5 +1,7 @@
 package elcon.mods.agecraft.assets.resources;
 
+import java.util.HashMap;
+
 import net.minecraft.client.renderer.IconFlipped;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
@@ -21,6 +23,7 @@ import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.TreeRegistry.Tree;
+import elcon.mods.agecraft.core.render.TexturePartial;
 import elcon.mods.core.ElConCore;
 
 @SideOnly(Side.CLIENT)
@@ -45,6 +48,9 @@ public class ResourcesCore extends Resources {
 	
 	public static Icon[][][] doorMetalIcons = new Icon[4][2][2];
 	public static Icon[] trapdoorMetalIcons = new Icon[2];
+	
+	public static final int FLUID_PARTIAL_ICON_COUNT = 1;
+	public static HashMap<String, TexturePartial[]> fluidPartialIcons = new HashMap<String, TexturePartial[]>();
 	
 	@Override
 	public void registerBlockIcons(IconRegister iconRegister) {
@@ -202,6 +208,15 @@ public class ResourcesCore extends Resources {
 					}
 				}
 			}
+		}
+	}
+
+	public static void registerPartialFluidIcon(String fluid, int type, TexturePartial icon) {
+		if(!fluidPartialIcons.containsKey(fluid)) {
+			fluidPartialIcons.put(fluid, new TexturePartial[FLUID_PARTIAL_ICON_COUNT]);
+		}
+		if(type < FLUID_PARTIAL_ICON_COUNT) {
+			fluidPartialIcons.get(fluid)[type] = icon;
 		}
 	}
 }

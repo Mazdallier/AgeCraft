@@ -19,6 +19,8 @@ public class ItemWoodBucket extends ItemBucket {
 
 	public ItemWoodBucket(int id) {
 		super(id);
+		setMaxDamage(0);
+		setHasSubtypes(false);
 	}
 	
 	@Override

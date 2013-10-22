@@ -16,6 +16,8 @@ public class ItemMetalBucket extends ItemBucket {
 
 	public ItemMetalBucket(int id) {
 		super(id);
+		setMaxDamage(0);
+		setHasSubtypes(false);
 	}
 	
 	@Override
@@ -25,7 +27,7 @@ public class ItemMetalBucket extends ItemBucket {
 	
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		return LanguageManager.getLocalization("trees." + MetalRegistry.metals[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 	
 	@Override

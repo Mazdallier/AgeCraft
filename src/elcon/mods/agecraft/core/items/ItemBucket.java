@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumMovingObjectType;
@@ -19,6 +21,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
+import elcon.mods.core.lang.LanguageManager;
 
 public abstract class ItemBucket extends ItemFluidContainer {
 
@@ -26,6 +29,14 @@ public abstract class ItemBucket extends ItemFluidContainer {
 		super(id);
 		setCapacity(FluidContainerRegistry.BUCKET_VOLUME);
 		setCreativeTab(ACCreativeTabs.tools);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advancedItemTooltips) {
+		if(hasFluid(stack)) {
+			list.add(LanguageManager.getLocalization(getFluid(stack).getFluid().getUnlocalizedName()));
+		}
 	}
 
 	@Override
@@ -140,9 +151,11 @@ public abstract class ItemBucket extends ItemFluidContainer {
 	@Override
 	public Icon getIcon(ItemStack stack, int pass) {
 		if(pass == 0) {
-			return hasFluid(stack) ? getFluid(stack).getFluid().getIcon(getFluid(stack)) : ResourcesCore.emptyTexture;
+			Minecraft.getMinecraft().getTextureManager().bindTexture(hasFluid(stack) ? TextureMap.locationBlocksTexture : TextureMap.locationItemsTexture);
+			return hasFluid(stack) && ResourcesCore.fluidPartialIcons.containsKey(getFluid(stack).getFluid().getName()) ? ResourcesCore.fluidPartialIcons.get(getFluid(stack).getFluid().getName())[0] : ResourcesCore.emptyTexture;
 		}
-		return getIconIndex(stack);
+		return ResourcesCore.emptyTexture;
+		//return getIconIndex(stack);
 	}
 
 	@Override
