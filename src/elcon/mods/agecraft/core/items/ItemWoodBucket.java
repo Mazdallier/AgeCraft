@@ -9,6 +9,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.core.lang.LanguageManager;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
@@ -44,12 +45,6 @@ public class ItemWoodBucket extends ItemBucket {
 	}
 	
 	@Override
-	@SideOnly(Side.CLIENT)
-	public Icon getIconIndex(ItemStack stack) {
-		return TreeRegistry.trees[stack.getItemDamage()].bucket;
-	}
-	
-	@Override
 	public List<Fluid> getFluidBlacklist(ItemStack stack) {
 		return Arrays.asList(FluidRegistry.LAVA);
 	}
@@ -62,5 +57,16 @@ public class ItemWoodBucket extends ItemBucket {
 				list.add(new ItemStack(id, 1, i));
 			}
 		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIconIndex(ItemStack stack) {
+		return TreeRegistry.trees[stack.getItemDamage()].bucket;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
 	}
 }

@@ -6,6 +6,8 @@ import net.minecraft.client.renderer.IconFlipped;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.ArmorRegistry;
@@ -23,7 +25,6 @@ import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.TreeRegistry.Tree;
-import elcon.mods.agecraft.core.render.TexturePartial;
 import elcon.mods.core.ElConCore;
 
 @SideOnly(Side.CLIENT)
@@ -49,8 +50,8 @@ public class ResourcesCore extends Resources {
 	public static Icon[][][] doorMetalIcons = new Icon[4][2][2];
 	public static Icon[] trapdoorMetalIcons = new Icon[2];
 	
-	public static final int FLUID_PARTIAL_ICON_COUNT = 1;
-	public static HashMap<String, TexturePartial[]> fluidPartialIcons = new HashMap<String, TexturePartial[]>();
+	private static final int FLUID_CONTAINER_COUNT = 1;
+	public static HashMap<String, Icon[]> fluidContainerIcons = new HashMap<String, Icon[]>();
 	
 	@Override
 	public void registerBlockIcons(IconRegister iconRegister) {
@@ -209,14 +210,22 @@ public class ResourcesCore extends Resources {
 				}
 			}
 		}
+		
+		
+		//fluids
+		for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
+			if(fluid != null) {
+				registerContainerIcon(fluid.getName(), 0, iconRegister.registerIcon("agecraft:fluids/bucket/" + fluid.getName()));
+			}
+		}
 	}
 
-	public static void registerPartialFluidIcon(String fluid, int type, TexturePartial icon) {
-		if(!fluidPartialIcons.containsKey(fluid)) {
-			fluidPartialIcons.put(fluid, new TexturePartial[FLUID_PARTIAL_ICON_COUNT]);
+	public void registerContainerIcon(String name, int type, Icon icon) {
+		if(!fluidContainerIcons.containsKey(name)) {
+			fluidContainerIcons.put(name, new Icon[FLUID_CONTAINER_COUNT]);
 		}
-		if(type < FLUID_PARTIAL_ICON_COUNT) {
-			fluidPartialIcons.get(fluid)[type] = icon;
+		if(type < FLUID_CONTAINER_COUNT) {
+			fluidContainerIcons.get(name)[type] = icon;
 		}
 	}
 }

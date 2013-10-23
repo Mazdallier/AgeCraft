@@ -3,6 +3,7 @@ package elcon.mods.agecraft.core.items;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
@@ -41,12 +42,6 @@ public class ItemMetalBucket extends ItemBucket {
 	}
 	
 	@Override
-	@SideOnly(Side.CLIENT)
-	public Icon getIconIndex(ItemStack stack) {
-		return MetalRegistry.metals[stack.getItemDamage()].bucket;
-	}
-	
-	@Override
 	public List<Fluid> getFluidBlacklist(ItemStack stack) {
 		return new ArrayList<Fluid>();
 	}
@@ -59,5 +54,16 @@ public class ItemMetalBucket extends ItemBucket {
 				list.add(new ItemStack(id, 1, i));
 			}
 		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIconIndex(ItemStack stack) {
+		return MetalRegistry.metals[stack.getItemDamage()].bucket;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
 	}
 }

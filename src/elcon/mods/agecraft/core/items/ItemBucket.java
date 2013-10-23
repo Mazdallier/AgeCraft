@@ -4,8 +4,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumMovingObjectType;
@@ -151,11 +149,17 @@ public abstract class ItemBucket extends ItemFluidContainer {
 	@Override
 	public Icon getIcon(ItemStack stack, int pass) {
 		if(pass == 0) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(hasFluid(stack) ? TextureMap.locationBlocksTexture : TextureMap.locationItemsTexture);
-			return hasFluid(stack) && ResourcesCore.fluidPartialIcons.containsKey(getFluid(stack).getFluid().getName()) ? ResourcesCore.fluidPartialIcons.get(getFluid(stack).getFluid().getName())[0] : ResourcesCore.emptyTexture;
+			return getIconIndex(stack);
+		} else if(pass == 1) {
+			return hasFluid(stack) && ResourcesCore.fluidContainerIcons.containsKey(getFluid(stack).getFluid().getName()) ? ResourcesCore.fluidContainerIcons.get(getFluid(stack).getFluid().getName())[0] : ResourcesCore.emptyTexture;
 		}
 		return ResourcesCore.emptyTexture;
-		//return getIconIndex(stack);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIconIndex(ItemStack stack) {
+		return ResourcesCore.emptyTexture;
 	}
 
 	@Override
