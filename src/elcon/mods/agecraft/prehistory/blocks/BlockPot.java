@@ -16,7 +16,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import cpw.mods.fml.relauncher.Side;
@@ -60,7 +59,6 @@ public class BlockPot extends BlockExtendedContainer {
 				NBTTagCompound tag = new NBTTagCompound();
 				tile.fluid.writeToNBT(tag);
 				nbt.setCompoundTag("Fluid", tag);
-				System.out.println("FLUID");
 			} else if(tile.hasDust()) {
 				NBTTagCompound tag = new NBTTagCompound();
 				tile.dust.writeToNBT(tag);
@@ -82,10 +80,8 @@ public class BlockPot extends BlockExtendedContainer {
 		if(stack.hasTagCompound()) {
 			NBTTagCompound nbt = stack.getTagCompound();
 			tile.hasLid = nbt.getBoolean("HasLid");
-			System.out.println(nbt);
 			if(nbt.hasKey("Fluid")) {
 				NBTTagCompound tag = nbt.getCompoundTag("Fluid").getCompoundTag("pot");
-				System.out.println(tag.getString("FluidName"));
 				FluidStack fluidStack = new FluidStack(FluidRegistry.getFluid(tag.getString("FluidName")), tag.getInteger("Amount"));
 				if(tag.hasKey("Tag")) {
 					fluidStack.tag = tag.getCompoundTag("Tag");
@@ -132,20 +128,20 @@ public class BlockPot extends BlockExtendedContainer {
 					}
 				} 
 				if(!tile.hasDust()) {
-					FluidStack fluidStack = FluidContainerRegistry.getFluidForFilledItem(stack);
+					FluidStack fluidStack = ACUtil.getFluidContainerStack(stack);
 					if(fluidStack != null) {
 						int amount = tile.fluid.fill(fluidStack, true);
 						if(amount > 0) {
 							if(!player.capabilities.isCreativeMode) {
-								player.inventory.setInventorySlotContents(player.inventory.currentItem, ACUtil.consumeItem(stack));
+								player.inventory.setInventorySlotContents(player.inventory.currentItem, ACUtil.drainFluidContainer(stack, amount));
 							}
 							return true;
 						}
 					} else {
 						FluidStack availableFluid = tile.fluid.getFluid();
 						if(availableFluid != null) {
-							ItemStack filled = FluidContainerRegistry.fillFluidContainer(availableFluid, stack);
-							fluidStack = FluidContainerRegistry.getFluidForFilledItem(filled);
+							ItemStack filled = ACUtil.fillFluidContainer(stack, availableFluid);
+							fluidStack = ACUtil.getFluidContainerStack(filled);
 							if(fluidStack != null) {
 								if(!player.capabilities.isCreativeMode) {
 									if(stack.stackSize > 1) {

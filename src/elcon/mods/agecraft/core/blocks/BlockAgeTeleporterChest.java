@@ -5,7 +5,6 @@ import static net.minecraftforge.common.ForgeDirection.DOWN;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -24,6 +23,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.AgeCraft;
+import elcon.mods.agecraft.core.AgeCraftCore;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.core.lang.LanguageManager;
 
@@ -49,18 +49,22 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 		return "tile.ageTeleporterChest.name";
 	}
 
+	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
 
+	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
 
+	@Override
 	public int getRenderType() {
 		return 99;
 	}
 
+	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, int x, int y, int z) {
 		setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 	}
@@ -120,6 +124,7 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 		}
 	}
 
+	@Override
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
 		TileEntityAgeTeleporterChest var7 = (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z);
 
@@ -157,6 +162,7 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 		super.breakBlock(world, x, y, z, par5, par6);
 	}
 
+	@Override
 	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9) {
 		Object var10 = (TileEntityAgeTeleporterChest) par1World.getBlockTileEntity(par2, par3, par4);
 
@@ -174,6 +180,7 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 		}
 	}
 
+	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityAgeTeleporterChest();
 	}
@@ -181,6 +188,6 @@ public class BlockAgeTeleporterChest extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		blockIcon = Block.chest.getIcon(0, 0);
+		blockIcon = AgeCraftCore.ageTeleporterBlock.getIcon(0, 0);
 	}
 }

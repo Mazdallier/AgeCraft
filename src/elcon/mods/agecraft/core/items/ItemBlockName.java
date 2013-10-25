@@ -6,8 +6,8 @@ import net.minecraft.item.ItemStack;
 
 public class ItemBlockName extends ItemBlock {
 
-	public ItemBlockName(int i) {
-		super(i);
+	public ItemBlockName(int id) {
+		super(id);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import net.minecraftforge.fluids.Fluid;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.MetalRegistry;
+import elcon.mods.agecraft.core.MetalRegistry.OreType;
 import elcon.mods.core.lang.LanguageManager;
 
 public class ItemMetalBucket extends ItemBucket {
@@ -18,7 +19,7 @@ public class ItemMetalBucket extends ItemBucket {
 	public ItemMetalBucket(int id) {
 		super(id);
 		setMaxDamage(0);
-		setHasSubtypes(false);
+		setHasSubtypes(true);
 	}
 	
 	@Override
@@ -48,16 +49,6 @@ public class ItemMetalBucket extends ItemBucket {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(int id, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < MetalRegistry.metals.length; i++) {
-			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasIngot) {
-				list.add(new ItemStack(id, 1, i));
-			}
-		}
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
 	public Icon getIconIndex(ItemStack stack) {
 		return MetalRegistry.metals[stack.getItemDamage()].bucket;
 	}
@@ -65,5 +56,16 @@ public class ItemMetalBucket extends ItemBucket {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
+	}
+	
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(int id, CreativeTabs creativeTab, List list) {
+		for(int i = 0; i < MetalRegistry.metals.length; i++) {
+			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].type == OreType.METAL && MetalRegistry.metals[i].hasIngot) {
+				list.add(new ItemStack(id, 1, i));
+			}
+		}
 	}
 }

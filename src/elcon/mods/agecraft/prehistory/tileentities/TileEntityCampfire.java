@@ -157,6 +157,34 @@ public class TileEntityCampfire extends TileEntity {
 			}
 		}
 	}
+	
+	public boolean addLogs(ItemStack stack) {
+		if(RecipesCampfire.getFuelValue(stack) != 0) {
+			if(stack.itemID == Trees.log.blockID) {
+				logs[stack.getItemDamage()] += stack.stackSize;
+				countLogs();
+				if(currentLogIndex == -1) {
+					if(logCount > 0) {
+						int best = 0;
+						int bestIndex = -1;
+						for(int i = 0; i < logs.length; i++) {
+							if(logs[i] > best) {
+								best = logs[i];
+								bestIndex = i;
+							}
+						}
+						currentLogIndex = bestIndex;
+						logBurnTime = RecipesCampfire.getFuelValue(new ItemStack(Trees.log));
+					}
+				}
+			}
+			burnTime += RecipesCampfire.getFuelValue(stack) * stack.stackSize;
+			stack = null;
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+			return true;
+		}
+		return false;
+	}
 
 	public boolean onBlockActivated(float rotationYaw, ItemStack stack) {
 		if(stack != null) {

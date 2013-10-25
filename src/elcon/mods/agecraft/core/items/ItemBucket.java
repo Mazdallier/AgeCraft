@@ -179,6 +179,5 @@ public abstract class ItemBucket extends ItemFluidContainer {
 	public boolean hasFluid(ItemStack stack) {
 		return getFluid(stack) != null;
 	}
-
 	public abstract List<Fluid> getFluidBlacklist(ItemStack stack);
 }

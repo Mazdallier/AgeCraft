@@ -57,6 +57,7 @@
 	3000 Campfire
 	3001 Rock
 	3002 Pot
+	3003 Bed
 3100-3199	Agriculture Age
 3200-3299	Ancient Egypt
 3300-3399	Ancient China
@@ -111,6 +112,8 @@
 13000-13099		Prehistory
 	13000 Rock Tool
 	13001 Rock Tanning Tool
+	13002 Rock Pickaxe Head
+	13003 Rock Pickaxe
 13100-13199		Agriculture Age
 13200-13299		Ancient Egypt
 13300-13399		Ancient China
@@ -157,6 +160,8 @@
 200-299		Prehistory
 	200 Rock
 	201 Campfire
+	202 Pot
+	203 Bed
 300-399		Agriculture Age
 400-499		Ancient Egypt
 500-599		Ancient China
@@ -186,4 +191,4 @@
 120-129		Future
 
 ======= DNA IDs ======
-0	Tree
+0		Tree

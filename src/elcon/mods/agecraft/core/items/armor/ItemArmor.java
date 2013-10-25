@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -66,13 +65,13 @@ public class ItemArmor extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		int armorIndex = EntityLiving.getArmorPosition(stack) - 1;
+		/*int armorIndex = EntityLiving.getArmorPosition(stack) - 1;
 		ItemStack currentArmor = player.getCurrentArmor(armorIndex);
 		if(currentArmor != null) {
 			player.inventory.addItemStackToInventory(currentArmor.copy());
 		}
 		player.setCurrentItemOrArmor(armorIndex + 1, stack.copy());
-		stack.stackSize = 0;
+		stack.stackSize = 0;*/
 		return stack;
 	}
 	

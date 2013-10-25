@@ -3,6 +3,7 @@ package elcon.mods.agecraft.prehistory;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.Age;
@@ -10,11 +11,13 @@ import elcon.mods.agecraft.IACPacketHandler;
 import elcon.mods.agecraft.IACPacketHandlerClient;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
-import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.items.ItemDummy;
+import elcon.mods.agecraft.prehistory.blocks.BlockBed;
 import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
 import elcon.mods.agecraft.prehistory.blocks.BlockPot;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
+import elcon.mods.agecraft.prehistory.items.ItemBed;
+import elcon.mods.agecraft.prehistory.items.ItemCampfire;
 import elcon.mods.agecraft.prehistory.items.ItemFakeStone;
 import elcon.mods.agecraft.prehistory.items.ItemPot;
 import elcon.mods.agecraft.prehistory.items.ItemRock;
@@ -22,6 +25,7 @@ import elcon.mods.agecraft.prehistory.items.ItemRockPickaxe;
 import elcon.mods.agecraft.prehistory.items.ItemRockTanningTool;
 import elcon.mods.agecraft.prehistory.items.ItemRockTool;
 import elcon.mods.agecraft.prehistory.recipes.RecipesCampfire;
+import elcon.mods.agecraft.prehistory.recipes.RecipesCampfireLogs;
 import elcon.mods.agecraft.prehistory.recipes.RecipesSharpener;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
@@ -34,6 +38,7 @@ public class PrehistoryAge extends Age {
 	public static Block campfire;
 	public static Block rock;
 	public static Block pot;
+	public static Block bed;
 	
 	public static Item fakeStone;
 	public static Item rockTool;
@@ -53,11 +58,13 @@ public class PrehistoryAge extends Age {
 		campfire = new BlockCampfire(3000).setUnlocalizedName("prehistory_campfire");
 		rock = new BlockRock(3001).setUnlocalizedName("prehistory_rock");
 		pot = new BlockPot(3002).setUnlocalizedName("prehistory_pot");
+		bed = new BlockBed(3003).setUnlocalizedName("prehistory_bed");
 		
 		//register blocks
-		GameRegistry.registerBlock(campfire, ItemBlockName.class, "AC_prehistory_campfire");
+		GameRegistry.registerBlock(campfire, ItemCampfire.class, "AC_prehistory_campfire");
 		GameRegistry.registerBlock(rock, ItemRock.class, "AC_prehistory_rock");
 		GameRegistry.registerBlock(pot, ItemPot.class, "AC_prehistory_pot");
+		GameRegistry.registerBlock(bed, ItemBed.class, "AC_prehistory_bed");
 		
 		//init items
 		fakeStone = new ItemFakeStone(11000).setUnlocalizedName("prehistory_fakeStone");
@@ -74,12 +81,13 @@ public class PrehistoryAge extends Age {
 	@Override
 	public void postInit() {
 		//add recipes
-		GameRegistry.addRecipe(new ItemStack(campfire.blockID, 1, 0), "##", '#', Trees.log);
+		//GameRegistry.addRecipe(new ItemStack(campfire.blockID, 1, 0), "##", '#', Trees.log);
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			if(TreeRegistry.trees[i] != null) {
 				GameRegistry.addRecipe(new ItemStack(rockPickaxe.itemID, 1, 0), "#", "I", '#', rockPickaxeHead, 'I', new ItemStack(Trees.stick.itemID, 1, i));
 			}
 		}
+		CraftingManager.getInstance().getRecipeList().add(new RecipesCampfireLogs());
 		RecipesCampfire.addRecipes();
 		RecipesSharpener.addRecipes();
 	}

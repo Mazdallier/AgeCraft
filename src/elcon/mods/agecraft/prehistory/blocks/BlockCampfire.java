@@ -10,6 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
@@ -17,7 +19,6 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
-import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.core.lang.LanguageManager;
 
@@ -112,8 +113,18 @@ public class BlockCampfire extends BlockContainer {
 				tile = new TileEntityCampfire();
 				world.setBlockTileEntity(x, y, z, tile);
 			}
-			tile.onBlockActivated(entity.rotationYaw, new ItemStack(Trees.log));
-			tile.onBlockActivated(entity.rotationYaw, new ItemStack(Trees.log));
+			if(!stack.hasTagCompound()) {
+				stack.setTagCompound(new NBTTagCompound());
+				return;
+			}
+			NBTTagCompound nbt = stack.getTagCompound();
+			if(nbt.hasKey("Logs")) {
+				NBTTagList list = nbt.getTagList("Logs");
+				for(int i = 0; i < list.tagCount(); i++) {
+					ItemStack logStack = ItemStack.loadItemStackFromNBT((NBTTagCompound) list.tagAt(i));
+					tile.addLogs(logStack);
+				}
+			}
 		}
 	}
 	

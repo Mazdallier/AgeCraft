@@ -3,10 +3,12 @@ package elcon.mods.agecraft.core.player;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.NetClientHandler;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Session;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.core.ElConCore;
 import elcon.mods.core.player.PlayerCoreClient;
 
 @SideOnly(Side.CLIENT)
@@ -16,5 +18,9 @@ public class ACPlayerClient extends PlayerCoreClient {
 		super(mc, world, session, netClientHandler, playerCoreIndex, entityPlayerSP);
 		player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setAttribute(100.0D);
 		player.dimension = 10;
+		ChunkCoordinates spawn = world.getSpawnPoint();
+		player.posX = spawn.posX;
+		player.posZ = spawn.posZ;
+		player.posY = ElConCore.getFirstUncoveredBlock(world, (int) player.posX, (int) player.posZ) + 3;
 	}
 }
