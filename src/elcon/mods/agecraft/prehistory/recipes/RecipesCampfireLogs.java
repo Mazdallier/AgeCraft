@@ -12,20 +12,30 @@ import elcon.mods.agecraft.prehistory.PrehistoryAge;
 public class RecipesCampfireLogs implements IRecipe {
 
 	public ItemStack[] getRecipe(InventoryCrafting inventory) {
-		ItemStack[] stacks;
+		ItemStack[] stacks = new ItemStack[3];
+		int index = 1;
 		for(int i = 0; i <= 1; i++) {
 			for(int j = 0; j <= 2; j++) {
-				stacks = checkMatch(inventory, i, j, true); 
-				if(stacks != null && stacks.length > 0) {
-					return stacks;
-				}
-				stacks = checkMatch(inventory, i, j, false); 
-				if(stacks != null && stacks.length > 0) {
-					return stacks;
+				ItemStack stack = checkMatch(inventory, i, j); 
+				if(stack != null) {
+					if(stack.itemID == PrehistoryAge.campfire.blockID && stacks[0] != null) {
+						return null;
+					}
+					stacks[stack.itemID == PrehistoryAge.campfire.blockID ? 0 : index] = stack;
+					index++;
 				}
 			}
 		}
-		return null;
+		if(stacks[0] == null) {
+			if(stacks[1] == null || stacks[2] == null) {
+				return null;
+			}
+		} else {
+			if(stacks[1] == null && stacks[2] == null) {
+				return null;
+			}
+		}		
+		return stacks;
 	}
 	
 	@Override
@@ -33,10 +43,10 @@ public class RecipesCampfireLogs implements IRecipe {
 		return getRecipe(inventory) != null;
 	}
 
-	private ItemStack checkMatch(InventoryCrafting inventory, int x, int y, boolean mirror) {
+	private ItemStack checkMatch(InventoryCrafting inventory, int x, int y) {
 		ItemStack stackInSlot = inventory.getStackInRowAndColumn(x, y);
 		if(stackInSlot != null) {
-			if(stackInSlot.itemID == Trees.log.blockID) {
+			if(stackInSlot.itemID == Trees.log.blockID || stackInSlot.itemID == PrehistoryAge.campfire.blockID) {
 				ItemStack stack = stackInSlot.copy();
 				stack.stackSize = 1;
 				return stack;
@@ -47,13 +57,24 @@ public class RecipesCampfireLogs implements IRecipe {
 
 	@Override
 	public ItemStack getCraftingResult(InventoryCrafting inventory) {
-		System.out.println("getCraftingResult");
 		ItemStack stack = getRecipeOutput().copy();
-		NBTTagCompound nbt = new NBTTagCompound();
-		NBTTagList list = new NBTTagList();
 		ItemStack[] stacks = getRecipe(inventory);
-		if(stack != null) {
-			for(int i = 0; i < stacks.length; i++) {
+		NBTTagCompound nbt;
+		NBTTagList list;
+		if(stacks[0] != null) {
+			stack = stacks[0];
+			nbt = stack.getTagCompound();
+			if(nbt.hasKey("Logs")) {
+				list = nbt.getTagList("Logs");
+			} else {
+				list = new NBTTagList();
+			}
+		} else {
+			nbt = new NBTTagCompound();
+			list = new NBTTagList();
+		}
+		for(int i = 1; i < stacks.length; i++) {
+			if(stacks[i] != null) {
 				NBTTagCompound tag = new NBTTagCompound();
 				stacks[i].writeToNBT(tag);
 				list.appendTag(tag);
@@ -71,7 +92,6 @@ public class RecipesCampfireLogs implements IRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		System.out.println("getRecipeOutput");
 		return new ItemStack(PrehistoryAge.campfire);
 	}
 }

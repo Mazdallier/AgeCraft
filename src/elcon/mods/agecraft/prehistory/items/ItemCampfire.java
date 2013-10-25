@@ -30,15 +30,24 @@ public class ItemCampfire extends ItemBlockName {
 			}
 			NBTTagCompound nbt = stack.getTagCompound();
 			if(nbt.hasKey("Logs")) {
+				int[] logs = new int[TreeRegistry.trees.length];
 				StringBuilder sb = new StringBuilder();
 				NBTTagList nbtList = nbt.getTagList("Logs");
 				for(int i = 0; i < nbtList.tagCount(); i++) {
 					ItemStack logStack = ItemStack.loadItemStackFromNBT((NBTTagCompound) nbtList.tagAt(i));
-					sb.append(LanguageManager.getLocalization("trees." + TreeRegistry.trees[logStack.getItemDamage()].name));
-					if(i < (nbtList.tagCount() - 1)) {
-						sb.append(", ");
+					logs[logStack.getItemDamage()]++;
+				}
+				for(int i = 0; i < logs.length; i++) {
+					if(logs[i] > 0) {
+						sb.append(logs[i]);
+						sb.append("x");
+						sb.append(LanguageManager.getLocalization("trees." + TreeRegistry.trees[i].name));
+						if(i < (nbtList.tagCount() - 1)) {
+							sb.append(", ");
+						}
 					}
 				}
+				list.add(sb.toString());
 			}
 		}
 	}
