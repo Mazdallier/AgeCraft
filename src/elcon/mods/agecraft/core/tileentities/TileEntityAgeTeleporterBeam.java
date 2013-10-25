@@ -13,9 +13,9 @@ import net.minecraft.util.AxisAlignedBB;
 public class TileEntityAgeTeleporterBeam extends TileEntity {
 
 	@SideOnly(Side.CLIENT)
-	private long field_82137_b;
+	private long lastTime;
 	@SideOnly(Side.CLIENT)
-	private float field_82138_c;
+	private float rotation;
 	
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -38,24 +38,21 @@ public class TileEntityAgeTeleporterBeam extends TileEntity {
 
 	@SideOnly(Side.CLIENT)
 	public float func_82125_v_() {
-		int i = (int) (worldObj.getTotalWorldTime() - field_82137_b);
-		field_82137_b = worldObj.getTotalWorldTime();
+		int delta = (int) (worldObj.getTotalWorldTime() - lastTime);
+		lastTime = worldObj.getTotalWorldTime();
 
-		if(i > 1) {
-			field_82138_c -= (float) i / 40.0F;
+		if(delta > 1) {
+			rotation -= (float) delta / 40.0F;
 
-			if(field_82138_c < 0.0F) {
-				field_82138_c = 0.0F;
+			if(rotation < 0.0F) {
+				rotation = 0.0F;
 			}
 		}
-
-		field_82138_c += 0.025F;
-
-		if(field_82138_c > 1.0F) {
-			field_82138_c = 1.0F;
+		rotation += 0.025F;
+		if(rotation > 1.0F) {
+			rotation = 1.0F;
 		}
-
-		return field_82138_c;
+		return rotation;
 	}
 
 	@SideOnly(Side.CLIENT)
