@@ -14,6 +14,11 @@ public class BlockOverlay extends Block {
 	}
 	
 	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
+	
+	@Override
 	public int getRenderType() {
 		return 42;
 	}

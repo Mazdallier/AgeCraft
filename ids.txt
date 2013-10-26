@@ -139,6 +139,7 @@
 	100 Ore
 	200 Campfire
 	201 Pot
+	202 Bed
 
 ======= Block Render IDs ======
 90-98   Common blocks

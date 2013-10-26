@@ -8,6 +8,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import elcon.mods.agecraft.core.tileentities.TileEntityExtended;
 
@@ -40,5 +42,16 @@ public abstract class BlockExtendedContainer extends BlockContainer {
 		if(tile != null && tile.hasDropppedBlock) {
 			super.dropBlockAsItemWithChance(world, x, y, z, meta, chance, fortune);
 		}
+	}
+	
+	public TileEntity getTileEntity(IBlockAccess blockAccess, int x, int y, int z) {
+		TileEntity tile = (TileEntity) blockAccess.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			if(blockAccess instanceof World) {
+				tile = createNewTileEntity(((World) blockAccess));
+				((World) blockAccess).setBlockTileEntity(x, y, z, tile);
+			}
+		}
+		return tile;
 	}
 }

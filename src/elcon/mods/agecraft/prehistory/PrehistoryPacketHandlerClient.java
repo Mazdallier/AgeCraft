@@ -12,6 +12,7 @@ import com.google.common.io.ByteArrayDataInput;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.IACPacketHandlerClient;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 
@@ -26,6 +27,9 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 			break;
 		case 201:
 			handleTileEntityPot(world, dat);
+			break;
+		case 202:
+			handleTileEntityBed(world, dat);
 			break;
 		}
 	}
@@ -100,6 +104,25 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		} else {
 			tile.dust = null;
 		}
+		world.markBlockForRenderUpdate(x, y, z);
+	}
+	
+	private void handleTileEntityBed(World world, ByteArrayDataInput dat) {
+		int x = dat.readInt();
+		int y = dat.readInt();
+		int z = dat.readInt();
+		
+		TileEntityBed tile = (TileEntityBed) world.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityBed();
+			world.setBlockTileEntity(x, y, z, tile);
+		}
+		
+		tile.isFoot = dat.readBoolean();
+		tile.direction = dat.readByte();
+		tile.color = dat.readInt();
+		tile.isOccupied = dat.readBoolean();
+		
 		world.markBlockForRenderUpdate(x, y, z);
 	}
 }

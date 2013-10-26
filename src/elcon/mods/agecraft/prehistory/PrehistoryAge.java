@@ -4,12 +4,12 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.Age;
 import elcon.mods.agecraft.IACPacketHandler;
 import elcon.mods.agecraft.IACPacketHandlerClient;
-import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.items.ItemDummy;
 import elcon.mods.agecraft.prehistory.blocks.BlockBed;
@@ -76,17 +76,13 @@ public class PrehistoryAge extends Age {
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntityCampfire.class, "TileCampfire");
 		GameRegistry.registerTileEntity(TileEntityPot.class, "TilePot");
+		GameRegistry.registerTileEntity(TileEntityPot.class, "TileBed");
 	}
 	
 	@Override
 	public void postInit() {
 		//add recipes
-		//GameRegistry.addRecipe(new ItemStack(campfire.blockID, 1, 0), "##", '#', Trees.log);
-		for(int i = 0; i < TreeRegistry.trees.length; i++) {
-			if(TreeRegistry.trees[i] != null) {
-				GameRegistry.addRecipe(new ItemStack(rockPickaxe.itemID, 1, 0), "#", "I", '#', rockPickaxeHead, 'I', new ItemStack(Trees.stick.itemID, 1, i));
-			}
-		}
+		GameRegistry.addRecipe(new ItemStack(rockPickaxe.itemID, 1, 0), "#", "I", '#', rockPickaxeHead, 'I', new ItemStack(Trees.stick.itemID, 1, OreDictionary.WILDCARD_VALUE));
 		CraftingManager.getInstance().getRecipeList().add(new RecipesCampfireLogs());
 		RecipesCampfire.addRecipes();
 		RecipesSharpener.addRecipes();
