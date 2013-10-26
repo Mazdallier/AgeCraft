@@ -31,7 +31,7 @@ public class TileEntityAgeTeleporterBeam extends TileEntity {
 		while(i.hasNext()) {
 			Entity e = i.next();
 			if(e != null) {
-				e.setVelocity(e.motionX, 0.20D, e.motionZ);
+				e.motionY = 0.20D;
 			}
 		}
 	}

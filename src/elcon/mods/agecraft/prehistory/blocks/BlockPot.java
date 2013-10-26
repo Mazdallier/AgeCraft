@@ -31,7 +31,6 @@ import elcon.mods.core.lang.LanguageManager;
 public class BlockPot extends BlockExtendedContainer {
 
 	public boolean renderSolid = false;
-	private Icon icon;
 	private Icon iconsSide[] = new Icon[2];
 	private Icon iconsTop[] = new Icon[2];
 
@@ -229,12 +228,6 @@ public class BlockPot extends BlockExtendedContainer {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
-		return icon;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
 	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		if((side == 0 || side == 1) && renderSolid) {
 			return iconsTop[1];
@@ -254,7 +247,6 @@ public class BlockPot extends BlockExtendedContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		icon = iconRegister.registerIcon("agecraft:ages/prehistory/pot");
 		iconsSide[0] = iconRegister.registerIcon("agecraft:ages/prehistory/potSide");
 		iconsTop[0] = iconRegister.registerIcon("agecraft:ages/prehistory/potTop");
 		iconsSide[1] = iconRegister.registerIcon("agecraft:ages/prehistory/potLidSide");
