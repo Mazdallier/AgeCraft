@@ -1,7 +1,7 @@
 package elcon.mods.agecraft.core.blocks.tree;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
@@ -9,9 +9,10 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.Trees;
+import elcon.mods.agecraft.core.blocks.BlockExtendedContainer;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
 
-public class BlockWoodDNA extends BlockContainer {
+public class BlockWoodDNA extends BlockExtendedContainer {
 
 	public BlockWoodDNA(int id) {
 		super(id, Material.wood);
@@ -30,5 +31,10 @@ public class BlockWoodDNA extends BlockContainer {
 			tile = new TileEntityDNATree();
 		}
 		return Trees.wood.getIcon(side, (tile.getWoodType() * 4) & blockAccess.getBlockMetadata(x, y, z));
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
 	}
 }

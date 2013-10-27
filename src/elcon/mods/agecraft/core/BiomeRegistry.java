@@ -60,7 +60,10 @@ public class BiomeRegistry {
 		} else if(resistance == 0) {
 			return false;
 		} else {
-			float temp = Math.max(Math.min((preferedTemperature + 1.0F) + resistance * 0.5F, 0.0F), 2.0F);
+			if((resistance > 0 && temperature < preferedTemperature) || (resistance < 0 && temperature > preferedTemperature)) {
+				return false;
+			}
+			float temp = Math.min(Math.max((preferedTemperature) + (resistance * 0.5F), 0.0F), 2.0F);
 			return ((preferedTemperature >= 1.0F && temperature >= 1.0F) || (preferedTemperature <= 1.0F && temperature <= 1.0F)) && temperature <= temp;
 		}
 	}
@@ -72,7 +75,10 @@ public class BiomeRegistry {
 		} else if(resistance == 0) {
 			return false;
 		} else {
-			float hum = Math.max(Math.min((preferedHumidity + 1.0F) + resistance * 0.5F, 0.0F), 2.0F);
+			if((resistance > 0 && humidity < preferedHumidity) || (resistance < 0 && humidity > preferedHumidity)) {
+				return false;
+			}
+			float hum = Math.min(Math.max((preferedHumidity + 1.0F) + (resistance * 0.5F), 0.0F), 2.0F);
 			return ((preferedHumidity >= 1.0F && humidity >= 1.0F) || (preferedHumidity <= 1.0F && humidity <= 1.0F)) && humidity <= hum;
 		}
 	}
@@ -88,7 +94,7 @@ public class BiomeRegistry {
 		for(int i = 0; i < BiomeGenBase.biomeList.length; i++) {
 			if(BiomeGenBase.biomeList[i] != null) {
 				BiomeGenBase biome = BiomeGenBase.biomeList[i];
-				registerBiome(new Biome(biome.biomeID, biome.biomeName, biome, biome.temperature - 1.0F, biome.rainfall - 1.0F));
+				registerBiome(new Biome(biome.biomeID, biome.biomeName, biome, biome.temperature, biome.rainfall));
 			}
 		}
 	}

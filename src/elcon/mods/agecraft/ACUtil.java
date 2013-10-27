@@ -18,6 +18,31 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ACUtil {
 
+	public static String arrayToString(Object[] array) {
+		StringBuilder sb = new StringBuilder();
+		sb.append('[');
+		for(int i = 0; i < array.length; i++) {
+			sb.append(array[i].toString());
+			if(i < (array.length - 1)) {
+				sb.append(", ");
+			}
+		}
+		sb.append(']');
+		return sb.toString();
+	}
+	
+	public static boolean arraysEqual(Object[] array1, Object[] array2) {
+		if(array1.length != array2.length) {
+			return false;
+		}
+		for(int i = 0; i < array1.length; i++) {
+			if(!array1[i].equals(array2[i])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public static boolean areItemStacksEqualNoSize(ItemStack stack1, ItemStack stack2) {
 		if(stack1 == null && stack2 == null) {
 			return true;

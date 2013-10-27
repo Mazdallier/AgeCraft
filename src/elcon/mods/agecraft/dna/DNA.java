@@ -77,7 +77,7 @@ public class DNA {
 				for(int j = 0; j < dna.chromosomes[i].geneCount; j++) {
 					if(dna.chromosomes[i].genes[j] != null) {
 						int allel = generateAllel(dna.chromosomes[i].genes[j].maxValue);
-						storageGenes[j] = new DNAStorageGene(dna.chromosomes[i].id, dna.chromosomes[i].genes[j].id, allel, allel, (byte) 0);
+						storageGenes[j] = new DNAStorageGene(dna.chromosomes[i].genes[j].id, allel, allel, (byte) 0);
 					}
 				}
 				storageChromosomes[i].genes = storageGenes;
@@ -117,7 +117,7 @@ public class DNA {
 					}
 				}
 				
-				genes[j] = new DNAStorageGene(i, j, r1.allel, r2.allel, generateActive(r1, r2));
+				genes[j] = new DNAStorageGene(j, r1.allel, r2.allel, generateActive(r1, r2));
 			}
 			chromosome.genes = genes;
 			chromosomes[i] = chromosome;

@@ -9,14 +9,12 @@ public class DNAStorageGene implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public int chromosomeID;
 	public int id;
 	public int allel1;
 	public int allel2;
 	public byte active;
 
-	public DNAStorageGene(int chromosomeID, int id, int allel1, int allel2, byte active) {
-		this.chromosomeID = chromosomeID;
+	public DNAStorageGene(int id, int allel1, int allel2, byte active) {
 		this.id = id;
 		this.allel1 = allel1;
 		this.allel2 = allel2;
@@ -55,5 +53,19 @@ public class DNAStorageGene implements Serializable {
 			}
 			return new ReproCell(allel1, active == 0);
 		}
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof DNAStorageGene) {
+			DNAStorageGene dna = (DNAStorageGene) obj;
+			return id == dna.id && allel1 == dna.allel1 && allel2 == dna.allel2 && active == dna.active;
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "[id=" + id + ", allel1=" + allel1 + ", allel2=" + allel2 + ", active=" + active + "]"; 
 	}
 }

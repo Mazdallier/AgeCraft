@@ -6,6 +6,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -62,25 +63,21 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		if(!world.isRemote) {
 			if(stack.hasTagCompound() && stack.getTagCompound().hasKey("DNA")) {
-				TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
-				if(tile == null) {
-					tile = new TileEntityDNATree();
-					world.setBlockTileEntity(x, y, z, tile);
-				}
+				TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
 				DNAStorage dna = new DNAStorage(Trees.treeDNA.id);
 				dna.readFromNBT(stack.getTagCompound().getCompoundTag("DNA"));
 				tile.setDNA(dna);
+				if(!canBlockStay(world, x, y, z)) {
+					dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
+					world.setBlockToAir(x, y, z);
+				}
 			}
 		}
 	}
 	
 	@Override
 	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityDNATree();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
+		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		ItemStack stack = new ItemStack(idDropped(metadata, world.rand, fortune), quantityDropped(metadata, fortune, world.rand), damageDropped(metadata));
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -125,12 +122,9 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		Block soil = Block.blocksList[world.getBlockId(x, y - 1, z)];
 		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
 		if(tile != null) {
-			System.out.println(world.getBiomeGenForCoords(x, z).biomeName);
-			System.out.println(BiomeGenBase.biomeList[tile.getBiome()].biomeName);
-			System.out.println("T: " + BiomeRegistry.getTemperature(world.getBiomeGenForCoords(x, z)) + " PT: " + BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]) + " R: " + BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature()));
 			return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this)) 
-					&& BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature()) 
-					&& BiomeRegistry.canSurviveHumidity(world.getBiomeGenForCoords(x, z), BiomeRegistry.getHumidity(BiomeGenBase.biomeList[tile.getBiome()]), tile.getHumidity());
+					&& BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature() - 2) 
+					&& BiomeRegistry.canSurviveHumidity(world.getBiomeGenForCoords(x, z), BiomeRegistry.getHumidity(BiomeGenBase.biomeList[tile.getBiome()]), tile.getHumidity() - 2);
 		}
 		return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this));
 	}
@@ -183,6 +177,11 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 			tile = new TileEntityDNATree();
 		}
 		return blockAccess.getBlockMetadata(x, y, z) == 1 ? TreeRegistry.trees[tile.getWoodType()].sapling : TreeRegistry.trees[tile.getWoodType()].smallSapling;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister iconRegister) {
 	}
 	
 	@Override

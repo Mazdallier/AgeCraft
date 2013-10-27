@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.dna.structure.DNAObject;
 
 public class DNAStorage implements Serializable {
@@ -58,7 +59,7 @@ public class DNAStorage implements Serializable {
 						int allel1 = tag.getInteger("allel1");
 						int allel2 = tag.getInteger("allel2");
 						byte active = tag.getByte("active");
-						storageGenes[j] = new DNAStorageGene(chromosomeID, geneID, allel1, allel2, active);
+						storageGenes[j] = new DNAStorageGene(geneID, allel1, allel2, active);
 					}
 				}
 				storageChromosomes[i].genes = storageGenes;
@@ -92,5 +93,19 @@ public class DNAStorage implements Serializable {
 			}
 			nbt.setTag("Chromosomes", nbtList);
 		}
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof DNAStorage) {
+			DNAStorage dna = (DNAStorage) obj;
+			return id == dna.id && ACUtil.arraysEqual(chromosomes, dna.chromosomes);
+		}
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "[id=" + id + ", chromosomes=" + ACUtil.arrayToString(chromosomes) + "]";
 	}
 }
