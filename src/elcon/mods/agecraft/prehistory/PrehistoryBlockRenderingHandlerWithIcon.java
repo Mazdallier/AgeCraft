@@ -4,11 +4,13 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import elcon.mods.agecraft.core.ACBlockRenderingHandlerOverlay;
 import elcon.mods.agecraft.core.DustRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.prehistory.blocks.BlockPot;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock.RockShape;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 
@@ -28,6 +30,8 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 			return renderBlockCampfire(blockAccess, x, y, z, block, modelID, renderer);
 		case 202:
 			return renderBlockPot(blockAccess, x, y, z, (BlockPot) block, modelID, renderer);
+		case 203:
+			return renderBlockBed(blockAccess, x, y, z, block, modelID, renderer);
 		}
 		return false;
 	}
@@ -116,6 +120,30 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 		return true;
 	}
 
+	private boolean renderBlockBed(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
+		TileEntityBed tile = (TileEntityBed) blockAccess.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityBed();
+		}
+		if(!tile.isFoot) {
+			if(tile.direction == 0) {
+				renderer.uvRotateTop = 1;
+			} else if(tile.direction == 1) {
+				renderer.uvRotateTop = 3;
+			} else if(tile.direction == 2) {
+				renderer.uvRotateTop = 2;
+			}
+		}
+		ACBlockRenderingHandlerOverlay.renderBlockWithOverlay(blockAccess, block, x, y, z, renderer, 0xFFFFFF);
+		renderer.uvRotateSouth = 0;
+		renderer.uvRotateEast = 0;
+		renderer.uvRotateWest = 0;
+	    renderer.uvRotateNorth = 0;
+	    renderer.uvRotateTop = 0;
+	    renderer.uvRotateBottom = 0;
+		return true;
+	}
+	
 	@Override
 	public boolean shouldRender3DInInventory() {
 		return false;

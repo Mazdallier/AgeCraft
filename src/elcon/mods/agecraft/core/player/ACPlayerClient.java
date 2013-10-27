@@ -8,7 +8,6 @@ import net.minecraft.util.Session;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.ElConCore;
 import elcon.mods.core.player.PlayerCoreClient;
 
 @SideOnly(Side.CLIENT)
@@ -21,6 +20,12 @@ public class ACPlayerClient extends PlayerCoreClient {
 		ChunkCoordinates spawn = world.getSpawnPoint();
 		player.posX = spawn.posX;
 		player.posZ = spawn.posZ;
-		player.posY = ElConCore.getFirstUncoveredBlock(world, (int) player.posX, (int) player.posZ) + 3;
+		player.posY = getFirstUncoveredBlock(world, (int) player.posX, (int) player.posZ) + 1;
+	}
+	
+	public int getFirstUncoveredBlock(World world, int x, int z) {
+		int y;
+		for(y = 63; !(world.isAirBlock(x, y, z) && world.isAirBlock(x, y + 1, z)); y++) {}
+		return y;
 	}
 }

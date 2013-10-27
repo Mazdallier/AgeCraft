@@ -111,6 +111,7 @@ public class ACClientProxy extends ACCommonProxy {
 		RenderingRegistry.registerBlockHandler(200, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(201, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(202, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(203, blockRenderingHandlerWithIcon);
 		
 		//register tile entity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());

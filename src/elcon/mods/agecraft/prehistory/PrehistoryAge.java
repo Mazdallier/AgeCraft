@@ -27,6 +27,7 @@ import elcon.mods.agecraft.prehistory.items.ItemRockTool;
 import elcon.mods.agecraft.prehistory.recipes.RecipesCampfire;
 import elcon.mods.agecraft.prehistory.recipes.RecipesCampfireLogs;
 import elcon.mods.agecraft.prehistory.recipes.RecipesSharpener;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 
@@ -76,7 +77,7 @@ public class PrehistoryAge extends Age {
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntityCampfire.class, "TileCampfire");
 		GameRegistry.registerTileEntity(TileEntityPot.class, "TilePot");
-		GameRegistry.registerTileEntity(TileEntityPot.class, "TileBed");
+		GameRegistry.registerTileEntity(TileEntityBed.class, "TileBed");
 	}
 	
 	@Override

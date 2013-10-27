@@ -225,6 +225,12 @@ public class BlockPot extends BlockExtendedContainer {
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return true;
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int meta) {
+		return iconsTop[1];
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)

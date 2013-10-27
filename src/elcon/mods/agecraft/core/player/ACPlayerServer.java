@@ -5,7 +5,6 @@ import net.minecraft.item.ItemInWorldManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
-import elcon.mods.core.ElConCore;
 import elcon.mods.core.player.PlayerCoreServer;
 
 public class ACPlayerServer extends PlayerCoreServer {
@@ -17,6 +16,12 @@ public class ACPlayerServer extends PlayerCoreServer {
 		ChunkCoordinates spawn = world.getSpawnPoint();
 		player.posX = spawn.posX;
 		player.posZ = spawn.posZ;
-		player.posY = ElConCore.getFirstUncoveredBlock(world, (int) player.posX, (int) player.posZ) + 3;
+		player.posY = getFirstUncoveredBlock(world, (int) player.posX, (int) player.posZ) + 1;
+	}
+	
+	public int getFirstUncoveredBlock(World world, int x, int z) {
+		int y;
+		for(y = 63; !(world.isAirBlock(x, y, z) && world.isAirBlock(x, y + 1, z)); y++) {}
+		return y;
 	}
 }

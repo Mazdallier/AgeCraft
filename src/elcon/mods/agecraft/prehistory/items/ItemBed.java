@@ -51,11 +51,11 @@ public class ItemBed extends ItemBlockName {
 			}
 			if(player.canPlayerEdit(x, y, z, side, stack) && player.canPlayerEdit(x + dirX, y, z + dirZ, side, stack)) {
 				if(world.isAirBlock(x, y, z) && world.isAirBlock(x + dirX, y, z + dirZ) && world.doesBlockHaveSolidTopSurface(x, y - 1, z) && world.doesBlockHaveSolidTopSurface(x + dirX, y - 1, z + dirZ)) {
-					world.setBlock(x, y, z, bed.blockID, 0, 3);
 					TileEntityBed tile = new TileEntityBed();
 					tile.direction = (byte) direction;
 					tile.isFoot = true;
 					tile.color = color;
+					world.setBlock(x, y, z, bed.blockID, 0, 3);
 					world.setBlockTileEntity(x, y, z, tile);
 					if(world.getBlockId(x, y, z) == bed.blockID) {
 						tile = new TileEntityBed();
@@ -63,6 +63,7 @@ public class ItemBed extends ItemBlockName {
 						tile.isFoot = false;
 						tile.color = color;
 						world.setBlock(x + dirX, y, z + dirZ, bed.blockID, 0, 3);
+						world.setBlockTileEntity(x + dirX, y, z + dirZ, tile);
 					}
 					stack.stackSize--;
 					return true;

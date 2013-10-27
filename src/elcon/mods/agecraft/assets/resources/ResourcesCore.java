@@ -147,7 +147,9 @@ public class ResourcesCore extends Resources {
 						if(metal.hasDust) {
 							metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/metals/dust" + ElConCore.firstUpperCase(metal.name));
 						}
-						metal.bucket = iconRegister.registerIcon("agecraft:metals/buckets/bucket" + ElConCore.firstUpperCase(metal.name));
+						if(ToolRegistry.toolMaterials[128 + metal.id] != null) {
+							metal.bucket = iconRegister.registerIcon("agecraft:metals/buckets/bucket" + ElConCore.firstUpperCase(metal.name));
+						}
 					}
 				} else if(metal.type == OreType.GEM) {
 					if(metal.hasIngot) {

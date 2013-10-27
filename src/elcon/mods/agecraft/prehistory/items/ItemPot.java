@@ -47,6 +47,12 @@ public class ItemPot extends ItemBlockName {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
+	public int getSpriteNumber() {
+		return 1;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
 	public Icon getIconIndex(ItemStack stack) {
 		if(!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());

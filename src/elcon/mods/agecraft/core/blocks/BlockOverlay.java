@@ -6,11 +6,17 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.core.lang.LanguageManager;
 
 public class BlockOverlay extends Block {
 
 	public BlockOverlay(int i, Material material) {
 		super(i, material);
+	}
+	
+	@Override
+	public String getLocalizedName() {
+		return LanguageManager.getLocalization(getUnlocalizedName());
 	}
 	
 	@Override

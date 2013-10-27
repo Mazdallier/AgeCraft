@@ -1,6 +1,5 @@
 package elcon.mods.agecraft.prehistory.blocks;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import net.minecraft.block.Block;
@@ -10,7 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumStatus;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Icon;
@@ -28,8 +26,8 @@ public class BlockBed extends BlockContainerOverlay {
 
 	public static final int[][] bedBlockMap = new int[][]{{0, 1}, {-1, 0}, {0, -1}, {1, 0}};
 
-	public Icon[][] iconsOverlay = new Icon[2][3];
-	public Icon[] icons = new Icon[3];
+	public Icon[][] iconsOverlay = new Icon[2][4];
+	public Icon[] icons = new Icon[4];
 
 	public BlockBed(int id) {
 		super(id, Material.cloth);
@@ -44,32 +42,52 @@ public class BlockBed extends BlockContainerOverlay {
 		return new TileEntityBed();
 	}
 
-	public int getBedSide(int side) {
-		switch(side) {
-		case 0:
-		case 1:
-			return 0;
-		case 2:
-		case 4:
-			return 1;
-		case 3:
-		case 5:
-			return 2;
-		default:
+	public int getBedSide(int side, int direction) {
+		if(side == 0 || side == 1) {
 			return 0;
 		}
-	}
-
-	@Override
-	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-		if(!isBedFoot(world, x, y, z)) {
-			int id = idDropped(metadata, world.rand, fortune);
-			if(id > 0) {
-				list.add(new ItemStack(id, 1, damageDropped(metadata)));
+		if(direction == 0) {
+			switch(side) {
+			case 2:
+			case 3:
+				return 3;
+			case 4:
+				return 1;
+			case 5:
+				return 2;
+			}
+		} else if(direction == 1) {
+			switch(side) {
+			case 2:
+				return 1;
+			case 3:
+				return 2;
+			case 4:
+			case 5:
+				return 3;
+			}
+		} else if(direction == 2) {
+			switch(side) {
+			case 2:
+			case 3:
+				return 3;
+			case 4:
+				return 2;
+			case 5:
+				return 1;
+			}
+		} else if(direction == 3) {
+			switch(side) {
+			case 2:
+				return 2;
+			case 3:
+				return 1;
+			case 4:
+			case 5:
+				return 3;
 			}
 		}
-		return list;
+		return 0;
 	}
 
 	@Override
@@ -143,22 +161,10 @@ public class BlockBed extends BlockContainerOverlay {
 				world.setBlockToAir(x, y, z);
 			}
 		} else if(world.getBlockId(x + bedBlockMap[direction][0], y, z + bedBlockMap[direction][1]) != blockID) {
-			world.setBlockToAir(x, y, z);
 			if(!world.isRemote) {
 				dropBlockAsItem(world, x, y, z, 0, 0);
 			}
-		}
-	}
-
-	@Override
-	public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {
-		if(player.capabilities.isCreativeMode && !isBedFoot(world, x, y, z)) {
-			int direction = getBedDirection(world, x, y, z);
-			x -= bedBlockMap[direction][0];
-			z -= bedBlockMap[direction][1];
-			if(world.getBlockId(x, y, z) == blockID) {
-				world.setBlockToAir(x, y, z);
-			}
+			world.setBlockToAir(x, y, z);
 		}
 	}
 
@@ -222,38 +228,56 @@ public class BlockBed extends BlockContainerOverlay {
 	public boolean isOpaqueCube() {
 		return false;
 	}
+	
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
+	
+	@Override
+	public int getRenderType() {
+		return 203;
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
-		return 0xFFFFFF;
-		//return ((TileEntityBed) getTileEntity(blockAccess, x, y, z)).color;
+		return ((TileEntityBed) getTileEntity(blockAccess, x, y, z)).color;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int meta) {
+		return iconsOverlay[0][0];
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
-		return !isBedFoot(blockAccess, x, y, z) ? icons[getBedSide(side)] : ResourcesCore.emptyTexture;
+		return !isBedFoot(blockAccess, x, y, z) ? icons[getBedSide(side, getBedDirection(blockAccess, x, y, z))] : ResourcesCore.emptyTexture;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getBlockOverlayTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
-		return iconsOverlay[isBedFoot(blockAccess, x, y, z) ? 0 : 1][getBedSide(side)];
+		return iconsOverlay[isBedFoot(blockAccess, x, y, z) ? 0 : 1][getBedSide(side, getBedDirection(blockAccess, x, y, z))];
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icons[0] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadTop");
-		icons[1] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadSide");
-		icons[2] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadEnd");
+		icons[1] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadSideLeft");
+		icons[2] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadSideRight");
+		icons[3] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadEnd");
 
 		iconsOverlay[0][0] = iconRegister.registerIcon("agecraft:ages/prehistory/bedFeetTopOverlay");
-		iconsOverlay[0][1] = iconRegister.registerIcon("agecraft:ages/prehistory/bedFeetSideOverlay");
-		iconsOverlay[0][2] = iconRegister.registerIcon("agecraft:ages/prehistory/bedFeetEndOverlay");
+		iconsOverlay[0][1] = iconRegister.registerIcon("agecraft:ages/prehistory/bedFeetSideLeftOverlay");
+		iconsOverlay[0][2] = iconRegister.registerIcon("agecraft:ages/prehistory/bedFeetSideRightOverlay");
+		iconsOverlay[0][3] = iconRegister.registerIcon("agecraft:ages/prehistory/bedFeetEndOverlay");
 		iconsOverlay[1][0] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadTopOverlay");
-		iconsOverlay[1][1] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadSideOverlay");
-		iconsOverlay[1][2] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadEndOverlay");
+		iconsOverlay[1][1] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadSideLeftOverlay");
+		iconsOverlay[1][2] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadSideRightOverlay");
+		iconsOverlay[1][3] = iconRegister.registerIcon("agecraft:ages/prehistory/bedHeadEndOverlay");
 	}
 }
