@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import elcon.mods.agecraft.core.ACBlockRenderingHandlerOverlay;
 import elcon.mods.agecraft.core.DustRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.prehistory.blocks.BlockPot;
@@ -13,6 +12,7 @@ import elcon.mods.agecraft.prehistory.blocks.BlockRock.RockShape;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
+import elcon.mods.core.BlockRenderingHandlerOverlay;
 
 public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRenderingHandler {
 
@@ -134,7 +134,7 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 				renderer.uvRotateTop = 2;
 			}
 		}
-		ACBlockRenderingHandlerOverlay.renderBlockWithOverlay(blockAccess, block, x, y, z, renderer, 0xFFFFFF);
+		BlockRenderingHandlerOverlay.renderBlockWithOverlay(blockAccess, block, x, y, z, renderer, 0xFFFFFF);
 		renderer.uvRotateSouth = 0;
 		renderer.uvRotateEast = 0;
 		renderer.uvRotateWest = 0;

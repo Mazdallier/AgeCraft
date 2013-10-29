@@ -1,9 +1,9 @@
 package elcon.mods.agecraft.core;
 
-import elcon.mods.agecraft.ACLog;
-import elcon.mods.agecraft.ACUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import elcon.mods.agecraft.ACLog;
+import elcon.mods.agecraft.ACUtil;
 
 public class DustRegistry {
 

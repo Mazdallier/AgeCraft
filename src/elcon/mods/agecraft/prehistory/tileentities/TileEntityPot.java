@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import elcon.mods.agecraft.core.fluids.FluidTankTile;
-import elcon.mods.agecraft.core.tileentities.TileEntityExtended;
+import elcon.mods.core.tileentities.TileEntityExtended;
 
 public class TileEntityPot extends TileEntityExtended implements IFluidHandler {
 	

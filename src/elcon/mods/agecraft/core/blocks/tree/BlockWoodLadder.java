@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
-import elcon.mods.agecraft.core.blocks.BlockExtendedMetadata;
+import elcon.mods.core.blocks.BlockExtendedMetadata;
 import elcon.mods.core.lang.LanguageManager;
 
 public class BlockWoodLadder extends BlockExtendedMetadata {

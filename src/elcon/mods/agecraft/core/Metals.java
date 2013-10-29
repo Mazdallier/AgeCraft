@@ -18,7 +18,6 @@ import elcon.mods.agecraft.core.blocks.metal.BlockMetalLadder;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalTrapdoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockOreStorage;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneOre;
-import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.agecraft.core.items.ItemGem;
 import elcon.mods.agecraft.core.items.ItemIngot;
 import elcon.mods.agecraft.core.items.ItemMetalBucket;
@@ -26,6 +25,7 @@ import elcon.mods.agecraft.core.items.ItemMetalDoor;
 import elcon.mods.agecraft.core.items.ItemMetalDust;
 import elcon.mods.agecraft.core.items.ItemMetalStick;
 import elcon.mods.agecraft.core.items.ItemNugget;
+import elcon.mods.core.items.ItemBlockExtendedMetadata;
 
 public class Metals extends ACComponent {
 

@@ -8,6 +8,7 @@ import elcon.mods.agecraft.dna.storage.DNAStorage;
 import elcon.mods.agecraft.dna.storage.DNAStorageChromosome;
 import elcon.mods.agecraft.dna.storage.DNAStorageGene;
 import elcon.mods.agecraft.dna.structure.DNAObject;
+import elcon.mods.core.tileentities.TileEntityNBT;
 
 public class TileEntityDNA extends TileEntityNBT implements IDNAOwner {
 	

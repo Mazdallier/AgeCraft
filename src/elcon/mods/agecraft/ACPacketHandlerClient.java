@@ -21,8 +21,8 @@ import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.tech.TechTreeClient;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
-import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
-import elcon.mods.agecraft.core.tileentities.TileEntityNBT;
+import elcon.mods.core.tileentities.TileEntityMetadata;
+import elcon.mods.core.tileentities.TileEntityNBT;
 
 @SideOnly(Side.CLIENT)
 public class ACPacketHandlerClient implements IPacketHandler {

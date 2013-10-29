@@ -18,8 +18,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.MetalRegistry.Metal;
-import elcon.mods.agecraft.core.blocks.BlockExtendedMetadataOverlay;
 import elcon.mods.agecraft.core.items.tools.ItemTool;
+import elcon.mods.core.blocks.BlockExtendedMetadataOverlay;
 import elcon.mods.core.lang.LanguageManager;
 
 public class BlockStoneOre extends BlockExtendedMetadataOverlay {

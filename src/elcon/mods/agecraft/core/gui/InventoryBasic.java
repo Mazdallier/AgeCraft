@@ -1,12 +1,12 @@
 package elcon.mods.agecraft.core.gui;
 
-import elcon.mods.core.lang.LanguageManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import elcon.mods.core.lang.LanguageManager;
 
 public class InventoryBasic implements IInventory {
 

@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
+import elcon.mods.core.tileentities.TileEntityMetadata;
 
 public class WorldGenOre extends WorldGenerator {
 

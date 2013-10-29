@@ -1,9 +1,9 @@
 package elcon.mods.agecraft.assets.resources;
 
-import elcon.mods.agecraft.core.TreeRegistry;
-import elcon.mods.core.ElConCore;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.ResourceLocation;
+import elcon.mods.agecraft.core.TreeRegistry;
+import elcon.mods.core.ElConCore;
 
 public class ResourcesPrehistory extends Resources {
 	

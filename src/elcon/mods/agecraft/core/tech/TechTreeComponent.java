@@ -2,9 +2,8 @@ package elcon.mods.agecraft.core.tech;
 
 import java.util.ArrayList;
 
-import elcon.mods.core.lang.LanguageManager;
-
 import net.minecraft.item.ItemStack;
+import elcon.mods.core.lang.LanguageManager;
 
 public class TechTreeComponent {
 

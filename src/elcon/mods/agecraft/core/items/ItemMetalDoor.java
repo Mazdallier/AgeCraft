@@ -9,7 +9,8 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.MetalRegistry;
-import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
+import elcon.mods.core.items.ItemBlockExtendedMetadata;
+import elcon.mods.core.tileentities.TileEntityMetadata;
 
 public class ItemMetalDoor extends ItemBlockExtendedMetadata {
 

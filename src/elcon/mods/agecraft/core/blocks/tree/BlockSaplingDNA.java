@@ -26,9 +26,9 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.BiomeRegistry;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
-import elcon.mods.agecraft.core.blocks.BlockExtendedContainer;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
 import elcon.mods.agecraft.dna.storage.DNAStorage;
+import elcon.mods.core.blocks.BlockExtendedContainer;
 
 public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantable {
 
@@ -105,8 +105,12 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 				dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
 				world.setBlockToAir(x, y, z);
 			}
+			int chance = 12 - ((TileEntityDNATree) getTileEntity(world, x, y, z)).getDNA().getGene(2, 0).getActive();
+			if(world.isRaining()) {
+				chance -= 4;
+			}
 			//TODO: change grow chance
-			if(world.getBlockLightValue(x, y, z) >= 9 && random.nextInt(7) == 0) {
+			if(world.getBlockLightValue(x, y, z) >= 9 && random.nextInt(chance) == 0) {
 				growSapling(world, x, y, z, random);
 			}
 		}
@@ -190,7 +194,11 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			if(TreeRegistry.trees[i] != null) {
 				ItemStack stack = new ItemStack(id, 1, 0);
-				//TODO: create default DNA
+				NBTTagCompound nbt = new NBTTagCompound();
+				NBTTagCompound tag = new NBTTagCompound();
+				tag.setInteger("WoodType", i);
+				nbt.setCompoundTag("Defaults", tag);
+				stack.setTagCompound(nbt);
 				list.add(stack);
 			}
 		}

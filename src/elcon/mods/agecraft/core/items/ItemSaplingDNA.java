@@ -19,6 +19,7 @@ import elcon.mods.agecraft.dna.DNA;
 import elcon.mods.agecraft.dna.DNAUtil;
 import elcon.mods.agecraft.dna.storage.DNAStorage;
 import elcon.mods.core.color.Color;
+import elcon.mods.core.items.ItemBlockName;
 import elcon.mods.core.lang.LanguageManager;
 
 public class ItemSaplingDNA extends ItemBlockName {
@@ -54,6 +55,8 @@ public class ItemSaplingDNA extends ItemBlockName {
 			DNAStorage dna = new DNAStorage(Trees.treeDNA.id);
 			dna.readFromNBT(nbt.getCompoundTag("DNA"));
 			return LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 0).getActive()].name) + " " + LanguageManager.getLocalization("trees.sapling");
+		} else if(nbt.hasKey("Defaults")) {
+			return LanguageManager.getLocalization("trees." + TreeRegistry.trees[nbt.getCompoundTag("Defaults").getInteger("WoodType")].name) + " " + LanguageManager.getLocalization("trees.sapling");
 		}
 		return super.getItemDisplayName(stack);
 	}
@@ -91,6 +94,8 @@ public class ItemSaplingDNA extends ItemBlockName {
 			DNAStorage dna = new DNAStorage(Trees.treeDNA.id);
 			dna.readFromNBT(nbt.getCompoundTag("DNA"));
 			return TreeRegistry.trees[dna.getGene(0, 0).getActive()].sapling;
+		} else if(nbt.hasKey("Defaults")) {
+			return TreeRegistry.trees[nbt.getCompoundTag("Defaults").getInteger("WoodType")].sapling;
 		}
 		return null;
 	}

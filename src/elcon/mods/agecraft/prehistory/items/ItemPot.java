@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.core.items.ItemBlockName;
+import elcon.mods.core.items.ItemBlockName;
 import elcon.mods.core.lang.LanguageManager;
 
 public class ItemPot extends ItemBlockName {

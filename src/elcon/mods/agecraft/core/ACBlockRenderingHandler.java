@@ -19,7 +19,7 @@ import elcon.mods.agecraft.core.blocks.tree.BlockWoodFence;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodFenceGate;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodWall;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
-import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
+import elcon.mods.core.tileentities.TileEntityMetadata;
 
 public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 

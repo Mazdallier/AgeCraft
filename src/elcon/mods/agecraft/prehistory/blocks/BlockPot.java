@@ -24,8 +24,8 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.DustRegistry;
 import elcon.mods.agecraft.core.DustRegistry.Dust;
-import elcon.mods.agecraft.core.blocks.BlockExtendedContainer;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
+import elcon.mods.core.blocks.BlockExtendedContainer;
 import elcon.mods.core.lang.LanguageManager;
 
 public class BlockPot extends BlockExtendedContainer {

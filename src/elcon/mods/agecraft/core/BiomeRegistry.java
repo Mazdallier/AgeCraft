@@ -1,7 +1,7 @@
 package elcon.mods.agecraft.core;
 
-import elcon.mods.agecraft.ACLog;
 import net.minecraft.world.biome.BiomeGenBase;
+import elcon.mods.agecraft.ACLog;
 
 public class BiomeRegistry {
 

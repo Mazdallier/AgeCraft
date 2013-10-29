@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import elcon.mods.agecraft.core.tileentities.TileEntityExtended;
+import elcon.mods.core.tileentities.TileEntityExtended;
 
 public class TileEntityBed extends TileEntityExtended {
 

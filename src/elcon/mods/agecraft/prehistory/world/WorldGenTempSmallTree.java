@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.ForgeDirection;
 import elcon.mods.agecraft.core.Trees;
-import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
+import elcon.mods.core.tileentities.TileEntityMetadata;
 
 public class WorldGenTempSmallTree extends WorldGenerator {
 

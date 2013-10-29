@@ -11,8 +11,8 @@ import net.minecraftforge.fluids.Fluid;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.MetalRegistry;
-import elcon.mods.agecraft.core.ToolRegistry;
 import elcon.mods.agecraft.core.MetalRegistry.OreType;
+import elcon.mods.agecraft.core.ToolRegistry;
 import elcon.mods.core.lang.LanguageManager;
 
 public class ItemMetalBucket extends ItemBucket {

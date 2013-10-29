@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.core.tileentities.TileEntityMetadata;
 
 public class TileEntityWorkbench extends TileEntityMetadata implements IInventory {
 

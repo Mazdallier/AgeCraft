@@ -9,7 +9,7 @@ import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalLadder;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodLadder;
-import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
+import elcon.mods.core.tileentities.TileEntityMetadata;
 
 public class ACBlockRenderingHandlerWithIcon implements ISimpleBlockRenderingHandler {
 

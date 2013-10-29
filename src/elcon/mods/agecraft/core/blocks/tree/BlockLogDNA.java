@@ -1,13 +1,13 @@
 package elcon.mods.agecraft.core.blocks.tree;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import elcon.mods.agecraft.core.blocks.BlockExtendedContainer;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
+import elcon.mods.core.blocks.BlockExtendedContainer;
 
 public class BlockLogDNA extends BlockExtendedContainer {
 

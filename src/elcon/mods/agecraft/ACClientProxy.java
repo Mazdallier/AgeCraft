@@ -15,7 +15,6 @@ import elcon.mods.agecraft.assets.resources.Resources;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.assets.resources.ResourcesPrehistory;
 import elcon.mods.agecraft.core.ACBlockRenderingHandler;
-import elcon.mods.agecraft.core.ACBlockRenderingHandlerOverlay;
 import elcon.mods.agecraft.core.ACBlockRenderingHandlerWithIcon;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.entity.EntityBlock;
@@ -63,9 +62,6 @@ public class ACClientProxy extends ACCommonProxy {
 
 		// register key handler
 		KeyBindingRegistry.registerKeyBinding(new ACKeyHandler());
-
-		// register block handlers
-		RenderingRegistry.registerBlockHandler(ACConfig.BLOCK_OVERLAY_RENDER_ID, new ACBlockRenderingHandlerOverlay());
 
 		// init player clothing client
 		PlayerClothingClient.clothingDir = new File(ElConCore.minecraftDir, File.separator + "clothing");

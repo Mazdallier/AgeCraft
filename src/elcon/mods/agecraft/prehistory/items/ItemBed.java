@@ -8,10 +8,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 import elcon.mods.agecraft.prehistory.blocks.BlockBed;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
+import elcon.mods.core.items.ItemBlockName;
 
 public class ItemBed extends ItemBlockName {
 

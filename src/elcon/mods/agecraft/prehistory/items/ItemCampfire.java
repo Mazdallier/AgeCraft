@@ -2,16 +2,17 @@ package elcon.mods.agecraft.prehistory.items;
 
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+
+import org.lwjgl.input.Keyboard;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.TreeRegistry;
-import elcon.mods.agecraft.core.items.ItemBlockName;
+import elcon.mods.core.items.ItemBlockName;
 import elcon.mods.core.lang.LanguageManager;
 
 public class ItemCampfire extends ItemBlockName {

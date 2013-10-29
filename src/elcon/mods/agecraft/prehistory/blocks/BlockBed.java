@@ -19,8 +19,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
-import elcon.mods.agecraft.core.blocks.BlockContainerOverlay;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
+import elcon.mods.core.blocks.BlockContainerOverlay;
 
 public class BlockBed extends BlockContainerOverlay {
 

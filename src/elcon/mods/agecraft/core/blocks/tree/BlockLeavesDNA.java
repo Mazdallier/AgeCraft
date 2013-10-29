@@ -6,8 +6,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.core.blocks.BlockExtendedContainer;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
+import elcon.mods.core.blocks.BlockExtendedContainer;
 
 public class BlockLeavesDNA extends BlockExtendedContainer {
 

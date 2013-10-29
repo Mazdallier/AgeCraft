@@ -20,15 +20,15 @@ import elcon.mods.agecraft.core.clothing.ClothingCategory;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.clothing.ClothingUpdater;
-import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.tech.TechTree;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
-import elcon.mods.agecraft.core.tileentities.TileEntityMetadata;
-import elcon.mods.agecraft.core.tileentities.TileEntityNBT;
 import elcon.mods.agecraft.prehistory.world.WorldGenTeleportSphere;
 import elcon.mods.core.ElConCore;
+import elcon.mods.core.items.ItemBlockName;
+import elcon.mods.core.tileentities.TileEntityMetadata;
+import elcon.mods.core.tileentities.TileEntityNBT;
 
 public class AgeCraftCore extends ACComponent {
 	

@@ -11,7 +11,6 @@ import elcon.mods.agecraft.Age;
 import elcon.mods.agecraft.IACPacketHandler;
 import elcon.mods.agecraft.IACPacketHandlerClient;
 import elcon.mods.agecraft.core.Trees;
-import elcon.mods.agecraft.core.items.ItemDummy;
 import elcon.mods.agecraft.prehistory.blocks.BlockBed;
 import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
 import elcon.mods.agecraft.prehistory.blocks.BlockPot;
@@ -30,6 +29,7 @@ import elcon.mods.agecraft.prehistory.recipes.RecipesSharpener;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
+import elcon.mods.core.items.ItemDummy;
 
 public class PrehistoryAge extends Age {
 		

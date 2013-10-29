@@ -5,9 +5,9 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.core.blocks.crafting.BlockWorkbench;
-import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.agecraft.core.recipes.RecipesWorkbench;
 import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
+import elcon.mods.core.items.ItemBlockExtendedMetadata;
 
 public class Crafting extends ACComponent {
 	

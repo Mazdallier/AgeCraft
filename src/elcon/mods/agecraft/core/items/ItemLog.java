@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.TreeRegistry;
+import elcon.mods.core.items.ItemBlockExtendedMetadata;
 
 public class ItemLog extends ItemBlockExtendedMetadata {
 

@@ -24,9 +24,7 @@ import elcon.mods.agecraft.core.blocks.tree.BlockWoodFenceGate;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodLadder;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodTrapdoor;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodWall;
-import elcon.mods.agecraft.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.agecraft.core.items.ItemBlockLeaves;
-import elcon.mods.agecraft.core.items.ItemBlockName;
 import elcon.mods.agecraft.core.items.ItemLog;
 import elcon.mods.agecraft.core.items.ItemSaplingDNA;
 import elcon.mods.agecraft.core.items.ItemWoodBucket;
@@ -38,6 +36,8 @@ import elcon.mods.agecraft.dna.structure.Chromosome;
 import elcon.mods.agecraft.dna.structure.DNAObject;
 import elcon.mods.agecraft.dna.structure.Gene;
 import elcon.mods.core.ElConCore;
+import elcon.mods.core.items.ItemBlockExtendedMetadata;
+import elcon.mods.core.items.ItemBlockName;
 
 public class Trees extends ACComponent {
 
