@@ -16,8 +16,8 @@ public class GuiWorkbench extends GuiContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		fontRenderer.drawString(I18n.getString("container.crafting"), 28, 6, 4210752);
-		fontRenderer.drawString(I18n.getString("container.inventory"), 8, ySize - 96 + 2, 4210752);
+		fontRenderer.drawString(I18n.getString("container.crafting"), 28, 6, 0x404040);
+		fontRenderer.drawString(I18n.getString("container.inventory"), 8, ySize - 96 + 2, 0x404040);
 	}
 	
 	@Override

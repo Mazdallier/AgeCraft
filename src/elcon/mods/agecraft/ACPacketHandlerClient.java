@@ -1,10 +1,14 @@
 package elcon.mods.agecraft;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.world.World;
 
@@ -211,5 +215,26 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		}
 		tile.setTileMetadata(dat.readInt());
 		world.markBlockForUpdate(x, y, z);
+	}
+
+	public static Packet getTradePacket(int dimensionID, String player1, String player2) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(75);
+			dos.writeInt(dimensionID);
+			dos.writeUTF(player1);
+			dos.writeUTF(player2);
+			dos.close();
+			packet.channel = "AgeCraft";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

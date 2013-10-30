@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.NetLoginHandler;
 import net.minecraft.network.packet.NetHandler;
@@ -12,6 +13,7 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet1Login;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.World;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
@@ -41,6 +43,11 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 	}
 	
 	private void handlePacketServer(int packetID, ByteArrayDataInput dat) {
+		switch(packetID) {
+		case 75:
+			handleTradePacket(dat);
+		}
+		
 		for(ACComponent component : AgeCraft.instance.components) {
 			if(component != null) {
 				IACPacketHandler packetHandler = component.getPacketHandler();
@@ -59,6 +66,14 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 	}
 	
+	private void handleTradePacket(ByteArrayDataInput dat) {
+		World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dat.readInt());
+		EntityPlayer p1 = world.getPlayerEntityByName(dat.readUTF());
+		EntityPlayer p2 = world.getPlayerEntityByName(dat.readUTF());
+		p1.openGui(AgeCraft.instance, 1, world, (int) p1.posX, (int) p1.posY, (int) p1.posZ);
+		p2.openGui(AgeCraft.instance, 1, world, (int) p2.posX, (int) p2.posY, (int) p2.posZ);
+	}
+
 	public static Packet getTechTreeComponentPacket(String player, String pageName, String name, boolean unlocked) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();

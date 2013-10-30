@@ -16,11 +16,12 @@ import elcon.mods.core.items.ItemBlockName;
 public class ItemBed extends ItemBlockName {
 
 	private Icon icon;
+	private Icon iconOverlay;
 
 	public ItemBed(int id) {
 		super(id);
 	}
-
+	
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if(world.isRemote) {
@@ -75,10 +76,32 @@ public class ItemBed extends ItemBlockName {
 			}
 		}
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getColorFromItemStack(ItemStack stack, int renderPass) {
+		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("Color")) {
+			return stack.getTagCompound().getInteger("Color");
+		}
+		return 0xFFFFFF;
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIconFromDamage(int meta) {
+	public boolean requiresMultipleRenderPasses() {
+		return true;
+	}
+	
+	@Override
+	public int getRenderPasses(int metadata) {
+		return 2;
+	}	
+	
+	@Override
+	public Icon getIcon(ItemStack stack, int renderPass) {
+		if(renderPass == 2) {
+			return iconOverlay;
+		}
 		return icon;
 	}
 
@@ -86,5 +109,6 @@ public class ItemBed extends ItemBlockName {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icon = iconRegister.registerIcon("agecraft:ages/prehistory/bed");
+		iconOverlay = iconRegister.registerIcon("agecraft:ages/prehistory/bedOverlay");
 	}
 }
