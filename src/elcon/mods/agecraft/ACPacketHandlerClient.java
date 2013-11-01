@@ -20,6 +20,8 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.core.PlayerTradeManager;
+import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
@@ -30,7 +32,7 @@ import elcon.mods.core.tileentities.TileEntityNBT;
 
 @SideOnly(Side.CLIENT)
 public class ACPacketHandlerClient implements IPacketHandler {
-	
+
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 		ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
@@ -41,10 +43,10 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			handlePacketClient(packetID, dat);
 		}
 	}
-	
+
 	private void handlePacketClient(int packetID, ByteArrayDataInput dat) {
 		World world = (World) Minecraft.getMinecraft().theWorld;
-		
+
 		switch(packetID) {
 		case 0:
 			handleTechTreeComponent(dat);
@@ -58,6 +60,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		case 3:
 			handleClothingAllUpdate(dat);
 			break;
+		case 4:
+			handlePlayerTrade(dat);
+			break;
 		case 90:
 			handleTileEntityNBT(world, dat);
 			break;
@@ -68,7 +73,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			handleTileEntityMetadata(world, dat);
 			break;
 		}
-		
+
 		for(ACComponent component : AgeCraft.instance.components) {
 			if(component != null) {
 				IACPacketHandlerClient packetHandler = component.getPacketHandlerClient();
@@ -86,7 +91,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			}
 		}
 	}
-	
+
 	private void handleTechTreeComponent(ByteArrayDataInput dat) {
 		String player = dat.readUTF();
 		boolean unlocked = dat.readBoolean();
@@ -98,7 +103,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			}
 		}
 	}
-	
+
 	private void handleTechTreeAllComponents(ByteArrayDataInput dat) {
 		int pages = dat.readInt();
 		for(int i = 0; i < pages; i++) {
@@ -109,7 +114,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			}
 		}
 	}
-	
+
 	private void handleClothingUpdate(ByteArrayDataInput dat) {
 		String player = dat.readUTF();
 		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(player);
@@ -132,7 +137,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		}
 		PlayerClothingClient.addPlayerClothing(clothing);
 	}
-	
+
 	private void handleClothingAllUpdate(ByteArrayDataInput dat) {
 		int players = dat.readInt();
 		for(int i = 0; i < players; i++) {
@@ -158,7 +163,19 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			PlayerClothingClient.addPlayerClothing(clothing);
 		}
 	}
-	
+
+	private void handlePlayerTrade(ByteArrayDataInput dat) {
+		String player1 = dat.readUTF();
+		String player2 = dat.readUTF();
+		PlayerTrade trade = new PlayerTrade(player1, player2, dat.readByte(), dat.readInt());
+		PlayerTradeManager.tradesClient.put(trade.player1, trade);
+		PlayerTradeManager.tradesClient.put(trade.player2, trade);
+
+		Minecraft mc = Minecraft.getMinecraft();
+		mc.thePlayer.openGui(dat.readInt(), 1, mc.theWorld, (int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ);
+		mc.thePlayer.openContainer.windowId = dat.readInt();
+	}
+
 	private void handleTileEntityNBT(World world, ByteArrayDataInput dat) {
 		int x = dat.readInt();
 		int y = dat.readInt();
@@ -180,7 +197,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		tile.nbt = nbt;
 		world.markBlockForUpdate(x, y, z);
 	}
-	
+
 	private void handleTileEntityDNA(World world, ByteArrayDataInput dat) {
 		int x = dat.readInt();
 		int y = dat.readInt();
@@ -203,7 +220,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		tile.getDNA().readFromNBT(tile.nbt);
 		world.markBlockForUpdate(x, y, z);
 	}
-	
+
 	private void handleTileEntityMetadata(World world, ByteArrayDataInput dat) {
 		int x = dat.readInt();
 		int y = dat.readInt();

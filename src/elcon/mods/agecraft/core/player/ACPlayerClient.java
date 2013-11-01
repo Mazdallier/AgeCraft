@@ -3,7 +3,6 @@ package elcon.mods.agecraft.core.player;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.NetClientHandler;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Session;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
@@ -16,11 +15,11 @@ public class ACPlayerClient extends PlayerCoreClient {
 	public ACPlayerClient(Minecraft mc, World world, Session session, NetClientHandler netClientHandler, int playerCoreIndex, PlayerCoreClient entityPlayerSP) {
 		super(mc, world, session, netClientHandler, playerCoreIndex, entityPlayerSP);
 		player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setAttribute(100.0D);
-		player.dimension = 10;
-		ChunkCoordinates spawn = world.getSpawnPoint();
-		player.posX = spawn.posX;
-		player.posZ = spawn.posZ;
-		player.posY = getFirstUncoveredBlock(world, (int) player.posX, (int) player.posZ) + 1;
+//		player.dimension = 10;
+//		ChunkCoordinates spawn = world.getSpawnPoint();
+//		player.posX = spawn.posX;
+//		player.posZ = spawn.posZ;
+//		player.posY = getFirstUncoveredBlock(world, (int) player.posX, (int) player.posZ) + 1;
 	}
 	
 	public int getFirstUncoveredBlock(World world, int x, int z) {

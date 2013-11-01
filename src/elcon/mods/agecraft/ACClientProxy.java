@@ -16,11 +16,12 @@ import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.assets.resources.ResourcesPrehistory;
 import elcon.mods.agecraft.core.ACBlockRenderingHandler;
 import elcon.mods.agecraft.core.ACBlockRenderingHandlerWithIcon;
+import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.entity.EntityBlock;
-import elcon.mods.agecraft.core.gui.ContainerTrade;
+import elcon.mods.agecraft.core.gui.ContainerPlayerTrade;
 import elcon.mods.agecraft.core.gui.ContainerWorkbench;
-import elcon.mods.agecraft.core.gui.GuiTrade;
+import elcon.mods.agecraft.core.gui.GuiPlayerTrade;
 import elcon.mods.agecraft.core.gui.GuiWorkbench;
 import elcon.mods.agecraft.core.player.ACPlayerClient;
 import elcon.mods.agecraft.core.player.ACPlayerRender;
@@ -132,7 +133,7 @@ public class ACClientProxy extends ACCommonProxy {
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		if(id == 1) {
-			return new GuiTrade(new ContainerTrade(player.inventory));
+			return new GuiPlayerTrade(new ContainerPlayerTrade(player.inventory, PlayerTradeManager.tradesClient.get(player.username)));
 		} else if(id == 10) {
 			return new GuiChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
 		} else if(id == 11) {

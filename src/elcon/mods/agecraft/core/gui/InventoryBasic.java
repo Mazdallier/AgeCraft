@@ -10,9 +10,9 @@ import elcon.mods.core.lang.LanguageManager;
 
 public class InventoryBasic implements IInventory {
 
-	private Container container;
-	private ItemStack[] stacks;
-	private String unlocalizedName;
+	protected Container container;
+	protected ItemStack[] stacks;
+	protected String unlocalizedName;
 	
 	public InventoryBasic(Container container, int size, String unlocalizedName) {
 		this.container = container;

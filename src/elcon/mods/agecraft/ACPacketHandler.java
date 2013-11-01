@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.NetLoginHandler;
 import net.minecraft.network.packet.NetHandler;
@@ -19,18 +19,24 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.IPacketHandler;
+import cpw.mods.fml.common.network.NetworkModHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
+import elcon.mods.agecraft.core.PlayerTradeManager;
+import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
+import elcon.mods.agecraft.core.gui.ContainerPlayerTrade;
 import elcon.mods.agecraft.core.tech.TechTreeServer;
 
 public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
-	
+
 	@Override
 	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
 		ByteArrayDataInput dat = ByteStreams.newDataInput(packet.data);
@@ -41,13 +47,13 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			handlePacketServer(packetID, dat);
 		}
 	}
-	
+
 	private void handlePacketServer(int packetID, ByteArrayDataInput dat) {
 		switch(packetID) {
 		case 75:
-			handleTradePacket(dat);
+			handlePlayerTrade(dat);
 		}
-		
+
 		for(ACComponent component : AgeCraft.instance.components) {
 			if(component != null) {
 				IACPacketHandler packetHandler = component.getPacketHandler();
@@ -65,13 +71,40 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			}
 		}
 	}
-	
-	private void handleTradePacket(ByteArrayDataInput dat) {
-		World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dat.readInt());
-		EntityPlayer p1 = world.getPlayerEntityByName(dat.readUTF());
-		EntityPlayer p2 = world.getPlayerEntityByName(dat.readUTF());
-		p1.openGui(AgeCraft.instance, 1, world, (int) p1.posX, (int) p1.posY, (int) p1.posZ);
-		p2.openGui(AgeCraft.instance, 1, world, (int) p2.posX, (int) p2.posY, (int) p2.posZ);
+
+	private void handlePlayerTrade(ByteArrayDataInput dat) {
+		int dimensionID = dat.readInt();
+		World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dimensionID);
+		EntityPlayerMP p1 = (EntityPlayerMP) world.getPlayerEntityByName(dat.readUTF());
+		EntityPlayerMP p2 = (EntityPlayerMP) world.getPlayerEntityByName(dat.readUTF());
+		PlayerTrade trade = new PlayerTrade(p1.username, p2.username, (byte) 2, dimensionID);
+		PlayerTradeManager.trades.put(trade.player1, trade);
+		PlayerTradeManager.trades.put(trade.player2, trade);
+
+		NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler(AgeCraft.instance);
+		ModContainer mc = nmh.getContainer();
+
+		ContainerPlayerTrade container1 = new ContainerPlayerTrade(p1.inventory, trade);
+		ContainerPlayerTrade container2 = new ContainerPlayerTrade(p2.inventory, trade);
+		container1.otherContainer = container2;
+		container2.otherContainer = container1;
+
+		p1.incrementWindowID();
+		p1.closeContainer();
+		int windowId = p1.currentWindowId;
+		p1.openContainer = container1;
+		p1.openContainer.windowId = windowId;
+		p1.openContainer.addCraftingToCrafters(p1);
+
+		p2.incrementWindowID();
+		p2.closeContainer();
+		windowId = p2.currentWindowId;
+		p2.openContainer = container2;
+		p2.openContainer.windowId = windowId;
+		p2.openContainer.addCraftingToCrafters(p2);
+
+		PacketDispatcher.sendPacketToPlayer(getPlayerTradePacket(trade.player1, trade.player2, (byte) 0, dimensionID, nmh.getNetworkId(), p1.openContainer.windowId), (Player) p1);
+		PacketDispatcher.sendPacketToPlayer(getPlayerTradePacket(trade.player1, trade.player2, (byte) 1, dimensionID, nmh.getNetworkId(), p2.openContainer.windowId), (Player) p2);
 	}
 
 	public static Packet getTechTreeComponentPacket(String player, String pageName, String name, boolean unlocked) {
@@ -95,7 +128,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 		return null;
 	}
-	
+
 	public static Packet getTechTreeAllComponentsPacket(String player) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -127,7 +160,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 		return null;
 	}
-	
+
 	public static Packet getClothingUpdatePacket(PlayerClothing clothing) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -152,7 +185,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 						dos.writeBoolean(false);
 					}
 				}
-			}			
+			}
 			dos.close();
 			packet.channel = "ACClothing";
 			packet.data = bos.toByteArray();
@@ -164,7 +197,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 		return null;
 	}
-	
+
 	public static Packet getClothingAllUpdatePacket() {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -205,12 +238,36 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		return null;
 	}
 
+	public static Packet getPlayerTradePacket(String player1, String player2, byte currentPlayer, int dimensionID, int networkID, int windowID) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(4);
+			dos.writeUTF(player1);
+			dos.writeUTF(player2);
+			dos.writeByte(currentPlayer);
+			dos.writeInt(dimensionID);
+			dos.writeInt(networkID);
+			dos.writeInt(windowID);
+			dos.close();
+			packet.channel = "AgeCraft";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	@Override
 	// SERVER
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
 		PacketDispatcher.sendPacketToPlayer(getTechTreeAllComponentsPacket(netHandler.getPlayer().username), player);
 		ACLog.info("[TechTree] Send all components to " + netHandler.getPlayer().username);
-		
+
 		PlayerClothingServer.createDefaultClothing(netHandler.getPlayer().username);
 		PacketDispatcher.sendPacketToPlayer(getClothingAllUpdatePacket(), player);
 		PacketDispatcher.sendPacketToAllPlayers(getClothingUpdatePacket(PlayerClothingServer.getPlayerClothing(netHandler.getPlayer().username)));
