@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.NetLoginHandler;
@@ -52,6 +53,13 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		switch(packetID) {
 		case 75:
 			handlePlayerTrade(dat);
+			break;
+		case 76:
+			handlePlayerTradeAccept(dat);
+			break;
+		case 77:
+			handleOpenInventory(dat);
+			break;
 		}
 
 		for(ACComponent component : AgeCraft.instance.components) {
@@ -84,8 +92,8 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		NetworkModHandler nmh = FMLNetworkHandler.instance().findNetworkModHandler(AgeCraft.instance);
 		ModContainer mc = nmh.getContainer();
 
-		ContainerPlayerTrade container1 = new ContainerPlayerTrade(p1.inventory, trade);
-		ContainerPlayerTrade container2 = new ContainerPlayerTrade(p2.inventory, trade);
+		ContainerPlayerTrade container1 = new ContainerPlayerTrade(p1.inventory, trade, (byte) 0);
+		ContainerPlayerTrade container2 = new ContainerPlayerTrade(p2.inventory, trade, (byte) 1);
 		container1.otherContainer = container2;
 		container2.otherContainer = container1;
 
@@ -105,6 +113,26 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 
 		PacketDispatcher.sendPacketToPlayer(getPlayerTradePacket(trade.player1, trade.player2, (byte) 0, dimensionID, nmh.getNetworkId(), p1.openContainer.windowId), (Player) p1);
 		PacketDispatcher.sendPacketToPlayer(getPlayerTradePacket(trade.player1, trade.player2, (byte) 1, dimensionID, nmh.getNetworkId(), p2.openContainer.windowId), (Player) p2);
+	}
+	
+	private void handlePlayerTradeAccept(ByteArrayDataInput dat) {
+		PlayerTrade trade = PlayerTradeManager.trades.get(dat.readUTF());
+		if(dat.readByte() == 0) {
+			trade.accepted1 = dat.readBoolean();
+		} else {
+			trade.accepted2 = dat.readBoolean();
+		}
+		World world = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(trade.dimensionID);
+		EntityPlayerMP p1 = (EntityPlayerMP) world.getPlayerEntityByName(trade.player1);
+		EntityPlayerMP p2 = (EntityPlayerMP) world.getPlayerEntityByName(trade.player2);
+		PacketDispatcher.sendPacketToPlayer(getPlayerTradeAcceptChangePacket(trade.accepted1, trade.accepted2), (Player) p1);
+		PacketDispatcher.sendPacketToPlayer(getPlayerTradeAcceptChangePacket(trade.accepted1, trade.accepted2), (Player) p2);
+		((ContainerPlayerTrade) p1.openContainer).checkBothAccepted(p1, p2);
+	}
+	
+	private void handleOpenInventory(ByteArrayDataInput dat) {
+		EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dat.readInt()).getPlayerEntityByName(dat.readUTF());
+		player.openGui(AgeCraft.instance, 0, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
 	}
 
 	public static Packet getTechTreeComponentPacket(String player, String pageName, String name, boolean unlocked) {
@@ -250,6 +278,26 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			dos.writeInt(dimensionID);
 			dos.writeInt(networkID);
 			dos.writeInt(windowID);
+			dos.close();
+			packet.channel = "AgeCraft";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Packet getPlayerTradeAcceptChangePacket(boolean accepted1, boolean accepted2) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(5);
+			dos.writeBoolean(accepted1);
+			dos.writeBoolean(accepted2);
 			dos.close();
 			packet.channel = "AgeCraft";
 			packet.data = bos.toByteArray();

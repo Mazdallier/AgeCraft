@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class SlotTrade extends Slot {
 
+	public boolean preventChange = false;
 	public boolean canAccess;
 	
 	public SlotTrade(IInventory inventory, int id, int x, int y, boolean canAccess) {
@@ -16,7 +17,7 @@ public class SlotTrade extends Slot {
 	
 	@Override
 	public void onSlotChanged() {
-		if(canAccess) {
+		if(canAccess && !preventChange) {
 			super.onSlotChanged();
 		}
 	}

@@ -18,6 +18,7 @@ agecraft.version.mc_version_not_found=Unable to find a version of @MOD_NAME@ for
 container.trade=Trade
 container.crafting=Crafting
 container.workbench=Workbench
+container.armor=Armor
 
 trees.wood=Wood
 trees.leaves=Leaves

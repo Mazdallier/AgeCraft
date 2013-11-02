@@ -132,8 +132,11 @@
 	2 Clothing Update
 	3 Clothing All Update
 	4 Player Trade (To player 2)
+	5 Player Trade Accept Change
 75-90	Client to server packets
 	75 Player Trade (From player 1)
+	76 Player Trade Accept
+	77 Open Inventory
 90+ 	TileEntity packets
 	90 NBT
 	91 DNA

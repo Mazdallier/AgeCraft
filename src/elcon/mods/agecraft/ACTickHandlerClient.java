@@ -5,11 +5,13 @@ import java.util.EnumSet;
 import net.minecraft.client.Minecraft;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
 import elcon.mods.agecraft.core.gui.GuiInGame;
+import elcon.mods.agecraft.core.gui.GuiInventory;
 import elcon.mods.agecraft.core.tech.gui.GuiTechTreeComponent;
 
 @SideOnly(Side.CLIENT)
@@ -29,12 +31,13 @@ public class ACTickHandlerClient implements ITickHandler {
 			GuiTechTreeComponent.instance.updateTechTreeWindow();
 		}
 		if(type.contains(TickType.CLIENT)) {
-			if(!(Minecraft.getMinecraft().ingameGUI instanceof GuiInGame)) {
-				Minecraft.getMinecraft().ingameGUI = new GuiInGame(Minecraft.getMinecraft());
+			if(!(mc.ingameGUI instanceof GuiInGame)) {
+				mc.ingameGUI = new GuiInGame(Minecraft.getMinecraft());
 			}
-			//if(Minecraft.getMinecraft().currentScreen instanceof net.minecraft.client.gui.inventory.GuiInventory && !(Minecraft.getMinecraft().currentScreen instanceof GuiInventory)) {
-			//	Minecraft.getMinecraft().displayGuiScreen(new GuiInventory(Minecraft.getMinecraft().thePlayer));
-			//}
+			if(mc.currentScreen instanceof net.minecraft.client.gui.inventory.GuiInventory && !(mc.currentScreen instanceof GuiInventory)) {
+				mc.thePlayer.closeScreen();
+				PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getInventoryOpenPacket(mc.thePlayer.dimension, mc.thePlayer.username));
+			}
 			if(((BlockLeaves) Trees.leaves).fancyGraphics != mc.gameSettings.fancyGraphics) {
 				((BlockLeaves) Trees.leaves).fancyGraphics = mc.gameSettings.fancyGraphics;
 			}

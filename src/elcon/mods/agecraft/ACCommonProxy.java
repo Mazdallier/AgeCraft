@@ -40,8 +40,10 @@ public class ACCommonProxy implements IGuiHandler {
 	
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
-		if(id == 1) {
-			return new ContainerPlayerTrade(player.inventory, PlayerTradeManager.trades.get(player.username));
+		if(id == 0) {
+			return player.inventoryContainer;
+		} else if(id == 1) {
+			return new ContainerPlayerTrade(player.inventory, PlayerTradeManager.trades.get(player.username), (byte) 2);
 		} else if(id == 10) {
 			return new ContainerChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
 		} else if(id == 11) {

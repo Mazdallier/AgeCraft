@@ -63,6 +63,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		case 4:
 			handlePlayerTrade(dat);
 			break;
+		case 5:
+			handlePlayerTradeAcceptChange(dat);
+			break;
 		case 90:
 			handleTileEntityNBT(world, dat);
 			break;
@@ -175,6 +178,12 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		mc.thePlayer.openGui(dat.readInt(), 1, mc.theWorld, (int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ);
 		mc.thePlayer.openContainer.windowId = dat.readInt();
 	}
+	
+	private void handlePlayerTradeAcceptChange(ByteArrayDataInput dat) {
+		PlayerTrade trade = PlayerTradeManager.tradesClient.get(Minecraft.getMinecraft().thePlayer.username);
+		trade.accepted1 = dat.readBoolean();
+		trade.accepted2 = dat.readBoolean();
+	}
 
 	private void handleTileEntityNBT(World world, ByteArrayDataInput dat) {
 		int x = dat.readInt();
@@ -243,6 +252,47 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			dos.writeInt(dimensionID);
 			dos.writeUTF(player1);
 			dos.writeUTF(player2);
+			dos.close();
+			packet.channel = "AgeCraft";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Packet getTradeAcceptPacket(String username, byte player, boolean accept) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(76);
+			dos.writeUTF(username);
+			dos.writeByte(player);
+			dos.writeBoolean(accept);
+			dos.close();
+			packet.channel = "AgeCraft";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Packet getInventoryOpenPacket(int dimensionID, String player) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(77);
+			dos.writeInt(dimensionID);
+			dos.writeUTF(player);
 			dos.close();
 			packet.channel = "AgeCraft";
 			packet.data = bos.toByteArray();

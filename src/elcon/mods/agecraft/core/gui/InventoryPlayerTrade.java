@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack;
 
 public class InventoryPlayerTrade extends InventoryBasic {
 
-	public boolean preventChangeEvent = false;
 	public ContainerPlayerTrade container;
 	public boolean canAccess;
 	
@@ -22,7 +21,7 @@ public class InventoryPlayerTrade extends InventoryBasic {
 			if(stacks[slot].stackSize <= amount) {
 				stack = stacks[slot];
 				stacks[slot] = null;
-				if(canAccess && !preventChangeEvent) {
+				if(canAccess) {
 					container.onCraftMatrixChanged(this);
 				}
 				return stack;
@@ -31,7 +30,7 @@ public class InventoryPlayerTrade extends InventoryBasic {
 				if(stacks[slot].stackSize == 0) {
 					stacks[slot] = null;
 				}
-				if(canAccess && !preventChangeEvent) {
+				if(canAccess) {
 					container.onCraftMatrixChanged(this);
 				}
 				return stack;
@@ -44,7 +43,7 @@ public class InventoryPlayerTrade extends InventoryBasic {
 	public void setInventorySlotContents(int slot, ItemStack stack) {
 		if(slot < getSizeInventory()) {
 			stacks[slot] = stack;
-			if(canAccess && !preventChangeEvent) {
+			if(canAccess) {
 				container.onCraftMatrixChanged(this);
 			}
 		}

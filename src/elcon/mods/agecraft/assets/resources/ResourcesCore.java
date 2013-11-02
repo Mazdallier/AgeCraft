@@ -133,6 +133,7 @@ public class ResourcesCore extends Resources {
 			if(tree != null) {
 				tree.log = iconRegister.registerIcon("agecraft:wood/logs/log" + ElConCore.firstUpperCase(tree.name));
 				tree.stick = iconRegister.registerIcon("agecraft:wood/sticks/stick" + ElConCore.firstUpperCase(tree.name));
+				tree.dust = iconRegister.registerIcon("agecraft:wood/dusts/dust" + ElConCore.firstUpperCase(tree.name));
 				tree.bucket = iconRegister.registerIcon("agecraft:wood/buckets/bucket" + ElConCore.firstUpperCase(tree.name));
 			}
 		}
