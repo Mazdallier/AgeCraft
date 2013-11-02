@@ -112,9 +112,9 @@ public class Metals extends ACComponent {
 		MetalRegistry.registerMetal(new Metal(47, "tigerEye", OreType.GEM, 3.0F, 5.0F, 8, 5.0F, 10.0F, new ItemStack(gem, 1, 47), 1, 1, true, true, true, true, false, true, 0, 0, 0, 0x892604, 8, 8, 0, 32));
 		MetalRegistry.registerMetal(new Metal(48, "topaz", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(gem, 1, 48), 1, 1, true, true, true, true, false, true, 0, 0, 0, 0xD8CF48, 8, 8, 0, 32));
 		MetalRegistry.registerMetal(new Metal(49, "turquoise", OreType.GEM, 3.0F, 5.0F, 4, 5.0F, 10.0F, new ItemStack(gem, 1, 49), 1, 1, true, true, true, true, false, true, 0, 0, 0, 0x6AD6CE, 8, 8, 0, 32));
-		MetalRegistry.registerMetal(new Metal(50, "redstone", OreType.GEM, 3.0F, 5.0F, 5, 5.0F, 10.0F, new ItemStack(gem, 1, 50), 4, 5, true, true, true, true, false, false, 15, 0, 0, 0xE3260C, 8, 8, 0, 32));
-		MetalRegistry.registerMetal(new Metal(51, "salt", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 51), 1, 1, true, true, true, false, false, false, 0, 0, 0, 0xD8D2D4, 8, 8, 0, 32));
-		MetalRegistry.registerMetal(new Metal(52, "sulphur", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(gem, 1, 52), 1, 1, true, true, true, false, false, false, 0, 0, 0, 0xF4D41F, 8, 8, 0, 32));
+		MetalRegistry.registerMetal(new Metal(50, "redstone", OreType.GEM, 3.0F, 5.0F, 5, 5.0F, 10.0F, new ItemStack(gem, 1, 50), 4, 5, true, true, false, true, false, true, 15, 0, 0, 0xE3260C, 8, 8, 0, 32));
+		MetalRegistry.registerMetal(new Metal(51, "salt", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 51), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xD8D2D4, 8, 8, 0, 32));
+		MetalRegistry.registerMetal(new Metal(52, "sulphur", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(gem, 1, 52), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xF4D41F, 8, 8, 0, 32));
 		
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
 			if(MetalRegistry.metals[i] != null) {

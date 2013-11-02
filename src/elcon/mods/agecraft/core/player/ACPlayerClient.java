@@ -7,7 +7,6 @@ import net.minecraft.util.Session;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.core.gui.ContainerInventory;
 import elcon.mods.core.player.PlayerCoreClient;
 
 @SideOnly(Side.CLIENT)
@@ -17,7 +16,7 @@ public class ACPlayerClient extends PlayerCoreClient {
 		super(mc, world, session, netClientHandler, playerCoreIndex, entityPlayerSP);
 		player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setAttribute(100.0D);
 		player.setHealth(100.0F);
-		player.inventoryContainer = new ContainerInventory(player.inventory, !world.isRemote, player);
+		//player.inventoryContainer = new ContainerInventory(player.inventory, !world.isRemote, player);
 		// player.dimension = 10;
 		// ChunkCoordinates spawn = world.getSpawnPoint();
 		// player.posX = spawn.posX;

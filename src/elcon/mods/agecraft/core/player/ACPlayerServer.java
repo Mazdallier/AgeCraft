@@ -4,7 +4,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.item.ItemInWorldManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
-import elcon.mods.agecraft.core.gui.ContainerInventory;
 import elcon.mods.core.player.PlayerCoreServer;
 
 public class ACPlayerServer extends PlayerCoreServer {
@@ -13,7 +12,7 @@ public class ACPlayerServer extends PlayerCoreServer {
 		super(mcServer, world, username, itemInWorldManager, playerCoreIndex, entityPlayerMP);
 		player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setAttribute(100.0D);
 		player.setHealth(100.0F);
-		player.inventoryContainer = new ContainerInventory(player.inventory, !world.isRemote, player);
+		//player.inventoryContainer = new ContainerInventory(player.inventory, !world.isRemote, player);
 		// player.dimension = 10;
 		// ChunkCoordinates spawn = world.getSpawnPoint();
 		// player.posX = spawn.posX;
