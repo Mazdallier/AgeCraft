@@ -35,6 +35,10 @@ public class ResourcesCore extends Resources {
 	public static ResourceLocation guiTrade = new ResourceLocation("agecraft", "textures/gui/trade.png");
 	public static ResourceLocation guiChat = new ResourceLocation("agecraft", "textures/gui/chat.png");
 	
+	public static ResourceLocation guiClothingSelector = new ResourceLocation("agecraft", "textures/gui/clothing.png");
+	public static ResourceLocation guiClothingSelectorSideBar = new ResourceLocation("agecraft", "textures/gui/clothing_sidebar.png");
+	public static ResourceLocation guiClothingIcons = new ResourceLocation("agecraft", "textures/gui/clothing_icons.png");
+	
 	public static ResourceLocation guiTechTree = new ResourceLocation("agecraft", "textures/gui/tech_tree.png");
 	public static ResourceLocation guiTechTreeIcons = new ResourceLocation("agecraft", "textures/gui/tech_tree_icons.png");
 	

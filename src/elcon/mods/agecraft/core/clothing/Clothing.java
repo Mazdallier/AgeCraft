@@ -10,6 +10,7 @@ public class Clothing {
 	public ClothingType type;
 	public ClothingCategory category;
 	public boolean[] colors = new boolean[16];
+	public int price;
 	
 	public Clothing(int id, String name, ClothingType type, ClothingCategory category) {
 		this.id = id;

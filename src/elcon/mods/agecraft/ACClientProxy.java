@@ -22,6 +22,7 @@ import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.entity.EntityBlock;
 import elcon.mods.agecraft.core.gui.ContainerPlayerTrade;
 import elcon.mods.agecraft.core.gui.ContainerWorkbench;
+import elcon.mods.agecraft.core.gui.GuiClothingSelector;
 import elcon.mods.agecraft.core.gui.GuiInventory;
 import elcon.mods.agecraft.core.gui.GuiPlayerTrade;
 import elcon.mods.agecraft.core.gui.GuiWorkbench;
@@ -139,6 +140,8 @@ public class ACClientProxy extends ACCommonProxy {
 		} else if(id == 1) {
 			PlayerTrade trade = PlayerTradeManager.tradesClient.get(player.username);
 			return new GuiPlayerTrade(new ContainerPlayerTrade(player.inventory, trade, trade.currentPlayer));
+		} else if(id == 3) {
+			return new GuiClothingSelector();
 		} else if(id == 10) {
 			return new GuiChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
 		} else if(id == 11) {

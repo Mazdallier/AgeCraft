@@ -62,7 +62,7 @@ public class GuiInventory extends GuiContainer {
 		renderPlayer(guiLeft + 33, guiTop + 75, 30, (float) (guiLeft + 33) - xSize_lo, (float) (guiTop + 75 - 50) - ySize_lo, mc.thePlayer);
 	}
 
-	public static void renderPlayer(int x, int y, int size, float sizeX, float sizeY, EntityLivingBase entity) {
+	public static void renderPlayer(int x, int y, int size, float lookX, float lookY, EntityLivingBase entity) {
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) x, (float) y, 50.0F);
@@ -76,10 +76,10 @@ public class GuiInventory extends GuiContainer {
 		GL11.glRotatef(135.0F, 0.0F, 1.0F, 0.0F);
 		RenderHelper.enableStandardItemLighting();
 		GL11.glRotatef(-135.0F, 0.0F, 1.0F, 0.0F);
-		GL11.glRotatef(-((float) Math.atan((double) (sizeY / 40.0F))) * 20.0F, 1.0F, 0.0F, 0.0F);
-		entity.renderYawOffset = (float) Math.atan((double) (sizeX / 40.0F)) * 20.0F;
-		entity.rotationYaw = (float) Math.atan((double) (sizeX / 40.0F)) * 40.0F;
-		entity.rotationPitch = -((float) Math.atan((double) (sizeY / 40.0F))) * 20.0F;
+		GL11.glRotatef(-((float) Math.atan((double) (lookY / 40.0F))) * 20.0F, 1.0F, 0.0F, 0.0F);
+		entity.renderYawOffset = (float) Math.atan((double) (lookX / 40.0F)) * 20.0F;
+		entity.rotationYaw = (float) Math.atan((double) (lookX / 40.0F)) * 40.0F;
+		entity.rotationPitch = -((float) Math.atan((double) (lookY / 40.0F))) * 20.0F;
 		entity.rotationYawHead = entity.rotationYaw;
 		entity.prevRotationYawHead = entity.rotationYaw;
 		GL11.glTranslatef(0.0F, entity.yOffset, 0.0F);

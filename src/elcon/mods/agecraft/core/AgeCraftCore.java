@@ -15,6 +15,7 @@ import elcon.mods.agecraft.core.blocks.BlockAgeTeleporter;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBeam;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterBlock;
 import elcon.mods.agecraft.core.blocks.BlockAgeTeleporterChest;
+import elcon.mods.agecraft.core.blocks.BlockClothingSelectorTest;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneLayered;
 import elcon.mods.agecraft.core.clothing.ClothingCategory;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry;
@@ -44,6 +45,8 @@ public class AgeCraftCore extends ACComponent {
 	public static Block ageTeleporterBeam;
 	public static Block ageTeleporterChest;
 	
+	public static Block clothingSelectorTest;
+	
 	public AgeCraftCore() {
 		super();
 		techTree = new TechTree();
@@ -61,11 +64,15 @@ public class AgeCraftCore extends ACComponent {
 		ageTeleporterBeam = new BlockAgeTeleporterBeam(2998).setUnlocalizedName("ageTeleporterBeam");
 		ageTeleporterChest = new BlockAgeTeleporterChest(2999).setUnlocalizedName("ageTeleporterChest");
 		
+		clothingSelectorTest = new BlockClothingSelectorTest(2995).setUnlocalizedName("clothingSelectorTest");
+		
 		//register blocks
 		GameRegistry.registerBlock(ageTeleporter, ItemBlockName.class, "AC_ageTeleporter");
 		GameRegistry.registerBlock(ageTeleporterBlock, ItemBlockName.class, "AC_ageTeleporterBlock");
 		GameRegistry.registerBlock(ageTeleporterBeam, ItemBlockName.class, "AC_ageTeleporterBeam");
 		GameRegistry.registerBlock(ageTeleporterChest, ItemBlockName.class, "AC_ageTeleporterChest");
+		
+		GameRegistry.registerBlock(clothingSelectorTest, ItemBlockName.class, "AC_clothingSelectorTest");
 		
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntityAgeTeleporterBeam.class, "TileAgeTeleporterBeam");

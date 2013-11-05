@@ -1,8 +1,11 @@
 package elcon.mods.agecraft;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityDiggingFX;
+import net.minecraft.client.settings.EnumOptions;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
@@ -11,7 +14,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ACUtilClient {
 
-	@SideOnly(Side.CLIENT)
+	public static void changeGuiScale(Minecraft mc) {
+		mc.gameSettings.setOptionValue(EnumOptions.GUI_SCALE, 1);
+		ScaledResolution sr = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+		mc.currentScreen.setWorldAndResolution(mc, sr.getScaledWidth(), sr.getScaledHeight());
+	}
+	
 	public static boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer, Block block, int metadata) {
 		byte size = 4;
 		for(int i = 0; i < size; i++) {
@@ -27,7 +35,6 @@ public class ACUtilClient {
 		return true;
 	}
 
-	@SideOnly(Side.CLIENT)
 	public static boolean addBlockHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer, int metadata) {
 		int x = target.blockX;
 		int y = target.blockY;

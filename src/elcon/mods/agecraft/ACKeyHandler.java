@@ -17,9 +17,10 @@ public class ACKeyHandler extends KeyHandler {
 
 	public static KeyBinding techTree = new KeyBinding("Technology Tree", Keyboard.KEY_F);
 	public static KeyBinding trade = new KeyBinding("Trade", Keyboard.KEY_G);
+	public static KeyBinding changeGuiScale = new KeyBinding("Change Gui Scale", Keyboard.KEY_RBRACKET);
 	
 	public ACKeyHandler() {
-		super(new KeyBinding[]{techTree, trade}, new boolean[]{false, false});
+		super(new KeyBinding[]{techTree, trade, changeGuiScale}, new boolean[]{false, false, false});
 	}
 
 	@Override
@@ -28,6 +29,10 @@ public class ACKeyHandler extends KeyHandler {
 		if(mc.currentScreen == null) {
 			if(kb.keyCode == techTree.keyCode) {
 				mc.displayGuiScreen(new GuiTechTree());
+			}
+		} else {
+			if(kb.keyCode == changeGuiScale.keyCode && !tickEnd) {
+				ACUtilClient.changeGuiScale(mc);
 			}
 		}
 		if(mc.inGameHasFocus) {
