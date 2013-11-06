@@ -6,8 +6,12 @@ import net.minecraft.inventory.Container;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 
+@SideOnly(Side.CLIENT)
 public class GuiWorkbench extends GuiContainer {
 
 	public GuiWorkbench(Container container) {

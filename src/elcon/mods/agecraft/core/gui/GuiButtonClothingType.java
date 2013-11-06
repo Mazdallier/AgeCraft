@@ -2,10 +2,14 @@ package elcon.mods.agecraft.core.gui;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
+@SideOnly(Side.CLIENT)
 public class GuiButtonClothingType extends GuiToggleButton {
 
 	public int clothingType;
@@ -30,9 +34,10 @@ public class GuiButtonClothingType extends GuiToggleButton {
 				}
 				mc.fontRenderer.drawString(displayString, xPosition + 18, yPosition + (height - 8) / 2, color);
 			}
+			
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			mc.getTextureManager().bindTexture(ResourcesCore.guiClothingIcons);
+			drawTexturedModalRect(xPosition, yPosition, 0, 16 * clothingType, 16, 16);
 		}
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.getTextureManager().bindTexture(ResourcesCore.guiClothingIcons);
-		drawTexturedModalRect(xPosition, yPosition, 0, 16 * clothingType, 16, 16);
 	}
 }

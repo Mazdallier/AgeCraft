@@ -3,7 +3,11 @@ package elcon.mods.agecraft.core.gui;
 import java.util.ArrayList;
 
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class GuiButtonListHorizontal extends Gui {
 
 	public int x;
@@ -55,16 +59,8 @@ public class GuiButtonListHorizontal extends Gui {
 			buttonDown.enabled = true;
 			buttonUp.drawButton = true;
 			buttonDown.drawButton = true;
-		}
-	}
-	
-	public void actionPerformed(GuiButton button) {
-		if(button.id == buttonUp.id) {
-			index--;
-			updateList();
-		} else if(button.id == buttonDown.id) {
-			index++;
-			updateList();
+			button.enabled = false;
+			button.drawButton = false;
 		}
 	}
 
@@ -78,6 +74,41 @@ public class GuiButtonListHorizontal extends Gui {
 				buttons.get(i).drawButton = true;
 				buttons.get(i).xPosition = x + width * (i - index);
 			}
+		}
+	}
+	
+	public void hide() {
+		buttonUp.enabled = false;
+		buttonDown.enabled = false;
+		buttonUp.drawButton = false;
+		buttonDown.drawButton = false;
+		for(GuiButton button : buttons) {
+			button.enabled = false;
+			button.drawButton = false;
+		}
+	}
+	
+	public void show() {
+		buttonUp.enabled = true;
+		buttonDown.enabled = true;
+		buttonUp.drawButton = true;
+		buttonDown.drawButton = true;
+		updateList();
+	}
+	
+	public void actionPerformed(GuiButton button) {
+		if(button.id == buttonUp.id) {
+			index--;
+			if(index < 0) {
+				index = 0;
+			}
+			updateList();
+		} else if(button.id == buttonDown.id) {
+			index++;
+			if(index >= (buttons.size() - size)) {
+				index = buttons.size() - size;
+			}
+			updateList();
 		}
 	}
 }

@@ -5,6 +5,10 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@SideOnly(Side.CLIENT)
 public class GuiToggleButton extends GuiButton {
 	
 	public boolean toggled;
@@ -32,13 +36,13 @@ public class GuiToggleButton extends GuiButton {
 			drawTexturedModalRect(xPosition, yPosition, textureX, textureY + (toggled ? height : 0), width, height);
 			mouseDragged(mc, mouseX, mouseY);
 			if(displayString != null && displayString.length() > 0) {
-				int l = 0xE0E0E0;
+				int color = 0xE0E0E0;
 				if(!enabled) {
-					l = -0x5F5F60;
+					color = -0x5F5F60;
 				} else if(field_82253_i) {
-					l = 0xFFFFA0;
+					color = 0xFFFFA0;
 				}
-				drawCenteredString(mc.fontRenderer, displayString, xPosition + width / 2, yPosition + (height - 8) / 2, l);
+				drawCenteredString(mc.fontRenderer, displayString, xPosition + width / 2, yPosition + (height - 8) / 2, color);
 			}
 		}
 	}

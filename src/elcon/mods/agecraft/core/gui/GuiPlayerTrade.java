@@ -5,9 +5,12 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACPacketHandlerClient;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 
+@SideOnly(Side.CLIENT)
 public class GuiPlayerTrade extends GuiContainer {
 	
 	public ContainerPlayerTrade container;

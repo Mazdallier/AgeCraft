@@ -11,8 +11,12 @@ import net.minecraft.stats.AchievementList;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 
+@SideOnly(Side.CLIENT)
 public class GuiInventory extends GuiContainer {
 
 	private float xSize_lo;
