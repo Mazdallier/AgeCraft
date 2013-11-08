@@ -139,13 +139,11 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 	}
 	
 	private void handleClothingSelector(ByteArrayDataInput dat) {
-		System.out.println("RECEIVE");
 		String player = dat.readUTF();
 		PlayerClothing clothing = PlayerClothingServer.getPlayerClothing(player);
 		int size = dat.readInt();
 		for(int i = 0; i < size; i++) {
 			ClothingPiece piece = new ClothingPiece(dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt());
-			System.out.println(piece.getActiveColor());
 			clothing.addClothingPieceAndWear(piece, piece.getActiveColor());
 		}
 		//TODO: make the player actually pay
@@ -223,7 +221,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 					for(int i = 0; i < 16; i++) {
 						dos.writeBoolean(piece.colors[i]);
 					}
-					if(clothing.clothingPiecesWorn.containsValue(piece)) {
+					if(clothing.wearsClothingPiece(piece)) {
 						dos.writeBoolean(true);
 						dos.writeInt(clothing.clothingPiecesWornColor.get(typeID));
 					} else {
@@ -262,7 +260,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 						for(int i = 0; i < 16; i++) {
 							dos.writeBoolean(piece.colors[i]);
 						}
-						if(clothing.clothingPiecesWorn.containsValue(piece)) {
+						if(clothing.wearsClothingPiece(piece)) {
 							dos.writeBoolean(true);
 							dos.writeInt(clothing.clothingPiecesWornColor.get(typeID));
 						} else {
@@ -333,7 +331,9 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		PacketDispatcher.sendPacketToPlayer(getTechTreeAllComponentsPacket(netHandler.getPlayer().username), player);
 		ACLog.info("[TechTree] Send all components to " + netHandler.getPlayer().username);
 
-		PlayerClothingServer.createDefaultClothing(netHandler.getPlayer().username);
+		if(!PlayerClothingServer.players.containsKey(netHandler.getPlayer().username)) {
+			PlayerClothingServer.createDefaultClothing(netHandler.getPlayer().username);
+		}
 		PacketDispatcher.sendPacketToPlayer(getClothingAllUpdatePacket(), player);
 		PacketDispatcher.sendPacketToAllPlayers(getClothingUpdatePacket(PlayerClothingServer.getPlayerClothing(netHandler.getPlayer().username)));
 		ACLog.info("[Clothing] Send all clothing to " + netHandler.getPlayer().username);

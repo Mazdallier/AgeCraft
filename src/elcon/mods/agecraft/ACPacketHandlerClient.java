@@ -126,6 +126,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		if(clothing == null) {
 			clothing = new PlayerClothing(player);
 		}
+		clothing.clothingPiecesOwned.clear();
+		clothing.clothingPiecesWorn.clear();
+		clothing.clothingPiecesWornColor.clear();
 		int types = dat.readInt();
 		for(int i = 0; i < types; i++) {
 			int pieces = dat.readInt();

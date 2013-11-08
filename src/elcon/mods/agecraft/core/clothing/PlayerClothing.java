@@ -89,7 +89,6 @@ public class PlayerClothing implements Serializable {
 					if(ClothingRegistry.typesSorted[i] != null) {
 						ClothingPiece piece = clothingPiecesWorn.get(ClothingRegistry.typesSorted[i].id);
 						if(piece != null) {
-							System.out.println(clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id));
 							BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id))));
 							g.drawImage(image, 0, 0, null);
 						}
@@ -163,6 +162,15 @@ public class PlayerClothing implements Serializable {
 	public void setCurrentClothingPiece(ClothingPiece piece, int color) {
 		clothingPiecesWorn.put(piece.typeID, piece);
 		clothingPiecesWornColor.put(piece.typeID, color);
+	}
+
+	public boolean wearsClothingPiece(ClothingPiece piece2) {
+		for(ClothingPiece piece1 : clothingPiecesWorn.values()) {
+			if(piece1.typeID == piece2.typeID && piece1.categoryID == piece2.categoryID && piece1.clothingID == piece2.clothingID) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public PlayerClothing copy() {

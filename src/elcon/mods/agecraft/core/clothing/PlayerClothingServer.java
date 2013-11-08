@@ -32,6 +32,7 @@ public class PlayerClothingServer {
 	}
 
 	public static void createDefaultClothing(String username) {
+		System.out.println("createDefaultClothing");
 		PlayerClothing clothing = new PlayerClothing(username);
 		clothing.addClothingPieceAndWear(new ClothingPiece(0, 0, 0, 0), 0);
 		clothing.addClothingPieceAndWear(new ClothingPiece(1, 0, 0, 0), 0);
