@@ -60,6 +60,9 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		case 77:
 			handleOpenInventory(dat);
 			break;
+		case 78:
+			handleClothingSelector(dat);
+			break;
 		}
 
 		for(ACComponent component : AgeCraft.instance.components) {
@@ -133,6 +136,20 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 	private void handleOpenInventory(ByteArrayDataInput dat) {
 		EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dat.readInt()).getPlayerEntityByName(dat.readUTF());
 		player.openGui(AgeCraft.instance, 0, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+	}
+	
+	private void handleClothingSelector(ByteArrayDataInput dat) {
+		System.out.println("RECEIVE");
+		String player = dat.readUTF();
+		PlayerClothing clothing = PlayerClothingServer.getPlayerClothing(player);
+		int size = dat.readInt();
+		for(int i = 0; i < size; i++) {
+			ClothingPiece piece = new ClothingPiece(dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt());
+			System.out.println(piece.getActiveColor());
+			clothing.addClothingPieceAndWear(piece, piece.getActiveColor());
+		}
+		//TODO: make the player actually pay
+		PacketDispatcher.sendPacketToAllPlayers(getClothingUpdatePacket(clothing));
 	}
 
 	public static Packet getTechTreeComponentPacket(String player, String pageName, String name, boolean unlocked) {

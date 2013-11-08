@@ -2,6 +2,7 @@ package elcon.mods.agecraft;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
+import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
@@ -295,6 +297,32 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			dos.writeUTF(player);
 			dos.close();
 			packet.channel = "AgeCraft";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Packet getClothingSelectorPacket(String player, HashMap<ClothingType, ClothingPiece> clothingPieces) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(78);
+			dos.writeUTF(player);
+			dos.writeInt(clothingPieces.size());
+			for(ClothingPiece piece : clothingPieces.values()) {
+				dos.writeInt(piece.typeID);
+				dos.writeInt(piece.categoryID);
+				dos.writeInt(piece.clothingID);
+				dos.writeInt(piece.getActiveColor());
+			}
+			dos.close();
+			packet.channel = "ACClothing";
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
 			packet.isChunkDataPacket = false;

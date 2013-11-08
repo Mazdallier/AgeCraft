@@ -36,6 +36,15 @@ public class PlayerClothing implements Serializable {
 				this.colors[colors[i]] = true;
 			}
 		}
+
+		public int getActiveColor() {
+			for(int i = 0; i < colors.length; i++) {
+				if(colors[i]) {
+					return i;
+				}
+			}
+			return 0;
+		}
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -80,6 +89,7 @@ public class PlayerClothing implements Serializable {
 					if(ClothingRegistry.typesSorted[i] != null) {
 						ClothingPiece piece = clothingPiecesWorn.get(ClothingRegistry.typesSorted[i].id);
 						if(piece != null) {
+							System.out.println(clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id));
 							BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id))));
 							g.drawImage(image, 0, 0, null);
 						}
@@ -110,7 +120,16 @@ public class PlayerClothing implements Serializable {
 		} else {
 			pieces = clothingPiecesOwned.get(piece.typeID);
 		}
-		pieces.add(piece);
+		boolean shouldAdd = true;
+		for(ClothingPiece p : pieces) {
+			if(p.typeID == piece.typeID && p.categoryID == piece.categoryID && p.clothingID == piece.clothingID) {
+				p.colors[piece.getActiveColor()] = true;
+				shouldAdd = false;
+			}
+		}
+		if(shouldAdd) {
+			pieces.add(piece);
+		}
 	}
 	
 	public ArrayList<ClothingPiece> getClothingPieces(int typeID) {
@@ -148,9 +167,9 @@ public class PlayerClothing implements Serializable {
 
 	public PlayerClothing copy() {
 		PlayerClothing clothing = new PlayerClothing(player);
-		clothing.clothingPiecesOwned = (HashMap<Integer, ArrayList<ClothingPiece>>) clothingPiecesOwned.clone();
-		clothing.clothingPiecesWorn = (HashMap<Integer, ClothingPiece>) clothingPiecesWorn.clone();
-		clothing.clothingPiecesWornColor = (HashMap<Integer, Integer>) clothingPiecesWornColor.clone();
+		clothing.clothingPiecesOwned.putAll(clothingPiecesOwned);
+		clothing.clothingPiecesWorn.putAll(clothingPiecesWorn);
+		clothing.clothingPiecesWornColor.putAll(clothingPiecesWornColor);
 		return clothing;
 	}
 }

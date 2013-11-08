@@ -13,8 +13,10 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.ACPacketHandlerClient;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.clothing.Clothing;
 import elcon.mods.agecraft.core.clothing.ClothingCategory;
@@ -98,8 +100,8 @@ public class GuiClothingSelector extends GuiScreen {
 		buttonList.add(new GuiButton(1, guiLeft + 120, guiTop + 146, 32, 182, 16, 16, ResourcesCore.guiClothingSelector, ""));
 		buttonList.add(new GuiButton(2, guiLeft + 140, guiTop + 146, 16, 182, 16, 16, ResourcesCore.guiClothingSelector, ""));
 
-		buttonList.add(new GuiButtonDefault(3, guiLeft + 9, guiTop + 6, 70, 8, "/\\"));
-		buttonList.add(new GuiButtonDefault(4, guiLeft + 9, guiTop + 146, 70, 8, "\\/"));
+		buttonList.add(new GuiButtonDefault(3, guiLeft + 9, guiTop + 6, 70, 8, LanguageManager.getLocalization("gui.up.sign")));
+		buttonList.add(new GuiButtonDefault(4, guiLeft + 9, guiTop + 146, 70, 8, LanguageManager.getLocalization("gui.down.sign")));
 		buttonsClothingType = new GuiButtonListVertical(guiTop + 16, 16, (GuiButtonDefault) buttonList.get(3), (GuiButtonDefault) buttonList.get(4), 8);
 		int index = 0;
 		for(int i = 0; i < ClothingRegistry.types.length; i++) {
@@ -110,13 +112,6 @@ public class GuiClothingSelector extends GuiScreen {
 		}
 		buttonList.addAll(buttonsClothingType.buttons);
 		((GuiToggleButton) buttonList.get(5)).toggled = true;
-
-		//buttonList.add(new GuiButton(13, guiLeft + 181, guiTop + 15, 0, 182, 16, 16, ResourcesCore.guiClothingSelector, ""));
-		//buttonList.add(new GuiButtonDefault(14, guiLeft + 199, guiTop + 15, 32, 16, "List"));
-		//buttonList.add(new GuiButton(15, guiLeft + 233, guiTop + 15, 16, 182, 16, 16, ResourcesCore.guiClothingSelector, ""));
-		//buttonList.add(new GuiButton(16, guiLeft + 181, guiTop + 129, 0, 182, 16, 16, ResourcesCore.guiClothingSelector, ""));
-		//buttonList.add(new GuiButtonDefault(17, guiLeft + 199, guiTop + 129, 32, 16, "List"));
-		//buttonList.add(new GuiButton(18, guiLeft + 233, guiTop + 129, 16, 182, 16, 16, ResourcesCore.guiClothingSelector, ""));
 		
 		buttonList.add(new GuiButtonDefault(13, guiLeft + 181, guiTop + 15, 16, 16, LanguageManager.getLocalization("gui.prev.sign")));
 		buttonList.add(new GuiButtonDefault(14, guiLeft + 199, guiTop + 15, 32, 16, LanguageManager.getLocalization("gui.list")));
@@ -131,8 +126,8 @@ public class GuiClothingSelector extends GuiScreen {
 			}
 		}
 
-		buttonList.add(new GuiButtonDefault(35, guiLeft + 266, guiTop + 5, 84, 10, "/\\"));
-		buttonList.add(new GuiButtonDefault(36, guiLeft + 266, guiTop + 150, 84, 10, "\\/"));
+		buttonList.add(new GuiButtonDefault(35, guiLeft + 266, guiTop + 5, 84, 10, LanguageManager.getLocalization("gui.up.sign")));
+		buttonList.add(new GuiButtonDefault(36, guiLeft + 266, guiTop + 150, 84, 10, LanguageManager.getLocalization("gui.down.sign")));
 
 		buttonList.add(new GuiButtonDefault(37, guiLeft + 80, guiTop + 169, 96, 16, LanguageManager.getLocalization("gui.addToCart")));
 		if(showLeftList) {
@@ -150,6 +145,8 @@ public class GuiClothingSelector extends GuiScreen {
 		updateClothingList();
 		updateTempPieceClothing();
 
+		((GuiToggleButton) buttonsClothingCategories.buttons.get(currentClothingCategory)).toggled = true;
+		
 		buttonsClothingCategories.hide();
 		buttonsClothingPieces.hide();
 	}
@@ -168,15 +165,18 @@ public class GuiClothingSelector extends GuiScreen {
 		}
 		((GuiToggleButton) buttonsClothingPieces.buttons.get(currentClothingPiece)).toggled = true;
 	}
-	
+
 	public void updateTempClothing() {
 		totalPrice = 0;
-		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username + "-Temp");
+		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();
+		clothing.player = mc.thePlayer.username + "-Temp";
+		clothing.glTextureID = -1;
 		for(ClothingPiece piece : clothingPiecesCart.values()) {
 			clothing.clothingPiecesWorn.put(piece.typeID, piece);
+			clothing.clothingPiecesWornColor.put(piece.typeID, piece.getActiveColor());
 			totalPrice += ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).price;
 		}
-		PlayerClothingClient.updatePlayerClothing(mc.thePlayer.username + "-Temp");
+		PlayerClothingClient.addPlayerClothing(clothing);
 	}
 
 	public void updateTempPieceClothing() {
@@ -287,7 +287,8 @@ public class GuiClothingSelector extends GuiScreen {
 		} else if(button.id == 38) {
 			mc.thePlayer.closeScreen();
 		} else if(button.id == 39) {
-			
+			PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getClothingSelectorPacket(mc.thePlayer.username, clothingPiecesCart));
+			mc.thePlayer.closeScreen();
 		} else if(button.id >= 100 && button.id <= 1000 && rightList == 0) {
 			System.out.println(button.id - 100);
 			currentClothingCategory = button.id - 100;
@@ -324,6 +325,15 @@ public class GuiClothingSelector extends GuiScreen {
 					selectedButton = button;
 					mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
 					actionPerformed(button);
+				}
+			}
+		}
+		if(showLeftList) {
+			if(x >= guiLeft - 96 && x < guiLeft - 8 && y >= guiTop + 4 && y < guiTop + 132) {
+				int cartItemIndex = (int) Math.floor((y - guiTop - 4) / 16);
+				if(cartItemIndex < clothingPiecesCart.size()) {
+					clothingPiecesCart.remove(clothingPiecesCart.keySet().toArray(new ClothingType[clothingPiecesCart.size()])[cartItemIndex]);
+					updateTempClothing();
 				}
 			}
 		}
@@ -366,9 +376,10 @@ public class GuiClothingSelector extends GuiScreen {
 				rotation += 1.0F;
 			}
 		}
-		if(showLeftList) {
+		if(showLeftList) {		
 			int i = 0;
-			for(ClothingPiece piece : clothingPiecesCart.values()) {
+			for(ClothingType type : clothingPiecesCart.keySet()) {
+				ClothingPiece piece = clothingPiecesCart.get(type);
 				stringToDraw = LanguageManager.getLocalization("clothing." + ClothingRegistry.categories[piece.categoryID].name + "." + ClothingRegistry.types[piece.typeID].name + "." + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).name);
 				mc.fontRenderer.drawString(stringToDraw, guiLeft - 94, guiTop + 6 + 16 * i, 0x404040);
 				stringToDraw = Integer.toString(ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).price);
@@ -384,14 +395,18 @@ public class GuiClothingSelector extends GuiScreen {
 		}
 		if(showRightList) {
 			if(rightList == 0) {
-				stringToDraw = LanguageManager.getLocalization("clothing.categories");
-				mc.fontRenderer.drawString(stringToDraw, guiLeft + 308 - mc.fontRenderer.getStringWidth(stringToDraw) / 2, guiTop + 6, 0x404040);
+				if(buttonsClothingCategories.buttons.size() <= buttonsClothingCategories.size) {
+					stringToDraw = LanguageManager.getLocalization("clothing.categories");
+					mc.fontRenderer.drawString(stringToDraw, guiLeft + 308 - mc.fontRenderer.getStringWidth(stringToDraw) / 2, guiTop + 6, 0x404040);
+				}
 				for(net.minecraft.client.gui.GuiButton button : buttonsClothingCategories.buttons) {
 					button.drawButton(mc, mouseX, mouseY);
 				}
 			} else if(rightList == 1) {
-				stringToDraw = LanguageManager.getLocalization("clothing.pieces");
-				mc.fontRenderer.drawString(stringToDraw, guiLeft + 308 - mc.fontRenderer.getStringWidth(stringToDraw) / 2, guiTop + 6, 0x404040);
+				if(buttonsClothingPieces.buttons.size() <= buttonsClothingPieces.size) {
+					stringToDraw = LanguageManager.getLocalization("clothing.pieces");
+					mc.fontRenderer.drawString(stringToDraw, guiLeft + 308 - mc.fontRenderer.getStringWidth(stringToDraw) / 2, guiTop + 6, 0x404040);
+				}
 				for(net.minecraft.client.gui.GuiButton button : buttonsClothingPieces.buttons) {
 					button.drawButton(mc, mouseX, mouseY);
 				}

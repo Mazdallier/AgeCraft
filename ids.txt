@@ -137,6 +137,7 @@
 	75 Player Trade (From player 1)
 	76 Player Trade Accept
 	77 Open Inventory
+	78 Clothing Selector
 90+ 	TileEntity packets
 	90 NBT
 	91 DNA
