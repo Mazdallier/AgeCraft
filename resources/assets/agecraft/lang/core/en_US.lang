@@ -15,6 +15,27 @@ agecraft.version.general_error=Error while connecting to remote version authorit
 agecraft.version.final_error=Version check stopping after three unsuccessful connection attempts
 agecraft.version.mc_version_not_found=Unable to find a version of @MOD_NAME@ for @MINECRAFT_VERSION@ in the remote version authority
 
+gui.done=Done
+gui.cancel=Cancel
+gui.open=Open
+gui.close=Close
+gui.less=Less
+gui.more=More
+gui.list=List
+gui.prev=Previous
+gui.next=Next
+gui.prev.short=Prev
+gui.next.short=Next
+gui.prev.sign=<
+gui.next.sign=>
+gui.buy=Buy
+gui.sell=Sell
+gui.add=Add
+gui.remove=Remove
+gui.pay=Pay
+gui.choose=Choose
+gui.addToCart=Add to Cart
+
 container.trade=Trade
 container.crafting=Crafting
 container.workbench=Workbench

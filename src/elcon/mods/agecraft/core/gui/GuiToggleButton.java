@@ -11,10 +11,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiToggleButton extends GuiButton {
 	
+	public boolean selectOnly = false;
 	public boolean toggled;
 	
-	public GuiToggleButton(int id, int x, int y, int textureX, int textureY, int width, int height, ResourceLocation location, String text) {
+	public GuiToggleButton(int id, int x, int y, int textureX, int textureY, int width, int height, ResourceLocation location, String text, boolean selectOnly) {
 		super(id, x, y, textureX, textureY, width, height, location, text);
+		this.selectOnly = selectOnly;
 		toggled = false;
 	}
 
@@ -22,6 +24,9 @@ public class GuiToggleButton extends GuiButton {
 	public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3) {
 		boolean flag = super.mousePressed(par1Minecraft, par2, par3);
 		if(flag) {
+			if(toggled && selectOnly) {
+				return flag;
+			}
 			toggled = !toggled;
 		}
 		return flag;

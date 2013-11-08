@@ -89,11 +89,26 @@ public class GuiButtonListVertical extends Gui {
 	}
 	
 	public void show() {
-		buttonUp.enabled = true;
-		buttonDown.enabled = true;
-		buttonUp.drawButton = true;
-		buttonDown.drawButton = true;
+		if(buttons.size() >= size) {
+			buttonUp.enabled = true;
+			buttonDown.enabled = true;
+			buttonUp.drawButton = true;
+			buttonDown.drawButton = true;
+		} else {
+			buttonUp.enabled = false;
+			buttonDown.enabled = false;
+			buttonUp.drawButton = false;
+			buttonDown.drawButton = false;
+		}
 		updateList();
+	}
+	
+	public void setHidden(boolean flag) {
+		if(flag) {
+			hide();
+		} else {
+			show();
+		}
 	}
 	
 	public void actionPerformed(GuiButton button) {

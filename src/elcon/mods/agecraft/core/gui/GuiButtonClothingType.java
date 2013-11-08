@@ -15,7 +15,7 @@ public class GuiButtonClothingType extends GuiToggleButton {
 	public int clothingType;
 	
 	public GuiButtonClothingType(int id, int x, int y, int textureX, int textureY, int width, int height, ResourceLocation location, String text, int clothingType) {
-		super(id, x, y, textureX, textureY, width, height, location, text);
+		super(id, x, y, textureX, textureY, width, height, location, text, true);
 		this.clothingType = clothingType;
 	}
 	

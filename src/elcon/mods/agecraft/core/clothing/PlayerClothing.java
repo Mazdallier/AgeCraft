@@ -46,6 +46,7 @@ public class PlayerClothing implements Serializable {
 	public HashMap<Integer, ClothingPiece> clothingPiecesWorn = new HashMap<Integer, ClothingPiece>();
 	public HashMap<Integer, Integer> clothingPiecesWornColor = new HashMap<Integer, Integer>();
 	public int clothingPieceExclusive = -1;
+	public int clothingColorExclusive = -1;
 	
 	public PlayerClothing(String player) {
 		this.player = player;
@@ -71,7 +72,7 @@ public class PlayerClothing implements Serializable {
 			if(clothingPieceExclusive > -1) {
 				ClothingPiece piece = clothingPiecesWorn.get(clothingPieceExclusive);
 				if(piece != null) {
-					BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingPiecesWornColor.get(clothingPieceExclusive))));
+					BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingColorExclusive > 0 ? clothingColorExclusive : 0)));
 					g.drawImage(image, 0, 0, null);
 				}
 			} else {
