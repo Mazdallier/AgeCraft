@@ -22,7 +22,6 @@ import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.entity.EntityBlock;
 import elcon.mods.agecraft.core.gui.ContainerPlayerTrade;
 import elcon.mods.agecraft.core.gui.ContainerWorkbench;
-import elcon.mods.agecraft.core.gui.GuiClothingSelector;
 import elcon.mods.agecraft.core.gui.GuiInventory;
 import elcon.mods.agecraft.core.gui.GuiPlayerTrade;
 import elcon.mods.agecraft.core.gui.GuiWorkbench;
@@ -39,8 +38,10 @@ import elcon.mods.agecraft.prehistory.PrehistoryBlockRenderingHandler;
 import elcon.mods.agecraft.prehistory.PrehistoryBlockRenderingHandlerWithIcon;
 import elcon.mods.agecraft.prehistory.gui.GuiSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityBarrel;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
+import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererBarrel;
 import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererPot;
 import elcon.mods.core.BlockRenderingHandlerOverlay;
@@ -119,10 +120,12 @@ public class ACClientProxy extends ACCommonProxy {
 		RenderingRegistry.registerBlockHandler(201, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(202, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(203, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(204, blockRenderingHandlerWithIcon);
 		
 		//register tile entity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPot.class, new TileEntityRendererPot());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBarrel.class, new TileEntityRendererBarrel());
 	}
 
 	@Override
@@ -140,8 +143,6 @@ public class ACClientProxy extends ACCommonProxy {
 		} else if(id == 1) {
 			PlayerTrade trade = PlayerTradeManager.tradesClient.get(player.username);
 			return new GuiPlayerTrade(new ContainerPlayerTrade(player.inventory, trade, trade.currentPlayer));
-		} else if(id == 3) {
-			return new GuiClothingSelector();
 		} else if(id == 10) {
 			return new GuiChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
 		} else if(id == 11) {

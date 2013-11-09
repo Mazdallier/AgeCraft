@@ -152,13 +152,28 @@ public class ClothingUpdater implements Runnable {
 				FileUtils.copyURLToFile(new URL(category.updateURL), clothingZip);
 				ACLog.info("[Clothing] Downloaded " + clothingZip.getName() + " from " + category.updateURL);
 				if(clothingZip.exists()) {
-					extractZip(clothingZip, new File(clothingDir, File.separator + category.name));
+					extractZip(clothingZip, new File(clothingDir, File.separator + category.name), true);
 					ACLog.info("[Clothing] Extracted " + clothingZip.getName() + " to " + new File(clothingDir, File.separator + category.name).getAbsolutePath());
 				}
 				clothingZip.delete();
 				lines.add(category.name + "=" + versions.get(category.name).version);
 			} catch(Exception e) {
 				e.printStackTrace();
+			}
+			for(String url : category.expansionURLs) {
+				try {
+					File clothingZip = new File(clothingDir, category.name + ".zip");
+					clothingZip.createNewFile();
+					FileUtils.copyURLToFile(new URL(url), clothingZip);
+					ACLog.info("[Clothing] Downloaded expansion " + clothingZip.getName() + " from " + url);
+					if(clothingZip.exists()) {
+						extractZip(clothingZip, new File(clothingDir, File.separator + category.name), false);
+						ACLog.info("[Clothing] Extracted expansion " + clothingZip.getName() + " to " + new File(clothingDir, File.separator + category.name).getAbsolutePath());
+					}
+					clothingZip.delete();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		if(!lines.isEmpty()) {
@@ -198,10 +213,10 @@ public class ClothingUpdater implements Runnable {
 		return update;
 	}
 
-	private void extractZip(File zip, File dest) {
+	private void extractZip(File zip, File dest, boolean deleteDest) {
 		byte[] buffer = new byte[1024];
 		try {
-			if(dest.exists()) {
+			if(deleteDest && dest.exists()) {
 				dest.delete();
 			}
 			dest.mkdirs();

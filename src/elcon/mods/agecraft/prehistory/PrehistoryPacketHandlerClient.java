@@ -12,6 +12,7 @@ import com.google.common.io.ByteArrayDataInput;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.IACPacketHandlerClient;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityBarrel;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
@@ -30,6 +31,9 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 			break;
 		case 202:
 			handleTileEntityBed(world, dat);
+			break;
+		case 203:
+			handleTileEntityBarrel(world, dat);
 			break;
 		}
 	}
@@ -122,6 +126,43 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		tile.direction = dat.readByte();
 		tile.color = dat.readInt();
 		tile.isOccupied = dat.readBoolean();
+		
+		world.markBlockForRenderUpdate(x, y, z);
+	}
+	
+	private void handleTileEntityBarrel(World world, ByteArrayDataInput dat) {
+		int x = dat.readInt();
+		int y = dat.readInt();
+		int z = dat.readInt();
+		
+		TileEntityBarrel tile = (TileEntityBarrel) world.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityBarrel();
+			world.setBlockTileEntity(x, y, z, tile);
+		}
+		
+		tile.woodType = dat.readInt();
+		tile.stickType = dat.readInt();
+		tile.hasLid = dat.readBoolean();
+		
+		if(dat.readBoolean()) {
+			tile.fluid.setFluid(new FluidStack(dat.readInt(), dat.readInt()));
+		} else {
+			tile.fluid.setFluid(null);
+		}
+		
+		if(dat.readBoolean()) {
+			tile.stack = new ItemStack(dat.readInt(), dat.readInt(), dat.readInt());
+			if(dat.readBoolean()) {
+				try {
+					tile.stack.setTagCompound((NBTTagCompound) NBTBase.readNamedTag(dat));
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			tile.stack = null;
+		}
 		
 		world.markBlockForRenderUpdate(x, y, z);
 	}

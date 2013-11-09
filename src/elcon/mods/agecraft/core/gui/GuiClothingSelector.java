@@ -55,12 +55,18 @@ public class GuiClothingSelector extends GuiScreen {
 	public ArrayList<Clothing> clothingPieces = new ArrayList<Clothing>();
 
 	public HashMap<ClothingType, ClothingPiece> clothingPiecesCart = new HashMap<ClothingType, ClothingPiece>();
-	public int totalPrice = 0;
+	public int totalPrice;
 
-	public GuiClothingSelector() {
+	public boolean[] clothingTypesChangeable = new boolean[ClothingRegistry.types.length];
+	public int clothingTypesChangeableCount;
+	
+	public GuiClothingSelector(boolean[] clothingTypesChangable) {
+		this.clothingTypesChangeable = clothingTypesChangable;
 		xSize = 256;
 		ySize = 166;
 		allowUserInput = true;
+		
+		totalPrice = 0;
 	}
 
 	@Override
@@ -75,7 +81,7 @@ public class GuiClothingSelector extends GuiScreen {
 		currentClothingCategory = 0;
 		currentClothingPiece = 0;
 		currentClothingColor = 0;
-
+		
 		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();
 		clothing.player = mc.thePlayer.username + "-Temp";
 		PlayerClothingClient.addPlayerClothing(clothing);
@@ -104,39 +110,41 @@ public class GuiClothingSelector extends GuiScreen {
 		buttonList.add(new GuiButtonDefault(4, guiLeft + 9, guiTop + 146, 70, 8, LanguageManager.getLocalization("gui.down.sign")));
 		buttonsClothingType = new GuiButtonListVertical(guiTop + 16, 16, (GuiButtonDefault) buttonList.get(3), (GuiButtonDefault) buttonList.get(4), 8);
 		int index = 0;
+		clothingTypesChangeableCount = 0;
 		for(int i = 0; i < ClothingRegistry.types.length; i++) {
-			if(ClothingRegistry.types[i] != null) {
-				buttonsClothingType.addButton(new GuiButtonClothingType(5 + index, guiLeft + 10, guiTop + 16 + i * 16, 0, 166, 68, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing.type." + ClothingRegistry.types[i].name), i));
+			if(ClothingRegistry.types[i] != null && clothingTypesChangeable[i]) {
+				buttonsClothingType.addButton(new GuiButtonClothingType(5 + index, guiLeft + 10, guiTop + 16 + index * 16, 0, 166, 68, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing.type." + ClothingRegistry.types[i].name), i));
 				index++;
+				clothingTypesChangeableCount++;
 			}
 		}
 		buttonList.addAll(buttonsClothingType.buttons);
 		((GuiToggleButton) buttonList.get(5)).toggled = true;
 		
-		buttonList.add(new GuiButtonDefault(13, guiLeft + 181, guiTop + 15, 16, 16, LanguageManager.getLocalization("gui.prev.sign")));
-		buttonList.add(new GuiButtonDefault(14, guiLeft + 199, guiTop + 15, 32, 16, LanguageManager.getLocalization("gui.list")));
-		buttonList.add(new GuiButtonDefault(15, guiLeft + 233, guiTop + 15, 16, 16, LanguageManager.getLocalization("gui.next.sign")));
-		buttonList.add(new GuiButtonDefault(16, guiLeft + 181, guiTop + 129, 16, 16, LanguageManager.getLocalization("gui.prev.sign")));
-		buttonList.add(new GuiButtonDefault(17, guiLeft + 199, guiTop + 129, 32, 16, LanguageManager.getLocalization("gui.list")));
-		buttonList.add(new GuiButtonDefault(18, guiLeft + 233, guiTop + 129, 16, 16, LanguageManager.getLocalization("gui.next.sign")));
+		buttonList.add(new GuiButtonDefault(21, guiLeft + 181, guiTop + 15, 16, 16, LanguageManager.getLocalization("gui.prev.sign")));
+		buttonList.add(new GuiButtonDefault(22, guiLeft + 199, guiTop + 15, 32, 16, LanguageManager.getLocalization("gui.list")));
+		buttonList.add(new GuiButtonDefault(23, guiLeft + 233, guiTop + 15, 16, 16, LanguageManager.getLocalization("gui.next.sign")));
+		buttonList.add(new GuiButtonDefault(24, guiLeft + 181, guiTop + 129, 16, 16, LanguageManager.getLocalization("gui.prev.sign")));
+		buttonList.add(new GuiButtonDefault(25, guiLeft + 199, guiTop + 129, 32, 16, LanguageManager.getLocalization("gui.list")));
+		buttonList.add(new GuiButtonDefault(26, guiLeft + 233, guiTop + 129, 16, 16, LanguageManager.getLocalization("gui.next.sign")));
 
 		for(int j = 0; j < 2; j++) {
 			for(int i = 0; i < 8; i++) {
-				buttonList.add(new GuiButtonClothingColor(19 + i + j * 8, guiLeft + 183 + i * 8, guiTop + 146 + j * 8, 68 + i * 8, 166 + j * 8, 8, 8, ResourcesCore.guiClothingSelector, ""));
+				buttonList.add(new GuiButtonClothingColor(27 + i + j * 8, guiLeft + 183 + i * 8, guiTop + 146 + j * 8, 68 + i * 8, 166 + j * 8, 8, 8, ResourcesCore.guiClothingSelector, ""));
 			}
 		}
 
-		buttonList.add(new GuiButtonDefault(35, guiLeft + 266, guiTop + 5, 84, 10, LanguageManager.getLocalization("gui.up.sign")));
-		buttonList.add(new GuiButtonDefault(36, guiLeft + 266, guiTop + 150, 84, 10, LanguageManager.getLocalization("gui.down.sign")));
+		buttonList.add(new GuiButtonDefault(43, guiLeft + 266, guiTop + 5, 84, 10, LanguageManager.getLocalization("gui.up.sign")));
+		buttonList.add(new GuiButtonDefault(44, guiLeft + 266, guiTop + 150, 84, 10, LanguageManager.getLocalization("gui.down.sign")));
 
-		buttonList.add(new GuiButtonDefault(37, guiLeft + 80, guiTop + 169, 96, 16, LanguageManager.getLocalization("gui.addToCart")));
+		buttonList.add(new GuiButtonDefault(45, guiLeft + 80, guiTop + 169, 96, 16, LanguageManager.getLocalization("gui.addToCart")));
 		if(showLeftList) {
-			buttonList.add(new GuiButtonDefault(38, guiLeft - 100, guiTop + 169, 40, 16, LanguageManager.getLocalization("gui.cancel")));
-			buttonList.add(new GuiButtonDefault(39, guiLeft - 44, guiTop + 169, 40, 16, LanguageManager.getLocalization("gui.pay")));
+			buttonList.add(new GuiButtonDefault(46, guiLeft - 100, guiTop + 169, 40, 16, LanguageManager.getLocalization("gui.cancel")));
+			buttonList.add(new GuiButtonDefault(47, guiLeft - 44, guiTop + 169, 40, 16, LanguageManager.getLocalization("gui.pay")));
 		}
 
-		buttonsClothingCategories = new GuiButtonListVertical(guiTop + 19, 16, (GuiButtonDefault) buttonList.get(35), (GuiButtonDefault) buttonList.get(36), 8);
-		buttonsClothingPieces = new GuiButtonListVertical(guiTop + 19, 16, (GuiButtonDefault) buttonList.get(35), (GuiButtonDefault) buttonList.get(36), 8);
+		buttonsClothingCategories = new GuiButtonListVertical(guiTop + 19, 16, (GuiButtonDefault) buttonList.get(27 + clothingTypesChangeableCount), (GuiButtonDefault) buttonList.get(28 + clothingTypesChangeableCount), 8);
+		buttonsClothingPieces = new GuiButtonListVertical(guiTop + 19, 16, (GuiButtonDefault) buttonList.get(27 + clothingTypesChangeableCount), (GuiButtonDefault) buttonList.get(28 + clothingTypesChangeableCount), 8);
 
 		buttonsClothingCategories.buttons.clear();
 		for(int i = 0; i < clothingCategories.size(); i++) {
@@ -187,8 +195,8 @@ public class GuiClothingSelector extends GuiScreen {
 
 		for(int i = 0; i < 16; i++) {
 			boolean flag = clothingCategories.get(currentClothingCategory).clothing.get(ClothingRegistry.types[currentClothingType])[currentClothingPiece].colors[i];
-			((GuiToggleButton) buttonList.get(19 + i)).enabled = flag;
-			((GuiToggleButton) buttonList.get(19 + i)).drawButton = flag;
+			((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + i)).enabled = flag;
+			((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + i)).drawButton = flag;
 		}
 	}
 
@@ -209,22 +217,22 @@ public class GuiClothingSelector extends GuiScreen {
 			rotation += 1.0F;
 		} else if(button.id == 3 || button.id == 4) {
 			buttonsClothingType.actionPerformed((GuiButtonDefault) button);
-		} else if(button.id >= 5 && button.id < 13) {
-			for(int i = 5; i < 13; i++) {
+		} else if(button.id >= 5 && button.id < 21) {
+			for(int i = 5; i < 5 + clothingTypesChangeableCount; i++) {
 				((GuiToggleButton) buttonList.get(i)).toggled = false;
 			}
 			((GuiToggleButton) button).toggled = true;
-			currentClothingType = button.id - 5;
+			currentClothingType = ((GuiButtonClothingType) button).clothingType;
 			updateClothingList();
 			updateTempPieceClothing();
-		} else if(button.id == 13) {
+		} else if(button.id == 21) {
 			currentClothingCategory--;
 			if(currentClothingCategory < 0) {
 				currentClothingCategory = 0;
 			}
 			updateClothingList();
 			updateTempPieceClothing();
-		} else if(button.id == 14) {
+		} else if(button.id == 22) {
 			if(rightList == 0) {
 				showRightList = !showRightList;
 				buttonsClothingPieces.hide();
@@ -235,20 +243,20 @@ public class GuiClothingSelector extends GuiScreen {
 				buttonsClothingPieces.hide();
 				buttonsClothingCategories.show();
 			}
-		} else if(button.id == 15) {
+		} else if(button.id == 23) {
 			currentClothingCategory++;
 			if(currentClothingCategory >= clothingCategories.size()) {
 				currentClothingCategory = clothingCategories.size() - 1;
 			}
 			updateClothingList();
 			updateTempPieceClothing();
-		} else if(button.id == 16) {
+		} else if(button.id == 24) {
 			currentClothingPiece--;
 			if(currentClothingPiece < 0) {
 				currentClothingPiece = 0;
 			}
 			updateTempPieceClothing();
-		} else if(button.id == 17) {
+		} else if(button.id == 25) {
 			if(rightList == 1) {
 				showRightList = !showRightList;
 				buttonsClothingCategories.hide();
@@ -259,34 +267,34 @@ public class GuiClothingSelector extends GuiScreen {
 				buttonsClothingCategories.hide();
 				buttonsClothingPieces.show();
 			}
-		} else if(button.id == 18) {
+		} else if(button.id == 26) {
 			currentClothingPiece++;
 			if(currentClothingPiece >= clothingPieces.size()) {
 				currentClothingPiece = clothingPieces.size() - 1;
 			}
 			updateTempPieceClothing();
-		} else if(button.id >= 19 && button.id < 35) {
-			for(int i = 19; i < 35; i++) {
-				((GuiToggleButton) buttonList.get(i)).toggled = false;
+		} else if(button.id >= 27 && button.id < 43) {
+			for(int i = 0; i < 16; i++) {
+				((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + i)).toggled = false;
 			}
 			((GuiToggleButton) button).toggled = true;
-			currentClothingColor = button.id - 19;
+			currentClothingColor = button.id - 27;
 			updateTempPieceClothing();
-		} else if(button.id == 35 || button.id == 36) {
+		} else if(button.id == 43 || button.id == 44) {
 			if(rightList == 0) {
 				buttonsClothingCategories.actionPerformed((GuiButtonDefault) button);
 			} else if(rightList == 1) {
 				buttonsClothingPieces.actionPerformed((GuiButtonDefault) button);
 			}
-		} else if(button.id == 37) {
+		} else if(button.id == 45) {
 			if(!clothingPiecesCart.containsKey(ClothingRegistry.types[currentClothingType])) {
 				ClothingPiece piece = new ClothingPiece(currentClothingType, currentClothingCategory, currentClothingPiece, currentClothingColor);
 				clothingPiecesCart.put(ClothingRegistry.types[currentClothingType], piece);
 				updateTempClothing();
 			}
-		} else if(button.id == 38) {
+		} else if(button.id == 46) {
 			mc.thePlayer.closeScreen();
-		} else if(button.id == 39) {
+		} else if(button.id == 47) {
 			PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getClothingSelectorPacket(mc.thePlayer.username, clothingPiecesCart));
 			mc.thePlayer.closeScreen();
 		} else if(button.id >= 100 && button.id <= 1000 && rightList == 0) {
@@ -448,5 +456,10 @@ public class GuiClothingSelector extends GuiScreen {
 		OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
+	}
+	
+	@Override
+	public boolean doesGuiPauseGame() {
+		return false;
 	}
 }

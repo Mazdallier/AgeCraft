@@ -2,6 +2,7 @@ tile.campfire.name=Campfire
 tile.rock.name=Rock
 tile.pot.name=Pot
 tile.bed.name=Bed
+tile.barrel.name=Barrel
 
 item.fakeStone.name=Rock
 item.rock.name=Rock

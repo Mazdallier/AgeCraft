@@ -140,14 +140,14 @@ public class ACUtil {
 	}
 	
 	public static FluidStack getFluidContainerStack(ItemStack stack) {
-		if(stack.getItem() instanceof IFluidContainerItem) {
+		if(stack != null && stack.getItem() instanceof IFluidContainerItem) {
 			return ((IFluidContainerItem) stack.getItem()).getFluid(stack);
 		}
 		return FluidContainerRegistry.getFluidForFilledItem(stack);
 	}
 	
 	public static ItemStack fillFluidContainer(ItemStack stack, FluidStack fluidStack) {
-		if(stack.getItem() instanceof IFluidContainerItem) {
+		if(stack != null && stack.getItem() instanceof IFluidContainerItem) {
 			((IFluidContainerItem) stack.getItem()).fill(stack, fluidStack, true);
 			return stack;
 		}
@@ -155,7 +155,7 @@ public class ACUtil {
 	}
 	
 	public static ItemStack drainFluidContainer(ItemStack stack, int amount) {
-		if(stack.getItem() instanceof IFluidContainerItem) {
+		if(stack != null && stack.getItem() instanceof IFluidContainerItem) {
 			((IFluidContainerItem) stack.getItem()).drain(stack, amount, true);
 			return stack;
 		}

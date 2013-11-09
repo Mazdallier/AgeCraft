@@ -2,6 +2,7 @@ package elcon.mods.agecraft;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.block.Block;
@@ -23,10 +24,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
+import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
+import elcon.mods.agecraft.core.gui.GuiClothingSelector;
 import elcon.mods.agecraft.core.tech.TechTreeClient;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
 import elcon.mods.core.tileentities.TileEntityMetadata;
@@ -67,6 +70,12 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			break;
 		case 5:
 			handlePlayerTradeAcceptChange(dat);
+			break;
+		case 6:
+			handleClothingSelectorOpen(dat);
+			break;
+		case 7:
+			handleClothingList(dat);
 			break;
 		case 90:
 			handleTileEntityNBT(world, dat);
@@ -188,6 +197,28 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		PlayerTrade trade = PlayerTradeManager.tradesClient.get(Minecraft.getMinecraft().thePlayer.username);
 		trade.accepted1 = dat.readBoolean();
 		trade.accepted2 = dat.readBoolean();
+	}
+	
+	private void handleClothingSelectorOpen(ByteArrayDataInput dat) {
+		boolean[] changeable = new boolean[ClothingRegistry.types.length];
+		for(int i = 0; i < ClothingRegistry.types.length; i++) {
+			changeable[i] = dat.readBoolean();
+		}
+		Minecraft.getMinecraft().displayGuiScreen(new GuiClothingSelector(changeable));
+	}
+	
+	private void handleClothingList(ByteArrayDataInput dat) {
+		ArrayList<String> categoriesToDownload = new ArrayList<String>();
+		int categories = dat.readInt();
+		for(int i = 0; i < categories; i++) {
+			String name = dat.readUTF();
+			if(ClothingRegistry.getClothingCategory(name) == null) {
+				categoriesToDownload.add(name);
+			}
+		}
+		for(String category : categoriesToDownload) {
+			
+		}
 	}
 
 	private void handleTileEntityNBT(World world, ByteArrayDataInput dat) {

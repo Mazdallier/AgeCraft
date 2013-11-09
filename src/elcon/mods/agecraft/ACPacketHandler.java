@@ -30,6 +30,7 @@ import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
 import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
+import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
@@ -324,7 +325,28 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 		return null;
 	}
-
+	
+	public static Packet getClothingSelectorOpenPacket(boolean[] changeable) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(6);
+			for(int i = 0; i < ClothingRegistry.types.length; i++) {
+				dos.writeBoolean(changeable[i]);
+			}
+			dos.close();
+			packet.channel = "ACClothing";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	@Override
 	// SERVER
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {

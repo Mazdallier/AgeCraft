@@ -133,6 +133,7 @@
 	3 Clothing All Update
 	4 Player Trade (To player 2)
 	5 Player Trade Accept Change
+	6 Clothing Selector Open
 75-90	Client to server packets
 	75 Player Trade (From player 1)
 	76 Player Trade Accept
@@ -146,6 +147,7 @@
 	200 Campfire
 	201 Pot
 	202 Bed
+	203 Barrel
 
 ======= Block Render IDs ======
 90-98   Common blocks
@@ -169,6 +171,7 @@
 	201 Campfire
 	202 Pot
 	203 Bed
+	204 Barrel
 300-399		Agriculture Age
 400-499		Ancient Egypt
 500-599		Ancient China
@@ -184,7 +187,6 @@
 	0 Inventory
 	1 Player Trade
 	2 Chat
-	3 Clothing Selector
 10-19		Core blocks
 	10 Age Teleporter chest
 	11 Crafting

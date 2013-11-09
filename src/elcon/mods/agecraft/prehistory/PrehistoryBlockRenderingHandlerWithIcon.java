@@ -5,10 +5,13 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import elcon.mods.agecraft.core.DustRegistry;
+import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
+import elcon.mods.agecraft.prehistory.blocks.BlockBarrel;
 import elcon.mods.agecraft.prehistory.blocks.BlockPot;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock.RockShape;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityBarrel;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
@@ -32,6 +35,8 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 			return renderBlockPot(blockAccess, x, y, z, (BlockPot) block, modelID, renderer);
 		case 203:
 			return renderBlockBed(blockAccess, x, y, z, block, modelID, renderer);
+		case 204:
+			return renderBlockBarrel(blockAccess, x, y, z, (BlockBarrel) block, modelID, renderer);
 		}
 		return false;
 	}
@@ -141,6 +146,40 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 	    renderer.uvRotateNorth = 0;
 	    renderer.uvRotateTop = 0;
 	    renderer.uvRotateBottom = 0;
+		return true;
+	}
+	
+	private boolean renderBlockBarrel(IBlockAccess blockAccess, int x, int y, int z, BlockBarrel block, int modelID, RenderBlocks renderer) {
+		TileEntityBarrel tile = (TileEntityBarrel) blockAccess.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityBarrel();
+		}
+
+		renderer.setRenderBounds(0.125D, 0.0D, 0.125D, 0.875D, 0.0625D, 0.875D);
+		renderer.renderStandardBlock(block, x, y, z);
+
+		renderer.setRenderBounds(0.125D, 0.0625D, 0.125D, 0.875D, 1.0D, 0.1875D);
+		renderer.renderStandardBlock(block, x, y, z);
+
+		renderer.setRenderBounds(0.8125D, 0.0625D, 0.1875D, 0.875D, 1.0D, 0.8125D);
+		renderer.renderStandardBlock(block, x, y, z);
+
+		renderer.setRenderBounds(0.125D, 0.0625D, 0.8125D, 0.875D, 1.0D, 0.875D);
+		renderer.renderStandardBlock(block, x, y, z);
+
+		renderer.setRenderBounds(0.125D, 0.0625D, 0.1875D, 0.1875D, 1.0D, 0.8125D);
+		renderer.renderStandardBlock(block, x, y, z);
+
+		if(tile.hasLid) {
+			renderer.setRenderBounds(0.1875D, 0.875D, 0.1875D, 0.8125D, 0.9375D, 0.8125D);
+			renderer.renderStandardBlock(block, x, y, z);
+		}
+		if(tile.stickType >= 0) {
+			renderer.setOverrideBlockTexture(TreeRegistry.trees[tile.stickType].planks);
+			renderer.setRenderBounds(0.1875D, 0.8075D, 0.4375D, 0.8125D, 0.875D, 0.5625D);
+			renderer.renderStandardBlock(block, x, y, z);
+			renderer.clearOverrideBlockTexture();
+		}
 		return true;
 	}
 	

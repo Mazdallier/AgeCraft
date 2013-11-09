@@ -3,6 +3,7 @@ package elcon.mods.agecraft.prehistory.tileentities;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,16 +16,22 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import elcon.mods.agecraft.core.fluids.FluidTankTile;
+import elcon.mods.agecraft.prehistory.recipes.RecipesBarrel;
 import elcon.mods.core.tileentities.TileEntityExtended;
 
-public class TileEntityPot extends TileEntityExtended implements IFluidHandler {
-	
+public class TileEntityBarrel extends TileEntityExtended implements IFluidHandler {
+
+	public int woodType;
+	public int stickType = -1;
 	public boolean hasLid;
-	public FluidTankTile fluid;
-	public ItemStack dust;
 	
-	public TileEntityPot() {
-		fluid = new FluidTankTile("pot", this, FluidContainerRegistry.BUCKET_VOLUME);
+	public FluidTankTile fluid;
+	public ItemStack stack;
+	
+	public int ticksLeft = -1;
+	
+	public TileEntityBarrel() {
+		fluid = new FluidTankTile("barrel", this, FluidContainerRegistry.BUCKET_VOLUME);
 	}
 	
 	@Override
@@ -32,11 +39,13 @@ public class TileEntityPot extends TileEntityExtended implements IFluidHandler {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		DataOutputStream dos = new DataOutputStream(bos);
 		try {
-			dos.writeInt(201);
+			dos.writeInt(203);
 			dos.writeInt(xCoord);
 			dos.writeInt(yCoord);
 			dos.writeInt(zCoord);
 			
+			dos.writeInt(woodType);
+			dos.writeInt(stickType);			
 			dos.writeBoolean(hasLid);
 			
 			dos.writeBoolean(fluid.getFluid() != null && fluid.getFluid().getFluid() != null);
@@ -45,16 +54,16 @@ public class TileEntityPot extends TileEntityExtended implements IFluidHandler {
 				dos.writeInt(fluid.getFluid().amount);
 			}
 			
-			dos.writeBoolean(dust != null);
-			if(dust != null) {
-				dos.writeInt(dust.itemID);
-				dos.writeInt(dust.stackSize);
-				dos.writeInt(dust.getItemDamage());
+			dos.writeBoolean(stack != null);
+			if(stack != null) {
+				dos.writeInt(stack.itemID);
+				dos.writeInt(stack.stackSize);
+				dos.writeInt(stack.getItemDamage());
 				
-				dos.writeBoolean(dust.hasTagCompound());
-				if(dust.hasTagCompound()) {
+				dos.writeBoolean(stack.hasTagCompound());
+				if(stack.hasTagCompound()) {
 					try {
-						NBTBase.writeNamedTag(dust.stackTagCompound, dos);
+						NBTBase.writeNamedTag(stack.stackTagCompound, dos);
 					} catch(Exception e) {
 						e.printStackTrace();
 					}
@@ -71,43 +80,68 @@ public class TileEntityPot extends TileEntityExtended implements IFluidHandler {
 		return packet;
 	}
 	
-	public boolean isEmpty() {
-		return !hasFluid() && !hasDust();
-	}
-	
 	public boolean hasFluid() {
-		return fluid != null && !fluid.isEmpty();
+		return fluid != null && !fluid.isEmpty();		
 	}
 	
-	public boolean hasDust() {
-		return dust != null;
+	public boolean hasStack() {
+		return stack != null;
+	}
+	
+	@Override
+	public boolean canUpdate() {
+		return true;
+	}
+	
+	@Override
+	public void updateEntity() {
+		if(!worldObj.isRemote) {
+			if(hasStack() && (!hasFluid() || stickType == -1)) {
+				worldObj.spawnEntityInWorld(new EntityItem(worldObj, xCoord, yCoord, zCoord, stack.copy()));
+			}
+			if(hasLid) {
+				if(ticksLeft > 0) {
+					ticksLeft--;
+				} else if(ticksLeft == 0) { 
+					ticksLeft = -1;
+					if(RecipesBarrel.getRecipe(stack) != null) {
+						stack = RecipesBarrel.getRecipe(stack).output.copy();
+					}
+					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+				}
+			}
+		}
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
+		woodType = nbt.getInteger("WoodType");
+		stickType = nbt.getInteger("StickType");
 		hasLid = nbt.getBoolean("HasLid");
 		if(nbt.hasKey("Fluid")) {
 			fluid.readFromNBT(nbt.getCompoundTag("Fluid"));
 		}
-		if(nbt.hasKey("Dust")) {
-			dust = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Dust"));
+		if(nbt.hasKey("Stack")) {
+			stack = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("Stack"));
 		}
 	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
+		nbt.setInteger("WoodType", woodType);
+		nbt.setInteger("StickType", stickType);
 		nbt.setBoolean("HasLid", hasLid);
 		if(fluid != null) {
 			NBTTagCompound tag = new NBTTagCompound();
 			fluid.writeToNBT(tag);
 			nbt.setCompoundTag("Fluid", tag);
 		}
-		if(dust != null) {
+		if(stack != null) {
 			NBTTagCompound tag = new NBTTagCompound();
-			dust.writeToNBT(tag);
-			nbt.setCompoundTag("Dust", tag);
+			stack.writeToNBT(tag);
+			nbt.setCompoundTag("Stack", tag);
 		}
 	}
 

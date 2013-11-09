@@ -1,5 +1,6 @@
 package elcon.mods.agecraft.core.clothing;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import elcon.mods.agecraft.ACLog;
@@ -12,6 +13,7 @@ public class ClothingCategory {
 	public String name;
 	public String versionURL;
 	public String updateURL;
+	public ArrayList<String> expansionURLs = new ArrayList<String>();
 	
 	public HashMap<ClothingType, Clothing[]> clothing = new HashMap<ClothingType, Clothing[]>();
 	
@@ -68,5 +70,13 @@ public class ClothingCategory {
 			}
 		}
 		return null;
+	}
+	
+	public void addExpansionURL(String url) {
+		expansionURLs.add(url);
+	}
+	
+	public void removeExpansionURL(String url) {
+		expansionURLs.remove(url);
 	}
 }
