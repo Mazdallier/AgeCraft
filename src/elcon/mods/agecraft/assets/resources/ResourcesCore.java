@@ -47,6 +47,8 @@ public class ResourcesCore extends Resources {
 	public static ResourceLocation ageTeleporterBeam = new ResourceLocation("agecraft", "textures/misc/beam.png");
 	public static ResourceLocation ageTeleporterChest = new ResourceLocation("agecraft", "textures/tile/teleporter_chest.png");
 	
+	public static ResourceLocation gear = new ResourceLocation("agecraft", "textures/misc/gear.png");
+	
 	public static Icon missingTexture;
 	public static Icon emptyTexture;
 	

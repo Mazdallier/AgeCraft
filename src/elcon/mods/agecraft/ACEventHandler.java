@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import cpw.mods.fml.common.ICraftingHandler;
@@ -18,7 +19,7 @@ public class ACEventHandler implements ICraftingHandler {
 	@ForgeSubscribe
 	public void onPlayerNameFormat(PlayerEvent.NameFormat event) {
 		if(RankManager.hasRank(event.username)) {
-			event.displayname = RankManager.getPrefix(event.username) + event.displayname + RankManager.getPostfix(event.username);
+			event.displayname = RankManager.getPrefix(event.username) + event.displayname + RankManager.getPostfix(event.username) + EnumChatFormatting.RESET;
 		}
 	}
 	

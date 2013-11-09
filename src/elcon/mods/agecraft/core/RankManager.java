@@ -23,7 +23,8 @@ public class RankManager {
 	}
 	
 	public static Rank user = new Rank("user", Color.TEXT_COLOR_WHITE, "", "");
-	public static Rank donator = new Rank("user", Color.TEXT_COLOR_GREEN, Color.TEXT_COLOR_PREFIX_GREEN, "");
+	public static Rank developer = new Rank("developer", Color.TEXT_COLOR_WHITE, "", "");
+	public static Rank donator = new Rank("donator", Color.TEXT_COLOR_GREEN, Color.TEXT_COLOR_PREFIX_GREEN, "");
 	
 	public static Rank defaultRank;
 	public static HashMap<String, Rank> ranks = new HashMap<String, Rank>();
@@ -32,8 +33,17 @@ public class RankManager {
 	public static void init() {
 		defaultRank = user;
 		
+		setRank("ElConquistador", developer);
+		setRank("DJPrinceCap", developer);
+		setRank("RoryGee", developer);
+		setRank("poursa", developer);
+		setRank("iTz_Terrible", developer);
+		
 		setPlayerRank("ElConquistador", Color.TEXT_COLOR_BLUE, Color.TEXT_COLOR_PREFIX_BLUE, "");
 		setPlayerRank("DJPrinceCap", Color.TEXT_COLOR_GOLD, Color.TEXT_COLOR_PREFIX_GOLD, "");
+		setPlayerRank("RoryGee", Color.TEXT_COLOR_WHITE, Color.TEXT_COLOR_PREFIX_WHITE, "");
+		setPlayerRank("poursa", Color.TEXT_COLOR_WHITE, Color.TEXT_COLOR_PREFIX_WHITE, "");
+		setPlayerRank("iTz_Terrible", Color.TEXT_COLOR_GREEN, Color.TEXT_COLOR_PREFIX_GREEN, "");
 	}
 	
 	public static int getColor(String player) {
