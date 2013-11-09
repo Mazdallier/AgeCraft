@@ -2,7 +2,6 @@ package elcon.mods.agecraft;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.block.Block;
@@ -73,9 +72,6 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			break;
 		case 6:
 			handleClothingSelectorOpen(dat);
-			break;
-		case 7:
-			handleClothingList(dat);
 			break;
 		case 90:
 			handleTileEntityNBT(world, dat);
@@ -205,20 +201,6 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			changeable[i] = dat.readBoolean();
 		}
 		Minecraft.getMinecraft().displayGuiScreen(new GuiClothingSelector(changeable));
-	}
-	
-	private void handleClothingList(ByteArrayDataInput dat) {
-		ArrayList<String> categoriesToDownload = new ArrayList<String>();
-		int categories = dat.readInt();
-		for(int i = 0; i < categories; i++) {
-			String name = dat.readUTF();
-			if(ClothingRegistry.getClothingCategory(name) == null) {
-				categoriesToDownload.add(name);
-			}
-		}
-		for(String category : categoriesToDownload) {
-			
-		}
 	}
 
 	private void handleTileEntityNBT(World world, ByteArrayDataInput dat) {

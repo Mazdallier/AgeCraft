@@ -17,7 +17,7 @@ public class ACKeyHandler extends KeyHandler {
 
 	public static KeyBinding techTree = new KeyBinding("Technology Tree", Keyboard.KEY_F);
 	public static KeyBinding trade = new KeyBinding("Trade", Keyboard.KEY_G);
-	public static KeyBinding changeGuiScale = new KeyBinding("Change Gui Scale", Keyboard.KEY_RBRACKET);
+	public static KeyBinding changeGuiScale = new KeyBinding("Change Gui Scale", Keyboard.KEY_F10);
 	
 	public ACKeyHandler() {
 		super(new KeyBinding[]{techTree, trade, changeGuiScale}, new boolean[]{false, false, false});
