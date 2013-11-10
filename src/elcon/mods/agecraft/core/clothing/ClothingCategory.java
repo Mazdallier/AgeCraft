@@ -34,7 +34,7 @@ public class ClothingCategory {
 		}
 		Clothing[] clothings = clothing.get(c.type);
 		if(clothings[c.id] != null) {
-			ACLog.warning("[ClothingRegistry] Overriding existing clothing (" + clothings[c.id] + ": " + clothings[c.id].name.toUpperCase() + ") with new clothing (" + c.id + ": " + c.name.toUpperCase() + ")");
+			ACLog.warning("[ClothingRegistry] Overriding existing clothing (" + clothings[c.id].id + ": " + clothings[c.id].name.toUpperCase() + ") with new clothing (" + c.id + ": " + c.name.toUpperCase() + ")");
 		}
 		clothings[c.id] = c;
 	}
@@ -46,7 +46,7 @@ public class ClothingCategory {
 		}
 		Clothing[] clothings = clothing.get(type);
 		for(int i = 0; i < clothings.length; i++) {
-			if(clothings[i] != null) {
+			if(clothings[i] == null) {
 				return i;
 			}
 		}

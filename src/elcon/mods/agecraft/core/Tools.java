@@ -1,5 +1,6 @@
 package elcon.mods.agecraft.core;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.ACComponent;
@@ -58,6 +59,7 @@ public class Tools extends ACComponent {
 
 	@Override
 	public void preInit() {
+		//init items
 		sword = (ItemTool) new ItemSword(12520).setUnlocalizedName("tools_sword");
 		pickaxe = (ItemTool) new ItemPickaxe(12521).setUnlocalizedName("tools_pickaxe");
 		axe = (ItemTool) new ItemAxe(12522).setUnlocalizedName("tools_axe");
@@ -80,6 +82,30 @@ public class Tools extends ACComponent {
 		arrow = (ItemTool) new ItemArrow(12539).setUnlocalizedName("tools_arrow");
 		bolt = (ItemTool) new ItemBolt(12540).setUnlocalizedName("tools_bolt");
 		fishingRod = (ItemTool) new ItemFishingRod(12541).setUnlocalizedName("tools_fishingRod");
+		
+		//register items
+		GameRegistry.registerItem(sword, "AC_tools_sword");
+		GameRegistry.registerItem(pickaxe, "AC_tools_pickaxe");
+		GameRegistry.registerItem(axe, "AC_tools_axe");
+		GameRegistry.registerItem(shovel, "AC_tools_shovel");
+		GameRegistry.registerItem(hoe, "AC_tools_hoe");
+		GameRegistry.registerItem(battleaxe, "AC_tools_battleaxe");
+		GameRegistry.registerItem(warhammer, "AC_tools_warhammer");
+		GameRegistry.registerItem(mace, "AC_tools_mace");
+		GameRegistry.registerItem(dagger, "AC_tools_dagger");
+		GameRegistry.registerItem(knife, "AC_tools_knife");
+		GameRegistry.registerItem(spear, "AC_tools_spear");
+		GameRegistry.registerItem(sickle, "AC_tools_sickle");
+		GameRegistry.registerItem(pitchfork, "AC_tools_pitchfork");
+		GameRegistry.registerItem(hammer, "AC_tools_hammer");
+		GameRegistry.registerItem(chisel, "AC_tools_chisel");
+		GameRegistry.registerItem(handsaw, "AC_tools_handsaw");
+		GameRegistry.registerItem(saw, "AC_tools_saw");
+		GameRegistry.registerItem(bow, "AC_tools_bow");
+		GameRegistry.registerItem(crossbow, "AC_tools_crossbow");
+		GameRegistry.registerItem(arrow, "AC_tools_arrow");
+		GameRegistry.registerItem(bolt, "AC_tools_bolt");
+		GameRegistry.registerItem(fishingRod, "AC_tools_fishingRod");
 	}
 
 	@Override

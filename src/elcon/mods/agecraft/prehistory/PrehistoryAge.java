@@ -48,7 +48,7 @@ public class PrehistoryAge extends Age {
 	
 	public static Item fakeStone;
 	public static Item rockTool;
-	public static Item rockTanningTool;
+	public static Item rockSkinningTool;
 	public static Item rockPickaxeHead;
 	public static Item rockPickaxe;
 	
@@ -77,9 +77,16 @@ public class PrehistoryAge extends Age {
 		//init items
 		fakeStone = new ItemFakeStone(11000).setUnlocalizedName("prehistory_fakeStone");
 		rockTool = new ItemRockTool(13000).setUnlocalizedName("prehistory_rockTool");
-		rockTanningTool = new ItemRockTanningTool(13001).setUnlocalizedName("prehistory_rockTanningTool");
+		rockSkinningTool = new ItemRockTanningTool(13001).setUnlocalizedName("prehistory_rockSkinningTool");
 		rockPickaxeHead = new ItemDummy(13002, "item.rockPickaxeHead.name", "agecraft:ages/prehistory/rockPickaxeHead").setMaxStackSize(1).setCreativeTab(ACCreativeTabs.prehistoryAge).setUnlocalizedName("prehistory_rockPickaxeAxe");
 		rockPickaxe = new ItemRockPickaxe(13003).setUnlocalizedName("prehistory_rockPickaxe");
+		
+		//register items
+		GameRegistry.registerItem(fakeStone, "AC_prehistory_fakeStone");
+		GameRegistry.registerItem(rockTool, "AC_prehistory_rockTool");
+		GameRegistry.registerItem(rockSkinningTool, "AC_prehistory_rockSkinningTool");
+		GameRegistry.registerItem(rockPickaxeHead, "AC_prehistory_rockPickaxeHea");
+		GameRegistry.registerItem(rockPickaxe, "AC_prehistory_rockPickaxe");
 		
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntityCampfire.class, "TileCampfire");

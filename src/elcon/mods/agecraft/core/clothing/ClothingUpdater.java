@@ -39,8 +39,8 @@ public class ClothingUpdater implements Runnable {
 
 	public ClothingUpdater(File clothingDir) {
 		this.clothingDir = clothingDir;
-	}	
-	
+	}
+
 	public void load() {
 		if(clothingDir.exists()) {
 			int categoryCount = 0;
@@ -69,7 +69,7 @@ public class ClothingUpdater implements Runnable {
 								if(clothing == null) {
 									clothing = new Clothing(category.getNextClothingID(type), clothingName, type, category);
 									category.registerClothing(clothing);
-									clothingCount++;									
+									clothingCount++;
 								}
 								clothing.enableColor(Integer.parseInt(clothingColor));
 								colorCount++;
@@ -79,7 +79,7 @@ public class ClothingUpdater implements Runnable {
 				}
 				ACLog.info("[Clothing] Loaded clothing category: " + category.name);
 			}
-			ACLog.info("[Clothing] Loaded " + categoryCount + " categories with " + clothingCount + " clothing types with a total of " + colorCount + " colors. (Average: " + (clothingCount == 0 ? 0 :(colorCount / clothingCount)) + " colors/clothing type)");
+			ACLog.info("[Clothing] Loaded " + categoryCount + " categories with " + clothingCount + " clothing pieces with a total of " + colorCount + " colors. (Average: " + (clothingCount == 0 ? 0 : (colorCount / clothingCount)) + " colors/clothing piece)");
 		}
 	}
 
@@ -141,7 +141,7 @@ public class ClothingUpdater implements Runnable {
 			}
 		}
 	}
-	
+
 	public void download() {
 		ArrayList<String> lines = new ArrayList<String>();
 		for(ClothingCategory category : downloadCategories) {
@@ -251,7 +251,7 @@ public class ClothingUpdater implements Runnable {
 		download();
 		load();
 	}
-	
+
 	public void excecute() {
 		new Thread(this).start();
 	}

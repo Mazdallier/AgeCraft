@@ -36,7 +36,7 @@ public class BiomeDecoratorACPrehistory {
 
 		rocksPerChunk = 1;
 		grassPerChunk = 1;
-		smallTreesPerChunk = 3;
+		smallTreesPerChunk = 1;
 
 		rockGen = new WorldGenFlowers(PrehistoryAge.rock.blockID);
 		oreGens = new WorldGenOre[MetalRegistry.metals.length];

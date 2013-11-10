@@ -71,6 +71,14 @@ public class Metals extends ACComponent {
 		nugget = new ItemNugget(12503).setUnlocalizedName("metal_nugget");
 		dust = new ItemMetalDust(12504).setUnlocalizedName("metal_dust");
 		bucket = new ItemMetalBucket(12505).setUnlocalizedName("metal_bucket");
+		
+		//register items
+		GameRegistry.registerItem(ingot, "AC_metal_ingot");
+		GameRegistry.registerItem(gem, "AC_metal_gem");
+		GameRegistry.registerItem(stick, "AC_metal_stick");
+		GameRegistry.registerItem(nugget, "AC_metal_nugget");
+		GameRegistry.registerItem(dust, "AC_metal_dust");
+		GameRegistry.registerItem(bucket, "AC_metal_bucket");
 	}
 
 	@Override
@@ -84,7 +92,7 @@ public class Metals extends ACComponent {
 		MetalRegistry.registerMetal(new Metal(5, "gold", OreType.METAL, 3.0F, 5.0F, 7, 5.0F, 10.0F, new ItemStack(ore, 1, 5), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0xFDFD51, 6, 2, 0, 32));
 		MetalRegistry.registerMetal(new Metal(6, "zinc", OreType.METAL, 3.0F, 5.0F, 4, 5.0F, 10.0F, new ItemStack(ore, 1, 6), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0xE0DACE, 12, 15, 0, 96));
 		MetalRegistry.registerMetal(new Metal(7, "nickel", OreType.METAL, 3.0F, 5.0F, 3, 5.0F, 10.0F, new ItemStack(ore, 1, 7), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0x8E9F9F, 8, 5, 0, 64));
-		MetalRegistry.registerMetal(new Metal(8, "aluminium", OreType.METAL, 3.0F, 5.0F, 2, 5.0F, 10.0F, new ItemStack(ore, 1, 8), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0xCECECE, 8, 5, 10, 96));
+		MetalRegistry.registerMetal(new Metal(8, "aluminium", OreType.METAL, 3.0F, 5.0F, 2, 5.0F, 10.0F, new ItemStack(ore, 1, 8), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0xCECECE, 8, 5, 10, 64));
 		MetalRegistry.registerMetal(new Metal(9, "platinum", OreType.METAL, 3.0F, 5.0F, 5, 5.0F, 10.0F, new ItemStack(ore, 1, 9), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0xC0C0C0, 4, 3, 0, 16));
 		MetalRegistry.registerMetal(new Metal(10, "lead", OreType.METAL, 3.0F, 5.0F, 5, 5.0F, 10.0F, new ItemStack(ore, 1, 10), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0x454552, 6, 5, 0, 96));
 		MetalRegistry.registerMetal(new Metal(11, "steel", OreType.METAL, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(ore, 1, 11), 1, 1, false, false, true, true, true, true, 0, 0, 0, 0x7B7B7B, 0, 0, 0, 0));
@@ -94,7 +102,7 @@ public class Metals extends ACComponent {
 		MetalRegistry.registerMetal(new Metal(15, "tungsten", OreType.METAL, 3.0F, 5.0F, 10, 5.0F, 10.0F, new ItemStack(ore, 1, 15), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0x444444, 4, 5, 0, 16));
 		MetalRegistry.registerMetal(new Metal(16, "uranium", OreType.METAL, 3.0F, 5.0F, 5, 5.0F, 10.0F, new ItemStack(ore, 1, 16), 1, 1, false, true, true, true, false, true, 0, 0, 0, 0x00B12C, 4, 6, 0, 96));
 
-		MetalRegistry.registerMetal(new Metal(32, "coal", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 32), 1, 1, true, true, true, true, false, true, 0, 5, 5, 0x0D0D0D, 16, 18, 0, 128));
+		MetalRegistry.registerMetal(new Metal(32, "coal", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 32), 1, 1, true, true, true, true, false, true, 0, 5, 5, 0x0D0D0D, 16, 15, 0, 128));
 		MetalRegistry.registerMetal(new Metal(33, "amethyst", OreType.GEM, 3.0F, 5.0F, 9, 5.0F, 10.0F, new ItemStack(gem, 1, 33), 1, 1, true, true, true, true, false, true, 0, 0, 0, 0xA575C7, 8, 2, 0, 26));
 		MetalRegistry.registerMetal(new Metal(34, "berylRed", OreType.GEM, 3.0F, 5.0F, 4, 5.0F, 10.0F, new ItemStack(gem, 1, 34), 1, 1, true, true, true, true, false, true, 0, 0, 0, 0xF76B6B, 5, 1, 0, 16));
 		MetalRegistry.registerMetal(new Metal(35, "berylYellow", OreType.GEM, 3.0F, 5.0F, 4, 5.0F, 10.0F, new ItemStack(gem, 1, 35), 1, 1, true, true, true, true, false, true, 0, 0, 0, 0xFDD24E, 6, 2, 10, 64));
@@ -113,8 +121,8 @@ public class Metals extends ACComponent {
 		MetalRegistry.registerMetal(new Metal(48, "topaz", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(gem, 1, 48), 1, 1, true, true, true, true, false, true, 0, 0, 0, 0xD8CF48, 8, 2, 40, 128));
 		MetalRegistry.registerMetal(new Metal(49, "turquoise", OreType.GEM, 3.0F, 5.0F, 4, 5.0F, 10.0F, new ItemStack(gem, 1, 49), 1, 1, true, true, true, true, false, true, 0, 0, 0, 0x6AD6CE, 8, 1, 0, 32));
 		MetalRegistry.registerMetal(new Metal(50, "redstone", OreType.GEM, 3.0F, 5.0F, 5, 5.0F, 10.0F, new ItemStack(gem, 1, 50), 4, 5, true, true, false, true, false, true, 15, 0, 0, 0xE3260C, 8, 8, 0, 26));
-		MetalRegistry.registerMetal(new Metal(51, "salt", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 51), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xD8D2D4, 12, 18, 20, 128));
-		MetalRegistry.registerMetal(new Metal(52, "sulphur", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(gem, 1, 52), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xF4D41F, 12, 18, 20, 128));
+		MetalRegistry.registerMetal(new Metal(51, "salt", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 51), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xD8D2D4, 12, 12, 20, 128));
+		MetalRegistry.registerMetal(new Metal(52, "sulphur", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(gem, 1, 52), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xF4D41F, 12, 12, 20, 128));
 
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
 			if(MetalRegistry.metals[i] != null) {

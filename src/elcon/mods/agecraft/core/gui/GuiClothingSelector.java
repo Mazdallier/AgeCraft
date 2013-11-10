@@ -187,17 +187,26 @@ public class GuiClothingSelector extends GuiScreen {
 		PlayerClothingClient.addPlayerClothing(clothing);
 	}
 
-	public void updateTempPieceClothing() {
-		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username + "-TempPiece");
-		clothing.clothingPieceExclusive = currentClothingType;
-		clothing.clothingColorExclusive = currentClothingColor;
-		PlayerClothingClient.updatePlayerClothing(mc.thePlayer.username + "-TempPiece");
-
+	public void updateTempPieceClothing() {		
+		int firstColor = -1;
 		for(int i = 0; i < 16; i++) {
 			boolean flag = clothingCategories.get(currentClothingCategory).clothing.get(ClothingRegistry.types[currentClothingType])[currentClothingPiece].colors[i];
 			((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + i)).enabled = flag;
 			((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + i)).drawButton = flag;
+			((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + i)).toggled = false;
+			if(flag && firstColor == -1) {
+				firstColor = i;
+			}
 		}
+		if(currentClothingColor == -1) {
+			currentClothingColor = firstColor;
+		}
+		((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + currentClothingColor)).toggled = true;
+		
+		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username + "-TempPiece");
+		clothing.clothingPieceExclusive = currentClothingType;
+		clothing.clothingColorExclusive = currentClothingColor;
+		PlayerClothingClient.updatePlayerClothing(mc.thePlayer.username + "-TempPiece");
 	}
 
 	@Override
@@ -298,12 +307,20 @@ public class GuiClothingSelector extends GuiScreen {
 			PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getClothingSelectorPacket(mc.thePlayer.username, clothingPiecesCart));
 			mc.thePlayer.closeScreen();
 		} else if(button.id >= 100 && button.id <= 1000 && rightList == 0) {
-			System.out.println(button.id - 100);
+			for(net.minecraft.client.gui.GuiButton b : buttonsClothingCategories.buttons) {
+				((GuiToggleButton) b).toggled = false;
+			}
+			((GuiToggleButton) button).toggled = true;
 			currentClothingCategory = button.id - 100;
 			updateClothingList();
 			updateTempPieceClothing();
 		} else if(button.id >= 1000 && rightList == 1) {
+			for(net.minecraft.client.gui.GuiButton b : buttonsClothingPieces.buttons) {
+				((GuiToggleButton) b).toggled = false;
+			}
+			((GuiToggleButton) button).toggled = true;
 			currentClothingPiece = button.id - 1000;
+			currentClothingColor = -1;
 			updateTempPieceClothing();
 		}
 	}

@@ -152,6 +152,11 @@ public class Trees extends ACComponent {
 		dust = new ItemWoodDust(12511).setUnlocalizedName("trees_dust");
 		bucket = new ItemWoodBucket(12512).setUnlocalizedName("trees_bucket");
 		
+		//register items
+		GameRegistry.registerItem(stick, "AC_trees_stick");
+		GameRegistry.registerItem(dust, "AC_trees_dust");
+		GameRegistry.registerItem(bucket, "AC_trees_bucket");
+		
 		//register tileentities
 		GameRegistry.registerTileEntity(TileEntityDNATree.class, "TileDNATree");
 	}

@@ -81,8 +81,13 @@ public class PlayerClothing implements Serializable {
 			if(clothingPieceExclusive > -1) {
 				ClothingPiece piece = clothingPiecesWorn.get(clothingPieceExclusive);
 				if(piece != null) {
-					BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingColorExclusive > 0 ? clothingColorExclusive : 0)));
-					g.drawImage(image, 0, 0, null);
+					try {
+						System.out.println(piece.typeID + " | " + piece.categoryID + " | " + piece.clothingID + " | " + piece.getActiveColor());
+						BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingColorExclusive > 0 ? clothingColorExclusive : 0)));
+						g.drawImage(image, 0, 0, null);
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
 			} else {
 				for(int i = 0; i < ClothingRegistry.typesSorted.length; i++) {
@@ -90,6 +95,7 @@ public class PlayerClothing implements Serializable {
 						try {
 							ClothingPiece piece = clothingPiecesWorn.get(ClothingRegistry.typesSorted[i].id);
 							if(piece != null) {
+								System.out.println(piece.typeID + " | " + piece.categoryID + " | " + piece.clothingID + " | " + clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id));
 								BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id))));
 								g.drawImage(image, 0, 0, null);
 							}

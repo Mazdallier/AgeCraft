@@ -1,5 +1,6 @@
 package elcon.mods.agecraft.core;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.core.ArmorRegistry.ArmorMaterial;
@@ -24,6 +25,12 @@ public class Armor extends ACComponent {
 		chestplate = (ItemArmor) new ItemChestplate(12600).setUnlocalizedName("armor_chestplate");
 		leggings = (ItemArmor) new ItemLeggings(12600).setUnlocalizedName("armor_leggings");
 		boots = (ItemArmor) new ItemBoots(12600).setUnlocalizedName("armor_boots");
+		
+		//register items
+		GameRegistry.registerItem(helmet, "AC_armor_helmet");
+		GameRegistry.registerItem(chestplate, "AC_armor_cheastplate");
+		GameRegistry.registerItem(leggings, "AC_armor_leggings");
+		GameRegistry.registerItem(boots, "AC_armor_boots");
 	}
 	
 	@Override

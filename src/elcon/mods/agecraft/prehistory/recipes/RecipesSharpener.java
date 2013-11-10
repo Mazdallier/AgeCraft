@@ -87,7 +87,7 @@ public class RecipesSharpener {
 		r[41] = true; r[42] = true; r[43] = true; r[44] = true; r[45] = true; r[46] = true;
 		r[49] = true; r[50] = true; r[51] = true; r[52] = true; r[53] = true;
 		r[58] = true; r[59] = true; r[60] = true;	
-		addRecipe(r, new ItemStack(PrehistoryAge.rockTanningTool));
+		addRecipe(r, new ItemStack(PrehistoryAge.rockSkinningTool));
 		
 		r = new boolean[64];
 		r[10] = true; r[11] = true; r[12] = true; r[13] = true;
