@@ -98,7 +98,7 @@ public class AgeCraftCore extends ACComponent {
 		ClothingRegistry.registerClothingType(new ClothingType(8, "boots", 6));
 		
 		//register clothing categories
-		ClothingRegistry.registerClothingCategory(new ClothingCategory(0, "test", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/test/test.zip"));
+		ClothingRegistry.registerClothingCategory(new ClothingCategory(0, "general", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/general/general.zip"));
 
 		//load clothing
 		ClothingUpdater clothingManager = new ClothingUpdater(new File(ElConCore.minecraftDir, File.separator + "clothing"));
