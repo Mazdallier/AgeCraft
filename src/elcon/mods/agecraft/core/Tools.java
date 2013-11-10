@@ -92,7 +92,7 @@ public class Tools extends ACComponent {
 			Block.stone, Block.cobblestone, Metals.ore, Metals.block, Metals.fence, Metals.fenceGate, Metals.door, Metals.trapdoor, Metals.ladder
 		}));
 		ToolRegistry.registerTool(new Tool(2, "axe", axe, 1, 2, true, true, true, new Block[]{
-			Trees.wood, Trees.log, Trees.woodWall, Trees.planks, Trees.fence, Trees.fenceGate, Trees.door, Trees.trapdoor, Trees.ladder
+			Trees.wood, Trees.log, Trees.woodWall, Trees.planks, Trees.fence, Trees.fenceGate, Trees.door, Trees.trapdoor, Trees.ladder, Trees.woodDNA, Trees.logDNA
 		}));
 		ToolRegistry.registerTool(new Tool(3, "shovel", shovel, 1, 2, true, true, true, new Block[]{
 			Block.grass, Block.dirt, Block.sand, Block.gravel, Block.snow, Block.blockSnow
@@ -113,7 +113,7 @@ public class Tools extends ACComponent {
 		ToolRegistry.registerTool(new Tool(10, "spear", spear, 2, 1, true, true, true, new Block[]{	
 		}));
 		ToolRegistry.registerTool(new Tool(11, "sickle", sickle, 1, 2, true, true, true, new Block[]{
-			Block.web, Block.tallGrass, Block.deadBush, Block.vine, Trees.leaves
+			Block.web, Block.tallGrass, Block.deadBush, Block.vine, Trees.leaves, Trees.leavesDNA, Trees.saplingDNA
 		}));
 		ToolRegistry.registerTool(new Tool(12, "pitchfork", pitchfork, 1, 2, true, true, true, new Block[]{	
 		}));

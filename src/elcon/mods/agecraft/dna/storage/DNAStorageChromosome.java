@@ -28,4 +28,15 @@ public class DNAStorageChromosome implements Serializable {
 	public String toString() {
 		return "[id=" + id + ", genes=" + ACUtil.arrayToString(genes) + "]";
 	}
+
+	public DNAStorageChromosome copy() {
+		DNAStorageChromosome dna = new DNAStorageChromosome(id);
+		dna.genes = new DNAStorageGene[genes.length];
+		for(int i = 0; i < genes.length; i++) {
+			if(genes[i] != null) {
+				dna.genes[i] = genes[i].copy();
+			}
+		}
+		return dna;
+	}
 }

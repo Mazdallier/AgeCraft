@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.TreeRegistry;
+import elcon.mods.agecraft.core.Trees;
 import elcon.mods.core.blocks.BlockExtendedMetadata;
 import elcon.mods.core.lang.LanguageManager;
 
@@ -191,7 +192,7 @@ public class BlockLeaves extends BlockExtendedMetadata {
 			world.spawnParticle("dripWater", d0, d1, d2, 0.0D, 0.0D, 0.0D);
 		}
 	}
-
+	
 	@Override
 	public int idDropped(int meta, Random random, int fortune) {
 		return 0;
@@ -228,7 +229,7 @@ public class BlockLeaves extends BlockExtendedMetadata {
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		int id = blockAccess.getBlockId(x, y, z);
-		return !fancyGraphics && id == blockID ? false : super.shouldSideBeRendered(blockAccess, x, y, z, side);
+		return !fancyGraphics && (id == blockID || id == Trees.leavesDNA.blockID) ? false : super.shouldSideBeRendered(blockAccess, x, y, z, side);
 	}
 	
 	@Override

@@ -68,4 +68,8 @@ public class DNAStorageGene implements Serializable {
 	public String toString() {
 		return "[id=" + id + ", allel1=" + allel1 + ", allel2=" + allel2 + ", active=" + active + "]"; 
 	}
+
+	public DNAStorageGene copy() {
+		return new DNAStorageGene(id, allel1, allel2, active);
+	}
 }

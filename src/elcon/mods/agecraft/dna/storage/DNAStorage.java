@@ -108,4 +108,15 @@ public class DNAStorage implements Serializable {
 	public String toString() {
 		return "[id=" + id + ", chromosomes=" + ACUtil.arrayToString(chromosomes) + "]";
 	}
+
+	public DNAStorage copy() {
+		DNAStorage dna = new DNAStorage(id);
+		dna.chromosomes = new DNAStorageChromosome[chromosomes.length];
+		for(int i = 0; i < chromosomes.length; i++) {
+			if(chromosomes[i] != null) {
+				dna.chromosomes[i] = chromosomes[i].copy();
+			}
+		}
+		return dna;
+	}
 }

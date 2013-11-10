@@ -28,6 +28,8 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	@Override
 	public boolean renderWorldBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
 		switch(modelID) {
+		case 91:
+			return renderBlockRotated(blockAccess, x, y, z, block, modelID, renderer);
 		case 100:
 			return renderBlockMetalFence(blockAccess, x, y, z, (BlockMetalFence) block, modelID, renderer);
 		case 101:
@@ -44,6 +46,27 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			return renderBlockWoodFenceGate(blockAccess, x, y, z, (BlockWoodFenceGate) block, modelID, renderer);
 		}
 		return false;
+	}
+	
+	private boolean renderBlockRotated(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
+		int direction = blockAccess.getBlockMetadata(x, y, z) & 3;
+		if(direction == 2) {
+			renderer.uvRotateEast = 1;
+			renderer.uvRotateWest = 1;
+			renderer.uvRotateTop = 1;
+			renderer.uvRotateBottom = 1;
+		} else if(direction == 1) {
+			renderer.uvRotateSouth = 1;
+			renderer.uvRotateNorth = 1;
+		}
+		boolean flag = renderer.renderStandardBlock(block, x, y, z);
+		renderer.uvRotateSouth = 0;
+		renderer.uvRotateEast = 0;
+		renderer.uvRotateWest = 0;
+		renderer.uvRotateNorth = 0;
+		renderer.uvRotateTop = 0;
+		renderer.uvRotateBottom = 0;
+		return flag;
 	}
 	
 	private boolean renderBlockMetalFence(IBlockAccess blockAccess, int x, int y, int z, BlockMetalFence block, int modelID, RenderBlocks renderer) {
@@ -633,6 +656,9 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
 		switch(modelID) {
+		case 91:
+			renderItemBlock(block, metadata, modelID, renderer);
+			break;
 		case 99:
 			GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);

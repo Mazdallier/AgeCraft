@@ -83,6 +83,7 @@ public class ACClientProxy extends ACCommonProxy {
 		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();
 		ACBlockRenderingHandlerWithIcon blockRenderingHandlerWithIcon = new ACBlockRenderingHandlerWithIcon();
 		RenderingRegistry.registerBlockHandler(90, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(91, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(99, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(100, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(101, blockRenderingHandler);

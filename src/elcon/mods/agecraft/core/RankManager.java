@@ -37,12 +37,14 @@ public class RankManager {
 		setRank("DJPrinceCap", developer);
 		setRank("RoryGee", developer);
 		setRank("poursa", developer);
+		setRank("cheesy919", developer);
 		setRank("iTz_Terrible", developer);
 		
 		setPlayerRank("ElConquistador", Color.TEXT_COLOR_BLUE, Color.TEXT_COLOR_PREFIX_BLUE, "");
 		setPlayerRank("DJPrinceCap", Color.TEXT_COLOR_GOLD, Color.TEXT_COLOR_PREFIX_GOLD, "");
-		setPlayerRank("RoryGee", Color.TEXT_COLOR_WHITE, Color.TEXT_COLOR_PREFIX_WHITE, "");
+		setPlayerRank("RoryGee", Color.TEXT_COLOR_PURPLE, Color.TEXT_COLOR_PREFIX_PURPLE, "");
 		setPlayerRank("poursa", Color.TEXT_COLOR_WHITE, Color.TEXT_COLOR_PREFIX_WHITE, "");
+		setPlayerRank("cheesy919", Color.TEXT_COLOR_GOLD, Color.TEXT_COLOR_PREFIX_GOLD, "");
 		setPlayerRank("iTz_Terrible", Color.TEXT_COLOR_GREEN, Color.TEXT_COLOR_PREFIX_GREEN, "");
 	}
 	
