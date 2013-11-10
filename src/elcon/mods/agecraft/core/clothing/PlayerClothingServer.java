@@ -38,9 +38,10 @@ public class PlayerClothingServer {
 		clothing.addClothingPieceAndWear(new ClothingPiece(2, 0, 0, 0), 0);
 		clothing.addClothingPieceAndWear(new ClothingPiece(3, 0, 0, 0), 0);
 		clothing.addClothingPieceAndWear(new ClothingPiece(4, 0, 0, 0), 0);
-		clothing.addClothingPieceAndWear(new ClothingPiece(5, 0, 0, 0, 1), 1);
-		clothing.addClothingPieceAndWear(new ClothingPiece(6, 0, 0, 0, 1), 1);
+		clothing.addClothingPieceAndWear(new ClothingPiece(5, 0, 0, 0), 0);
+		clothing.addClothingPieceAndWear(new ClothingPiece(6, 0, 0, 0), 0);
 		clothing.addClothingPieceAndWear(new ClothingPiece(7, 0, 0, 0), 0);
+		clothing.addClothingPieceAndWear(new ClothingPiece(8, 0, 0, 0), 0);
 		players.put(clothing.player, clothing);
 	}
 }
