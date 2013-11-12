@@ -25,7 +25,7 @@ public class ClothingRegistry {
 		
 		@Override
 		public int compare(ClothingType a, ClothingType b) {
-			if(a.index >= b.index) {
+			if(a.index <= b.index) {
 				return -1;
 			}
 			return 1;
@@ -42,7 +42,7 @@ public class ClothingRegistry {
 		
 		@Override
 		public int compare(String a, String b) {
-			if(map.get(a).renderIndex >= map.get(b).renderIndex) {
+			if(map.get(a).renderIndex <= map.get(b).renderIndex) {
 				return -1;
 			}
 			return 1;

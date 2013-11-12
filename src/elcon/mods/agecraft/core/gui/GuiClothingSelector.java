@@ -241,6 +241,8 @@ public class GuiClothingSelector extends GuiScreen {
 			}
 			((GuiToggleButton) button).toggled = true;
 			currentClothingType = ((GuiButtonClothingType) button).clothingTypeIndex;
+			currentClothingPiece = 0;
+			currentClothingColor = -1;
 			updateClothingList();
 			updateTempPieceClothing();
 		} else if(button.id == 21) {
@@ -248,6 +250,8 @@ public class GuiClothingSelector extends GuiScreen {
 			if(currentClothingCategory < 0) {
 				currentClothingCategory = 0;
 			}
+			currentClothingPiece = 0;
+			currentClothingColor = -1;
 			updateClothingList();
 			updateTempPieceClothing();
 		} else if(button.id == 22) {
@@ -266,6 +270,8 @@ public class GuiClothingSelector extends GuiScreen {
 			if(currentClothingCategory >= clothingCategories.size()) {
 				currentClothingCategory = clothingCategories.size() - 1;
 			}
+			currentClothingPiece = 0;
+			currentClothingColor = -1;
 			updateClothingList();
 			updateTempPieceClothing();
 		} else if(button.id == 24) {
@@ -273,6 +279,7 @@ public class GuiClothingSelector extends GuiScreen {
 			if(currentClothingPiece < 0) {
 				currentClothingPiece = 0;
 			}
+			currentClothingColor = -1;
 			updateTempPieceClothing();
 		} else if(button.id == 25) {
 			if(rightList == 1) {
@@ -290,6 +297,7 @@ public class GuiClothingSelector extends GuiScreen {
 			if(currentClothingPiece >= clothingPieces.size()) {
 				currentClothingPiece = clothingPieces.size() - 1;
 			}
+			currentClothingColor = -1;
 			updateTempPieceClothing();
 		} else if(button.id >= 27 && button.id < 43) {
 			for(int i = 0; i < 16; i++) {
@@ -305,9 +313,10 @@ public class GuiClothingSelector extends GuiScreen {
 				buttonsClothingPieces.actionPerformed((GuiButtonDefault) button);
 			}
 		} else if(button.id == 45) {
-			if(!clothingPiecesCart.containsKey(currentClothingType)) {
+			if(!clothingPiecesCart.containsKey(currentClothingType) && clothingPiecesCart.size() < 8) {
 				ClothingPiece piece = new ClothingPiece(clothingTypes.get(currentClothingType).name, clothingCategories.get(currentClothingCategory).name, clothingPieces.get(currentClothingPiece).name, currentClothingColor);
 				clothingPiecesCart.put(clothingTypes.get(currentClothingType).name, piece);
+				currentClothingColor = -1;
 				updateTempClothing();
 			}
 		} else if(button.id == 46) {
@@ -321,6 +330,8 @@ public class GuiClothingSelector extends GuiScreen {
 			}
 			((GuiToggleButton) button).toggled = true;
 			currentClothingCategory = button.id - 100;
+			currentClothingPiece = 0;
+			currentClothingColor = -1;
 			updateClothingList();
 			updateTempPieceClothing();
 		} else if(button.id >= 1000 && rightList == 1) {
