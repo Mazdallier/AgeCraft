@@ -1,39 +1,70 @@
 package elcon.mods.agecraft.core.clothing;
 
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.TreeMap;
+
 import elcon.mods.agecraft.ACLog;
 
 public class ClothingRegistry {
 
 	public static class ClothingType {
 
-		public int id;
 		public String name;
-		public int sortedID;
+		public int index;
+		public int renderIndex;
 		
-		public ClothingType(int id, String name, int sortedID) {
-			this.id = id;
+		public ClothingType(String name, int index, int renderIndex) {
 			this.name = name;
-			this.sortedID = sortedID;
+			this.index = index;
+			this.renderIndex = renderIndex;
 		}
 	}
 	
-	public static ClothingType[] types = new ClothingType[16];
-	public static ClothingType[] typesSorted = new ClothingType[16];
-	public static ClothingCategory[] categories = new ClothingCategory[64];
+	public static class ClothingTypeIndexComparator implements Comparator<ClothingType> {
+		
+		@Override
+		public int compare(ClothingType a, ClothingType b) {
+			if(a.index >= b.index) {
+				return -1;
+			}
+			return 1;
+		}
+	}
+	
+	public static class ClothingTypeRenderIndexComparator implements Comparator<String> {
+
+		public HashMap<String, ClothingType> map = new HashMap<String, ClothingType>();
+		
+		public ClothingTypeRenderIndexComparator(HashMap<String, ClothingType> map) {
+			this.map = map;
+		}
+		
+		@Override
+		public int compare(String a, String b) {
+			if(map.get(a).renderIndex >= map.get(b).renderIndex) {
+				return -1;
+			}
+			return 1;
+		}
+	}
+	
+	public static HashMap<String, ClothingType> types = new HashMap<String, ClothingType>();
+	public static TreeMap<String, ClothingType> typesSorted;
+	public static HashMap<String, ClothingCategory> categories = new HashMap<String, ClothingCategory>();
 	
 	public static void registerClothingType(ClothingType type) {
-		if(types[type.id] != null) {
-			ACLog.warning("[ClothingRegistry] Overriding existing clothing type (" + types[type.id] + ": " + types[type.id].name.toUpperCase() + ") with new clothing type (" + type.id + ": " + type.name.toUpperCase() + ")");
+		if(types.get(type.name) != null) {
+			ACLog.warning("[ClothingRegistry] Overriding existing clothing type (" + types.get(type.name).name.toUpperCase() + ") with new clothing type (" + type.name.toUpperCase() + ")");
 		}
-		types[type.id]= type;
-		typesSorted[type.sortedID] = type;
+		types.put(type.name, type);
 	}
 	
 	public static void registerClothingCategory(ClothingCategory category) {
-		if(categories[category.id] != null) {
-			ACLog.warning("[ClothingRegistry] Overriding existing clothing category (" + categories[category.id] + ": " + categories[category.id].name.toUpperCase() + ") with new clothing category (" + category.id + ": " + category.name.toUpperCase() + ")");
+		if(categories.get(category.name) != null) {
+			ACLog.warning("[ClothingRegistry] Overriding existing clothing category (" + categories.get(category.name).name.toUpperCase() + ") with new clothing category (" + category.name.toUpperCase() + ")");
 		}
-		categories[category.id]= category;
+		categories.put(category.name, category);
 	}
 	
 	public static void registerClothing(Clothing clothing) {
@@ -41,20 +72,16 @@ public class ClothingRegistry {
 	}
 
 	public static ClothingType getClothingType(String name) {
-		for(int i = 0; i < types.length; i++) {
-			if(types[i] != null && types[i].name.equals(name)) {
-				return types[i];
-			}
-		}
-		return null;
+		return types.get(name);
 	}
 	
 	public static ClothingCategory getClothingCategory(String name) {
-		for(int i = 0; i < categories.length; i++) {
-			if(categories[i] != null && categories[i].name.equals(name)) {
-				return categories[i];
-			}
-		}
-		return null;
+		return categories.get(name);
+	}
+
+	public static void sortClothingTypes() {
+		ClothingTypeRenderIndexComparator comparator = new ClothingTypeRenderIndexComparator(types);
+		typesSorted = new TreeMap<String, ClothingType>(comparator);
+		typesSorted.putAll(types);
 	}
 }

@@ -55,9 +55,8 @@ public class ClothingUpdater implements Runnable {
 			for(int i = 0; i < dirs.length; i++) {
 				ClothingCategory category = ClothingRegistry.getClothingCategory(dirs[i].getName());
 				categoryCount++;
-				for(int j = 0; j < ClothingRegistry.types.length; j++) {
-					if(ClothingRegistry.types[j] != null) {
-						ClothingType type = ClothingRegistry.types[j];
+				for(ClothingType type : ClothingRegistry.types.values()) {
+					if(type != null) {
 						File typeDir = new File(dirs[i], File.separator + type.name);
 						if(typeDir.exists()) {
 							File[] files = typeDir.listFiles();
@@ -67,7 +66,7 @@ public class ClothingUpdater implements Runnable {
 								String clothingName = files[k].getName().replaceAll("_" + clothingColor + ".png", "");
 								Clothing clothing = category.getClothing(type, clothingName);
 								if(clothing == null) {
-									clothing = new Clothing(category.getNextClothingID(type), clothingName, type, category);
+									clothing = new Clothing(clothingName, type, category);
 									category.registerClothing(clothing);
 									clothingCount++;
 								}
@@ -106,9 +105,8 @@ public class ClothingUpdater implements Runnable {
 			}
 		}
 		ArrayList<String> versionURLsChecked = new ArrayList<String>();
-		for(int i = 0; i < ClothingRegistry.categories.length; i++) {
-			if(ClothingRegistry.categories[i] != null) {
-				ClothingCategory category = ClothingRegistry.categories[i];
+		for(ClothingCategory category : ClothingRegistry.categories.values()) {
+			if(category != null) {
 				ACLog.info("[Clothing] Checking version for category: " + category.name);
 				if(!versionURLsChecked.contains(category.versionURL)) {
 					try {

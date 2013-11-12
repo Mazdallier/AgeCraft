@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -30,7 +31,6 @@ import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
 import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
-import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
@@ -144,7 +144,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		PlayerClothing clothing = PlayerClothingServer.getPlayerClothing(player);
 		int size = dat.readInt();
 		for(int i = 0; i < size; i++) {
-			ClothingPiece piece = new ClothingPiece(dat.readInt(), dat.readInt(), dat.readInt(), dat.readInt());
+			ClothingPiece piece = new ClothingPiece(dat.readUTF(), dat.readUTF(), dat.readUTF(), dat.readInt());
 			clothing.addClothingPieceAndWear(piece, piece.getActiveColor());
 		}
 		//TODO: make the player actually pay
@@ -213,18 +213,19 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			dos.writeInt(2);
 			dos.writeUTF(clothing.player);
 			dos.writeInt(clothing.clothingPiecesOwned.size());
-			for(int typeID : clothing.clothingPiecesOwned.keySet()) {
-				ArrayList<ClothingPiece> pieces = clothing.clothingPiecesOwned.get(typeID);
+			for(String type : clothing.clothingPiecesOwned.keySet()) {
+				ArrayList<ClothingPiece> pieces = clothing.clothingPiecesOwned.get(type);
+				dos.writeUTF(type);
 				dos.writeInt(pieces.size());
 				for(ClothingPiece piece : pieces) {
-					dos.writeInt(piece.categoryID);
-					dos.writeInt(piece.clothingID);
+					dos.writeUTF(piece.categoryID);
+					dos.writeUTF(piece.clothingID);
 					for(int i = 0; i < 16; i++) {
 						dos.writeBoolean(piece.colors[i]);
 					}
 					if(clothing.wearsClothingPiece(piece)) {
 						dos.writeBoolean(true);
-						dos.writeInt(clothing.clothingPiecesWornColor.get(typeID));
+						dos.writeInt(clothing.clothingPiecesWornColor.get(type));
 					} else {
 						dos.writeBoolean(false);
 					}
@@ -252,18 +253,19 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			for(PlayerClothing clothing : PlayerClothingServer.players.values()) {
 				dos.writeUTF(clothing.player);
 				dos.writeInt(clothing.clothingPiecesOwned.size());
-				for(int typeID : clothing.clothingPiecesOwned.keySet()) {
-					ArrayList<ClothingPiece> pieces = clothing.clothingPiecesOwned.get(typeID);
+				for(String type : clothing.clothingPiecesOwned.keySet()) {
+					ArrayList<ClothingPiece> pieces = clothing.clothingPiecesOwned.get(type);
+					dos.writeUTF(type);
 					dos.writeInt(pieces.size());
 					for(ClothingPiece piece : pieces) {
-						dos.writeInt(piece.categoryID);
-						dos.writeInt(piece.clothingID);
+						dos.writeUTF(piece.categoryID);
+						dos.writeUTF(piece.clothingID);
 						for(int i = 0; i < 16; i++) {
 							dos.writeBoolean(piece.colors[i]);
 						}
 						if(clothing.wearsClothingPiece(piece)) {
 							dos.writeBoolean(true);
-							dos.writeInt(clothing.clothingPiecesWornColor.get(typeID));
+							dos.writeInt(clothing.clothingPiecesWornColor.get(type));
 						} else {
 							dos.writeBoolean(false);
 						}
@@ -326,14 +328,15 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		return null;
 	}
 	
-	public static Packet getClothingSelectorOpenPacket(boolean[] changeable) {
+	public static Packet getClothingSelectorOpenPacket(List<String> changeable) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			DataOutputStream dos = new DataOutputStream(bos);
 			Packet250CustomPayload packet = new Packet250CustomPayload();
 			dos.writeInt(6);
-			for(int i = 0; i < ClothingRegistry.types.length; i++) {
-				dos.writeBoolean(changeable[i]);
+			dos.writeInt(changeable.size());
+			for(String s : changeable) {
+				dos.writeUTF(s);
 			}
 			dos.close();
 			packet.channel = "ACClothing";

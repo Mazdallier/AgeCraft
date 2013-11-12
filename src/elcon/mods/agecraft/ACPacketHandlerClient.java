@@ -2,6 +2,7 @@ package elcon.mods.agecraft;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.block.Block;
@@ -23,8 +24,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
-import elcon.mods.agecraft.core.clothing.ClothingRegistry;
-import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
@@ -136,9 +135,10 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		clothing.clothingPiecesWornColor.clear();
 		int types = dat.readInt();
 		for(int i = 0; i < types; i++) {
+			String type = dat.readUTF();
 			int pieces = dat.readInt();
 			for(int j = 0; j < pieces; j++) {
-				ClothingPiece piece = new ClothingPiece(i, dat.readInt(), dat.readInt());
+				ClothingPiece piece = new ClothingPiece(type, dat.readUTF(), dat.readUTF());
 				for(int k = 0; k < 16; k++) {
 					piece.colors[k] = dat.readBoolean();
 				}
@@ -161,9 +161,10 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			}
 			int types = dat.readInt();
 			for(int j = 0; j < types; j++) {
+				String type = dat.readUTF();
 				int pieces = dat.readInt();
 				for(int k = 0; k < pieces; k++) {
-					ClothingPiece piece = new ClothingPiece(j, dat.readInt(), dat.readInt());
+					ClothingPiece piece = new ClothingPiece(type, dat.readUTF(), dat.readUTF());
 					for(int l = 0; l < 16; l++) {
 						piece.colors[l] = dat.readBoolean();
 					}
@@ -196,9 +197,10 @@ public class ACPacketHandlerClient implements IPacketHandler {
 	}
 	
 	private void handleClothingSelectorOpen(ByteArrayDataInput dat) {
-		boolean[] changeable = new boolean[ClothingRegistry.types.length];
-		for(int i = 0; i < ClothingRegistry.types.length; i++) {
-			changeable[i] = dat.readBoolean();
+		ArrayList<String> changeable = new ArrayList<String>();
+		int size = dat.readInt();
+		for(int i = 0; i < size; i++) {
+			changeable.add(dat.readUTF());
 		}
 		Minecraft.getMinecraft().displayGuiScreen(new GuiClothingSelector(changeable));
 	}
@@ -323,7 +325,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		return null;
 	}
 
-	public static Packet getClothingSelectorPacket(String player, HashMap<ClothingType, ClothingPiece> clothingPieces) {
+	public static Packet getClothingSelectorPacket(String player, HashMap<String, ClothingPiece> clothingPieces) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			DataOutputStream dos = new DataOutputStream(bos);
@@ -332,9 +334,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			dos.writeUTF(player);
 			dos.writeInt(clothingPieces.size());
 			for(ClothingPiece piece : clothingPieces.values()) {
-				dos.writeInt(piece.typeID);
-				dos.writeInt(piece.categoryID);
-				dos.writeInt(piece.clothingID);
+				dos.writeUTF(piece.typeID);
+				dos.writeUTF(piece.categoryID);
+				dos.writeUTF(piece.clothingID);
 				dos.writeInt(piece.getActiveColor());
 			}
 			dos.close();

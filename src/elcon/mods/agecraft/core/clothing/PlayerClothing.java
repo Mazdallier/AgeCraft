@@ -10,6 +10,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import elcon.mods.agecraft.ACLog;
+import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 
 public class PlayerClothing implements Serializable {
 
@@ -17,18 +18,18 @@ public class PlayerClothing implements Serializable {
 		
 		private static final long serialVersionUID = 1L;
 		
-		public int typeID;
-		public int categoryID;
-		public int clothingID;
+		public String typeID;
+		public String categoryID;
+		public String clothingID;
 		public boolean[] colors = new boolean[16];
 		
-		public ClothingPiece(int typeID, int categoryID, int clothingID) {
+		public ClothingPiece(String typeID, String categoryID, String clothingID) {
 			this.typeID = typeID;
 			this.categoryID = categoryID;
 			this.clothingID = clothingID;
 		}
 
-		public ClothingPiece(int typeID, int categoryID, int clothingID, int... colors) {
+		public ClothingPiece(String typeID, String categoryID, String clothingID, int... colors) {
 			this.typeID = typeID;
 			this.categoryID = categoryID;
 			this.clothingID = clothingID;
@@ -45,16 +46,21 @@ public class PlayerClothing implements Serializable {
 			}
 			return 0;
 		}
+		
+		@Override
+		public String toString() {
+			return "[typeID=" + typeID + ", categoryID=" + categoryID + ", clothigID=" + clothingID + ", activeColor=" + getActiveColor() + "]";
+		}
 	}
 	
 	private static final long serialVersionUID = 1L;
 	
 	public String player;
 	public int glTextureID = -1;
-	public HashMap<Integer, ArrayList<ClothingPiece>> clothingPiecesOwned = new HashMap<Integer, ArrayList<ClothingPiece>>();
-	public HashMap<Integer, ClothingPiece> clothingPiecesWorn = new HashMap<Integer, ClothingPiece>();
-	public HashMap<Integer, Integer> clothingPiecesWornColor = new HashMap<Integer, Integer>();
-	public int clothingPieceExclusive = -1;
+	public HashMap<String, ArrayList<ClothingPiece>> clothingPiecesOwned = new HashMap<String, ArrayList<ClothingPiece>>();
+	public HashMap<String, ClothingPiece> clothingPiecesWorn = new HashMap<String, ClothingPiece>();
+	public HashMap<String, Integer> clothingPiecesWornColor = new HashMap<String, Integer>();
+	public String clothingTypeExclusive = "";
 	public int clothingColorExclusive = -1;
 	
 	public PlayerClothing(String player) {
@@ -78,25 +84,23 @@ public class PlayerClothing implements Serializable {
 			BufferedImage outputImage = new BufferedImage(64, 32, BufferedImage.TYPE_INT_ARGB);
 			Graphics g = outputImage.getGraphics();
 			
-			if(clothingPieceExclusive > -1) {
-				ClothingPiece piece = clothingPiecesWorn.get(clothingPieceExclusive);
+			if(clothingTypeExclusive.length() > 0) {
+				ClothingPiece piece = clothingPiecesWorn.get(clothingTypeExclusive);
 				if(piece != null) {
 					try {
-						System.out.println(piece.typeID + " | " + piece.categoryID + " | " + piece.clothingID + " | " + piece.getActiveColor());
-						BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingColorExclusive > 0 ? clothingColorExclusive : 0)));
+						BufferedImage image = ImageIO.read(new File(clothingDir, piece.categoryID + File.separator + piece.typeID + File.separator + ClothingRegistry.categories.get(piece.categoryID).getClothing(ClothingRegistry.types.get(piece.typeID), piece.clothingID).getFileName(clothingColorExclusive > 0 ? clothingColorExclusive : 0)));
 						g.drawImage(image, 0, 0, null);
 					} catch(Exception e) {
 						e.printStackTrace();
 					}
 				}
 			} else {
-				for(int i = 0; i < ClothingRegistry.typesSorted.length; i++) {
-					if(ClothingRegistry.typesSorted[i] != null) {
+				for(ClothingType type : ClothingRegistry.typesSorted.values()) {
+					if(type != null) {
 						try {
-							ClothingPiece piece = clothingPiecesWorn.get(ClothingRegistry.typesSorted[i].id);
+							ClothingPiece piece = clothingPiecesWorn.get(type.name);
 							if(piece != null) {
-								System.out.println(piece.typeID + " | " + piece.categoryID + " | " + piece.clothingID + " | " + clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id));
-								BufferedImage image = ImageIO.read(new File(clothingDir, ClothingRegistry.categories[piece.categoryID].name + File.separator + ClothingRegistry.types[piece.typeID].name + File.separator + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).getFileName(clothingPiecesWornColor.get(ClothingRegistry.typesSorted[i].id))));
+								BufferedImage image = ImageIO.read(new File(clothingDir, piece.categoryID + File.separator + piece.typeID + File.separator + ClothingRegistry.categories.get(piece.categoryID).getClothing(ClothingRegistry.types.get(piece.typeID), piece.clothingID).getFileName(clothingPiecesWornColor.get(type.name))));
 								g.drawImage(image, 0, 0, null);
 							}
 						} catch(Exception e) {

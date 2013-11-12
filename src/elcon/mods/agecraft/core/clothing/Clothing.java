@@ -5,23 +5,21 @@ import elcon.mods.core.lang.LanguageManager;
 
 public class Clothing {
 	
-	public int id;
 	public String name;
 	public ClothingType type;
 	public ClothingCategory category;
 	public boolean[] colors = new boolean[16];
 	public int price;
 	
-	public Clothing(int id, String name, ClothingType type, ClothingCategory category) {
-		this.id = id;
+	public Clothing(String name, ClothingType type, ClothingCategory category) {
 		this.name = name;
 		this.type = type;
 		this.category = category;
 		disableAllColors();
 	}
 	
-	public Clothing(int id, String name, ClothingType type, ClothingCategory category, boolean[] colors) {
-		this(id, name, type, category);
+	public Clothing(String name, ClothingType type, ClothingCategory category, boolean[] colors) {
+		this(name, type, category);
 		this.colors = colors;
 	}
 	

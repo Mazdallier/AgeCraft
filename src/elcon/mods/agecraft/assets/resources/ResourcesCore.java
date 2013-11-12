@@ -162,10 +162,10 @@ public class ResourcesCore extends Resources {
 					}
 				} else if(metal.type == OreType.GEM) {
 					if(metal.hasIngot) {
-						metal.ingot = iconRegister.registerIcon("agecraft:metals/gems/gem" + ElConCore.firstUpperCase(metal.name));
-						if(metal.hasDust) {
-							metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/gems/dust" + ElConCore.firstUpperCase(metal.name));
-						}
+						metal.ingot = iconRegister.registerIcon("agecraft:metals/gems/gem" + ElConCore.firstUpperCase(metal.name));	
+					}
+					if(metal.hasDust) {
+						metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/gems/dust" + ElConCore.firstUpperCase(metal.name));
 					}
 				}
 			}

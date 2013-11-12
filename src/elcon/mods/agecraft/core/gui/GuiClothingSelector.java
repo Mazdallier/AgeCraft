@@ -1,7 +1,10 @@
 package elcon.mods.agecraft.core.gui;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -22,6 +25,7 @@ import elcon.mods.agecraft.core.clothing.Clothing;
 import elcon.mods.agecraft.core.clothing.ClothingCategory;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
+import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingTypeIndexComparator;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
@@ -51,16 +55,17 @@ public class GuiClothingSelector extends GuiScreen {
 	public int currentClothingPiece;
 	public int currentClothingColor;
 
+	public ArrayList<ClothingType> clothingTypes = new ArrayList<ClothingType>();
 	public ArrayList<ClothingCategory> clothingCategories = new ArrayList<ClothingCategory>();
 	public ArrayList<Clothing> clothingPieces = new ArrayList<Clothing>();
 
-	public HashMap<ClothingType, ClothingPiece> clothingPiecesCart = new HashMap<ClothingType, ClothingPiece>();
+	public HashMap<String, ClothingPiece> clothingPiecesCart = new HashMap<String, ClothingPiece>();
 	public int totalPrice;
 
-	public boolean[] clothingTypesChangeable = new boolean[ClothingRegistry.types.length];
+	public List<String> clothingTypesChangeable;
 	public int clothingTypesChangeableCount;
 	
-	public GuiClothingSelector(boolean[] clothingTypesChangable) {
+	public GuiClothingSelector(List<String> clothingTypesChangable) {
 		this.clothingTypesChangeable = clothingTypesChangable;
 		xSize = 256;
 		ySize = 166;
@@ -71,12 +76,13 @@ public class GuiClothingSelector extends GuiScreen {
 
 	@Override
 	public void initGui() {
+		clothingTypes.clear();
+		clothingTypes.addAll(ClothingRegistry.types.values());
+		Collections.sort(clothingTypes, new ClothingTypeIndexComparator());
+		
 		clothingCategories.clear();
-		for(int i = 0; i < ClothingRegistry.categories.length; i++) {
-			if(ClothingRegistry.categories[i] != null) {
-				clothingCategories.add(ClothingRegistry.categories[i]);
-			}
-		}
+		clothingCategories.addAll(ClothingRegistry.categories.values());
+				
 		currentClothingType = 0;
 		currentClothingCategory = 0;
 		currentClothingPiece = 0;
@@ -87,7 +93,7 @@ public class GuiClothingSelector extends GuiScreen {
 		PlayerClothingClient.addPlayerClothing(clothing);
 		clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();
 		clothing.player = mc.thePlayer.username + "-TempPiece";
-		clothing.clothingPieceExclusive = currentClothingType;
+		clothing.clothingTypeExclusive = clothingTypes.get(currentClothingType).name;
 		clothing.clothingColorExclusive = currentClothingColor;
 		PlayerClothingClient.addPlayerClothing(clothing);
 
@@ -111,9 +117,9 @@ public class GuiClothingSelector extends GuiScreen {
 		buttonsClothingType = new GuiButtonListVertical(guiTop + 16, 16, (GuiButtonDefault) buttonList.get(3), (GuiButtonDefault) buttonList.get(4), 8);
 		int index = 0;
 		clothingTypesChangeableCount = 0;
-		for(int i = 0; i < ClothingRegistry.types.length; i++) {
-			if(ClothingRegistry.types[i] != null && clothingTypesChangeable[i]) {
-				buttonsClothingType.addButton(new GuiButtonClothingType(5 + index, guiLeft + 10, guiTop + 16 + index * 16, 0, 166, 68, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing.type." + ClothingRegistry.types[i].name), i));
+		for(ClothingType type : clothingTypes) {
+			if(type != null && clothingTypesChangeable.contains(type.name)) {
+				buttonsClothingType.addButton(new GuiButtonClothingType(5 + index, guiLeft + 10, guiTop + 16 + index * 16, 0, 166, 68, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing.type." + type.name), type.name, index));
 				index++;
 				clothingTypesChangeableCount++;
 			}
@@ -160,14 +166,16 @@ public class GuiClothingSelector extends GuiScreen {
 	}
 
 	public void updateClothingList() {
-		Clothing[] clothingPiecesArray = clothingCategories.get(currentClothingCategory).clothing.get(ClothingRegistry.types[currentClothingType]);
+		Collection<Clothing> clothingPiecesList = clothingCategories.get(currentClothingCategory).clothing.get(ClothingRegistry.types.get(clothingTypes.get(currentClothingType).name)).values();
 		clothingPieces.clear();
+		clothingPieces.addAll(clothingPiecesList);
 		buttonsClothingPieces.buttons.clear();
-		if(clothingPiecesArray != null) {
-			for(int i = 0; i < clothingPiecesArray.length; i++) {
-				if(clothingPiecesArray[i] != null) {
-					clothingPieces.add(clothingPiecesArray[i]);
-					buttonsClothingPieces.addButton(new GuiToggleButton(1000 + i, guiLeft + 267, guiTop + 19 + i * 16, 140, 166, 82, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing." + clothingPiecesArray[i].category.name + "." + clothingPiecesArray[i].type.name + "." + clothingPiecesArray[i].name), true));
+		if(clothingPiecesList != null) {
+			int index = 0;
+			for(Clothing clothing : clothingPiecesList) {
+				if(clothing != null) {
+					buttonsClothingPieces.addButton(new GuiToggleButton(1000 + index, guiLeft + 267, guiTop + 19 + index * 16, 140, 166, 82, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing." + clothing.category.name + "." + clothing.type.name + "." + clothing.name), true));
+					index++;
 				}
 			}
 		}
@@ -182,15 +190,15 @@ public class GuiClothingSelector extends GuiScreen {
 		for(ClothingPiece piece : clothingPiecesCart.values()) {
 			clothing.clothingPiecesWorn.put(piece.typeID, piece);
 			clothing.clothingPiecesWornColor.put(piece.typeID, piece.getActiveColor());
-			totalPrice += ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).price;
+			totalPrice += ClothingRegistry.categories.get(piece.categoryID).getClothing(ClothingRegistry.types.get(piece.typeID), piece.clothingID).price;
 		}
 		PlayerClothingClient.addPlayerClothing(clothing);
 	}
 
-	public void updateTempPieceClothing() {		
+	public void updateTempPieceClothing() {
 		int firstColor = -1;
 		for(int i = 0; i < 16; i++) {
-			boolean flag = clothingCategories.get(currentClothingCategory).clothing.get(ClothingRegistry.types[currentClothingType])[currentClothingPiece].colors[i];
+			boolean flag = clothingPieces.get(currentClothingPiece).colors[i];
 			((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + i)).enabled = flag;
 			((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + i)).drawButton = flag;
 			((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + i)).toggled = false;
@@ -204,7 +212,8 @@ public class GuiClothingSelector extends GuiScreen {
 		((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + currentClothingColor)).toggled = true;
 		
 		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username + "-TempPiece");
-		clothing.clothingPieceExclusive = currentClothingType;
+		clothing.addClothingPieceAndWear(new ClothingPiece(clothingTypes.get(currentClothingType).name, clothingCategories.get(currentClothingCategory).name, clothingPieces.get(currentClothingPiece).name, currentClothingColor), currentClothingColor);
+		clothing.clothingTypeExclusive = clothingTypes.get(currentClothingType).name;
 		clothing.clothingColorExclusive = currentClothingColor;
 		PlayerClothingClient.updatePlayerClothing(mc.thePlayer.username + "-TempPiece");
 	}
@@ -231,7 +240,7 @@ public class GuiClothingSelector extends GuiScreen {
 				((GuiToggleButton) buttonList.get(i)).toggled = false;
 			}
 			((GuiToggleButton) button).toggled = true;
-			currentClothingType = ((GuiButtonClothingType) button).clothingType;
+			currentClothingType = ((GuiButtonClothingType) button).clothingTypeIndex;
 			updateClothingList();
 			updateTempPieceClothing();
 		} else if(button.id == 21) {
@@ -296,9 +305,9 @@ public class GuiClothingSelector extends GuiScreen {
 				buttonsClothingPieces.actionPerformed((GuiButtonDefault) button);
 			}
 		} else if(button.id == 45) {
-			if(!clothingPiecesCart.containsKey(ClothingRegistry.types[currentClothingType])) {
-				ClothingPiece piece = new ClothingPiece(currentClothingType, currentClothingCategory, currentClothingPiece, currentClothingColor);
-				clothingPiecesCart.put(ClothingRegistry.types[currentClothingType], piece);
+			if(!clothingPiecesCart.containsKey(currentClothingType)) {
+				ClothingPiece piece = new ClothingPiece(clothingTypes.get(currentClothingType).name, clothingCategories.get(currentClothingCategory).name, clothingPieces.get(currentClothingPiece).name, currentClothingColor);
+				clothingPiecesCart.put(clothingTypes.get(currentClothingType).name, piece);
 				updateTempClothing();
 			}
 		} else if(button.id == 46) {
@@ -357,7 +366,7 @@ public class GuiClothingSelector extends GuiScreen {
 			if(x >= guiLeft - 96 && x < guiLeft - 8 && y >= guiTop + 4 && y < guiTop + 132) {
 				int cartItemIndex = (int) Math.floor((y - guiTop - 4) / 16);
 				if(cartItemIndex < clothingPiecesCart.size()) {
-					clothingPiecesCart.remove(clothingPiecesCart.keySet().toArray(new ClothingType[clothingPiecesCart.size()])[cartItemIndex]);
+					clothingPiecesCart.remove(clothingPiecesCart.keySet().toArray(new String[clothingPiecesCart.size()])[cartItemIndex]);
 					updateTempClothing();
 				}
 			}
@@ -403,11 +412,11 @@ public class GuiClothingSelector extends GuiScreen {
 		}
 		if(showLeftList) {		
 			int i = 0;
-			for(ClothingType type : clothingPiecesCart.keySet()) {
+			for(String type : clothingPiecesCart.keySet()) {
 				ClothingPiece piece = clothingPiecesCart.get(type);
-				stringToDraw = LanguageManager.getLocalization("clothing." + ClothingRegistry.categories[piece.categoryID].name + "." + ClothingRegistry.types[piece.typeID].name + "." + ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).name);
+				stringToDraw = LanguageManager.getLocalization("clothing." + piece.categoryID + "." + piece.typeID + "." + piece.clothingID);
 				mc.fontRenderer.drawString(stringToDraw, guiLeft - 94, guiTop + 6 + 16 * i, 0x404040);
-				stringToDraw = Integer.toString(ClothingRegistry.categories[piece.categoryID].getClothing(ClothingRegistry.types[piece.typeID], piece.clothingID).price);
+				stringToDraw = Integer.toString(ClothingRegistry.categories.get(piece.categoryID).getClothing(ClothingRegistry.types.get(piece.typeID), piece.clothingID).price);
 				mc.fontRenderer.drawString(stringToDraw, guiLeft - 10 - mc.fontRenderer.getStringWidth(stringToDraw), guiTop + 6 + 16 * i, 0x404040);
 				i++;
 			}

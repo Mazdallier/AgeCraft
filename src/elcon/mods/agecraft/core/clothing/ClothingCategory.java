@@ -9,16 +9,14 @@ import elcon.mods.core.lang.LanguageManager;
 
 public class ClothingCategory {
 
-	public int id;
 	public String name;
 	public String versionURL;
 	public String updateURL;
 	public ArrayList<String> expansionURLs = new ArrayList<String>();
 	
-	public HashMap<ClothingType, Clothing[]> clothing = new HashMap<ClothingType, Clothing[]>();
+	public HashMap<ClothingType, HashMap<String, Clothing>> clothing = new HashMap<ClothingType, HashMap<String, Clothing>>();
 	
-	public ClothingCategory(int id, String name, String versionURL, String updateURL) {
-		this.id = id;
+	public ClothingCategory(String name, String versionURL, String updateURL) {
 		this.name = name;
 		this.versionURL = versionURL;
 		this.updateURL = updateURL;
@@ -30,44 +28,18 @@ public class ClothingCategory {
 	
 	public void registerClothing(Clothing c) {
 		if(!clothing.containsKey(c.type)) {
-			
+			clothing.put(c.type, new HashMap<String, Clothing>());
 		}
-		Clothing[] clothings = clothing.get(c.type);
-		if(clothings[c.id] != null) {
-			ACLog.warning("[ClothingRegistry] Overriding existing clothing (" + clothings[c.id].id + ": " + clothings[c.id].name.toUpperCase() + ") with new clothing (" + c.id + ": " + c.name.toUpperCase() + ")");
+		HashMap<String, Clothing> clothings = clothing.get(c.type);
+		if(clothings.get(c.name) != null) {
+			ACLog.warning("[ClothingRegistry] Overriding existing clothing (" + clothings.get(c.name).name.toUpperCase() + ") with new clothing (" + c.name.toUpperCase() + ")");
 		}
-		clothings[c.id] = c;
-	}
-	
-	public int getNextClothingID(ClothingType type) {
-		if(!clothing.containsKey(type)) {
-			clothing.put(type, new Clothing[1024]);
-			return 0;
-		}
-		Clothing[] clothings = clothing.get(type);
-		for(int i = 0; i < clothings.length; i++) {
-			if(clothings[i] == null) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
-	public Clothing getClothing(ClothingType type, int id) {
-		if(clothing.containsKey(type)) {
-			return clothing.get(type)[id];
-		}
-		return null;
+		clothings.put(c.name, c);
 	}
 	
 	public Clothing getClothing(ClothingType type, String name) {
 		if(clothing.containsKey(type)) {
-			Clothing[] clothings = clothing.get(type);
-			for(int i = 0; i < clothings.length; i++) {
-				if(clothings[i] != null && clothings[i].name.equalsIgnoreCase(name)) {
-					return clothings[i];
-				}
-			}
+			return clothing.get(type).get(name);
 		}
 		return null;
 	}

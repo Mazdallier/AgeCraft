@@ -33,15 +33,15 @@ public class PlayerClothingServer {
 
 	public static void createDefaultClothing(String username) {
 		PlayerClothing clothing = new PlayerClothing(username);
-		clothing.addClothingPieceAndWear(new ClothingPiece(0, 0, 0, 0), 0);
-		clothing.addClothingPieceAndWear(new ClothingPiece(1, 0, 0, 0, 3), 3);
-		clothing.addClothingPieceAndWear(new ClothingPiece(2, 0, 0, 0), 0);
-		clothing.addClothingPieceAndWear(new ClothingPiece(3, 0, 0, 0, 1), 1);
-		clothing.addClothingPieceAndWear(new ClothingPiece(4, 0, 0, 0, 3), 3);
-		clothing.addClothingPieceAndWear(new ClothingPiece(5, 0, 0, 0), 0);
-		clothing.addClothingPieceAndWear(new ClothingPiece(6, 0, 0, 0, 12), 12);
-		clothing.addClothingPieceAndWear(new ClothingPiece(7, 0, 0, 0, 4), 4);
-		clothing.addClothingPieceAndWear(new ClothingPiece(8, 0, 0, 0, 3), 3);
+		clothing.addClothingPieceAndWear(new ClothingPiece("skin", "general", "steve", 0), 0);
+		clothing.addClothingPieceAndWear(new ClothingPiece("hair", "general", "steve", 3), 3);
+		clothing.addClothingPieceAndWear(new ClothingPiece("eyes", "general", "steve", 0), 0);
+		clothing.addClothingPieceAndWear(new ClothingPiece("mouth", "general", "steve", 1), 1);
+		clothing.addClothingPieceAndWear(new ClothingPiece("facialHair", "general", "steve", 3), 3);
+		clothing.addClothingPieceAndWear(new ClothingPiece("hat", "general", "steve", 0), 0);
+		clothing.addClothingPieceAndWear(new ClothingPiece("shirt", "general", "steve", 12), 12);
+		clothing.addClothingPieceAndWear(new ClothingPiece("pants", "general", "steve", 4), 4);
+		clothing.addClothingPieceAndWear(new ClothingPiece("boots", "general", "steve", 3), 3);
 		players.put(clothing.player, clothing);
 	}
 }

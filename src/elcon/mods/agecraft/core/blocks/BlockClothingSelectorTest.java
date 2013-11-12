@@ -1,5 +1,7 @@
 package elcon.mods.agecraft.core.blocks;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,12 +22,8 @@ public class BlockClothingSelectorTest extends Block {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(!world.isRemote) {
-			boolean[] changeable = new boolean[ClothingRegistry.types.length];
-			for(int i = 0; i < ClothingRegistry.types.length; i++) {
-				if(ClothingRegistry.types[i] != null) {
-					changeable[i] = true;
-				}
-			}
+			ArrayList<String> changeable = new ArrayList<String>();
+			changeable.addAll(ClothingRegistry.types.keySet());
 			PacketDispatcher.sendPacketToPlayer(ACPacketHandler.getClothingSelectorOpenPacket(changeable), (Player) player);
 		}
 		return true;

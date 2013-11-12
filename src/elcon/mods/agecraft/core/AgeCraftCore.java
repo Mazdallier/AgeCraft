@@ -87,18 +87,18 @@ public class AgeCraftCore extends ACComponent {
 	
 	public void init() {
 		//register clothing types
-		ClothingRegistry.registerClothingType(new ClothingType(0, "skin", 0));
-		ClothingRegistry.registerClothingType(new ClothingType(1, "hair", 3));
-		ClothingRegistry.registerClothingType(new ClothingType(2, "eyes", 2));
-		ClothingRegistry.registerClothingType(new ClothingType(3, "mouth", 1));
-		ClothingRegistry.registerClothingType(new ClothingType(4, "facialHair", 4));
-		ClothingRegistry.registerClothingType(new ClothingType(5, "hat", 5));
-		ClothingRegistry.registerClothingType(new ClothingType(6, "shirt", 8));
-		ClothingRegistry.registerClothingType(new ClothingType(7, "pants", 7));
-		ClothingRegistry.registerClothingType(new ClothingType(8, "boots", 6));
+		ClothingRegistry.registerClothingType(new ClothingType("skin", 0, 0));
+		ClothingRegistry.registerClothingType(new ClothingType("hair", 1, 3));
+		ClothingRegistry.registerClothingType(new ClothingType("eyes", 2, 2));
+		ClothingRegistry.registerClothingType(new ClothingType("mouth", 3, 1));
+		ClothingRegistry.registerClothingType(new ClothingType("facialHair", 4, 4));
+		ClothingRegistry.registerClothingType(new ClothingType("hat", 5, 5));
+		ClothingRegistry.registerClothingType(new ClothingType("shirt", 6, 8));
+		ClothingRegistry.registerClothingType(new ClothingType("pants", 7, 7));
+		ClothingRegistry.registerClothingType(new ClothingType("boots", 8, 6));
 		
 		//register clothing categories
-		ClothingRegistry.registerClothingCategory(new ClothingCategory(0, "general", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/general/general.zip"));
+		ClothingRegistry.registerClothingCategory(new ClothingCategory("general", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/general/general.zip"));
 
 		//load clothing
 		ClothingUpdater clothingUpdater = new ClothingUpdater(new File(ElConCore.minecraftDir, File.separator + "clothing"));
@@ -112,6 +112,9 @@ public class AgeCraftCore extends ACComponent {
 		
 		//register biomes
 		BiomeRegistry.registerBiomes();
+		
+		//sort clothing types
+		ClothingRegistry.sortClothingTypes();
 	}
 	
 	public void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
