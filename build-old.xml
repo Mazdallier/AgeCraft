@@ -16,6 +16,34 @@
 	-->
 	<property file="private.properties" prefix="private" />
 
+	<!-- Minecraft Forge -->
+	<property name="minecraftforge_src_archive" value="minecraftforge-src-${build.minecraft_version}-${build.forge_version}.zip" />
+	<property name="minecraftforge_src_archive_location" value="http://files.minecraftforge.net/minecraftforge/${minecraftforge_src_archive}" />
+
+	<target name="forge-clean">
+		<delete dir="${build.base_location}/forge" />
+	</target>
+
+	<target name="forge-download">
+		<mkdir dir="${build.base_location}/temp" />
+		<get src="${minecraftforge_src_archive_location}" dest="${build.base_location}/temp/" verbose="true" usetimestamp="true" />
+	</target>
+
+	<target name="forge-uncompress" depends="forge-download, forge-clean">
+		<unzip src="${build.base_location}/temp/${minecraftforge_src_archive}" dest="${build.base_location}" />
+		<delete dir="${build.base_location}/temp" />
+	</target>
+
+	<target name="forge-install" depends="forge-uncompress">
+		<exec dir="${build.base_location}/forge/" executable="cmd.exe" osfamily="windows" failonerror="true">
+			<arg value="/c" />
+			<arg value="${build.base_location}\forge\install.cmd" />
+		</exec>
+		<exec dir="${build.base_location}/forge/" executable="bash" osfamily="unix">
+			<arg line="reobfuscate_srg.sh" />
+		</exec>
+	</target>
+
 	<target name="clean">
 		<delete dir="${build.base_location}/temp" />
 		<delete file="${build.mcp_location}/src/minecraft/mcmod.info" />
@@ -31,9 +59,6 @@
 	</target>
 
 	<target name="prep">
-		<copy todir="${build.mcp_location}/src/minecraft">
-			<fileset dir="${build.elconcore_location}/src/" excludes="/elcon/mods/example/**" />
-		</copy>
 		<copy todir="${build.mcp_location}/src/minecraft">
 			<fileset dir="src/" />
 		</copy>
@@ -66,35 +91,25 @@
 	</target>
 
 	<target name="sign_jar">
-		<signjar jar="${build.release_location}/${build.minecraft_version}/${build.mod_version}/${build.mod_name}-${build.mod_version}-${build_number.build_number}.jar" keystore="${private.keystore_location}" alias="${private.keystore_user_alias}" storepass="${private.keystore_user_password}" />
+		<signjar jar="${build.release_location}/MC ${build.minecraft_version}/${build.mod_version}/${build.mod_name}-${build.mod_version}-${build_number.build_number}.jar" keystore="${private.keystore_location}" alias="${private.keystore_user_alias}" storepass="${private.keystore_user_password}" />
 	</target>
 
-	<target name="test">
-		<antcall target="clean" />
-		<antcall target="recompile" />
-		<antcall target="clean" />
-	</target>
-	
 	<target name="build">
 		<!-- Prep for the build -->
 		<antcall target="clean" />
 		<antcall target="increment_build_number" />
 		<antcall target="prep" />
-		<antcall target="replace_tokens" />
 		<antcall target="recompile" />
 		<antcall target="reobfuscate" />
 
 		<!-- Build the jar -->
 		<mkdir dir="${build.release_location}/${build.minecraft_version}/${build.mod_version}" />
-		<jar destfile="${build.release_location}/${build.minecraft_version}/${build.mod_version}/${build.mod_name}-${build.mod_version}-${build_number.build_number}.jar">
+		<jar destfile="${build.release_location}/${build.minecraft_version}/${build.mod_version}/ee3-universal-${build.mod_version}-${build_number.build_number}.jar">
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="mcmod.info" />
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="pack.mcmeta" />
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="agecraft_at.cfg" />
-			<fileset dir="${build.mcp_location}/reobf/minecraft" excludes="/elcon/mods/core" />
-			<fileset dir="resources" excludes="**/xcf/**" />
-			<manifest>
-				<attribute name="AccessTransformer" value="agecraft_at.cfg" />
-			</manifest>
+			<fileset dir="${build.mcp_location}/reobf/minecraft" />
+			<fileset dir="${build.source_location}/resources" excludes="**/xcf/**" />
 		</jar>
 
 		<!-- Clean up the MCP source now that we are done -->
@@ -116,11 +131,8 @@
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="mcmod.info" />
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="pack.mcmeta" />
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="agecraft_at.cfg" />
-			<fileset dir="${build.mcp_location}/reobf/minecraft" excludes="/elcon/mods/core" />
+			<fileset dir="${build.mcp_location}/reobf/minecraft" />
 			<fileset dir="resources" excludes="**/xcf/**" />
-			<manifest>
-				<attribute name="AccessTransformer" value="agecraft_at.cfg" />
-			</manifest>
 		</jar>
 
 		<!-- Sign the finished jar -->
