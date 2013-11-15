@@ -1,0 +1,29 @@
+clothing.types=Types
+clothing.categories=Categories
+clothing.pieces=Pieces
+
+clothing.type.skin=Skin
+clothing.type.hair=Hair
+clothing.type.eyes=Eyes
+clothing.type.mouth=Mouth
+clothing.type.facialHair=Face
+clothing.type.hat=Hat
+clothing.type.shirt=Shirt
+clothing.type.pants=Pants
+clothing.type.boots=Boots
+
+clothing.category.general=General
+
+clothing.general.skin.steve=Steve's Skin
+clothing.general.hair.steve=Steve's Hair
+clothing.general.mouth.steve=Steve's Mouth
+clothing.general.eyes.steve=Steve's Eyes
+clothing.general.facialHair.steve=Steve's Face
+clothing.general.hat.steve=Steve's Hat
+clothing.general.shirt.steve=Steve's Shirt
+clothing.general.pants.steve=Steve's Pants
+clothing.general.boots.steve=Steve's Boots
+clothing.general.boots.smooth=Smooth Shoes
+clothing.general.hat.smooth=Smooth Hat
+clothing.general.pants.smooth=Smooth Pants
+clothing.general.shirt.smooth=Smooth Jacket
