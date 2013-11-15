@@ -31,6 +31,8 @@ import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.relauncher.Side;
 import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
+import elcon.mods.agecraft.core.clothing.ClothingCategory;
+import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
@@ -337,6 +339,30 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			dos.writeInt(changeable.size());
 			for(String s : changeable) {
 				dos.writeUTF(s);
+			}
+			dos.close();
+			packet.channel = "ACClothing";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Packet getClothingList() {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(7);
+			dos.writeInt(ClothingRegistry.categories.size());
+			for(ClothingCategory category : ClothingRegistry.categories.values()) {
+				dos.writeUTF(category.name);
+				dos.writeUTF(category.versionURL);
+				dos.writeUTF(category.updateURL);
 			}
 			dos.close();
 			packet.channel = "ACClothing";

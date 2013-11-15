@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -24,6 +25,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
+import elcon.mods.agecraft.core.clothing.ClothingCategory;
+import elcon.mods.agecraft.core.clothing.ClothingRegistry;
+import elcon.mods.agecraft.core.clothing.ClothingUpdater;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
@@ -71,6 +75,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			break;
 		case 6:
 			handleClothingSelectorOpen(dat);
+			break;
+		case 7:
+			handleClothingList(dat);
 			break;
 		case 90:
 			handleTileEntityNBT(world, dat);
@@ -203,6 +210,29 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			changeable.add(dat.readUTF());
 		}
 		Minecraft.getMinecraft().displayGuiScreen(new GuiClothingSelector(changeable));
+	}
+	
+	private void handleClothingList(ByteArrayDataInput dat) {
+		int size = dat.readInt();
+		final LinkedList<ClothingCategory> categories = new LinkedList<ClothingCategory>();
+		for(int i = 0; i < size; i++) {
+			String name = dat.readUTF();
+			String versionURL = dat.readUTF();
+			String updateURL = dat.readUTF();
+			if(ClothingRegistry.getClothingCategory(name) == null) {
+				ClothingCategory category = new ClothingCategory(name, versionURL, updateURL);
+				ClothingRegistry.registerClothingCategory(category);
+				ClothingUpdater.instance.localCategories.add(category);
+				categories.add(category);
+			}
+		}
+		new Thread() {
+			@Override
+			public void run() {
+				ClothingUpdater.instance.saveLocalCategories();
+				ClothingUpdater.instance.downloadCateogry(categories);
+			}
+		};
 	}
 
 	private void handleTileEntityNBT(World world, ByteArrayDataInput dat) {

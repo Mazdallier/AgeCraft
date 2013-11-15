@@ -8,14 +8,16 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.FileUtils;
 
 import elcon.mods.agecraft.ACLog;
+import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.core.ElConCore;
 
@@ -31,14 +33,127 @@ public class ClothingUpdater implements Runnable {
 			this.version = version;
 		}
 	}
+	
+	public static ClothingUpdater instance;
 
 	public HashMap<String, ClothingCategoryVersion> localVersions = new HashMap<String, ClothingCategoryVersion>();
 	public HashMap<String, ClothingCategoryVersion> versions = new HashMap<String, ClothingCategoryVersion>();
-	public ArrayList<ClothingCategory> downloadCategories = new ArrayList<ClothingCategory>();
+	public LinkedList<ClothingCategory> downloadCategories = new LinkedList<ClothingCategory>();
+	public LinkedList<ClothingCategory> localCategories = new LinkedList<ClothingCategory>();
+	public LinkedList<String> previousLines = new LinkedList<String>();
 	public File clothingDir;
 
 	public ClothingUpdater(File clothingDir) {
 		this.clothingDir = clothingDir;
+		
+		instance = this;
+	}
+	
+	public void loadLocalCategories() {
+		File file = new File(AgeCraft.minecraftDir, "config/clothing-categories.txt");
+		if(file.exists()) {
+			try {
+				BufferedReader reader = new BufferedReader(new FileReader(file));
+				String line;
+				while((line = reader.readLine()) != null) {
+					if(line.length() > 0 && !line.startsWith("#")) {
+						String[] split = line.split("=");
+						if(ClothingRegistry.getClothingCategory(split[0]) == null) {
+							ClothingCategory category = new ClothingCategory(split[0], split[1], split[2]);
+							ClothingRegistry.registerClothingCategory(category);
+							localCategories.add(category);
+						}
+					}
+				}
+				reader.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				file.createNewFile();
+				FileWriter writer = new FileWriter(file);
+				writer.write("### Clothing Categories ###");
+				writer.write("# Format: <name>=<version url>=<update url>");
+				writer.write("# ");
+				writer.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void saveLocalCategories() {
+		File file = new File(AgeCraft.minecraftDir, "config/clothing-categories.txt");
+		try {
+			if(file.exists()) {
+				file.delete();
+			}
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("### Clothing Categories ### \n");
+			writer.write("# Format: <name>=<version url>=<update url> \n");
+			writer.write("# \n");
+			for(ClothingCategory category : localCategories) {
+				writer.write(category.name + "=" + category.versionURL + "=" + category.updateURL);
+				writer.write("\n");
+			}
+			writer.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void downloadCateogry(List<ClothingCategory> categories) {
+		for(ClothingCategory category : categories) {
+			try {
+				ACLog.info("[Clothing] Updating category " + category.name + " to version " + versions.get(category.name));
+				File clothingZip = new File(clothingDir, category.name + ".zip");
+				clothingZip.createNewFile();
+				FileUtils.copyURLToFile(new URL(category.updateURL), clothingZip);
+				ACLog.info("[Clothing] Downloaded " + clothingZip.getName() + " from " + category.updateURL);
+				if(clothingZip.exists()) {
+					extractZip(clothingZip, new File(clothingDir, File.separator + category.name), true);
+					ACLog.info("[Clothing] Extracted " + clothingZip.getName() + " to " + new File(clothingDir, File.separator + category.name).getAbsolutePath());
+				}
+				clothingZip.delete();
+				previousLines.add(category.name + "=" + versions.get(category.name).version);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			for(String url : category.expansionURLs) {
+				try {
+					File clothingZip = new File(clothingDir, category.name + ".zip");
+					clothingZip.createNewFile();
+					FileUtils.copyURLToFile(new URL(url), clothingZip);
+					ACLog.info("[Clothing] Downloaded expansion " + clothingZip.getName() + " from " + url);
+					if(clothingZip.exists()) {
+						extractZip(clothingZip, new File(clothingDir, File.separator + category.name), false);
+						ACLog.info("[Clothing] Extracted expansion " + clothingZip.getName() + " to " + new File(clothingDir, File.separator + category.name).getAbsolutePath());
+					}
+					clothingZip.delete();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if(!previousLines.isEmpty()) {
+			try {
+				File file = new File(ElConCore.minecraftDir, "clothing_versions.dat");
+				if(file.exists()) {
+					file.delete();
+				}
+				file.createNewFile();
+				FileWriter writer = new FileWriter(file);
+				for(String line : previousLines) {
+					writer.write(line);
+					writer.write("\n");
+				}
+				writer.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void load() {
@@ -104,7 +219,7 @@ public class ClothingUpdater implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		ArrayList<String> versionURLsChecked = new ArrayList<String>();
+		LinkedList<String> versionURLsChecked = new LinkedList<String>();
 		for(ClothingCategory category : ClothingRegistry.categories.values()) {
 			if(category != null) {
 				ACLog.info("[Clothing] Checking version for category: " + category.name);
@@ -141,7 +256,8 @@ public class ClothingUpdater implements Runnable {
 	}
 
 	public void download() {
-		ArrayList<String> lines = new ArrayList<String>();
+		previousLines.clear();
+		LinkedList<String> lines = new LinkedList<String>();
 		for(ClothingCategory category : downloadCategories) {
 			try {
 				ACLog.info("[Clothing] Updating category " + category.name + " to version " + versions.get(category.name));
@@ -175,6 +291,7 @@ public class ClothingUpdater implements Runnable {
 			}
 		}
 		if(!lines.isEmpty()) {
+			previousLines.addAll(lines);
 			try {
 				File file = new File(ElConCore.minecraftDir, "clothing_versions.dat");
 				if(file.exists()) {
@@ -245,6 +362,7 @@ public class ClothingUpdater implements Runnable {
 	@Override
 	public void run() {
 		ACLog.info("[Clothing] Loading clothing...");
+		loadLocalCategories();
 		update();
 		download();
 		load();

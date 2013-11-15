@@ -98,11 +98,7 @@ public class AgeCraftCore extends ACComponent {
 		ClothingRegistry.registerClothingType(new ClothingType("boots", 8, 6));
 		
 		//register clothing categories
-		ClothingRegistry.registerClothingCategory(new ClothingCategory("general", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/general/general.zip"));
-
-		//load clothing
-		ClothingUpdater clothingUpdater = new ClothingUpdater(new File(ElConCore.minecraftDir, File.separator + "clothing"));
-		clothingUpdater.excecute();
+		ClothingRegistry.registerClothingCategory(new ClothingCategory("general", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/general/general.zip"));		
 	}
 	
 	public void postInit() {
@@ -115,6 +111,10 @@ public class AgeCraftCore extends ACComponent {
 		
 		//sort clothing types
 		ClothingRegistry.sortClothingTypes();
+		
+		//update clothing
+		ClothingUpdater clothingUpdater = new ClothingUpdater(new File(ElConCore.minecraftDir, File.separator + "clothing"));
+		clothingUpdater.excecute();
 	}
 	
 	public void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {

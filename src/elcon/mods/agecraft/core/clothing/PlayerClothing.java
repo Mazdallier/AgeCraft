@@ -34,7 +34,9 @@ public class PlayerClothing implements Serializable {
 			this.categoryID = categoryID;
 			this.clothingID = clothingID;
 			for(int i = 0; i < colors.length; i++) {
-				this.colors[colors[i]] = true;
+				if(colors[i] >= 0) {
+					this.colors[colors[i]] = true;
+				}
 			}
 		}
 

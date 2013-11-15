@@ -134,6 +134,7 @@
 	4 Player Trade (To player 2)
 	5 Player Trade Accept Change
 	6 Clothing Selector Open
+	7 Clothing List
 75-90	Client to server packets
 	75 Player Trade (From player 1)
 	76 Player Trade Accept
