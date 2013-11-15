@@ -1,4 +1,5 @@
 /*.bat
+/buid/
 /releases/
 /build_number.properties
 /agecraft-keystore
