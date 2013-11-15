@@ -86,7 +86,7 @@
 
 		<!-- Copy files to build dir for Jenkins -->
 		<delete file="build/**" />
-		<copy todir="C:\Jenkins\workspace\AgeCraft\build">
+		<copy todir="build">
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="mcmod.info" />
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="pack.mcmeta" />
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="agecraft_at.cfg" />
