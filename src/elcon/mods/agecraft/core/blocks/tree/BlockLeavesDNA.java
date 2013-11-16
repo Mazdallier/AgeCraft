@@ -80,14 +80,14 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 				int yy = y + ForgeDirection.VALID_DIRECTIONS[side].offsetY;
 				int zz = z + ForgeDirection.VALID_DIRECTIONS[side].offsetZ;
 				if(world.getBlockId(xx, yy, zz) == blockID) {
-					System.out.println("BREEDING " + xx + "," + yy + "," + zz);
-					world.playAuxSFX(2005, xx, yy, zz, 0);
 					TileEntityDNATree tileOther = (TileEntityDNATree) getTileEntity(world, xx, yy, zz);
 					DNAStorage dnaNew = DNA.reproduce(tile.getDNA(), tileOther.getDNA());
 					tile.setDNA(dnaNew);
 					tileOther.setDNA(dnaNew);
 					world.markBlockForUpdate(x, y, z);
 					world.markBlockForUpdate(xx, yy, zz);
+					world.playAuxSFX(2005, x, y, z, 0);
+					world.playAuxSFX(2005, xx, yy, zz, 0);
 				}
 			}
 			int meta = world.getBlockMetadata(x, y, z);
@@ -180,7 +180,8 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-		ItemStack stack = new ItemStack(idDropped(metadata, world.rand, fortune), quantityDropped(world.rand), damageDropped(metadata));
+		int dropChance = (tile.getSaplingDropRate() + 1) * 10;
+		ItemStack stack = new ItemStack(idDropped(metadata, world.rand, fortune), quantityDropped(metadata, fortune, world.rand) * (world.rand.nextInt(dropChance) == 0 ? 1 : 0), damageDropped(metadata));
 		NBTTagCompound nbt = new NBTTagCompound();
 		NBTTagCompound tag = new NBTTagCompound();
 		tile.getDNA().writeToNBT(tag);
@@ -201,8 +202,8 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	}
 	
 	@Override
-	public int quantityDropped(Random random) {
-		return random.nextInt(20) == 0 ? 1 : 0;
+	public int quantityDropped(int meta, int fortune, Random random) {
+		return 1;
 	}
 	
 	@Override

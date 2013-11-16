@@ -88,7 +88,7 @@ public class Trees extends ACComponent {
 			new Gene(2, "height", MAX_HEIGHT)
 		}),
 		new Chromosome(4, "drops", new Gene[] {
-			new Gene(0, "saplingDropRate"),
+			new Gene(0, "saplingDropRate", 2),
 			new Gene(1, "sappiness"),
 			new Gene(2, "fruit"),
 			new Gene(3, "fruitDropRate")

@@ -2,6 +2,15 @@ package elcon.mods.agecraft.dna;
 
 public class DNAUtil {
 
+	public static String intToGoodBad(int i) {
+		switch(i) {
+			case 0: return "Good";
+			case 1: return "Normal";
+			case 2: return "Bad";
+		}
+		return "Normal";
+	}
+	
 	public static String intToSpeed(int i) {
 		switch(i) {
 			case 0: return "Slowest";

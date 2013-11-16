@@ -30,23 +30,6 @@ public class ItemSaplingDNA extends ItemBlockName {
 	}
 
 	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if(!world.isRemote) {
-			if(!stack.hasTagCompound()) {
-				stack.setTagCompound(new NBTTagCompound());
-			}
-			NBTTagCompound nbt = stack.getTagCompound();
-			if(!nbt.hasKey("DNA")) {
-				DNAStorage dna = DNA.createDNAStorage(Trees.treeDNA);
-				NBTTagCompound tag = new NBTTagCompound();
-				dna.writeToNBT(tag);
-				nbt.setCompoundTag("DNA", tag);
-			}
-		}
-		return stack;
-	}
-
-	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
 		if(!world.isRemote) {
 			if(!stack.hasTagCompound()) {
@@ -109,7 +92,8 @@ public class ItemSaplingDNA extends ItemBlockName {
 				list.add(BiomeGenBase.biomeList[dna.getGene(1, 1).getActive()].biomeName);
 				list.add("T: " + DNAUtil.intToPlusMin(dna.getGene(1, 1).getActive()) + Color.TEXT_COLOR_PREFIX_GRAY + " H: " + DNAUtil.intToPlusMin(dna.getGene(1, 2).getActive()));
 				list.add("S: " + DNAUtil.intToSpeed(dna.getGene(2, 0).getActive()) + " T: " + DNAUtil.intToSpeed(dna.getGene(2, 1).getActive()) + " B: " + DNAUtil.intToSpeed(dna.getGene(2, 2).getActive()));
-				list.add(Integer.toString(dna.getGene(2, 0).getActive() + 1) + "x" + Integer.toString(dna.getGene(2, 0).getActive() + 1));
+				list.add("Saplings: " +  DNAUtil.intToGoodBad(dna.getGene(4, 0).getActive()));
+				list.add(Integer.toString(dna.getGene(3, 0).getActive() + 1) + "x" + Integer.toString(dna.getGene(3, 0).getActive() + 1));
 			}
 		}
 	}
