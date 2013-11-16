@@ -34,7 +34,7 @@ public class ItemRockTanningTool extends Item {
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return "item.rockToolTanning.name";
+		return "item.rockTanningTool.name";
 	}
 	
 	@Override

@@ -97,6 +97,7 @@ public class ContainerPlayerTrade extends ContainerBasic {
 		for(int i = 0; i < inventoryPlayer1.getSizeInventory(); i++) {
 			ItemStack stack = inventoryPlayer1.getStackInSlotOnClosing(i);
 			if(stack != null) {
+				System.out.println("droppped: " + stack);
 				if(!player.inventory.addItemStackToInventory(stack)) {
 					player.dropPlayerItem(stack);
 				}

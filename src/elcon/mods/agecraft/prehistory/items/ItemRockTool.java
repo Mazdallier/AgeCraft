@@ -22,7 +22,6 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
-import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.core.lang.LanguageManager;
 
 public class ItemRockTool extends Item {
@@ -77,11 +76,7 @@ public class ItemRockTool extends Item {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
-		if(!world.isRemote) {
-			if(entityplayer.isSneaking()) {
-				entityplayer.openGui(AgeCraft.instance, 1, world, (int) entityplayer.posX, (int) entityplayer.posY, (int) entityplayer.posZ);
-				return itemstack;
-			}			
+		if(!world.isRemote) {	
 			int i = 0;
 			if(itemstack.hasTagCompound()) {
 				i = itemstack.stackTagCompound.getInteger("Type");
