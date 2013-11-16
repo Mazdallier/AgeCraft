@@ -90,6 +90,7 @@
 			<fileset dir="${build.mcp_location}/src/minecraft/" includes="agecraft_at.cfg" />
 			<fileset dir="${build.mcp_location}/reobf/minecraft" excludes="elcon/mods/core/**" />
 			<fileset dir="resources" />
+			<fileset dir="${build.agecraft_localization_location}/resources" />
 			<manifest>
 				<attribute name="AccessTransformer" value="agecraft_at.cfg" />
 			</manifest>

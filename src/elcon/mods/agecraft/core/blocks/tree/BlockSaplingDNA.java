@@ -6,14 +6,18 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -23,11 +27,13 @@ import net.minecraftforge.common.IPlantable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
+import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.BiomeRegistry;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
 import elcon.mods.agecraft.dna.storage.DNAStorage;
+import elcon.mods.core.ECUtilClient;
 import elcon.mods.core.blocks.BlockExtendedContainer;
 import elcon.mods.core.lang.LanguageManager;
 import elcon.mods.core.tileentities.TileEntityMetadata;
@@ -64,7 +70,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 
 	public void growTree(World world, int x, int y, int z, Random random) {
 		TileEntityDNATree tileSapling = (TileEntityDNATree) getTileEntity(world, x, y, z);
-		int woodType = tileSapling.getDNA().getGene(0, 0).getActive();
+		int woodType = tileSapling.getWoodType();
 		
 		TileEntityMetadata tileWood = new TileEntityMetadata();
 		tileWood.setTileMetadata(woodType * 4);
@@ -104,6 +110,20 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityDNATree();
+	}
+	
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+		if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == Item.dyePowder && player.inventory.getCurrentItem().getItemDamage() == 15) {
+			if(!world.isRemote) {
+				if(!player.capabilities.isCreativeMode) {
+					ACUtil.consumeItem(player.inventory.getCurrentItem());
+				}
+				growSapling(world, x, y, z, world.rand);
+			}
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
@@ -156,7 +176,6 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 			if(world.isRaining()) {
 				chance -= 4;
 			}
-			//TODO: change grow chance
 			if(world.getBlockLightValue(x, y, z) >= 9 && random.nextInt(chance) == 0) {
 				growSapling(world, x, y, z, random);
 			}
@@ -178,6 +197,15 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 					&& BiomeRegistry.canSurviveHumidity(world.getBiomeGenForCoords(x, z), BiomeRegistry.getHumidity(BiomeGenBase.biomeList[tile.getBiome()]), tile.getHumidity() - 2);
 		}
 		return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this));
+	}
+	
+	@Override
+	public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, int x, int y, int z) {
+		int meta = blockAccess.getBlockMetadata(x, y, z);
+		if(meta == 0) {
+			setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, 0.5F, 0.7F);
+		}
+		setBlockBounds(0.1F, 0.0F, 0.1F, 0.9F, 0.8F, 0.9F);
 	}
 	
 	@Override
@@ -218,6 +246,36 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 	@Override
 	public int getPlantMetadata(World world, int x, int y, int z) {
 		return world.getBlockMetadata(x, y, z);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
+		if(tile != null) {
+			meta = tile.getWoodType();
+		}
+		return ECUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, meta);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean addBlockHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
+		int x = target.blockX;
+		int y = target.blockY;
+		int z = target.blockZ;
+		int meta = 0;
+		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
+		if(tile != null) {
+			meta = tile.getWoodType();
+		}
+		return ECUtilClient.addBlockHitEffects(world, target, effectRenderer, meta);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int meta) {
+		return TreeRegistry.trees[meta].sapling;
 	}
 	
 	@Override

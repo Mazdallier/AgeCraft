@@ -6,20 +6,26 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
+import elcon.mods.agecraft.dna.DNA;
+import elcon.mods.agecraft.dna.storage.DNAStorage;
+import elcon.mods.core.ECUtilClient;
 import elcon.mods.core.blocks.BlockExtendedContainer;
 import elcon.mods.core.lang.LanguageManager;
 
@@ -46,38 +52,6 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	}
 	
 	@Override
-	public boolean isOpaqueCube() {
-		return !((BlockLeaves) Trees.leaves).fancyGraphics;
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getBlockColor() {
-		return ColorizerFoliage.getFoliageColor(0.5D, 1.0D);
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
-		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(blockAccess, x, y, z);
-		if(TreeRegistry.trees[tile.getLeaveType()].useBiomeColor) {
-			int r = 0;
-			int g = 0;
-			int b = 0;
-			for(int k = -1; k <= 1; ++k) {
-				for(int i = -1; i <= 1; ++i) {
-					int color = blockAccess.getBiomeGenForCoords(x + i, z + k).getBiomeFoliageColor();
-					r += (color & 16711680) >> 16;
-					g += (color & 65280) >> 8;
-					b += color & 255;
-				}
-			}
-			return (r / 9 & 255) << 16 | (g / 9 & 255) << 8 | b / 9 & 255;
-		}
-		return TreeRegistry.trees[tile.getLeaveType()].leavesColor;
-	}
-	
-	@Override
 	public void breakBlock(World world, int x, int y, int z, int id, int meta) {
 		byte size = 1;
 		int range = size + 1;
@@ -98,6 +72,24 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random random) {
 		if(!world.isRemote) {
+			TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
+			int chance = 12 - tile.getBreedingSpeed();
+			if(random.nextInt(chance) == 0) {
+				int side = random.nextInt(6);
+				int xx = x + ForgeDirection.VALID_DIRECTIONS[side].offsetX;
+				int yy = y + ForgeDirection.VALID_DIRECTIONS[side].offsetY;
+				int zz = z + ForgeDirection.VALID_DIRECTIONS[side].offsetZ;
+				if(world.getBlockId(xx, yy, zz) == blockID) {
+					System.out.println("BREEDING " + xx + "," + yy + "," + zz);
+					world.playAuxSFX(2005, xx, yy, zz, 0);
+					TileEntityDNATree tileOther = (TileEntityDNATree) getTileEntity(world, xx, yy, zz);
+					DNAStorage dnaNew = DNA.reproduce(tile.getDNA(), tileOther.getDNA());
+					tile.setDNA(dnaNew);
+					tileOther.setDNA(dnaNew);
+					world.markBlockForUpdate(x, y, z);
+					world.markBlockForUpdate(xx, yy, zz);
+				}
+			}
 			int meta = world.getBlockMetadata(x, y, z);
 			if((meta & 2) != 0 && (meta & 1) == 0) {
 				byte size = 4;
@@ -229,10 +221,72 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	}
 	
 	@Override
+	public boolean isOpaqueCube() {
+		return !((BlockLeaves) Trees.leaves).fancyGraphics;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getBlockColor() {
+		return ColorizerFoliage.getFoliageColor(0.5D, 1.0D);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
+		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(blockAccess, x, y, z);
+		if(TreeRegistry.trees[tile.getLeaveType()].useBiomeColor) {
+			int r = 0;
+			int g = 0;
+			int b = 0;
+			for(int k = -1; k <= 1; ++k) {
+				for(int i = -1; i <= 1; ++i) {
+					int color = blockAccess.getBiomeGenForCoords(x + i, z + k).getBiomeFoliageColor();
+					r += (color & 16711680) >> 16;
+					g += (color & 65280) >> 8;
+					b += color & 255;
+				}
+			}
+			return (r / 9 & 255) << 16 | (g / 9 & 255) << 8 | b / 9 & 255;
+		}
+		return TreeRegistry.trees[tile.getLeaveType()].leavesColor;
+	}
+	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		int id = blockAccess.getBlockId(x, y, z);
 		return !((BlockLeaves) Trees.leaves).fancyGraphics && (id == blockID || id == Trees.leaves.blockID) ? false : super.shouldSideBeRendered(blockAccess, x, y, z, side);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
+		if(tile != null) {
+			meta = tile.getLeaveType();
+		}
+		return ECUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, meta);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean addBlockHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
+		int x = target.blockX;
+		int y = target.blockY;
+		int z = target.blockZ;
+		int meta = 0;
+		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
+		if(tile != null) {
+			meta = tile.getLeaveType();
+		}
+		return ECUtilClient.addBlockHitEffects(world, target, effectRenderer, meta);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int meta) {
+		return Trees.leaves.getIcon(side, meta);
 	}
 	
 	@Override
