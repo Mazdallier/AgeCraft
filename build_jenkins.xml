@@ -81,17 +81,6 @@
 		<antcall target="replace_tokens" />
 		<antcall target="recompile" />
 		<antcall target="reobfuscate" />
-
-		<!-- Copy files to build dir for Jenkins -->
-		<delete file="build/**" />
-		<copy todir="build">
-			<fileset dir="${build.mcp_location}/src/minecraft/" includes="mcmod.info" />
-			<fileset dir="${build.mcp_location}/src/minecraft/" includes="pack.mcmeta" />
-			<fileset dir="${build.mcp_location}/src/minecraft/" includes="agecraft_at.cfg" />
-			<fileset dir="${build.mcp_location}/src/minecraft/" includes="META-INF/MANIFEST.MF" />
-			<fileset dir="${build.mcp_location}/reobf/minecraft" excludes="elcon/mods/core/**" />
-			<fileset dir="resources" />
-		</copy>
 		
 		<!-- Build the jar -->
 		<mkdir dir="${build.release_location}/${build.minecraft_version}/${build.mod_version}" />
@@ -108,6 +97,13 @@
 
 		<!-- Sign the finished jar -->
 		<antcall target="sign_jar" />
+		
+		<!-- Copy files to build dir for Jenkins -->
+		<delete dir="packages" />
+		<mkdir dir="packages" />
+		<copy todir="packages">
+			<fileset file="${build.release_location}/${build.minecraft_version}/${build.mod_version}/${build.mod_name}-${build.mod_version}-${build_number.build_number}.jar" />
+		</copy>
 
 		<!-- Clean up the MCP source now that we are done -->
 		<antcall target="clean" />

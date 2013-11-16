@@ -64,6 +64,12 @@ public class PlayerClothingClient {
 		}
 	}
 	
+	public static void updatePlayerClothingAll() {
+		for(String player : players.keySet()) {
+			updatePlayerClothing(player);
+		}
+	}
+	
 	public static void removePlayerClothing(String username) {
 		if(players.containsKey(username)) {
 			players.remove(username);

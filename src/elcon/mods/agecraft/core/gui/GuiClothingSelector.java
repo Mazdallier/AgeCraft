@@ -81,7 +81,11 @@ public class GuiClothingSelector extends GuiScreen {
 		Collections.sort(clothingTypes, new ClothingTypeIndexComparator());
 		
 		clothingCategories.clear();
-		clothingCategories.addAll(ClothingRegistry.categories.values());
+		for(ClothingCategory category : ClothingRegistry.categories.values()) {
+			if(category.enabled) {
+				clothingCategories.add(category);
+			}
+		}
 				
 		currentClothingType = 0;
 		currentClothingCategory = 0;

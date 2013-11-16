@@ -213,6 +213,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 	}
 	
 	private void handleClothingList(ByteArrayDataInput dat) {
+		for(ClothingCategory category : ClothingRegistry.categories.values()) {
+			category.enabled = false;
+		}
 		int size = dat.readInt();
 		final LinkedList<ClothingCategory> categories = new LinkedList<ClothingCategory>();
 		for(int i = 0; i < size; i++) {
@@ -224,6 +227,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 				ClothingRegistry.registerClothingCategory(category);
 				ClothingUpdater.instance.localCategories.add(category);
 				categories.add(category);
+				ACLog.info("[Clothing] Category: " + name + " can't be found locally, so downloading it");
+			} else {
+				ClothingRegistry.getClothingCategory(name).enabled = true;
 			}
 		}
 		new Thread() {
@@ -231,6 +237,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			public void run() {
 				ClothingUpdater.instance.saveLocalCategories();
 				ClothingUpdater.instance.downloadCateogry(categories);
+				PlayerClothingClient.updatePlayerClothingAll();
 			}
 		};
 	}
