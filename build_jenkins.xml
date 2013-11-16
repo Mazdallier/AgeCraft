@@ -14,7 +14,7 @@
 		These properties are used to properly sign the compiled jar in the 'release' target
 		For the majority of you this is not a concern and you will not need values for these - just use the 'build' target 
 	-->
-	<!--<property file="private.properties" prefix="private" />-->
+	<property file="${build.agecraft_location}/private.properties" prefix="private" />
 
 	<target name="clean">
 		<delete dir="${build.base_location}/temp" />
@@ -35,7 +35,6 @@
 			<fileset file="${build.agecraft_location}/agecraft-keystore" />
 			<fileset file="${build.agecraft_location}/private.properties" />
 		</copy>
-		<property file="private.properties" prefix="private" />
 		<copy todir="${build.mcp_location}/src/minecraft">
 			<fileset dir="${build.elconcore_location}/src/" excludes="/elcon/mods/example/**" />
 		</copy>
