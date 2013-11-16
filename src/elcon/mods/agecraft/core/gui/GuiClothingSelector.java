@@ -64,34 +64,39 @@ public class GuiClothingSelector extends GuiScreen {
 
 	public List<String> clothingTypesChangeable;
 	public int clothingTypesChangeableCount;
-	
+
 	public GuiClothingSelector(List<String> clothingTypesChangable) {
 		this.clothingTypesChangeable = clothingTypesChangable;
 		xSize = 256;
 		ySize = 166;
 		allowUserInput = true;
-		
+
 		totalPrice = 0;
 	}
 
 	@Override
 	public void initGui() {
-		clothingTypes.clear();
-		clothingTypes.addAll(ClothingRegistry.types.values());
-		Collections.sort(clothingTypes, new ClothingTypeIndexComparator());
-		
-		clothingCategories.clear();
-		for(ClothingCategory category : ClothingRegistry.categories.values()) {
-			if(category.enabled) {
-				clothingCategories.add(category);
-			}
-		}
-				
 		currentClothingType = 0;
 		currentClothingCategory = 0;
 		currentClothingPiece = 0;
 		currentClothingColor = 0;
-		
+
+		clothingTypes.clear();
+		clothingTypes.addAll(ClothingRegistry.types.values());
+		Collections.sort(clothingTypes, new ClothingTypeIndexComparator());
+
+		int index = 0;
+		clothingCategories.clear();
+		for(ClothingCategory category : ClothingRegistry.categories.values()) {
+			if(category.enabled) {
+				clothingCategories.add(category);
+				if(category.name.equalsIgnoreCase("general")) {
+					currentClothingCategory = index;
+				}
+				index++;
+			}
+		}
+
 		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();
 		clothing.player = mc.thePlayer.username + "-Temp";
 		PlayerClothingClient.addPlayerClothing(clothing);
@@ -119,7 +124,7 @@ public class GuiClothingSelector extends GuiScreen {
 		buttonList.add(new GuiButtonDefault(3, guiLeft + 9, guiTop + 6, 70, 8, LanguageManager.getLocalization("gui.up.sign")));
 		buttonList.add(new GuiButtonDefault(4, guiLeft + 9, guiTop + 146, 70, 8, LanguageManager.getLocalization("gui.down.sign")));
 		buttonsClothingType = new GuiButtonListVertical(guiTop + 16, 16, (GuiButtonDefault) buttonList.get(3), (GuiButtonDefault) buttonList.get(4), 8);
-		int index = 0;
+		index = 0;
 		clothingTypesChangeableCount = 0;
 		for(ClothingType type : clothingTypes) {
 			if(type != null && clothingTypesChangeable.contains(type.name)) {
@@ -130,7 +135,7 @@ public class GuiClothingSelector extends GuiScreen {
 		}
 		buttonList.addAll(buttonsClothingType.buttons);
 		((GuiToggleButton) buttonList.get(5)).toggled = true;
-		
+
 		buttonList.add(new GuiButtonDefault(21, guiLeft + 181, guiTop + 15, 16, 16, LanguageManager.getLocalization("gui.prev.sign")));
 		buttonList.add(new GuiButtonDefault(22, guiLeft + 199, guiTop + 15, 32, 16, LanguageManager.getLocalization("gui.list")));
 		buttonList.add(new GuiButtonDefault(23, guiLeft + 233, guiTop + 15, 16, 16, LanguageManager.getLocalization("gui.next.sign")));
@@ -164,7 +169,7 @@ public class GuiClothingSelector extends GuiScreen {
 		updateTempPieceClothing();
 
 		((GuiToggleButton) buttonsClothingCategories.buttons.get(currentClothingCategory)).toggled = true;
-		
+
 		buttonsClothingCategories.hide();
 		buttonsClothingPieces.hide();
 	}
@@ -214,7 +219,7 @@ public class GuiClothingSelector extends GuiScreen {
 			currentClothingColor = firstColor;
 		}
 		((GuiToggleButton) buttonList.get(11 + clothingTypesChangeableCount + currentClothingColor)).toggled = true;
-		
+
 		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username + "-TempPiece");
 		clothing.addClothingPieceAndWear(new ClothingPiece(clothingTypes.get(currentClothingType).name, clothingCategories.get(currentClothingCategory).name, clothingPieces.get(currentClothingPiece).name, currentClothingColor), currentClothingColor);
 		clothing.clothingTypeExclusive = clothingTypes.get(currentClothingType).name;
@@ -425,7 +430,7 @@ public class GuiClothingSelector extends GuiScreen {
 				rotation += 1.0F;
 			}
 		}
-		if(showLeftList) {		
+		if(showLeftList) {
 			int i = 0;
 			for(String type : clothingPiecesCart.keySet()) {
 				ClothingPiece piece = clothingPiecesCart.get(type);
@@ -435,11 +440,11 @@ public class GuiClothingSelector extends GuiScreen {
 				mc.fontRenderer.drawString(stringToDraw, guiLeft - 10 - mc.fontRenderer.getStringWidth(stringToDraw), guiTop + 6 + 16 * i, 0x404040);
 				i++;
 			}
-			
+
 			mc.fontRenderer.drawString("+", guiLeft - 16, guiTop + 138, 0x404040);
 			mc.fontRenderer.drawString("--------------", guiLeft - 94, guiTop + 144, 0x404040);
 
-			stringToDraw = Integer.toString(totalPrice );
+			stringToDraw = Integer.toString(totalPrice);
 			mc.fontRenderer.drawString(stringToDraw, guiLeft - 10 - mc.fontRenderer.getStringWidth(stringToDraw), guiTop + 152, 0x404040);
 		}
 		if(showRightList) {
@@ -498,7 +503,7 @@ public class GuiClothingSelector extends GuiScreen {
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
-	
+
 	@Override
 	public boolean doesGuiPauseGame() {
 		return false;
