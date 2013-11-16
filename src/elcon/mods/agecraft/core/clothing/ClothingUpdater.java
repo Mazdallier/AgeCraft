@@ -73,9 +73,9 @@ public class ClothingUpdater implements Runnable {
 			try {
 				file.createNewFile();
 				FileWriter writer = new FileWriter(file);
-				writer.write("### Clothing Categories ###");
-				writer.write("# Format: <name>=<version url>=<update url>");
-				writer.write("# ");
+				writer.write("### Clothing Categories ### \n");
+				writer.write("# Format: <name>=<version url>=<update url> \n");
+				writer.write("# \n");
 				writer.close();
 			} catch(Exception e) {
 				e.printStackTrace();

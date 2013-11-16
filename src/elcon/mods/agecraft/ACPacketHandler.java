@@ -382,6 +382,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		PacketDispatcher.sendPacketToPlayer(getTechTreeAllComponentsPacket(netHandler.getPlayer().username), player);
 		ACLog.info("[TechTree] Send all components to " + netHandler.getPlayer().username);
 
+		PacketDispatcher.sendPacketToPlayer(getClothingList(), player);
 		if(!PlayerClothingServer.players.containsKey(netHandler.getPlayer().username)) {
 			PlayerClothingServer.createDefaultClothing(netHandler.getPlayer().username);
 		}
