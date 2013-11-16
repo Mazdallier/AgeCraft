@@ -2,6 +2,7 @@ package elcon.mods.agecraft.core.items;
 
 import java.util.List;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +24,7 @@ import elcon.mods.core.items.ItemBlockName;
 import elcon.mods.core.lang.LanguageManager;
 
 public class ItemSaplingDNA extends ItemBlockName {
-	
+
 	public ItemSaplingDNA(int id) {
 		super(id);
 	}
@@ -46,6 +47,36 @@ public class ItemSaplingDNA extends ItemBlockName {
 	}
 
 	@Override
+	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isCurrentItem) {
+		if(!world.isRemote) {
+			if(!stack.hasTagCompound()) {
+				NBTTagCompound nbt = new NBTTagCompound();
+				DNAStorage dna = DNA.createDNAStorage(Trees.treeDNA);
+				NBTTagCompound tag = new NBTTagCompound();
+				dna.writeToNBT(tag);
+				nbt.setCompoundTag("DNA", tag);
+				stack.setTagCompound(nbt);
+			} else if(stack.getTagCompound().hasKey("Defaults")) {
+				if(stack.getTagCompound().hasKey("DNA")) {
+					stack.getTagCompound().removeTag("Defaults");
+				} else {
+					NBTTagCompound tag = stack.getTagCompound().getCompoundTag("Defaults");
+					DNAStorage dna = DNA.createDNAStorage(Trees.treeDNA);
+					int treeType = tag.getInteger("TreeType");
+					dna.getGene(0, 0).allel1 = treeType;
+					dna.getGene(0, 0).allel2 = treeType;
+					dna.getGene(0, 1).allel1 = treeType;
+					dna.getGene(0, 1).allel2 = treeType;
+					NBTTagCompound tagDNA = new NBTTagCompound();
+					dna.writeToNBT(tagDNA);
+					stack.getTagCompound().setCompoundTag("DNA", tagDNA);
+					stack.getTagCompound().removeTag("Defaults");
+				}
+			}
+		}
+	}
+
+	@Override
 	public String getItemDisplayName(ItemStack stack) {
 		if(!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
@@ -56,11 +87,11 @@ public class ItemSaplingDNA extends ItemBlockName {
 			dna.readFromNBT(nbt.getCompoundTag("DNA"));
 			return LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 0).getActive()].name) + " " + LanguageManager.getLocalization("trees.sapling");
 		} else if(nbt.hasKey("Defaults")) {
-			return LanguageManager.getLocalization("trees." + TreeRegistry.trees[nbt.getCompoundTag("Defaults").getInteger("WoodType")].name) + " " + LanguageManager.getLocalization("trees.sapling");
+			return LanguageManager.getLocalization("trees." + TreeRegistry.trees[nbt.getCompoundTag("Defaults").getInteger("TreeType")].name) + " " + LanguageManager.getLocalization("trees.sapling");
 		}
 		return super.getItemDisplayName(stack);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advancedItemTooltips) {
@@ -82,7 +113,7 @@ public class ItemSaplingDNA extends ItemBlockName {
 			}
 		}
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIconIndex(ItemStack stack) {
@@ -95,11 +126,11 @@ public class ItemSaplingDNA extends ItemBlockName {
 			dna.readFromNBT(nbt.getCompoundTag("DNA"));
 			return TreeRegistry.trees[dna.getGene(0, 0).getActive()].sapling;
 		} else if(nbt.hasKey("Defaults")) {
-			return TreeRegistry.trees[nbt.getCompoundTag("Defaults").getInteger("WoodType")].sapling;
+			return TreeRegistry.trees[nbt.getCompoundTag("Defaults").getInteger("TreeType")].sapling;
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Icon getIcon(ItemStack stack, int pass) {
 		return getIconIndex(stack);

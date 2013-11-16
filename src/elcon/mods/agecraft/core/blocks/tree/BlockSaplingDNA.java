@@ -30,6 +30,7 @@ import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
 import elcon.mods.agecraft.dna.storage.DNAStorage;
 import elcon.mods.core.blocks.BlockExtendedContainer;
 import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.core.tileentities.TileEntityMetadata;
 
 public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantable {
 
@@ -63,38 +64,41 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 
 	public void growTree(World world, int x, int y, int z, Random random) {
 		TileEntityDNATree tileSapling = (TileEntityDNATree) getTileEntity(world, x, y, z);
-		TileEntityDNATree tile = new TileEntityDNATree();
-		tile.setDNA(tileSapling.getDNA().copy());
-		world.setBlock(x, y, z, Trees.woodDNA.blockID, 0, 3);
-		world.setBlockTileEntity(x, y, z, tile);
-		tile = new TileEntityDNATree();
-		tile.setDNA(tileSapling.getDNA().copy());
-		world.setBlock(x, y + 1, z, Trees.woodDNA.blockID, 0, 3);
-		world.setBlockTileEntity(x, y + 1, z, tile);
-		tile = new TileEntityDNATree();
-		tile.setDNA(tileSapling.getDNA().copy());
-		world.setBlock(x, y + 2, z, Trees.woodDNA.blockID, 0, 3);
-		world.setBlockTileEntity(x, y + 2, z, tile);
-		tile = new TileEntityDNATree();
-		tile.setDNA(tileSapling.getDNA().copy());
+		int woodType = tileSapling.getDNA().getGene(0, 0).getActive();
+		
+		TileEntityMetadata tileWood = new TileEntityMetadata();
+		tileWood.setTileMetadata(woodType * 4);
+		world.setBlock(x, y, z, Trees.wood.blockID, 0, 3);
+		world.setBlockTileEntity(x, y, z, tileWood);
+		tileWood = new TileEntityMetadata();
+		tileWood.setTileMetadata(woodType * 4);
+		world.setBlock(x, y + 1, z, Trees.wood.blockID, 0, 3);
+		world.setBlockTileEntity(x, y + 1, z, tileWood);
+		tileWood = new TileEntityMetadata();
+		tileWood.setTileMetadata(woodType * 4);
+		world.setBlock(x, y + 2, z, Trees.wood.blockID, 0, 3);
+		world.setBlockTileEntity(x, y + 2, z, tileWood);
+		
+		TileEntityDNATree tileLeaves = new TileEntityDNATree();
+		tileLeaves.setDNA(tileSapling.getDNA().copy());
 		world.setBlock(x, y + 3, z, Trees.leavesDNA.blockID, 0, 3);
-		world.setBlockTileEntity(x, y + 3, z, tile);
-		tile = new TileEntityDNATree();
-		tile.setDNA(tileSapling.getDNA().copy());
+		world.setBlockTileEntity(x, y + 3, z, tileLeaves);
+		tileLeaves = new TileEntityDNATree();
+		tileLeaves.setDNA(tileSapling.getDNA().copy());
 		world.setBlock(x - 1, y + 2, z, Trees.leavesDNA.blockID, 0, 3);
-		world.setBlockTileEntity(x - 1, y + 2, z, tile);
-		tile = new TileEntityDNATree();
-		tile.setDNA(tileSapling.getDNA().copy());
+		world.setBlockTileEntity(x - 1, y + 2, z, tileLeaves);
+		tileLeaves = new TileEntityDNATree();
+		tileLeaves.setDNA(tileSapling.getDNA().copy());
 		world.setBlock(x + 1, y + 2, z, Trees.leavesDNA.blockID, 0, 3);
-		world.setBlockTileEntity(x + 1, y + 2, z, tile);
-		tile = new TileEntityDNATree();
-		tile.setDNA(tileSapling.getDNA().copy());
+		world.setBlockTileEntity(x + 1, y + 2, z, tileLeaves);
+		tileLeaves = new TileEntityDNATree();
+		tileLeaves.setDNA(tileSapling.getDNA().copy());
 		world.setBlock(x, y + 2, z - 1, Trees.leavesDNA.blockID, 0, 3);
-		world.setBlockTileEntity(x, y + 2, z - 1, tile);
-		tile = new TileEntityDNATree();
-		tile.setDNA(tileSapling.getDNA().copy());
+		world.setBlockTileEntity(x, y + 2, z - 1, tileLeaves);
+		tileLeaves = new TileEntityDNATree();
+		tileLeaves.setDNA(tileSapling.getDNA().copy());
 		world.setBlock(x, y + 2, z + 1, Trees.leavesDNA.blockID, 0, 3);
-		world.setBlockTileEntity(x, y + 2, z + 1, tile);
+		world.setBlockTileEntity(x, y + 2, z + 1, tileLeaves);
 	}
 
 	@Override
@@ -239,7 +243,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 				ItemStack stack = new ItemStack(id, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
 				NBTTagCompound tag = new NBTTagCompound();
-				tag.setInteger("WoodType", i);
+				tag.setInteger("TreeType", i);
 				nbt.setCompoundTag("Defaults", tag);
 				stack.setTagCompound(nbt);
 				list.add(stack);

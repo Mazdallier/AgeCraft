@@ -13,11 +13,9 @@ import elcon.mods.agecraft.core.TreeRegistry.Tree;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeaves;
 import elcon.mods.agecraft.core.blocks.tree.BlockLeavesDNA;
 import elcon.mods.agecraft.core.blocks.tree.BlockLog;
-import elcon.mods.agecraft.core.blocks.tree.BlockLogDNA;
 import elcon.mods.agecraft.core.blocks.tree.BlockPlanks;
 import elcon.mods.agecraft.core.blocks.tree.BlockSaplingDNA;
 import elcon.mods.agecraft.core.blocks.tree.BlockWood;
-import elcon.mods.agecraft.core.blocks.tree.BlockWoodDNA;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodDoor;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodFence;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodFenceGate;
@@ -60,9 +58,7 @@ public class Trees extends ACComponent {
 	public static Block door;
 	public static Block trapdoor;
 	public static Block ladder;
-	
-	public static Block woodDNA;
-	public static Block logDNA;
+
 	public static Block leavesDNA;
 	public static Block saplingDNA;
 	
@@ -83,7 +79,7 @@ public class Trees extends ACComponent {
 		}),
 		new Chromosome(2, "growth", new Gene[] {
 			new Gene(0, "saplingGrowSpeed", 4),
-			new Gene(1, "grrowSpeed", 4),
+			new Gene(1, "growSpeed", 4),
 			new Gene(2, "breedingSpeed", 4)
 		}),
 		new Chromosome(3, "appearance", new Gene[] {
@@ -113,10 +109,8 @@ public class Trees extends ACComponent {
 		trapdoor = new BlockWoodTrapdoor(2518).setUnlocalizedName("trees_trapdoor");
 		ladder = new BlockWoodLadder(2519).setUnlocalizedName("trees_ladder");
 		
-		woodDNA = new BlockWoodDNA(2530).setUnlocalizedName("tree_woodDNA");
-		logDNA = new BlockLogDNA(2531).setUnlocalizedName("tree_logDNA");
-		leavesDNA = new BlockLeavesDNA(2532).setUnlocalizedName("tree_leavesDNA");
-		saplingDNA = new BlockSaplingDNA(2533).setUnlocalizedName("tree_saplingDNA");
+		leavesDNA = new BlockLeavesDNA(2530).setUnlocalizedName("tree_leavesDNA");
+		saplingDNA = new BlockSaplingDNA(2531).setUnlocalizedName("tree_saplingDNA");
 		
 		//register blocks
 		GameRegistry.registerBlock(wood, ItemBlockExtendedMetadata.class, "AC_trees_wood");
@@ -130,8 +124,6 @@ public class Trees extends ACComponent {
 		GameRegistry.registerBlock(trapdoor, ItemBlockExtendedMetadata.class, "AC_trees_trapdoor");
 		GameRegistry.registerBlock(ladder, ItemBlockExtendedMetadata.class, "AC_trees_ladder");
 		
-		GameRegistry.registerBlock(woodDNA, ItemBlockName.class, "AC_trees_woodDNA");
-		GameRegistry.registerBlock(logDNA, ItemBlockName.class, "AC_trees_logDNA");
 		GameRegistry.registerBlock(leavesDNA, ItemBlockName.class, "AC_trees_leavesDNA");
 		GameRegistry.registerBlock(saplingDNA, ItemSaplingDNA.class, "AC_trees_saplingDNA");
 		
