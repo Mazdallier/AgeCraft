@@ -104,6 +104,10 @@
 		<copy todir="packages">
 			<fileset file="${build.release_location}/${build.minecraft_version}/${build.mod_version}/${build.mod_name}-${build.mod_version}-${build_number.build_number}.jar" />
 		</copy>
+		<mkdir dir="${build.agecraft_location}/${build.release_location}/${build.minecraft_version}/${build.mod_version}" />
+		<copy todir="${build.agecraft_location}/${build.release_location}/${build.minecraft_version}/${build.mod_version}">
+			<fileset file="${build.release_location}/${build.minecraft_version}/${build.mod_version}/${build.mod_name}-${build.mod_version}-${build_number.build_number}.jar" />
+		</copy>
 
 		<!-- Clean up the MCP source now that we are done -->
 		<antcall target="clean" />
