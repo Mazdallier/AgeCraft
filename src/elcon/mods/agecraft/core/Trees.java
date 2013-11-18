@@ -44,9 +44,9 @@ public class Trees extends ACComponent {
 	
 	public static final int MAX_BIOME_TYPE = 22;
 	
-	public static final int MAX_TRUNK_SIZE = 2;
+	public static final int MAX_TRUNK_SIZE = 4;
 	public static final int MAX_LEAVE_SIZE = 10;
-	public static final int MAX_HEIGHT = 32;
+	public static final int MAX_HEIGHT = 31;
 	
 	public static Block wood;
 	public static Block log;

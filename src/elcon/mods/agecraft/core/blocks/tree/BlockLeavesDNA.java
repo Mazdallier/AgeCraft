@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -49,6 +50,16 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	@Override
 	public String getUnlocalizedName() {
 		return "trees.leaves";
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+		if(stack.hasTagCompound() && stack.getTagCompound().hasKey("DNA")) {
+			TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
+			DNAStorage dna = new DNAStorage(tile.getDNAObject());
+			dna.readFromNBT(stack.getTagCompound().getCompoundTag("DNA"));
+			tile.setDNA(dna);
+		}
 	}
 	
 	@Override
@@ -125,23 +136,18 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 										if(adjacentTreeBlocks[(i + radius - 1) * treeSize2 + (j + radius) * treeSize + k + radius] == -2) {
 											adjacentTreeBlocks[(i + radius - 1) * treeSize2 + (j + radius) * treeSize + k + radius] = ii;
 										}
-
 										if(adjacentTreeBlocks[(i + radius + 1) * treeSize2 + (j + radius) * treeSize + k + radius] == -2) {
 											adjacentTreeBlocks[(i + radius + 1) * treeSize2 + (j + radius) * treeSize + k + radius] = ii;
 										}
-
 										if(adjacentTreeBlocks[(i + radius) * treeSize2 + (j + radius - 1) * treeSize + k + radius] == -2) {
 											adjacentTreeBlocks[(i + radius) * treeSize2 + (j + radius - 1) * treeSize + k + radius] = ii;
 										}
-
 										if(adjacentTreeBlocks[(i + radius) * treeSize2 + (j + radius + 1) * treeSize + k + radius] == -2) {
 											adjacentTreeBlocks[(i + radius) * treeSize2 + (j + radius + 1) * treeSize + k + radius] = ii;
 										}
-
 										if(adjacentTreeBlocks[(i + radius) * treeSize2 + (j + radius) * treeSize + (k + radius - 1)] == -2) {
 											adjacentTreeBlocks[(i + radius) * treeSize2 + (j + radius) * treeSize + (k + radius - 1)] = ii;
 										}
-
 										if(adjacentTreeBlocks[(i + radius) * treeSize2 + (j + radius) * treeSize + k + radius + 1] == -2) {
 											adjacentTreeBlocks[(i + radius) * treeSize2 + (j + radius) * treeSize + k + radius + 1] = ii;
 										}
@@ -204,6 +210,18 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	@Override
 	public int quantityDropped(int meta, int fortune, Random random) {
 		return 1;
+	}
+	
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+		ItemStack stack = new ItemStack(blockID, 1, 0);
+		NBTTagCompound nbt = new NBTTagCompound();
+		NBTTagCompound tag = new NBTTagCompound();
+		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
+		tile.getDNA().writeToNBT(tag);
+		nbt.setCompoundTag("DNA", tag);
+		stack.setTagCompound(nbt);
+		return stack;
 	}
 	
 	@Override
