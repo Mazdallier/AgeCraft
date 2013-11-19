@@ -48,7 +48,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		setCreativeTab(ACCreativeTabs.wood);
 		setBlockBounds(0.1F, 0.0F, 0.1F, 0.9F, 0.8F, 0.9F);
 	}
-	
+
 	@Override
 	public String getLocalizedName() {
 		return LanguageManager.getLocalization(getUnlocalizedName());
@@ -58,7 +58,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 	public String getUnlocalizedName() {
 		return "trees.sapling";
 	}
-	
+
 	public void growSapling(World world, int x, int y, int z, Random random) {
 		int meta = world.getBlockMetadata(x, y, z);
 		if(meta == 0) {
@@ -72,7 +72,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		TileEntityDNATree tileSapling = (TileEntityDNATree) getTileEntity(world, x, y, z);
 		int woodType = tileSapling.getWoodType();
 		int height = (tileSapling.getHeight() / 4) * 3;
-		
+
 		TileEntityMetadata tileWood;
 		for(int i = 0; i <= tileSapling.getTrunkSize(); i++) {
 			for(int k = 0; k <= tileSapling.getTrunkSize(); k++) {
@@ -83,20 +83,20 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 					world.setBlockTileEntity(x + i, y + j, z + k, tileWood);
 				}
 			}
-		}		
+		}
 		/*
-		TileEntityDNATree tileLeaves = new TileEntityDNATree();
-		tileLeaves.setDNA(tileSapling.getDNA().copy());
-		world.setBlock(x, y + 3, z, Trees.leavesDNA.blockID, 0, 3);
-		world.setBlockTileEntity(x, y + 3, z, tileLeaves);
-		*/
+		 * TileEntityDNATree tileLeaves = new TileEntityDNATree(); 
+		 * tileLeaves.setDNA(tileSapling.getDNA().copy()); 
+		 * world.setBlock(x, y + 3, z, Trees.leavesDNA.blockID, 0, 3);
+		 * world.setBlockTileEntity(x, y + 3, z, tileLeaves);
+		 */
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityDNATree();
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == Item.dyePowder && player.inventory.getCurrentItem().getItemDamage() == 15) {
@@ -110,7 +110,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		if(!world.isRemote) {
@@ -126,7 +126,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 			}
 		}
 	}
-	
+
 	@Override
 	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
@@ -140,7 +140,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		list.add(stack);
 		return list;
 	}
-	
+
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, int id) {
 		super.onNeighborBlockChange(world, x, y, z, id);
@@ -149,7 +149,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 			world.setBlockToAir(x, y, z);
 		}
 	}
-	
+
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random random) {
 		if(!world.isRemote) {
@@ -157,7 +157,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 				dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
 				world.setBlockToAir(x, y, z);
 			}
-			
+
 			int chance = 12 - ((TileEntityDNATree) getTileEntity(world, x, y, z)).getDNA().getGene(2, 0).getActive();
 			if(world.isRaining()) {
 				chance -= 4;
@@ -184,40 +184,40 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 
 	@Override
 	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
-		return super.canPlaceBlockAt(world, x, y ,z) && canBlockStay(world, x, y, z);
+		return super.canPlaceBlockAt(world, x, y, z) && canBlockStay(world, x, y, z);
 	}
-	
+
 	@Override
 	public boolean canBlockStay(World world, int x, int y, int z) {
 		Block soil = Block.blocksList[world.getBlockId(x, y - 1, z)];
 		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
 		if(tile != null) {
-			return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this)) 
-					&& BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature() - 2) 
+			return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this)) && BiomeRegistry.canSurviveTemperature(world.getBiomeGenForCoords(x, z), BiomeRegistry.getTemperature(BiomeGenBase.biomeList[tile.getBiome()]), tile.getTemperature() - 2)
 					&& BiomeRegistry.canSurviveHumidity(world.getBiomeGenForCoords(x, z), BiomeRegistry.getHumidity(BiomeGenBase.biomeList[tile.getBiome()]), tile.getHumidity() - 2);
 		}
 		return (world.getFullBlockLightValue(x, y, z) >= 8 || world.canBlockSeeTheSky(x, y, z)) && (soil != null && soil.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this));
 	}
-	
+
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, int x, int y, int z) {
 		int meta = blockAccess.getBlockMetadata(x, y, z);
 		if(meta == 0) {
-			setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, 0.5F, 0.7F);
+			setBlockBounds(0.25F, 0.0F, 0.25F, 0.75F, 0.6F, 0.75F);
+		} else {
+			setBlockBounds(0.1F, 0.0F, 0.1F, 0.9F, 0.8F, 0.9F);
 		}
-		setBlockBounds(0.1F, 0.0F, 0.1F, 0.9F, 0.8F, 0.9F);
 	}
-	
+
 	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
 		return null;
 	}
-	
+
 	@Override
 	public int damageDropped(int meta) {
 		return 0;
 	}
-	
+
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 		ItemStack stack = new ItemStack(blockID, 1, 0);
@@ -229,17 +229,17 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		stack.setTagCompound(nbt);
 		return stack;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
-	
+
 	@Override
 	public int getRenderType() {
 		return 90;
@@ -259,7 +259,7 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 	public int getPlantMetadata(World world, int x, int y, int z) {
 		return world.getBlockMetadata(x, y, z);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
@@ -283,13 +283,13 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		}
 		return ECUtilClient.addBlockHitEffects(world, target, effectRenderer, meta);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
 		return TreeRegistry.trees[meta].sapling;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
@@ -299,12 +299,12 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		}
 		return blockAccess.getBlockMetadata(x, y, z) == 1 ? TreeRegistry.trees[tile.getWoodType()].sapling : TreeRegistry.trees[tile.getWoodType()].smallSapling;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {

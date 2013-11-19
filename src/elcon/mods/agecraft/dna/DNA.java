@@ -87,6 +87,30 @@ public class DNA {
 		return storage;
 	}
 	
+	public static DNAStorage createDNAStorageFromTemplate(DNAObject dna, DNATemplate template) {
+		DNAStorage storage = new DNAStorage(dna);
+		DNAStorageChromosome[] storageChromosomes = new DNAStorageChromosome[dna.chromosomeCount];
+		for(int i = 0; i < dna.chromosomeCount; i++) {
+			if(dna.chromosomes[i] != null) {
+				storageChromosomes[i] = new DNAStorageChromosome(dna.chromosomes[i].id);
+				DNAStorageGene[] storageGenes = new DNAStorageGene[dna.chromosomes[i].geneCount];
+				for(int j = 0; j < dna.chromosomes[i].geneCount; j++) {
+					if(dna.chromosomes[i].genes[j] != null) {
+						if(template.hasAllel(i, j)) {
+							storageGenes[j] = new DNAStorageGene(dna.chromosomes[i].genes[j].id, template.getAllel1(i, j), template.getAllel2(i, j), (byte) 0);
+						} else {
+							int allel = generateAllel(dna.chromosomes[i].genes[j].maxValue);
+							storageGenes[j] = new DNAStorageGene(dna.chromosomes[i].genes[j].id, allel, allel, (byte) 0);
+						}
+					}
+				}
+				storageChromosomes[i].genes = storageGenes;
+			}
+		}
+		storage.chromosomes = storageChromosomes;
+		return storage;
+	}
+	
 	public static DNAStorage reproduce(DNAStorage d1, DNAStorage d2) {
 		DNAStorage child = new DNAStorage(d1.id);
 		DNAStorageChromosome[] chromosomes = new DNAStorageChromosome[d1.chromosomes.length];
