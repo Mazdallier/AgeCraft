@@ -40,7 +40,7 @@ public class TileEntityRendererCampfire extends TileEntitySpecialRenderer {
 			bindTexture(ResourcesPrehistory.campfire[tile.currentLogIndex]);
 		}		
 		GL11.glPushMatrix();
-		model.renderModel(0.0625F, tile.getLogCount());
+		model.renderModel(0.0625F, Math.min(tile.logCount, 8));
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
 

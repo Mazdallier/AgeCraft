@@ -56,6 +56,10 @@ public class TileEntityDNATree extends TileEntityDNA {
 		return getGene(3, 2).getActive();
 	}
 	
+	public int getGenerationType() {
+		return getGene(3, 3).getActive();
+	}
+	
 	public int getSaplingDropRate() {
 		return getGene(4, 0).getActive();
 	}

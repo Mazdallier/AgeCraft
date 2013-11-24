@@ -19,6 +19,8 @@ import elcon.mods.agecraft.prehistory.recipes.RecipesCampfire.RecipeCampfire;
 
 public class TileEntityCampfire extends TileEntity {
 
+	public static final int MAX_LOGS = 8;
+	
 	public int tick = 0;
 	
 	public int burnTime = 0;
@@ -161,6 +163,9 @@ public class TileEntityCampfire extends TileEntity {
 	public boolean addLogs(ItemStack stack) {
 		if(RecipesCampfire.getFuelValue(stack) != 0) {
 			if(stack.itemID == Trees.log.blockID) {
+				if(logCount >= MAX_LOGS) {
+					return true;
+				}
 				logs[stack.getItemDamage()] += stack.stackSize;
 				countLogs();
 				if(currentLogIndex == -1) {
@@ -186,10 +191,13 @@ public class TileEntityCampfire extends TileEntity {
 		return false;
 	}
 
-	public boolean onBlockActivated(float rotationYaw, ItemStack stack) {
+	public boolean onBlockActivated(float rotationYaw, boolean isCreativeMode, ItemStack stack) {
 		if(stack != null) {
 			if(RecipesCampfire.getFuelValue(stack) != 0) {
 				if(stack.itemID == Trees.log.blockID) {
+					if(logCount >= MAX_LOGS) {
+						return true;
+					}
 					logs[stack.getItemDamage()]++;
 					countLogs();
 					if(currentLogIndex == -1) {
@@ -208,9 +216,11 @@ public class TileEntityCampfire extends TileEntity {
 					}
 				}
 				burnTime += RecipesCampfire.getFuelValue(stack);
-				stack.stackSize--;
-				if(stack.stackSize <= 0) {
-					stack = null;
+				if(!isCreativeMode) {
+					stack.stackSize--;
+					if(stack.stackSize <= 0) {
+						stack = null;
+					}
 				}
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 				return true;
@@ -219,9 +229,11 @@ public class TileEntityCampfire extends TileEntity {
 					ItemStack s = stack.copy();
 					s.stackSize = 1;
 					setSpitStack(s, RecipesCampfire.getRecipe(stack));
-					stack.stackSize--;
-					if(stack.stackSize <= 0) {
-						stack = null;
+					if(!isCreativeMode) {
+						stack.stackSize--;
+						if(stack.stackSize <= 0) {
+							stack = null;
+						}
 					}
 					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 					return true;
@@ -233,9 +245,11 @@ public class TileEntityCampfire extends TileEntity {
 					}
 					frameType[frameStage] = stack.getItemDamage();
 					frameStage++;
-					stack.stackSize--;
-					if(stack.stackSize <= 0) {
-						stack = null;
+					if(!isCreativeMode) {
+						stack.stackSize--;
+						if(stack.stackSize <= 0) {
+							stack = null;
+						}
 					}
 					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 					return true;
@@ -290,10 +304,6 @@ public class TileEntityCampfire extends TileEntity {
 		for(int i = 0; i < logs.length; i++) {
 			logCount += logs[i];
 		}
-	}
-	
-	public int getLogCount() {
-		return Math.min(logCount, 8);
 	}
 	
 	public boolean hasFrame() {

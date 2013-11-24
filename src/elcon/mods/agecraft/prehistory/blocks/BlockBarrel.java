@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import mcp.mobius.waila.api.IWailaBlock;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -13,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -31,7 +35,7 @@ import elcon.mods.agecraft.prehistory.tileentities.TileEntityBarrel;
 import elcon.mods.core.blocks.BlockExtendedContainer;
 import elcon.mods.core.lang.LanguageManager;
 
-public class BlockBarrel extends BlockExtendedContainer {
+public class BlockBarrel extends BlockExtendedContainer implements IWailaBlock {
 
 	public BlockBarrel(int id) {
 		super(id, Material.wood);
@@ -275,5 +279,34 @@ public class BlockBarrel extends BlockExtendedContainer {
 				list.add(stack);
 			}
 		}
+	}
+
+	@Override
+	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return null;
+	}
+
+	@Override
+	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		TileEntityBarrel tile = (TileEntityBarrel) accessor.getTileEntity();
+		currenttip.add(0, EnumChatFormatting.WHITE + LanguageManager.getLocalization("trees." + TreeRegistry.trees[tile.woodType].name) + " " + LanguageManager.getLocalization(getUnlocalizedName()));
+		return currenttip;
+	}
+
+	@Override
+	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		TileEntityBarrel tile = (TileEntityBarrel) accessor.getTileEntity();
+		StringBuilder sb = new StringBuilder();
+		if(tile.hasFluid()) {
+			sb.append(LanguageManager.getLocalization(tile.fluid.getFluidType().getUnlocalizedName()));
+			if(tile.hasStack()) {
+				sb.append(" / ");
+				sb.append(tile.stack.getDisplayName());
+			}
+		}
+		if(sb.length() > 0) {
+			currenttip.add(sb.toString());
+		}
+		return currenttip;
 	}
 }

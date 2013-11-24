@@ -1,7 +1,11 @@
 package elcon.mods.agecraft.prehistory.blocks;
 
+import java.util.List;
 import java.util.Random;
 
+import mcp.mobius.waila.api.IWailaBlock;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -22,7 +26,7 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.core.lang.LanguageManager;
 
-public class BlockCampfire extends BlockContainer {
+public class BlockCampfire extends BlockContainer implements IWailaBlock {
 	
 	@SideOnly(Side.CLIENT)
 	private Icon icon;
@@ -136,7 +140,7 @@ public class BlockCampfire extends BlockContainer {
 				tile = new TileEntityCampfire();
 				world.setBlockTileEntity(x, y, z, tile);
 			}			
-			return tile.onBlockActivated(player.rotationYaw, player.getCurrentEquippedItem());
+			return tile.onBlockActivated(player.rotationYaw, player.capabilities.isCreativeMode, player.getCurrentEquippedItem());
 		}
 		return true;
 	}
@@ -177,5 +181,27 @@ public class BlockCampfire extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icon = iconRegister.registerIcon("agecraft:ages/prehistory/campfire");
+	}
+
+	@Override
+	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return null;
+	}
+
+	@Override
+	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return currenttip;
+	}
+
+	@Override
+	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		TileEntityCampfire tile = (TileEntityCampfire) accessor.getTileEntity();
+		if(tile.logCount > 0) {
+			currenttip.add(Integer.toString(tile.logCount) + " " + LanguageManager.getLocalization("trees.logs"));
+		}
+		if(tile.isCooking() && tile.spitStack != null) {
+			currenttip.add(tile.spitStack.getDisplayName());
+		}
+		return currenttip;
 	}
 }

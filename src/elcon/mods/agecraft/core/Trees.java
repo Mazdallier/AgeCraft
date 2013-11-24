@@ -30,6 +30,10 @@ import elcon.mods.agecraft.core.items.ItemWoodDoor;
 import elcon.mods.agecraft.core.items.ItemWoodDust;
 import elcon.mods.agecraft.core.items.ItemWoodStick;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
+import elcon.mods.agecraft.core.world.trees.WorldGenTreeBirch;
+import elcon.mods.agecraft.core.world.trees.WorldGenTreeJungle;
+import elcon.mods.agecraft.core.world.trees.WorldGenTreeOak;
+import elcon.mods.agecraft.core.world.trees.WorldGenTreeSpruce;
 import elcon.mods.agecraft.dna.structure.Chromosome;
 import elcon.mods.agecraft.dna.structure.DNAObject;
 import elcon.mods.agecraft.dna.structure.Gene;
@@ -39,8 +43,7 @@ import elcon.mods.core.items.ItemBlockName;
 
 public class Trees extends ACComponent {
 
-	public static final int MAX_WOOD_TYPE = 3;
-	public static final int MAX_LEAVE_TYPE = 3;
+	public static final int MAX_TREE_TYPE = 3;
 	
 	public static final int MAX_BIOME_TYPE = 22;
 	
@@ -68,8 +71,8 @@ public class Trees extends ACComponent {
 	
 	public static DNAObject treeDNA = new DNAObject(0, "tree", TileEntityDNATree.class, new Chromosome[] {
 		new Chromosome(0, "species", new Gene[] {
-			new Gene(0, "woodType", MAX_WOOD_TYPE),
-			new Gene(1, "leaveType", MAX_LEAVE_TYPE),
+			new Gene(0, "woodType", MAX_TREE_TYPE),
+			new Gene(1, "leaveType", MAX_TREE_TYPE),
 			new Gene(2, "leaveColor", 0xFFFFFF, false, true)
 		}),
 		new Chromosome(1, "habitat", new Gene[] {
@@ -85,7 +88,8 @@ public class Trees extends ACComponent {
 		new Chromosome(3, "appearance", new Gene[] {
 			new Gene(0, "trunkSize", MAX_TRUNK_SIZE),
 			new Gene(1, "leaveSize", MAX_LEAVE_SIZE),
-			new Gene(2, "height", MAX_HEIGHT)
+			new Gene(2, "height", MAX_HEIGHT),
+			new Gene(3, "generationType", MAX_TREE_TYPE)
 		}),
 		new Chromosome(4, "drops", new Gene[] {
 			new Gene(0, "saplingDropRate", 2),
@@ -156,10 +160,10 @@ public class Trees extends ACComponent {
 	@Override
 	public void init() {
 		//register trees
-		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true, 0xB4905A));
-		TreeRegistry.registerTree(new Tree(1, "birch", 0x80A755, false, 0xD7C185));
-		TreeRegistry.registerTree(new Tree(2, "spruce", 0x619961, false, 0x785836));
-		TreeRegistry.registerTree(new Tree(3, "jungle", 0x48B518, true, 0xB1805C));
+		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true, 0xB4905A, new WorldGenTreeOak()));
+		TreeRegistry.registerTree(new Tree(1, "birch", 0x80A755, false, 0xD7C185, new WorldGenTreeBirch()));
+		TreeRegistry.registerTree(new Tree(2, "spruce", 0x619961, false, 0x785836, new WorldGenTreeSpruce()));
+		TreeRegistry.registerTree(new Tree(3, "jungle", 0x48B518, true, 0xB1805C, new WorldGenTreeJungle()));
 		
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			if(TreeRegistry.trees[i] != null) {

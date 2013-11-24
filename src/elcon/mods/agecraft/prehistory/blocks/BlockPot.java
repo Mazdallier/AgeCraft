@@ -3,6 +3,9 @@ package elcon.mods.agecraft.prehistory.blocks;
 import java.util.ArrayList;
 import java.util.List;
 
+import mcp.mobius.waila.api.IWailaBlock;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -28,7 +31,7 @@ import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 import elcon.mods.core.blocks.BlockExtendedContainer;
 import elcon.mods.core.lang.LanguageManager;
 
-public class BlockPot extends BlockExtendedContainer {
+public class BlockPot extends BlockExtendedContainer implements IWailaBlock {
 
 	public boolean renderSolid = false;
 	private Icon iconsSide[] = new Icon[2];
@@ -257,5 +260,26 @@ public class BlockPot extends BlockExtendedContainer {
 		iconsTop[0] = iconRegister.registerIcon("agecraft:ages/prehistory/potTop");
 		iconsSide[1] = iconRegister.registerIcon("agecraft:ages/prehistory/potLidSide");
 		iconsTop[1] = iconRegister.registerIcon("agecraft:ages/prehistory/potLidTop");
+	}
+
+	@Override
+	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return null;
+	}
+
+	@Override
+	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		return currenttip;
+	}
+
+	@Override
+	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		TileEntityPot tile = (TileEntityPot) accessor.getTileEntity();
+		if(tile.hasFluid()) {
+			currenttip.add(LanguageManager.getLocalization(tile.fluid.getFluidType().getUnlocalizedName()));
+		} else if(tile.hasDust()) {
+			currenttip.add(tile.dust.getDisplayName());
+		}
+		return currenttip;
 	}
 }

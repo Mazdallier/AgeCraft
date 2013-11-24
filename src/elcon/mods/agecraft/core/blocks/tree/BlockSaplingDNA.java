@@ -36,7 +36,6 @@ import elcon.mods.agecraft.dna.storage.DNAStorage;
 import elcon.mods.core.ECUtilClient;
 import elcon.mods.core.blocks.BlockExtendedContainer;
 import elcon.mods.core.lang.LanguageManager;
-import elcon.mods.core.tileentities.TileEntityMetadata;
 
 public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantable {
 
@@ -69,27 +68,8 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 	}
 
 	public void growSmallTree(World world, int x, int y, int z, Random random) {
-		TileEntityDNATree tileSapling = (TileEntityDNATree) getTileEntity(world, x, y, z);
-		int woodType = tileSapling.getWoodType();
-		int height = (tileSapling.getHeight() / 4) * 3;
-
-		TileEntityMetadata tileWood;
-		for(int i = 0; i <= tileSapling.getTrunkSize(); i++) {
-			for(int k = 0; k <= tileSapling.getTrunkSize(); k++) {
-				for(int j = 0; j < height; j++) {
-					tileWood = new TileEntityMetadata();
-					tileWood.setTileMetadata(woodType);
-					world.setBlock(x + i, y + j, z + k, Trees.log.blockID, 0, 3);
-					world.setBlockTileEntity(x + i, y + j, z + k, tileWood);
-				}
-			}
-		}
-		/*
-		 * TileEntityDNATree tileLeaves = new TileEntityDNATree(); 
-		 * tileLeaves.setDNA(tileSapling.getDNA().copy()); 
-		 * world.setBlock(x, y + 3, z, Trees.leavesDNA.blockID, 0, 3);
-		 * world.setBlockTileEntity(x, y + 3, z, tileLeaves);
-		 */
+		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
+		TreeRegistry.trees[tile.getGenerationType()].worldGen.generateSmallTree(world, x, y, z, tile.getDNA());
 	}
 
 	@Override
