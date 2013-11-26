@@ -48,7 +48,7 @@ public class Trees extends ACComponent {
 	public static final int MAX_BIOME_TYPE = 22;
 	
 	public static final int MAX_TRUNK_SIZE = 4;
-	public static final int MAX_LEAVE_SIZE = 10;
+	public static final int MAX_LEAVE_SIZE = 15;
 	public static final int MAX_HEIGHT = 31;
 	
 	public static Block wood;
@@ -142,6 +142,8 @@ public class Trees extends ACComponent {
 		Block.setBurnProperties(door.blockID, 5, 20);
 		Block.setBurnProperties(trapdoor.blockID, 5, 20);
 		Block.setBurnProperties(ladder.blockID, 5, 20);
+		
+		Block.setBurnProperties(leavesDNA.blockID, 30, 60);
 		
 		//init items
 		stick = new ItemWoodStick(12510).setUnlocalizedName("trees_stick");

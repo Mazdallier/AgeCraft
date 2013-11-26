@@ -15,6 +15,19 @@ public class TileEntityDNA extends TileEntityNBT implements IDNAOwner {
 	public int dnaID;
 	private DNAStorage dna;
 	
+	public TileEntityDNA() {
+		
+	}
+	
+	public TileEntityDNA(int dnaID, DNAStorage dna) {
+		this.dnaID = dnaID;
+		this.dna = dna;
+	}
+	
+	public TileEntityDNA(Integer dnaID, DNAStorage dna) {
+		this(dnaID.intValue(), dna);
+	}
+	
 	@Override
 	public DNAObject getDNAObject() {
 		return DNA.getDNAObject(dnaID);

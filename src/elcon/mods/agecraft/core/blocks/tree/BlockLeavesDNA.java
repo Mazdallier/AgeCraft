@@ -84,7 +84,7 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	public void updateTick(World world, int x, int y, int z, Random random) {
 		if(!world.isRemote) {
 			TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
-			int chance = 12 - tile.getBreedingSpeed();
+			int chance = 24 - tile.getBreedingSpeed();
 			if(random.nextInt(chance) == 0) {
 				int side = random.nextInt(6);
 				int xx = x + ForgeDirection.VALID_DIRECTIONS[side].offsetX;

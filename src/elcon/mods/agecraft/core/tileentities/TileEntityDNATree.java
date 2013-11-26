@@ -1,11 +1,20 @@
 package elcon.mods.agecraft.core.tileentities;
 
 import elcon.mods.agecraft.core.Trees;
+import elcon.mods.agecraft.dna.storage.DNAStorage;
 
 public class TileEntityDNATree extends TileEntityDNA {
 	
 	public TileEntityDNATree() {
 		setDNAObjectID(Trees.treeDNA.id);
+	}
+	
+	public TileEntityDNATree(int dnaID, DNAStorage dna) {
+		super(dnaID, dna);
+	}
+	
+	public TileEntityDNATree(Integer dnaID, DNAStorage dna) {
+		super(dnaID, dna);
 	}
 	
 	public int getWoodType() {

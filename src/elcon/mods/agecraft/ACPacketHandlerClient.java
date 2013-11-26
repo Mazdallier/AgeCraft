@@ -270,6 +270,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		int z = dat.readInt();
 		TileEntityDNA tile = (TileEntityDNA) world.getBlockTileEntity(x, y, z);
 		if(tile == null) {
+			if(Block.blocksList[world.getBlockId(x, y, z)] == null) {
+				return;
+			}
 			tile = (TileEntityDNA) Block.blocksList[world.getBlockId(x, y, z)].createTileEntity(world, world.getBlockMetadata(x, y, z));
 			world.setBlockTileEntity(x, y, z, tile);
 		}
