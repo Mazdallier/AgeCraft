@@ -3,7 +3,9 @@ package elcon.mods.agecraft.core.world.trees;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNATree;
 import elcon.mods.agecraft.dna.storage.DNAStorage;
@@ -12,6 +14,8 @@ import elcon.mods.core.world.WorldGenBase;
 
 public abstract class WorldGenTree extends WorldGenBase {
 
+	public static ForgeDirection[] sideDirections = new ForgeDirection[]{ForgeDirection.NORTH, ForgeDirection.SOUTH, ForgeDirection.WEST, ForgeDirection.EAST};
+	
 	private World world;
 	private int startX;
 	private int startY;
@@ -34,20 +38,27 @@ public abstract class WorldGenTree extends WorldGenBase {
 		startZ = z;
 
 		int woodType = dna.getGene(0, 0).getActive();
-		int leaveType = dna.getGene(0, 1).getActive();
+		int leafType = dna.getGene(0, 1).getActive();
 		int trunkSize = dna.getGene(3, 0).getActive() + 1;
-		int leaveSize = Math.max(((dna.getGene(3, 1).getActive() + 1) / 4) * 3, trunkSize + 2);
-		int halfLeaveSize = leaveSize / 2;
-		int height = ((dna.getGene(3, 2).getActive() + 1) / 4) * 3;
+		int leafSize = Math.max(((dna.getGene(3, 1).getActive() + 1) / 4) * 3, trunkSize + 2);
+		int halfLeaveSize = leafSize / 2;
+		int height = ((dna.getGene(3, 2).getActive() + 3) / 4) * 3;
 		int generationType = dna.getGene(3, 3).getActive();
-
+		
+		int centerY = y + height - halfLeaveSize;
+		
+		//TODO: add required size check
+		
 		generateSmallTreeTrunk(trunkSize, height, woodType);
 		
 		for(int i = 0; i < trunkSize; i++) {
 			for(int j = 0; j < trunkSize; j++) {
-				generateSphere(world, x + i, y + height - halfLeaveSize, z + j, halfLeaveSize + 0.5D, Trees.leavesDNA.blockID, 0, false, TileEntityDNATree.class, dna.id, dna);
-				//generateSphere(world, x + (trunkSize / 2) - i, y + height - (leaveSize / 2) + 2, z + (trunkSize / 2) - j, leaveSize / 2, Trees.leavesDNA.blockID, 0, false, TileEntityDNATree.class, dna.id, dna);
+				generateSphere(world, x + i, centerY, z + j, halfLeaveSize + 0.5D, Trees.leavesDNA.blockID, 0, false, TileEntityDNATree.class, dna.id, dna);
 			}
+		}
+		
+		if(leafSize >= 8) {
+			generateSmallTreeBranches(centerY - 2, centerY + 2, leafSize / 4, leafSize / 2, leafSize / 4, trunkSize, woodType);
 		}
 		return true;
 	}
@@ -60,11 +71,13 @@ public abstract class WorldGenTree extends WorldGenBase {
 		startZ = z;
 
 		int woodType = dna.getGene(0, 0).getActive();
-		int leaveType = dna.getGene(0, 1).getActive();
+		int leafType = dna.getGene(0, 1).getActive();
 		int trunkSize = dna.getGene(3, 0).getActive() + 1;
-		int leaveSize = dna.getGene(3, 1).getActive() + 1;
-		int height = dna.getGene(3, 2).getActive() + 1;
+		int leafSize = dna.getGene(3, 1).getActive() + 1;
+		int height = dna.getGene(3, 2).getActive() + 3;
 		int generationType = dna.getGene(3, 3).getActive();
+		
+		//TODO: add required size check
 		
 		generateTreeTrunk(trunkSize, height, woodType);
 		
@@ -97,11 +110,80 @@ public abstract class WorldGenTree extends WorldGenBase {
 		}
 	}
 	
+	public void generateTreeBranches(int startY, int endY, int maxBranchCount, int branchLength, int branchHeight, int trunkSize, int woodType) {
+		int branchCount = 0;
+		int chance = (endY - startY) / maxBranchCount;
+		int halfTrunkSize = trunkSize == 1 ? 0 : trunkSize / 2;
+		System.out.println("generating branches " + chance);
+		for(int i = startY; i < endY; i++) {
+			if(random.nextInt(chance) == 0) {
+				ForgeDirection direction = sideDirections[i >= sideDirections.length ? random.nextInt(sideDirections.length) : i];
+				generateTreeBranch(world, startX + halfTrunkSize + direction.offsetX, i, startZ + halfTrunkSize + direction.offsetZ, direction, branchLength, branchHeight, woodType);
+				branchCount++;
+				if(branchCount >= maxBranchCount) {
+					return;
+				}
+			}
+		}
+	}
+	
+	public void generateTreeBranch(World world, int x, int y, int z, ForgeDirection direction, int branchLength, int branchHeight, int woodType) {
+		if(direction.offsetY == 0) {
+			int lengthPerHeight = branchLength / branchHeight;
+			int additionalBranchLength = branchLength - (branchHeight * lengthPerHeight);
+			for(int i = 0; i < branchHeight; i++) {
+				int length = lengthPerHeight + (i == branchHeight - 1 ? additionalBranchLength : 0);
+				for(int j = 0; j < length; j++) {
+					int xx = x + ((j + lengthPerHeight * i) * direction.offsetX);
+					int yy = y + i;
+					int zz = z + ((j + lengthPerHeight * i) * direction.offsetZ);
+					if(world.getBlockMaterial(xx, yy, zz) == Material.leaves) {
+						setBlockAndTileEntity(world, xx, yy, zz, Trees.wood.blockID, new TileEntityMetadata(woodType * 4));
+					}
+				}
+			}
+		}
+	}
+	
 	public void generateSmallTreeTrunk(int trunkSize, int height, int woodType) {
 		for(int x = startX; x < startX + trunkSize; x++) {
 			for(int z = startZ; z < startZ + trunkSize; z++) {
 				for(int y = startY; y < startY + height; y++) {
 					setBlockAndTileEntity(world, x, y, z, Trees.log.blockID, new TileEntityMetadata(woodType));
+				}
+			}
+		}
+	}
+	
+	public void generateSmallTreeBranches(int startY, int endY, int maxBranchCount, int branchLength, int branchHeight, int trunkSize, int woodType) {
+		int branchCount = 0;
+		int chance = (endY - startY) / maxBranchCount;
+		int halfTrunkSize = trunkSize == 1 ? 0 : trunkSize / 2;
+		for(int i = startY; i < endY; i++) {
+			if(random.nextInt(chance) == 0) {
+				ForgeDirection direction = sideDirections[i >= sideDirections.length ? random.nextInt(sideDirections.length) : i];
+				generateTreeBranch(world, startX + halfTrunkSize + direction.offsetX, i, startX + halfTrunkSize + direction.offsetZ, direction, branchLength, branchHeight, woodType);
+				branchCount++;
+				if(branchCount >= maxBranchCount) {
+					return;
+				}
+			}
+		}
+	}
+	
+	public void generateSmallTreeBranch(World world, int x, int y, int z, ForgeDirection direction, int branchLength, int branchHeight, int woodType) {
+		if(direction.offsetY != 0) {
+			int lengthPerHeight = branchLength / branchHeight;
+			int additionalBranchLength = branchLength - (branchHeight * lengthPerHeight);
+			for(int i = 0; i < branchHeight; i++) {
+				int length = lengthPerHeight + (i == branchHeight - 1 ? additionalBranchLength : 0);
+				for(int j = 0; j < length; j++) {
+					int xx = x + ((j + lengthPerHeight * i) * direction.offsetX);
+					int yy = y + i;
+					int zz = z + ((j + lengthPerHeight * i) * direction.offsetZ);
+					if(world.getBlockMaterial(xx, yy, zz) == Material.leaves) {
+						setBlockAndTileEntity(world, xx, yy, zz, Trees.log.blockID, new TileEntityMetadata(woodType));
+					}
 				}
 			}
 		}
