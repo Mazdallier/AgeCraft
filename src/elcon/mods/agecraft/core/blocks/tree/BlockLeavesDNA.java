@@ -254,7 +254,7 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
 		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(blockAccess, x, y, z);
-		if(TreeRegistry.trees[tile.getLeaveType()].useBiomeColor) {
+		if(TreeRegistry.trees[tile.getLeafType()].useBiomeColor) {
 			int r = 0;
 			int g = 0;
 			int b = 0;
@@ -268,7 +268,7 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 			}
 			return (r / 9 & 255) << 16 | (g / 9 & 255) << 8 | b / 9 & 255;
 		}
-		return TreeRegistry.trees[tile.getLeaveType()].leavesColor;
+		return TreeRegistry.trees[tile.getLeafType()].leafColor;
 	}
 	
 	@Override
@@ -283,7 +283,7 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	public boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
 		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
 		if(tile != null) {
-			meta = tile.getLeaveType();
+			meta = tile.getLeafType();
 		}
 		return ECUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, meta);
 	}
@@ -297,7 +297,7 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 		int meta = 0;
 		TileEntityDNATree tile = (TileEntityDNATree) world.getBlockTileEntity(x, y, z);
 		if(tile != null) {
-			meta = tile.getLeaveType();
+			meta = tile.getLeafType();
 		}
 		return ECUtilClient.addBlockHitEffects(world, target, effectRenderer, meta);
 	}
@@ -312,7 +312,7 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	@SideOnly(Side.CLIENT)
 	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(blockAccess, x, y, z);
-		return Trees.leaves.getIcon(side, tile.getLeaveType() * 4);
+		return Trees.leaves.getIcon(side, tile.getLeafType() * 4);
 	}
 	
 	@Override

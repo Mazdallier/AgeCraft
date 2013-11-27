@@ -52,8 +52,8 @@ public class DNA {
 		return -1;
 	}
 	
-	public static int generateAllel(int max) {
-		return random.nextInt(max + 1);
+	public static int generateAllel(int min, int max) {
+		return min + random.nextInt((max - min) + 1);
 	}
 	
 	public static byte generateActive(ReproCell r1, ReproCell r2) {
@@ -76,7 +76,7 @@ public class DNA {
 				DNAStorageGene[] storageGenes = new DNAStorageGene[dna.chromosomes[i].geneCount];
 				for(int j = 0; j < dna.chromosomes[i].geneCount; j++) {
 					if(dna.chromosomes[i].genes[j] != null) {
-						int allel = generateAllel(dna.chromosomes[i].genes[j].maxValue);
+						int allel = generateAllel(dna.chromosomes[i].genes[j].minValue, dna.chromosomes[i].genes[j].maxValue);
 						storageGenes[j] = new DNAStorageGene(dna.chromosomes[i].genes[j].id, allel, allel, (byte) 0);
 					}
 				}
@@ -99,7 +99,7 @@ public class DNA {
 						if(template.hasAllel(i, j)) {
 							storageGenes[j] = new DNAStorageGene(dna.chromosomes[i].genes[j].id, template.getAllel1(i, j), template.getAllel2(i, j), (byte) 0);
 						} else {
-							int allel = generateAllel(dna.chromosomes[i].genes[j].maxValue);
+							int allel = generateAllel(dna.chromosomes[i].genes[j].minValue, dna.chromosomes[i].genes[j].maxValue);
 							storageGenes[j] = new DNAStorageGene(dna.chromosomes[i].genes[j].id, allel, allel, (byte) 0);
 						}
 					}

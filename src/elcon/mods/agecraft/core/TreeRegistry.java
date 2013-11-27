@@ -11,7 +11,7 @@ public class TreeRegistry {
 		public int id;
 		public String name;
 		
-		public int leavesColor;
+		public int leafColor;
 		public boolean useBiomeColor;
 		public int woodColor;
 		
@@ -34,7 +34,7 @@ public class TreeRegistry {
 			this.id = id;
 			this.name = name;
 			
-			this.leavesColor = leavesColor;
+			this.leafColor = leavesColor;
 			this.useBiomeColor = useBiomeColor;
 			this.woodColor = woodColor;
 			

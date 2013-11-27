@@ -47,9 +47,9 @@ public class Trees extends ACComponent {
 	
 	public static final int MAX_BIOME_TYPE = 22;
 	
-	public static final int MAX_TRUNK_SIZE = 4;
-	public static final int MAX_LEAVE_SIZE = 15;
-	public static final int MAX_HEIGHT = 31;
+	public static final int MAX_TRUNK_SIZE = 5;
+	public static final int MAX_LEAF_SIZE = 16;
+	public static final int MAX_HEIGHT = 32;
 	
 	public static Block wood;
 	public static Block log;
@@ -71,31 +71,31 @@ public class Trees extends ACComponent {
 	
 	public static DNAObject treeDNA = new DNAObject(0, "tree", TileEntityDNATree.class, new Chromosome[] {
 		new Chromosome(0, "species", new Gene[] {
-			new Gene(0, "woodType", MAX_TREE_TYPE),
-			new Gene(1, "leaveType", MAX_TREE_TYPE),
-			new Gene(2, "leaveColor", 0xFFFFFF, false, true)
+			new Gene(0, "woodType", 0, MAX_TREE_TYPE),
+			new Gene(1, "leafType", 0, MAX_TREE_TYPE),
+			new Gene(2, "leafColor", 0, 0xFFFFFF, false, true)
 		}),
 		new Chromosome(1, "habitat", new Gene[] {
-			new Gene(0, "biome", MAX_BIOME_TYPE),
-			new Gene(1, "temperature", 4),
-			new Gene(2, "humidity", 4)
+			new Gene(0, "biome", 0, MAX_BIOME_TYPE),
+			new Gene(1, "temperature", 0, 4),
+			new Gene(2, "humidity", 0, 4)
 		}),
 		new Chromosome(2, "growth", new Gene[] {
-			new Gene(0, "saplingGrowSpeed", 4),
-			new Gene(1, "growSpeed", 4),
-			new Gene(2, "breedingSpeed", 4)
+			new Gene(0, "saplingGrowSpeed", 0, 4),
+			new Gene(1, "growSpeed", 0, 4),
+			new Gene(2, "breedingSpeed", 0, 4)
 		}),
 		new Chromosome(3, "appearance", new Gene[] {
-			new Gene(0, "trunkSize", MAX_TRUNK_SIZE),
-			new Gene(1, "leaveSize", MAX_LEAVE_SIZE),
-			new Gene(2, "height", MAX_HEIGHT),
-			new Gene(3, "generationType", MAX_TREE_TYPE)
+			new Gene(0, "trunkSize", 1, MAX_TRUNK_SIZE),
+			new Gene(1, "leafSize", 1, MAX_LEAF_SIZE),
+			new Gene(2, "height", 3, MAX_HEIGHT),
+			new Gene(3, "generationType", 1, MAX_TREE_TYPE)
 		}),
 		new Chromosome(4, "drops", new Gene[] {
-			new Gene(0, "saplingDropRate", 2),
-			new Gene(1, "sappiness"),
+			new Gene(0, "saplingDropRate", 0, 2),
+			new Gene(1, "sappiness", 0, 4),
 			new Gene(2, "fruit"),
-			new Gene(3, "fruitDropRate")
+			new Gene(3, "fruitDropRate", 0, 2)
 		})
 	});
 	

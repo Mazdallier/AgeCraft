@@ -15,6 +15,6 @@ public class ItemBlockLeaves extends ItemBlockExtendedMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int renderPass) {
-		return TreeRegistry.trees[(stack.getItemDamage() - (stack.getItemDamage() & 3)) / 4].leavesColor;
+		return TreeRegistry.trees[(stack.getItemDamage() - (stack.getItemDamage() & 3)) / 4].leafColor;
 	}
 }

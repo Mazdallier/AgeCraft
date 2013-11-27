@@ -2,11 +2,22 @@ package elcon.mods.agecraft.dna;
 
 public class DNAUtil {
 
-	public static String intToGoodBad(int i) {
+	public static String intToGoodBadSimple(int i) {
 		switch(i) {
 			case 0: return "Good";
 			case 1: return "Normal";
 			case 2: return "Bad";
+		}
+		return "Normal";
+	}
+	
+	public static String intToGoodBad(int i) {
+		switch(i) {
+			case 0: return "Best";
+			case 1: return "Good";
+			case 2: return "Normal";
+			case 3: return "Bad";
+			case 4: return "Worst";
 		}
 		return "Normal";
 	}

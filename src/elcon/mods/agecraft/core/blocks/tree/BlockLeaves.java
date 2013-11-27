@@ -60,7 +60,7 @@ public class BlockLeaves extends BlockExtendedMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderColor(int meta) {
-		return TreeRegistry.trees[(meta - (meta & 3)) / 4].leavesColor;
+		return TreeRegistry.trees[(meta - (meta & 3)) / 4].leafColor;
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class BlockLeaves extends BlockExtendedMetadata {
 			}
 			return (r / 9 & 255) << 16 | (g / 9 & 255) << 8 | b / 9 & 255;
 		}
-		return TreeRegistry.trees[(meta - (meta & 3)) / 4].leavesColor;
+		return TreeRegistry.trees[(meta - (meta & 3)) / 4].leafColor;
 	}
 
 	@Override

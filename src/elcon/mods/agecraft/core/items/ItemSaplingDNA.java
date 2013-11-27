@@ -92,8 +92,8 @@ public class ItemSaplingDNA extends ItemBlockName {
 				list.add(BiomeGenBase.biomeList[dna.getGene(1, 1).getActive()].biomeName);
 				list.add("T: " + DNAUtil.intToPlusMin(dna.getGene(1, 1).getActive()) + Color.TEXT_COLOR_PREFIX_GRAY + " H: " + DNAUtil.intToPlusMin(dna.getGene(1, 2).getActive()));
 				list.add("S: " + DNAUtil.intToSpeed(dna.getGene(2, 0).getActive()) + " T: " + DNAUtil.intToSpeed(dna.getGene(2, 1).getActive()) + " B: " + DNAUtil.intToSpeed(dna.getGene(2, 2).getActive()));
-				list.add("Saplings: " +  DNAUtil.intToGoodBad(dna.getGene(4, 0).getActive()));
-				list.add("T: " + Integer.toString(dna.getGene(3, 0).getActive() + 1) + "x" + Integer.toString(dna.getGene(3, 0).getActive() + 1) + " L: " + Integer.toString(dna.getGene(3, 1).getActive() + 1) + " H: " + Integer.toString(dna.getGene(3, 2).getActive() + 1));
+				list.add("Saplings: " +  DNAUtil.intToGoodBadSimple(dna.getGene(4, 0).getActive()));
+				list.add("T: " + Integer.toString(dna.getGene(3, 0).getActive()) + "x" + Integer.toString(dna.getGene(3, 0).getActive()) + " L: " + Integer.toString(dna.getGene(3, 1).getActive()) + " H: " + Integer.toString(dna.getGene(3, 2).getActive()));
 			}
 		}
 	}

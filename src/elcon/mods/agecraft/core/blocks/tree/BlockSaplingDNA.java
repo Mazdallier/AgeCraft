@@ -63,13 +63,13 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 		if(meta == 0) {
 			world.setBlockMetadataWithNotify(x, y, z, 1, 3);
 		} else if(canSaplingGrow(world, x, y, z)) {
-			growSmallTree(world, x, y, z, random);
+			growTree(world, x, y, z, random);
 		}
 	}
 
-	public void growSmallTree(World world, int x, int y, int z, Random random) {
+	public void growTree(World world, int x, int y, int z, Random random) {
 		TileEntityDNATree tile = (TileEntityDNATree) getTileEntity(world, x, y, z);
-		TreeRegistry.trees[tile.getGenerationType()].worldGen.generateSmallTree(world, x, y, z, tile.getDNA());
+		TreeRegistry.trees[tile.getGenerationType()].worldGen.generateTree(world, x, y, z, tile.getDNA());
 	}
 
 	@Override

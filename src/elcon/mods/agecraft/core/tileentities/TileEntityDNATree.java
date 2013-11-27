@@ -21,11 +21,11 @@ public class TileEntityDNATree extends TileEntityDNA {
 		return getGene(0, 0).getActive();
 	}
 	
-	public int getLeaveType() {
+	public int getLeafType() {
 		return getGene(0, 1).getActive();
 	}
 	
-	public int getLeaveColor() {
+	public int getLeafColor() {
 		return getGene(0, 2).getActive();
 	}
 	
@@ -57,7 +57,7 @@ public class TileEntityDNATree extends TileEntityDNA {
 		return getGene(3, 0).getActive();
 	}
 	
-	public int getLeaveSize() {
+	public int getLeafSize() {
 		return getGene(3, 1).getActive();
 	}
 	
