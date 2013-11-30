@@ -21,6 +21,7 @@ import elcon.mods.agecraft.core.clothing.ClothingCategory;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingType;
 import elcon.mods.agecraft.core.clothing.ClothingUpdater;
+import elcon.mods.agecraft.core.multipart.MultiParts;
 import elcon.mods.agecraft.core.tech.TechTree;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
@@ -39,6 +40,7 @@ public class AgeCraftCore extends ACComponent {
 	public Tools tools;
 	public Armor armor;
 	public Crafting crafting;
+	public MultiParts multiparts;
 	
 	public static Block ageTeleporter;
 	public static Block ageTeleporterBlock;
@@ -55,6 +57,7 @@ public class AgeCraftCore extends ACComponent {
 		tools = new Tools();
 		armor = new Armor();
 		crafting = new Crafting();
+		multiparts = new MultiParts();
 	}
 	
 	public void preInit() {

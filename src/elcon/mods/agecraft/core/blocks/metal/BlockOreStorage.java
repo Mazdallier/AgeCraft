@@ -28,7 +28,6 @@ public class BlockOreStorage extends BlockExtendedMetadata {
 		setCreativeTab(ACCreativeTabs.metals);
 	}
 	
-	
 	@Override
 	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
 		if(stack != null) {

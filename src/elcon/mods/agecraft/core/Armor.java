@@ -22,9 +22,9 @@ public class Armor extends ACComponent {
 	public void preInit() {
 		//init items
 		helmet = (ItemArmor) new ItemHelmet(12600).setUnlocalizedName("armor_helmet");
-		chestplate = (ItemArmor) new ItemChestplate(12600).setUnlocalizedName("armor_chestplate");
-		leggings = (ItemArmor) new ItemLeggings(12600).setUnlocalizedName("armor_leggings");
-		boots = (ItemArmor) new ItemBoots(12600).setUnlocalizedName("armor_boots");
+		chestplate = (ItemArmor) new ItemChestplate(12601).setUnlocalizedName("armor_chestplate");
+		leggings = (ItemArmor) new ItemLeggings(12602).setUnlocalizedName("armor_leggings");
+		boots = (ItemArmor) new ItemBoots(12603).setUnlocalizedName("armor_boots");
 		
 		//register items
 		GameRegistry.registerItem(helmet, "AC_armor_helmet");
