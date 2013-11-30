@@ -29,6 +29,10 @@ import elcon.mods.agecraft.core.clothing.ClothingRegistry.ClothingTypeIndexCompa
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
+import elcon.mods.core.gui.GuiButton;
+import elcon.mods.core.gui.GuiButtonDefault;
+import elcon.mods.core.gui.GuiButtonListVertical;
+import elcon.mods.core.gui.GuiToggleButton;
 import elcon.mods.core.lang.LanguageManager;
 
 @SideOnly(Side.CLIENT)

@@ -52,6 +52,10 @@ public class TileEntityBarrel extends TileEntityExtended implements IFluidHandle
 			if(fluid.getFluid() != null && fluid.getFluid().getFluid() != null) {
 				dos.writeInt(fluid.getFluid().getFluid().getID());
 				dos.writeInt(fluid.getFluid().amount);
+				dos.writeBoolean(fluid.getFluid().tag != null);
+				if(fluid.getFluid().tag != null) {
+					NBTBase.writeNamedTag(fluid.getFluid().tag, dos);
+				}
 			}
 			
 			dos.writeBoolean(stack != null);

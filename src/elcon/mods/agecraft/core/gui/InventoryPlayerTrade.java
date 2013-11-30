@@ -2,6 +2,7 @@ package elcon.mods.agecraft.core.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import elcon.mods.core.gui.InventoryBasic;
 
 public class InventoryPlayerTrade extends InventoryBasic {
 

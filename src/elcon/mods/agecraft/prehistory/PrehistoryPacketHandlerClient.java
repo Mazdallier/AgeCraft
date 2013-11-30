@@ -91,7 +91,15 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		tile.hasLid = dat.readBoolean();
 		
 		if(dat.readBoolean()) {
-			tile.fluid.setFluid(new FluidStack(dat.readInt(), dat.readInt()));
+			FluidStack fluidStack = new FluidStack(dat.readInt(), dat.readInt());
+			tile.fluid.setFluid(fluidStack);
+			if(dat.readBoolean()) {
+				try {
+					fluidStack.tag = (NBTTagCompound) NBTBase.readNamedTag(dat);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		} else {
 			tile.fluid.setFluid(null);
 		}
@@ -146,7 +154,15 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		tile.hasLid = dat.readBoolean();
 		
 		if(dat.readBoolean()) {
-			tile.fluid.setFluid(new FluidStack(dat.readInt(), dat.readInt()));
+			FluidStack fluidStack = new FluidStack(dat.readInt(), dat.readInt());
+			tile.fluid.setFluid(fluidStack);
+			if(dat.readBoolean()) {
+				try {
+					fluidStack.tag = (NBTTagCompound) NBTBase.readNamedTag(dat);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
 		} else {
 			tile.fluid.setFluid(null);
 		}

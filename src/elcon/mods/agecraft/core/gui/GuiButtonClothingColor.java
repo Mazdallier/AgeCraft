@@ -1,9 +1,11 @@
 package elcon.mods.agecraft.core.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL11;
+
+import elcon.mods.core.gui.GuiToggleButton;
 
 public class GuiButtonClothingColor extends GuiToggleButton {
 

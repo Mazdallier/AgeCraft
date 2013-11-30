@@ -1,6 +1,7 @@
 package elcon.mods.agecraft.core.gui;
 
 import net.minecraft.inventory.Container;
+import elcon.mods.core.gui.InventoryBasic;
 
 public class InventoryArmor extends InventoryBasic {
 

@@ -19,7 +19,6 @@ import elcon.mods.agecraft.core.ACBlockRenderingHandlerWithIcon;
 import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
-import elcon.mods.agecraft.core.entity.EntityBlock;
 import elcon.mods.agecraft.core.gui.ContainerPlayerTrade;
 import elcon.mods.agecraft.core.gui.ContainerWorkbench;
 import elcon.mods.agecraft.core.gui.GuiInventory;
@@ -28,7 +27,6 @@ import elcon.mods.agecraft.core.gui.GuiWorkbench;
 import elcon.mods.agecraft.core.player.ACPlayerClient;
 import elcon.mods.agecraft.core.player.ACPlayerRender;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
-import elcon.mods.agecraft.core.render.RenderEntityBlock;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
 import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
@@ -105,9 +103,6 @@ public class ACClientProxy extends ACCommonProxy {
 		// register tileentity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterBeam.class, new TileEntityAgeTeleporterBeamRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterChest.class, new TileEntityAgeTeleporterChestRenderer());
-		
-		//register entity renderers
-		RenderingRegistry.registerEntityRenderingHandler(EntityBlock.class, RenderEntityBlock.instance);
 		
 		registerPrehistory();
 	}

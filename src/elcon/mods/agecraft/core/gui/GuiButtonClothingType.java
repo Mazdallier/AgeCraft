@@ -1,14 +1,15 @@
 package elcon.mods.agecraft.core.gui;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.clothing.ClothingRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+import elcon.mods.core.gui.GuiToggleButton;
 
 @SideOnly(Side.CLIENT)
 public class GuiButtonClothingType extends GuiToggleButton {

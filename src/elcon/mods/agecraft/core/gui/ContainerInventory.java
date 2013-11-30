@@ -1,6 +1,5 @@
 package elcon.mods.agecraft.core.gui;
 
-import elcon.mods.agecraft.core.items.armor.ItemArmor;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -9,6 +8,7 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import elcon.mods.agecraft.core.items.armor.ItemArmor;
 
 public class ContainerInventory extends ContainerPlayer {
 

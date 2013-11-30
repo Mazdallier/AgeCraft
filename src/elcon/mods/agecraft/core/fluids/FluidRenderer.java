@@ -14,8 +14,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
-import elcon.mods.agecraft.core.render.RenderEntityBlock;
-import elcon.mods.agecraft.core.render.RenderEntityBlock.RenderBlockInfo;
+import elcon.mods.core.render.RenderEntityBlock;
+import elcon.mods.core.render.RenderEntityBlock.RenderBlockInfo;
 
 public class FluidRenderer {
 

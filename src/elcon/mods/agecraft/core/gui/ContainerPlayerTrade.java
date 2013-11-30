@@ -12,6 +12,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import elcon.mods.agecraft.ACPacketHandler;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
+import elcon.mods.core.gui.ContainerBasic;
 
 public class ContainerPlayerTrade extends ContainerBasic {
 
