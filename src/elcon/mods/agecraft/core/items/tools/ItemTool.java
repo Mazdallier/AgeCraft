@@ -33,7 +33,7 @@ import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
 import elcon.mods.core.lang.LanguageManager;
 
-public class ItemTool extends Item {
+public abstract class ItemTool extends Item {
 
 	public ItemTool(int id) {
 		super(id - 256);

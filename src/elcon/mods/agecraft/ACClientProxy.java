@@ -37,9 +37,11 @@ import elcon.mods.agecraft.prehistory.PrehistoryBlockRenderingHandlerWithIcon;
 import elcon.mods.agecraft.prehistory.gui.GuiSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBarrel;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityBox;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererBarrel;
+import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererBox;
 import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererPot;
 import elcon.mods.core.BlockRenderingHandlerOverlay;
@@ -117,11 +119,13 @@ public class ACClientProxy extends ACCommonProxy {
 		RenderingRegistry.registerBlockHandler(202, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(203, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(204, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(205, blockRenderingHandlerWithIcon);
 		
 		//register tile entity renderers
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCampfire.class, new TileEntityRendererCampfire());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPot.class, new TileEntityRendererPot());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBarrel.class, new TileEntityRendererBarrel());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBox.class, new TileEntityRendererBox());
 	}
 
 	@Override

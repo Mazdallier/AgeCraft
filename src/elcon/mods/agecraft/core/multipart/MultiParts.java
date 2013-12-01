@@ -16,7 +16,7 @@ public class MultiParts extends ACComponent {
 			if(TreeRegistry.trees[i] != null) {
 				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Trees.wood, i * 4), "trees_wood_" + TreeRegistry.trees[i].name);
 				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Trees.planks, i), "trees_planks_" + TreeRegistry.trees[i].name);
-				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Trees.leaves, i * 4), "trees_leaves_" + TreeRegistry.trees[i].name);
+				MicroMaterialRegistry.registerMaterial(new MicroMaterialLeaves(Trees.leaves, i * 4), "trees_leaves_" + TreeRegistry.trees[i].name);
 			}
 		}
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {

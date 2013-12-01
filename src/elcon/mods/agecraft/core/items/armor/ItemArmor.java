@@ -20,7 +20,7 @@ import elcon.mods.agecraft.core.ArmorRegistry.ArmorMaterial;
 import elcon.mods.agecraft.core.ArmorRegistry.ArmorType;
 import elcon.mods.core.lang.LanguageManager;
 
-public class ItemArmor extends Item {
+public abstract class ItemArmor extends Item {
 
 	public ItemArmor(int id) {
 		super(id - 256);
@@ -75,6 +75,8 @@ public class ItemArmor extends Item {
 		return stack;
 	}
 	
+	public abstract int getArmorType();
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int pass) {
@@ -126,23 +128,19 @@ public class ItemArmor extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int id, CreativeTabs creativeTabs, List list) {
-		for(int i = 0; i < ArmorRegistry.armorTypes.length; i++) {
-			if(ArmorRegistry.armorTypes[i] != null) {
-				for(int j = 0; j < ArmorRegistry.armorMaterials.length; j++) {
-					if(ArmorRegistry.armorMaterials[j] != null) {
-						ItemStack stack = new ItemStack(id, 1, 0);
-						NBTTagCompound nbt = new NBTTagCompound();
-						NBTTagCompound nbt2 = new NBTTagCompound();
-						nbt2.setInteger("Type", i);
-						nbt2.setInteger("Material", j);
-						if(ArmorRegistry.armorMaterials[j].hasColors) {
-							nbt.setInteger("Color", ArmorRegistry.armorMaterials[j].defaultColor);
-						}
-						nbt.setTag("Armor", nbt2);
-						stack.setTagCompound(nbt);
-						list.add(stack);
-					}
+		for(int j = 0; j < ArmorRegistry.armorMaterials.length; j++) {
+			if(ArmorRegistry.armorMaterials[j] != null) {
+				ItemStack stack = new ItemStack(id, 1, 0);
+				NBTTagCompound nbt = new NBTTagCompound();
+				NBTTagCompound nbt2 = new NBTTagCompound();
+				nbt2.setInteger("Type", getArmorType());
+				nbt2.setInteger("Material", j);
+				if(ArmorRegistry.armorMaterials[j].hasColors) {
+					nbt.setInteger("Color", ArmorRegistry.armorMaterials[j].defaultColor);
 				}
+				nbt.setTag("Armor", nbt2);
+				stack.setTagCompound(nbt);
+				list.add(stack);
 			}
 		}
 	}

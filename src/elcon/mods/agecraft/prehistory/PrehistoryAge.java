@@ -13,11 +13,13 @@ import elcon.mods.agecraft.IACPacketHandlerClient;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.prehistory.blocks.BlockBarrel;
 import elcon.mods.agecraft.prehistory.blocks.BlockBed;
+import elcon.mods.agecraft.prehistory.blocks.BlockBox;
 import elcon.mods.agecraft.prehistory.blocks.BlockCampfire;
 import elcon.mods.agecraft.prehistory.blocks.BlockPot;
 import elcon.mods.agecraft.prehistory.blocks.BlockRock;
 import elcon.mods.agecraft.prehistory.items.ItemBarrel;
 import elcon.mods.agecraft.prehistory.items.ItemBed;
+import elcon.mods.agecraft.prehistory.items.ItemBox;
 import elcon.mods.agecraft.prehistory.items.ItemCampfire;
 import elcon.mods.agecraft.prehistory.items.ItemFakeStone;
 import elcon.mods.agecraft.prehistory.items.ItemPot;
@@ -31,6 +33,7 @@ import elcon.mods.agecraft.prehistory.recipes.RecipesCampfireLogs;
 import elcon.mods.agecraft.prehistory.recipes.RecipesSharpener;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBarrel;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityBox;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 import elcon.mods.core.items.ItemDummy;
@@ -45,6 +48,7 @@ public class PrehistoryAge extends Age {
 	public static Block pot;
 	public static Block bed;
 	public static Block barrel;
+	public static Block box;
 	
 	public static Item fakeStone;
 	public static Item rockTool;
@@ -66,6 +70,7 @@ public class PrehistoryAge extends Age {
 		pot = new BlockPot(3002).setUnlocalizedName("prehistory_pot");
 		bed = new BlockBed(3003).setUnlocalizedName("prehistory_bed");
 		barrel = new BlockBarrel(3004).setUnlocalizedName("prehistory_barrel");
+		box = new BlockBox(3005).setUnlocalizedName("prehistroy_box");
 		
 		//register blocks
 		GameRegistry.registerBlock(campfire, ItemCampfire.class, "AC_prehistory_campfire");
@@ -73,6 +78,7 @@ public class PrehistoryAge extends Age {
 		GameRegistry.registerBlock(pot, ItemPot.class, "AC_prehistory_pot");
 		GameRegistry.registerBlock(bed, ItemBed.class, "AC_prehistory_bed");
 		GameRegistry.registerBlock(barrel, ItemBarrel.class, "AC_prehistory_barrel");
+		GameRegistry.registerBlock(box, ItemBox.class, "AC_prehistory_box");
 		
 		//init items
 		fakeStone = new ItemFakeStone(11000).setUnlocalizedName("prehistory_fakeStone");
@@ -93,6 +99,7 @@ public class PrehistoryAge extends Age {
 		GameRegistry.registerTileEntity(TileEntityPot.class, "TilePot");
 		GameRegistry.registerTileEntity(TileEntityBed.class, "TileBed");
 		GameRegistry.registerTileEntity(TileEntityBarrel.class, "TileBarrel");
+		GameRegistry.registerTileEntity(TileEntityBox.class, "TileBox");
 	}
 	
 	@Override

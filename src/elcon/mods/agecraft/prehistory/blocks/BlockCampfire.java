@@ -7,7 +7,6 @@ import mcp.mobius.waila.api.IWailaBlock;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
@@ -24,25 +23,26 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
+import elcon.mods.core.blocks.BlockExtendedContainer;
 import elcon.mods.core.lang.LanguageManager;
 
-public class BlockCampfire extends BlockContainer implements IWailaBlock {
-	
+public class BlockCampfire extends BlockExtendedContainer implements IWailaBlock {
+
 	@SideOnly(Side.CLIENT)
 	private Icon icon;
-	
+
 	public BlockCampfire(int id) {
 		super(id, Material.wood);
 		setStepSound(Block.soundWoodFootstep);
 		setCreativeTab(ACCreativeTabs.prehistoryAge);
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.2F, 1.0F);
 	}
-	
+
 	@Override
 	public String getLocalizedName() {
 		return LanguageManager.getLocalization(getUnlocalizedName());
 	}
-	
+
 	@Override
 	public String getUnlocalizedName() {
 		return "tile.campfire.name";
@@ -52,24 +52,21 @@ public class BlockCampfire extends BlockContainer implements IWailaBlock {
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityCampfire();
 	}
-	
+
 	@Override
 	public int getLightValue(IBlockAccess blockAccess, int x, int y, int z) {
 		if(blockAccess.getBlockId(x, y, z) == blockID) {
-			TileEntityCampfire tile = (TileEntityCampfire) blockAccess.getBlockTileEntity(x, y, z);
-			if(tile == null) {
-				tile = new TileEntityCampfire();
-			}
+			TileEntityCampfire tile = (TileEntityCampfire) getTileEntity(blockAccess, x, y, z);
 			return tile.isBurning() ? 15 : 0;
 		}
 		return super.getLightValue(blockAccess, x, y, z);
 	}
-	
+
 	@Override
 	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
 		return super.canPlaceBlockAt(world, x, y, z) && canBlockStay(world, x, y, z);
 	}
-	
+
 	@Override
 	public boolean canBlockStay(World world, int x, int y, int z) {
 		int id = world.getBlockId(x, y - 1, z);
@@ -78,45 +75,37 @@ public class BlockCampfire extends BlockContainer implements IWailaBlock {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void onBlockAdded(World world, int x, int y, int z) {
 		if(!canBlockStay(world, x, y, z)) {
 			dropBlockAsItem_do(world, x, y, z, new ItemStack(blockID, 1, 0));
-            world.setBlockToAir(x, y, z);
+			world.setBlockToAir(x, y, z);
 		}
 	}
-	
+
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, int id) {
 		if(!canBlockStay(world, x, y, z)) {
 			dropBlockAsItem_do(world, x, y, z, new ItemStack(blockID, 1, 0));
-            world.setBlockToAir(x, y, z);
+			world.setBlockToAir(x, y, z);
 		}
 	}
-	
+
 	@Override
 	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
 		if(!world.isRemote) {
-			TileEntityCampfire tile = (TileEntityCampfire) world.getBlockTileEntity(x, y, z);
-			if(tile == null) {
-				tile = new TileEntityCampfire();
-				world.setBlockTileEntity(x, y, z, tile);
-			}
+			TileEntityCampfire tile = (TileEntityCampfire) getTileEntity(world, x, y, z);
 			if(tile.isBurning()) {
 				entity.setFire(8);
 			}
 		}
 	}
-	
+
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		if(!world.isRemote) {
-			TileEntityCampfire tile = (TileEntityCampfire) world.getBlockTileEntity(x, y, z);
-			if(tile == null) {
-				tile = new TileEntityCampfire();
-				world.setBlockTileEntity(x, y, z, tile);
-			}
+			TileEntityCampfire tile = (TileEntityCampfire) getTileEntity(world, x, y, z);
 			if(!stack.hasTagCompound()) {
 				stack.setTagCompound(new NBTTagCompound());
 				return;
@@ -131,52 +120,48 @@ public class BlockCampfire extends BlockContainer implements IWailaBlock {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(!world.isRemote) {
-			TileEntityCampfire tile = (TileEntityCampfire) world.getBlockTileEntity(x, y, z);
-			if(tile == null) {
-				tile = new TileEntityCampfire();
-				world.setBlockTileEntity(x, y, z, tile);
-			}			
+			TileEntityCampfire tile = (TileEntityCampfire) getTileEntity(world, x, y, z);
 			return tile.onBlockActivated(player.rotationYaw, player.capabilities.isCreativeMode, player.getCurrentEquippedItem());
 		}
 		return true;
 	}
-	
+
 	@Override
 	public int idDropped(int meta, Random random, int fortune) {
 		return 0;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
-	
+
 	@Override
 	public int getRenderType() {
 		return 201;
-	}	
-	
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return true;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
 		return icon;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {

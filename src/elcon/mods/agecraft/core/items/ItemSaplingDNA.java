@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -78,12 +79,12 @@ public class ItemSaplingDNA extends ItemBlockName {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advancedItemTooltips) {
-		if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-			if(!stack.hasTagCompound()) {
-				stack.setTagCompound(new NBTTagCompound());
-			}
-			NBTTagCompound nbt = stack.getTagCompound();
-			if(nbt.hasKey("DNA")) {
+		if(!stack.hasTagCompound()) {
+			stack.setTagCompound(new NBTTagCompound());
+		}
+		NBTTagCompound nbt = stack.getTagCompound();
+		if(nbt.hasKey("DNA")) {
+			if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 				DNAStorage dna = new DNAStorage(Trees.treeDNA.id);
 				dna.readFromNBT(nbt.getCompoundTag("DNA"));
 				list.add(Color.TEXT_COLOR_PREFIX_DARK_BLUE + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 0).getActive()].name) + "-" + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 0).getInActive()].name) + " Wood");
@@ -94,8 +95,10 @@ public class ItemSaplingDNA extends ItemBlockName {
 				list.add("S: " + DNAUtil.intToSpeed(dna.getGene(2, 0).getActive()) + " T: " + DNAUtil.intToSpeed(dna.getGene(2, 1).getActive()) + " B: " + DNAUtil.intToSpeed(dna.getGene(2, 2).getActive()));
 				list.add("Saplings: " +  DNAUtil.intToGoodBadSimple(dna.getGene(4, 0).getActive()));
 				list.add("T: " + Integer.toString(dna.getGene(3, 0).getActive()) + "x" + Integer.toString(dna.getGene(3, 0).getActive()) + " L: " + Integer.toString(dna.getGene(3, 1).getActive()) + " H: " + Integer.toString(dna.getGene(3, 2).getActive()));
+			} else {
+				list.add(EnumChatFormatting.ITALIC + LanguageManager.getLocalization("gui.showdetails") + EnumChatFormatting.RESET);
 			}
-		}
+		}		
 	}
 
 	@Override

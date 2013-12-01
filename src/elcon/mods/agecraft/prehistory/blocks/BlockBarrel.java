@@ -16,8 +16,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
@@ -48,11 +48,7 @@ public class BlockBarrel extends BlockExtendedContainer implements IWailaBlock {
 	
 	@Override
 	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-		TileEntityBarrel tile = (TileEntityBarrel) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityBarrel();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
+		TileEntityBarrel tile = (TileEntityBarrel) getTileEntity(world, x, y, z);
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		ItemStack stack = new ItemStack(idDropped(metadata, world.rand, fortune), quantityDropped(metadata, fortune, world.rand), damageDropped(metadata));
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -80,11 +76,7 @@ public class BlockBarrel extends BlockExtendedContainer implements IWailaBlock {
 	
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		TileEntityBarrel tile = (TileEntityBarrel) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityBarrel();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
+		TileEntityBarrel tile = (TileEntityBarrel) getTileEntity(world, x, y, z);
 		if(stack.hasTagCompound()) {
 			NBTTagCompound nbt = stack.getTagCompound();
 			tile.woodType = nbt.getInteger("WoodType");
@@ -109,11 +101,7 @@ public class BlockBarrel extends BlockExtendedContainer implements IWailaBlock {
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		TileEntityBarrel tile = (TileEntityBarrel) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityBarrel();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
+		TileEntityBarrel tile = (TileEntityBarrel) getTileEntity(world, x, y, z);
 		ItemStack stack = player.inventory.getCurrentItem();
 		if(!player.isSneaking() && !tile.hasLid) {
 			if(tile.hasStack()) {
@@ -280,6 +268,11 @@ public class BlockBarrel extends BlockExtendedContainer implements IWailaBlock {
 			}
 		}
 	}
+	
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+		return getBlockDropped(world, x, y, z, world.getBlockMetadata(x, y, z), 0).get(0);
+	}
 
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -288,8 +281,6 @@ public class BlockBarrel extends BlockExtendedContainer implements IWailaBlock {
 
 	@Override
 	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		TileEntityBarrel tile = (TileEntityBarrel) accessor.getTileEntity();
-		currenttip.add(0, EnumChatFormatting.WHITE + LanguageManager.getLocalization("trees." + TreeRegistry.trees[tile.woodType].name) + " " + LanguageManager.getLocalization(getUnlocalizedName()));
 		return currenttip;
 	}
 

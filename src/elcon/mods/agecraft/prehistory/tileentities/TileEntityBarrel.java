@@ -58,21 +58,7 @@ public class TileEntityBarrel extends TileEntityExtended implements IFluidHandle
 				}
 			}
 			
-			dos.writeBoolean(stack != null);
-			if(stack != null) {
-				dos.writeInt(stack.itemID);
-				dos.writeInt(stack.stackSize);
-				dos.writeInt(stack.getItemDamage());
-				
-				dos.writeBoolean(stack.hasTagCompound());
-				if(stack.hasTagCompound()) {
-					try {
-						NBTBase.writeNamedTag(stack.stackTagCompound, dos);
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
+			Packet.writeItemStack(stack, dos);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

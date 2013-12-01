@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -47,11 +48,7 @@ public class BlockPot extends BlockExtendedContainer implements IWailaBlock {
 	
 	@Override
 	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-		TileEntityPot tile = (TileEntityPot) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityPot();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
+		TileEntityPot tile = (TileEntityPot) getTileEntity(world, x, y, z);
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		ItemStack stack = new ItemStack(idDropped(metadata, world.rand, fortune), quantityDropped(metadata, fortune, world.rand), damageDropped(metadata));
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -74,11 +71,7 @@ public class BlockPot extends BlockExtendedContainer implements IWailaBlock {
 	
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		TileEntityPot tile = (TileEntityPot) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityPot();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
+		TileEntityPot tile = (TileEntityPot) getTileEntity(world, x, y, z);
 		if(stack.hasTagCompound()) {
 			NBTTagCompound nbt = stack.getTagCompound();
 			tile.hasLid = nbt.getBoolean("HasLid");
@@ -100,11 +93,7 @@ public class BlockPot extends BlockExtendedContainer implements IWailaBlock {
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		TileEntityPot tile = (TileEntityPot) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityPot();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
+		TileEntityPot tile = (TileEntityPot) getTileEntity(world, x, y, z);
 		ItemStack stack = player.inventory.getCurrentItem();
 		if(!player.isSneaking() && !tile.hasLid) {
 			if(tile.hasDust()) {
@@ -180,10 +169,7 @@ public class BlockPot extends BlockExtendedContainer implements IWailaBlock {
 
 	@Override
 	public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, int x, int y, int z) {
-		TileEntityPot tile = (TileEntityPot) blockAccess.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityPot();
-		}
+		TileEntityPot tile = (TileEntityPot) getTileEntity(blockAccess, x, y, z);
 		setBlockBounds(0.125F, 0F, 0.125F, 0.875F, tile.hasLid ? 0.6875F : 0.625F, 0.875F);
 	}
 
@@ -241,10 +227,7 @@ public class BlockPot extends BlockExtendedContainer implements IWailaBlock {
 		if((side == 0 || side == 1) && renderSolid) {
 			return iconsTop[1];
 		}
-		TileEntityPot tile = (TileEntityPot) blockAccess.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityPot();
-		}
+		TileEntityPot tile = (TileEntityPot) getTileEntity(blockAccess, x, y, z);
 		if(side == 0) {
 			return iconsTop[1];
 		} else if(side == 1) {
@@ -262,6 +245,11 @@ public class BlockPot extends BlockExtendedContainer implements IWailaBlock {
 		iconsTop[1] = iconRegister.registerIcon("agecraft:ages/prehistory/potLidTop");
 	}
 
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+		return getBlockDropped(world, x, y, z, world.getBlockMetadata(x, y, z), 0).get(0);
+	}
+	
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
 		return null;

@@ -28,7 +28,7 @@ public class BlockLeaves extends BlockExtendedMetadata {
 
 	public BlockLeaves(int id) {
 		super(id, Material.leaves);
-		this.fancyGraphics = false;
+		this.fancyGraphics = true;
 		setHardness(0.2F);
 		setLightOpacity(1);
 		setTickRandomly(true);

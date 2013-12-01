@@ -1,8 +1,8 @@
 package elcon.mods.agecraft.prehistory;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.IACPacketHandlerClient;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBarrel;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
+import elcon.mods.agecraft.prehistory.tileentities.TileEntityBox;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
 
@@ -34,6 +35,9 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 			break;
 		case 203:
 			handleTileEntityBarrel(world, dat);
+			break;
+		case 204:
+			handleTileEntityBox(world, dat);
 			break;
 		}
 	}
@@ -61,17 +65,10 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		tile.frameType[1] = dat.readInt();
 		tile.frameType[2] = dat.readInt();
 		
-		if(dat.readBoolean()) {
-			tile.spitStack = new ItemStack(dat.readInt(), 1, dat.readInt());
-			if(dat.readBoolean()) {
-				try {
-					tile.spitStack.setTagCompound((NBTTagCompound) NBTBase.readNamedTag(dat));
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		} else {
-			tile.spitStack = null;
+		try {
+			tile.spitStack = Packet.readItemStack(dat);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		world.markBlockForRenderUpdate(x, y, z);
 		world.updateLightByType(EnumSkyBlock.Block, x, y, z);
@@ -103,18 +100,10 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		} else {
 			tile.fluid.setFluid(null);
 		}
-		
-		if(dat.readBoolean()) {
-			tile.dust = new ItemStack(dat.readInt(), dat.readInt(), dat.readInt());
-			if(dat.readBoolean()) {
-				try {
-					tile.dust.setTagCompound((NBTTagCompound) NBTBase.readNamedTag(dat));
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		} else {
-			tile.dust = null;
+		try {
+			tile.dust = Packet.readItemStack(dat);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		world.markBlockForRenderUpdate(x, y, z);
 	}
@@ -166,20 +155,34 @@ public class PrehistoryPacketHandlerClient implements IACPacketHandlerClient {
 		} else {
 			tile.fluid.setFluid(null);
 		}
+		try {
+			tile.stack = Packet.readItemStack(dat);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}		
+		world.markBlockForRenderUpdate(x, y, z);
+	}
+	
+	private void handleTileEntityBox(World world, ByteArrayDataInput dat) {
+		int x = dat.readInt();
+		int y = dat.readInt();
+		int z = dat.readInt();
 		
-		if(dat.readBoolean()) {
-			tile.stack = new ItemStack(dat.readInt(), dat.readInt(), dat.readInt());
-			if(dat.readBoolean()) {
-				try {
-					tile.stack.setTagCompound((NBTTagCompound) NBTBase.readNamedTag(dat));
-				} catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-		} else {
-			tile.stack = null;
+		TileEntityBox tile = (TileEntityBox) world.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntityBox();
+			world.setBlockTileEntity(x, y, z, tile);
 		}
 		
-		world.markBlockForRenderUpdate(x, y, z);
+		tile.woodType = dat.readInt();
+		tile.hasLid = dat.readBoolean();
+		
+		for(int i = 0; i < tile.stacks.length; i++) {
+			try {
+				tile.stacks[i] = Packet.readItemStack(dat);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

@@ -39,6 +39,7 @@ gui.remove=Remove
 gui.pay=Pay
 gui.choose=Choose
 gui.addToCart=Add to Cart
+gui.showdetails=Press shift for more details
 
 container.trade=Trade
 container.crafting=Crafting

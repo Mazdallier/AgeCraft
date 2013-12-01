@@ -49,21 +49,7 @@ public class TileEntityPot extends TileEntityExtended implements IFluidHandler {
 				}
 			}
 			
-			dos.writeBoolean(dust != null);
-			if(dust != null) {
-				dos.writeInt(dust.itemID);
-				dos.writeInt(dust.stackSize);
-				dos.writeInt(dust.getItemDamage());
-				
-				dos.writeBoolean(dust.hasTagCompound());
-				if(dust.hasTagCompound()) {
-					try {
-						NBTBase.writeNamedTag(dust.stackTagCompound, dos);
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
+			Packet.writeItemStack(dust, dos);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

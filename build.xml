@@ -126,7 +126,7 @@
 		</jar>
 
 		<!-- Sign the finished jar -->
-		<antcall target="sign_jar" />
+		<!-- <antcall target="sign_jar" /> -->
 
 		<!-- Clean up the MCP source now that we are done -->
 		<antcall target="clean" />

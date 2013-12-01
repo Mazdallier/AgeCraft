@@ -6,7 +6,6 @@ import java.io.DataOutputStream;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -62,20 +61,7 @@ public class TileEntityCampfire extends TileEntity {
 			dos.writeInt(frameType[1]);
 			dos.writeInt(frameType[2]);
 			
-			dos.writeBoolean(spitStack != null);
-			if(spitStack != null) {
-				dos.writeInt(spitStack.itemID);
-				dos.writeInt(spitStack.getItemDamage());
-				
-				dos.writeBoolean(spitStack.hasTagCompound());
-				if(spitStack.hasTagCompound()) {
-					try {
-						NBTBase.writeNamedTag(spitStack.stackTagCompound, dos);
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
+			Packet.writeItemStack(spitStack, dos);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

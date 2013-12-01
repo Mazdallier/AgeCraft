@@ -4,14 +4,13 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenFlowers;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.Metals;
 import elcon.mods.agecraft.core.world.WorldGenOre;
-import elcon.mods.agecraft.prehistory.PrehistoryAge;
+import elcon.mods.agecraft.prehistory.world.WorldGenRock;
 import elcon.mods.agecraft.prehistory.world.WorldGenTempSmallTree;
 import elcon.mods.core.ElConCore;
 
@@ -27,7 +26,7 @@ public class BiomeDecoratorACPrehistory {
 	public int grassPerChunk;
 	public int smallTreesPerChunk;
 
-	public WorldGenFlowers rockGen;
+	public WorldGenRock rockGen;
 	public WorldGenOre[] oreGens;
 	public WorldGenTempSmallTree tempSmallTreeGen;
 
@@ -38,7 +37,7 @@ public class BiomeDecoratorACPrehistory {
 		grassPerChunk = 1;
 		smallTreesPerChunk = 1;
 
-		rockGen = new WorldGenFlowers(PrehistoryAge.rock.blockID);
+		rockGen = new WorldGenRock();
 		oreGens = new WorldGenOre[MetalRegistry.metals.length];
 		tempSmallTreeGen = new WorldGenTempSmallTree();
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {

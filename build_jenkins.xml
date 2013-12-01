@@ -97,7 +97,7 @@
 		</jar>
 
 		<!-- Sign the finished jar -->
-		<antcall target="sign_jar" />
+		<!-- <antcall target="sign_jar" /> -->
 		
 		<!-- Copy files to build dir for Jenkins -->
 		<delete dir="packages" />

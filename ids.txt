@@ -58,6 +58,8 @@
 	3001 Rock
 	3002 Pot
 	3003 Bed
+	3004 Barrel
+	3005 Box
 3100-3199	Agriculture Age
 3200-3299	Ancient Egypt
 3300-3399	Ancient China
@@ -149,6 +151,7 @@
 	201 Pot
 	202 Bed
 	203 Barrel
+	204 Box
 
 ======= Block Render IDs ======
 90-98   Common blocks
@@ -174,6 +177,7 @@
 	202 Pot
 	203 Bed
 	204 Barrel
+	205 Box
 300-399		Agriculture Age
 400-499		Ancient Egypt
 500-599		Ancient China
