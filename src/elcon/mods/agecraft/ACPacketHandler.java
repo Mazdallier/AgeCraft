@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -245,14 +246,15 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		return null;
 	}
 
-	public static Packet getClothingAllUpdatePacket() {
+	public static Packet getClothingAllUpdatePacket(List<String> playersOnline) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			DataOutputStream dos = new DataOutputStream(bos);
 			Packet250CustomPayload packet = new Packet250CustomPayload();
 			dos.writeInt(3);
-			dos.writeInt(PlayerClothingServer.players.size());
-			for(PlayerClothing clothing : PlayerClothingServer.players.values()) {
+			dos.writeInt(playersOnline.size());
+			for(String player : playersOnline) {
+				PlayerClothing clothing = PlayerClothingServer.getPlayerClothing(player);
 				dos.writeUTF(clothing.player);
 				dos.writeInt(clothing.clothingPiecesOwned.size());
 				for(String type : clothing.clothingPiecesOwned.keySet()) {
@@ -379,14 +381,20 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 	@Override
 	// SERVER
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
+		LinkedList<String> playersOnline = new LinkedList<String>();
+		List<EntityPlayerMP> list = MinecraftServer.getServerConfigurationManager(FMLCommonHandler.instance().getMinecraftServerInstance()).playerEntityList;
+		for(EntityPlayerMP p : list) {
+			playersOnline.add(p.username);
+		}
+		
 		PacketDispatcher.sendPacketToPlayer(getTechTreeAllComponentsPacket(netHandler.getPlayer().username), player);
 		ACLog.info("[TechTree] Send all components to " + netHandler.getPlayer().username);
-
+		
 		PacketDispatcher.sendPacketToPlayer(getClothingList(), player);
 		if(!PlayerClothingServer.players.containsKey(netHandler.getPlayer().username)) {
 			PlayerClothingServer.createDefaultClothing(netHandler.getPlayer().username);
 		}
-		PacketDispatcher.sendPacketToPlayer(getClothingAllUpdatePacket(), player);
+		PacketDispatcher.sendPacketToPlayer(getClothingAllUpdatePacket(playersOnline), player);
 		PacketDispatcher.sendPacketToAllPlayers(getClothingUpdatePacket(PlayerClothingServer.getPlayerClothing(netHandler.getPlayer().username)));
 		ACLog.info("[Clothing] Send all clothing to " + netHandler.getPlayer().username);
 	}

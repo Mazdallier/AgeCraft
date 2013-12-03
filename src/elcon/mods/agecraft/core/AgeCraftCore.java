@@ -33,7 +33,7 @@ import elcon.mods.core.tileentities.TileEntityMetadata;
 import elcon.mods.core.tileentities.TileEntityNBT;
 
 public class AgeCraftCore extends ACComponent {
-	
+
 	public TechTree techTree;
 	public Metals ores;
 	public Trees trees;
@@ -41,14 +41,14 @@ public class AgeCraftCore extends ACComponent {
 	public Armor armor;
 	public Crafting crafting;
 	public MultiParts multiparts;
-	
+
 	public static Block ageTeleporter;
 	public static Block ageTeleporterBlock;
 	public static Block ageTeleporterBeam;
 	public static Block ageTeleporterChest;
-	
+
 	public static Block clothingSelectorTest;
-	
+
 	public AgeCraftCore() {
 		super();
 		techTree = new TechTree();
@@ -59,37 +59,37 @@ public class AgeCraftCore extends ACComponent {
 		crafting = new Crafting();
 		multiparts = new MultiParts();
 	}
-	
+
 	public void preInit() {
-		//init block
+		// init block
 		ageTeleporter = new BlockAgeTeleporter(2996).setUnlocalizedName("ageTeleporter");
 		ageTeleporterBlock = new BlockAgeTeleporterBlock(2997).setUnlocalizedName("ageTeleporterBlock");
 		ageTeleporterBeam = new BlockAgeTeleporterBeam(2998).setUnlocalizedName("ageTeleporterBeam");
 		ageTeleporterChest = new BlockAgeTeleporterChest(2999).setUnlocalizedName("ageTeleporterChest");
-		
+
 		clothingSelectorTest = new BlockClothingSelectorTest(2995).setUnlocalizedName("clothingSelectorTest");
-		
-		//register blocks
+
+		// register blocks
 		GameRegistry.registerBlock(ageTeleporter, ItemBlockName.class, "AC_ageTeleporter");
 		GameRegistry.registerBlock(ageTeleporterBlock, ItemBlockName.class, "AC_ageTeleporterBlock");
 		GameRegistry.registerBlock(ageTeleporterBeam, ItemBlockName.class, "AC_ageTeleporterBeam");
 		GameRegistry.registerBlock(ageTeleporterChest, ItemBlockName.class, "AC_ageTeleporterChest");
-		
+
 		GameRegistry.registerBlock(clothingSelectorTest, ItemBlockName.class, "AC_clothingSelectorTest");
-		
-		//register tile entities
+
+		// register tile entities
 		GameRegistry.registerTileEntity(TileEntityAgeTeleporterBeam.class, "TileAgeTeleporterBeam");
 		GameRegistry.registerTileEntity(TileEntityAgeTeleporterChest.class, "TileAgeTeleporterChest");
 		GameRegistry.registerTileEntity(TileEntityNBT.class, "TileNBT");
 		GameRegistry.registerTileEntity(TileEntityDNA.class, "TileDNA");
 		GameRegistry.registerTileEntity(TileEntityMetadata.class, "TileMetadata");
-		
-		//remove recipes
+
+		// remove recipes
 		CraftingManager.getInstance().getRecipeList().clear();
 	}
-	
+
 	public void init() {
-		//register clothing types
+		// register clothing types
 		ClothingRegistry.registerClothingType(new ClothingType("skin", 0, 0));
 		ClothingRegistry.registerClothingType(new ClothingType("hair", 1, 3));
 		ClothingRegistry.registerClothingType(new ClothingType("eyes", 2, 2));
@@ -99,31 +99,31 @@ public class AgeCraftCore extends ACComponent {
 		ClothingRegistry.registerClothingType(new ClothingType("shirt", 6, 8));
 		ClothingRegistry.registerClothingType(new ClothingType("pants", 7, 7));
 		ClothingRegistry.registerClothingType(new ClothingType("boots", 8, 6));
-		
-		//register clothing categories
-		ClothingRegistry.registerClothingCategory(new ClothingCategory("general", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/general/general.zip"));		
+
+		// register clothing categories
+		ClothingRegistry.registerClothingCategory(new ClothingCategory("general", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing-versions.dat", "https://raw.github.com/AgeCraft/AgeCraft/master/clothing/general/general.zip"));
 	}
-	
+
 	public void postInit() {
 		Block.blocksList[1] = null;
 		Block.stone = new BlockStoneLayered(1).setUnlocalizedName("stone").setTextureName("stone");
 		Item.itemsList[1] = new ItemBlockWithMetadata(1 - 256, Block.stone).setUnlocalizedName("stone");
-		
-		//register biomes
+
+		// register biomes
 		BiomeRegistry.registerBiomes();
-		
-		//sort clothing types
+
+		// sort clothing types
 		ClothingRegistry.sortClothingTypes();
-		
-		//update clothing
+
+		// update clothing
 		ClothingUpdater clothingUpdater = new ClothingUpdater(new File(ElConCore.minecraftDir, File.separator + "clothing"));
 		clothingUpdater.excecute();
 	}
-	
+
 	public void generateWorld(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		if(chunkX == 0 && chunkZ == 0) {
 			(new WorldGenTeleportSphere()).generate(world, random, 0, 128, 0);
-		} 		
+		}
 		chunkX *= 16;
 		chunkZ *= 16;
 		for(int i = 0; i < 16; i++) {

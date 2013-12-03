@@ -46,6 +46,9 @@ container.crafting=Crafting
 container.workbench=Workbench
 container.armor=Armor
 
+recipe.workbench.shaped=Shaped Workbench Recipe
+recipe.workbench.shapeless=Shapeless Workbench Recipe
+
 trees.wood=Wood
 trees.leaves=Leaves
 trees.log=Log

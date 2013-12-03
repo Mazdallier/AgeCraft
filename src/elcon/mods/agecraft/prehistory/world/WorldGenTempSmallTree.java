@@ -33,27 +33,27 @@ public class WorldGenTempSmallTree extends WorldGenerator {
 			world.setBlockTileEntity(x, y + 2, z, tile);
 			
 			tile = new TileEntityMetadata();
-			tile.setTileMetadata(treeType);
+			tile.setTileMetadata(treeType * 4);
 			world.setBlock(x, y + 3, z, Trees.leaves.blockID, 0, 0);
 			world.setBlockTileEntity(x, y + 3, z, tile);
 			
 			tile = new TileEntityMetadata();
-			tile.setTileMetadata(treeType);
+			tile.setTileMetadata(treeType * 4);
 			world.setBlock(x - 1, y + 2, z, Trees.leaves.blockID, 0, 0);
 			world.setBlockTileEntity(x - 1, y + 2, z, tile);
 			
 			tile = new TileEntityMetadata();
-			tile.setTileMetadata(treeType);
+			tile.setTileMetadata(treeType * 4);
 			world.setBlock(x + 1, y + 2, z, Trees.leaves.blockID, 0, 0);
 			world.setBlockTileEntity(x + 1, y + 2, z, tile);
 			
 			tile = new TileEntityMetadata();
-			tile.setTileMetadata(treeType);
+			tile.setTileMetadata(treeType * 4);
 			world.setBlock(x, y + 2, z - 1, Trees.leaves.blockID, 0, 0);
 			world.setBlockTileEntity(x, y + 2, z - 1, tile);
 			
 			tile = new TileEntityMetadata();
-			tile.setTileMetadata(treeType);
+			tile.setTileMetadata(treeType * 4);
 			world.setBlock(x, y + 2, z + 1, Trees.leaves.blockID, 0, 0);
 			world.setBlockTileEntity(x, y + 2, z + 1, tile);
 		}

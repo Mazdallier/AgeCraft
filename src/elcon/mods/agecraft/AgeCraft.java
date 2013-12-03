@@ -110,7 +110,7 @@ public class AgeCraft {
 	}
 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
+	public void postInit(FMLPostInitializationEvent event) {		
 		for(int i = 0; i < Age.ages.length; i++) {
 			if(Age.ages[i] != null) {
 				Age.ages[i].postInit();
