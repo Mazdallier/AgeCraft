@@ -2,6 +2,8 @@ package elcon.mods.agecraft.core.blocks.metal;
 
 import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,22 +14,20 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
 import elcon.mods.agecraft.core.items.tools.ItemTool;
 import elcon.mods.core.blocks.BlockExtendedMetadata;
 import elcon.mods.core.lang.LanguageManager;
 
-public class BlockOreStorage extends BlockExtendedMetadata {
+public class BlockMetalBlock extends BlockExtendedMetadata {
 
-	public BlockOreStorage(int id) {
+	public BlockMetalBlock(int id) {
 		super(id, Material.iron);
 		setStepSound(Block.soundMetalFootstep);
 		setCreativeTab(ACCreativeTabs.metals);
 	}
-	
+
 	@Override
 	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
 		if(stack != null) {
@@ -37,14 +37,28 @@ public class BlockOreStorage extends BlockExtendedMetadata {
 		}
 		return false;
 	}
+
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[(stack.getItemDamage() - (stack.getItemDamage() & 7)) / 8].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
-	
+
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return "metals.block";
+		int type = stack.getItemDamage() & 7;
+		switch(type) {
+		default:
+		case 0:
+			return "metals.block";
+		case 1:
+			return "metals.bricks";
+		case 2:
+			return "metals.smallBricks";
+		case 3:
+			return "metals.blockCircle";
+		case 4:
+			return "metals.pillar";
+		}
 	}
 	
 	@Override
@@ -59,38 +73,44 @@ public class BlockOreStorage extends BlockExtendedMetadata {
 	
 	@Override
 	public boolean canConnectRedstone(IBlockAccess blockAccess, int x, int y, int z, int side) {
-		return MetalRegistry.metals[getMetadata(blockAccess, x, y, z)].redstonePower > 0 && side != -1;
+		int meta = getMetadata(blockAccess, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 7)) / 8].redstonePower > 0 && side != -1;
 	}
 	
 	@Override
 	public int isProvidingWeakPower(IBlockAccess blockAccess, int x, int y, int z, int side) {
-		return MetalRegistry.metals[getMetadata(blockAccess, x, y, z)].redstonePower;
+		int meta = getMetadata(blockAccess, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 7)) / 8].redstonePower;
 	}
 	
 	@Override
 	public int getFireSpreadSpeed(World world, int x, int y, int z, int metadata, ForgeDirection face) {
-		return MetalRegistry.metals[getMetadata(world, x, y, z)].fireSpreadSpeed;
+		int meta = getMetadata(world, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 7)) / 8].fireSpreadSpeed;
 	}
 	
 	@Override
 	public int getFlammability(IBlockAccess blockAccess, int x, int y, int z, int metadata, ForgeDirection face) {
-		return MetalRegistry.metals[getMetadata(blockAccess, x, y, z)].flammability;
+		int meta = getMetadata(blockAccess, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 7)) / 8].flammability;
 	}
 	
 	@Override
 	public float getBlockHardness(World world, int x, int y, int z) {
-		return MetalRegistry.metals[getMetadata(world, x, y, z)].blockHardness;
+		int meta = getMetadata(world, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 7)) / 8].blockHardness;
 	}
 	
 	@Override
 	public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
-		return MetalRegistry.metals[getMetadata(world, x, y, z)].blockResistance / 5.0F;
+		int meta = getMetadata(world, x, y, z);
+		return MetalRegistry.metals[(meta - (meta & 7)) / 8].blockResistance / 5.0F;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
-		return MetalRegistry.metals[meta].block;
+		return MetalRegistry.metals[(meta - (meta & 7)) / 8].blocks[meta & 7];
 	}
 	
 	@Override
@@ -98,7 +118,9 @@ public class BlockOreStorage extends BlockExtendedMetadata {
 	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
 			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasBlock) {
-				list.add(new ItemStack(id, 1, i));
+				for(int j = 0; j < 5; j++) {
+					list.add(new ItemStack(id, 1, i * 8 + j));
+				}
 			}
 		}
 	}

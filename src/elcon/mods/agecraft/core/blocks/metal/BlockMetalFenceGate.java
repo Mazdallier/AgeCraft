@@ -165,7 +165,7 @@ public class BlockMetalFenceGate extends BlockExtendedMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
-		return MetalRegistry.metals[(meta - (meta & 7)) / 8].block;
+		return MetalRegistry.metals[(meta - (meta & 7)) / 8].blocks[0];
 	}
 
 	@Override

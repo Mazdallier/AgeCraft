@@ -41,7 +41,7 @@ public class MetalRegistry {
 		public int oreGenMaxY;
 		
 		public Icon ore;
-		public Icon block;
+		public Icon[] blocks = new Icon[5];
 		public Icon ingot;
 		public Icon stick;
 		public Icon nugget;

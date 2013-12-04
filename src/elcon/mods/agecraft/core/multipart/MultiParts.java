@@ -21,7 +21,11 @@ public class MultiParts extends ACComponent {
 		}
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
 			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasBlock) {
-				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Metals.block, i), "metal_block" + MetalRegistry.metals[i].name);
+				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Metals.block, i * 8), "metal_block" + MetalRegistry.metals[i].name);
+				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Metals.block, 1 + i * 8), "metal_bricks" + MetalRegistry.metals[i].name);
+				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Metals.block, 2 + i * 8), "metal_smallBricks" + MetalRegistry.metals[i].name);
+				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Metals.block, 3 + i * 8), "metal_blockCircle" + MetalRegistry.metals[i].name);
+				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Metals.block, 4 + i * 8), "metal_pillar" + MetalRegistry.metals[i].name);
 			}
 		}
 	}

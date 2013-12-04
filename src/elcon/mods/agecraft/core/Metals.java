@@ -11,12 +11,12 @@ import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.core.DustRegistry.Dust;
 import elcon.mods.agecraft.core.MetalRegistry.Metal;
 import elcon.mods.agecraft.core.MetalRegistry.OreType;
+import elcon.mods.agecraft.core.blocks.metal.BlockMetalBlock;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalDoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFence;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFenceGate;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalLadder;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalTrapdoor;
-import elcon.mods.agecraft.core.blocks.metal.BlockOreStorage;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneOre;
 import elcon.mods.agecraft.core.items.ItemGem;
 import elcon.mods.agecraft.core.items.ItemIngot;
@@ -48,7 +48,7 @@ public class Metals extends ACComponent {
 	public void preInit() {
 		// init blocks
 		ore = new BlockStoneOre(2500).setUnlocalizedName("metal_ore");
-		block = new BlockOreStorage(2501).setUnlocalizedName("metal_block");
+		block = new BlockMetalBlock(2501).setUnlocalizedName("metal_block");
 		fence = new BlockMetalFence(2502).setUnlocalizedName("metal_fence");
 		fenceGate = new BlockMetalFenceGate(2503).setUnlocalizedName("metal_fenceGate");
 		door = new BlockMetalDoor(2504).setUnlocalizedName("metal_door");

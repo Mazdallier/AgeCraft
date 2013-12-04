@@ -76,6 +76,10 @@ trees.jungle=Jungle
 
 metals.ore=Ore
 metals.block=Block
+metals.bricks=Bricks
+metals.smallBricks=Small Bricks
+metals.blockCircle=Circle Block
+metals.pillar=Pillar
 metals.fence=Fence
 metals.fenceGate=Fence Gate
 metals.door.standard=Door
