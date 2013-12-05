@@ -16,7 +16,7 @@ public class Crafting extends ACComponent {
 	@Override
 	public void preInit() {
 		//init blocks
-		workbench = new BlockWorkbench(2540).setUnlocalizedName("crafting_workbench");
+		workbench = new BlockWorkbench(2550).setUnlocalizedName("crafting_workbench");
 		
 		//register blocks
 		GameRegistry.registerBlock(workbench, ItemBlockExtendedMetadata.class, "AC_crafting_workbench");

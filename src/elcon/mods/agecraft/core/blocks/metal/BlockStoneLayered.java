@@ -24,10 +24,10 @@ public class BlockStoneLayered extends BlockStone {
 
 	public BlockStoneLayered(int i) {
 		super(i);
-		setCreativeTab(CreativeTabs.tabBlock);
 		setHardness(1.5F);
 		setResistance(10.0F);
 		setStepSound(Block.soundStoneFootstep);
+		setCreativeTab(CreativeTabs.tabBlock);
 		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
 			blockIcon = Block.stone.getIcon(0, 0);
 		}

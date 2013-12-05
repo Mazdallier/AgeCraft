@@ -21,33 +21,36 @@
 
 ======= Block IDs ======
 2500-2999 	Core blocks
-	2500 Ore
-	2501 Block
-	2502 Fence
-	2503 Fence gate
-	2504 Door
-	2505 Trapdoor
-	2506 Ladders
-	2507 Design blocks
+	2500 Stone
+	2501 Cobblestone
+	2502 Mossy stone
+	2503 Stonebrick
+
+	2510 Ore
+	2511 Block
+	2512 Fence
+	2513 Fence gate
+	2514 Door
+	2515 Trapdoor
+	2516 Ladders
+	2517 Design blocks
 	
-	2510 Wood
-	2511 Log
-	2512 Planks
-	2513 Leaves
-	2514 Wood wall
-	2515 Fence
-	2516 Fence gate
-	2517 Door
-	2518 Trapdoor
-	2519 Ladders
-	2520 Design planks
+	2520 Wood
+	2521 Log
+	2522 Planks
+	2523 Leaves
+	2524 Wood wall
+	2525 Fence
+	2526 Fence gate
+	2527 Door
+	2528 Trapdoor
+	2529 Ladders
+	2530 Design planks
 	
-	2530 Wood DNA
-	2531 Log DNA
-	2532 Leaves DNA
-	2533 Sapling DNA
+	2540 Leaves DNA
+	2541 Sapling DNA
 	
-	2540 Workbench
+	2550 Workbench
 	
 	2996 Age Teleporter
 	2997 Age Teleporter Block

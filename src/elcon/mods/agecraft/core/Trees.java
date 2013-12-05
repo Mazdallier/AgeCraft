@@ -102,19 +102,19 @@ public class Trees extends ACComponent {
 	@Override
 	public void preInit() {
 		//init blocks
-		wood = new BlockWood(2510).setUnlocalizedName("trees_wood");
-		log = new BlockLog(2511).setUnlocalizedName("trees_log");
-		planks = new BlockPlanks(2512).setUnlocalizedName("trees_planks");
-		leaves = new BlockLeaves(2513).setUnlocalizedName("trees_leaves");
-		woodWall = new BlockWoodWall(2514).setUnlocalizedName("trees_woodWall");
-		fence = new BlockWoodFence(2515).setUnlocalizedName("trees_fence");
-		fenceGate = new BlockWoodFenceGate(2516).setUnlocalizedName("trees_fenceGate");
-		door = new BlockWoodDoor(2517).setUnlocalizedName("trees_door");
-		trapdoor = new BlockWoodTrapdoor(2518).setUnlocalizedName("trees_trapdoor");
-		ladder = new BlockWoodLadder(2519).setUnlocalizedName("trees_ladder");
+		wood = new BlockWood(2520).setUnlocalizedName("trees_wood");
+		log = new BlockLog(2521).setUnlocalizedName("trees_log");
+		planks = new BlockPlanks(2522).setUnlocalizedName("trees_planks");
+		leaves = new BlockLeaves(2523).setUnlocalizedName("trees_leaves");
+		woodWall = new BlockWoodWall(2524).setUnlocalizedName("trees_woodWall");
+		fence = new BlockWoodFence(2525).setUnlocalizedName("trees_fence");
+		fenceGate = new BlockWoodFenceGate(2526).setUnlocalizedName("trees_fenceGate");
+		door = new BlockWoodDoor(2527).setUnlocalizedName("trees_door");
+		trapdoor = new BlockWoodTrapdoor(2528).setUnlocalizedName("trees_trapdoor");
+		ladder = new BlockWoodLadder(2529).setUnlocalizedName("trees_ladder");
 		
-		leavesDNA = new BlockLeavesDNA(2530).setUnlocalizedName("tree_leavesDNA");
-		saplingDNA = new BlockSaplingDNA(2531).setUnlocalizedName("tree_saplingDNA");
+		leavesDNA = new BlockLeavesDNA(2540).setUnlocalizedName("tree_leavesDNA");
+		saplingDNA = new BlockSaplingDNA(2541).setUnlocalizedName("tree_saplingDNA");
 		
 		//register blocks
 		GameRegistry.registerBlock(wood, ItemBlockExtendedMetadata.class, "AC_trees_wood");

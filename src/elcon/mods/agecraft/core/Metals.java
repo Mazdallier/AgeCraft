@@ -47,13 +47,13 @@ public class Metals extends ACComponent {
 	@Override
 	public void preInit() {
 		// init blocks
-		ore = new BlockStoneOre(2500).setUnlocalizedName("metal_ore");
-		block = new BlockMetalBlock(2501).setUnlocalizedName("metal_block");
-		fence = new BlockMetalFence(2502).setUnlocalizedName("metal_fence");
-		fenceGate = new BlockMetalFenceGate(2503).setUnlocalizedName("metal_fenceGate");
-		door = new BlockMetalDoor(2504).setUnlocalizedName("metal_door");
-		trapdoor = new BlockMetalTrapdoor(2505).setUnlocalizedName("metal_trapdoor");
-		ladder = new BlockMetalLadder(2506).setUnlocalizedName("metal_ladder");
+		ore = new BlockStoneOre(2510).setUnlocalizedName("metal_ore");
+		block = new BlockMetalBlock(2511).setUnlocalizedName("metal_block");
+		fence = new BlockMetalFence(2512).setUnlocalizedName("metal_fence");
+		fenceGate = new BlockMetalFenceGate(2513).setUnlocalizedName("metal_fenceGate");
+		door = new BlockMetalDoor(2514).setUnlocalizedName("metal_door");
+		trapdoor = new BlockMetalTrapdoor(2515).setUnlocalizedName("metal_trapdoor");
+		ladder = new BlockMetalLadder(2516).setUnlocalizedName("metal_ladder");
 
 		// register blocks
 		GameRegistry.registerBlock(ore, ItemBlockExtendedMetadata.class, "AC_metal_ore");
