@@ -29,8 +29,6 @@ import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
 import elcon.mods.agecraft.prehistory.world.WorldGenTeleportSphere;
 import elcon.mods.core.ElConCore;
 import elcon.mods.core.items.ItemBlockName;
-import elcon.mods.core.tileentities.TileEntityMetadata;
-import elcon.mods.core.tileentities.TileEntityNBT;
 
 public class AgeCraftCore extends ACComponent {
 
@@ -80,9 +78,7 @@ public class AgeCraftCore extends ACComponent {
 		// register tile entities
 		GameRegistry.registerTileEntity(TileEntityAgeTeleporterBeam.class, "TileAgeTeleporterBeam");
 		GameRegistry.registerTileEntity(TileEntityAgeTeleporterChest.class, "TileAgeTeleporterChest");
-		GameRegistry.registerTileEntity(TileEntityNBT.class, "TileNBT");
 		GameRegistry.registerTileEntity(TileEntityDNA.class, "TileDNA");
-		GameRegistry.registerTileEntity(TileEntityMetadata.class, "TileMetadata");
 
 		// remove recipes
 		CraftingManager.getInstance().getRecipeList().clear();

@@ -146,9 +146,7 @@
 	77 Open Inventory
 	78 Clothing Selector
 90+ 	TileEntity packets
-	90 NBT
-	91 DNA
-	92 Metadata
+	90 DNA
 	100 Ore
 	200 Campfire
 	201 Pot

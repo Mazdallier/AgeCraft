@@ -67,6 +67,15 @@ public class TileEntityDNA extends TileEntityNBT implements IDNAOwner {
 	}
 	
 	@Override
+	public int getPacketID() {
+		return 90;
+	}
+	
+	public String getPacketChannel() {
+		return "ACTile";
+	}
+	
+	@Override
 	public Packet getDescriptionPacket() {
 		dna.writeToNBT(nbt);
 		return super.getDescriptionPacket();
@@ -83,10 +92,5 @@ public class TileEntityDNA extends TileEntityNBT implements IDNAOwner {
 	public void writeToNBT(NBTTagCompound nbtTagCompound) {
 		dna.writeToNBT(nbt);
 		super.writeToNBT(nbtTagCompound);
-	}
-	
-	@Override
-	public int getPacketID() {
-		return 91;
 	}
 }

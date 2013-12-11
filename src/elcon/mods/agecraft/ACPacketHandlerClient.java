@@ -34,8 +34,6 @@ import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.gui.GuiClothingSelector;
 import elcon.mods.agecraft.core.tech.TechTreeClient;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
-import elcon.mods.core.tileentities.TileEntityMetadata;
-import elcon.mods.core.tileentities.TileEntityNBT;
 
 @SideOnly(Side.CLIENT)
 public class ACPacketHandlerClient implements IPacketHandler {
@@ -80,13 +78,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			handleClothingList(dat);
 			break;
 		case 90:
-			handleTileEntityNBT(world, dat);
-			break;
-		case 91:
 			handleTileEntityDNA(world, dat);
-			break;
-		case 92:
-			handleTileEntityMetadata(world, dat);
 			break;
 		}
 
@@ -242,28 +234,6 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		};
 	}
 
-	private void handleTileEntityNBT(World world, ByteArrayDataInput dat) {
-		int x = dat.readInt();
-		int y = dat.readInt();
-		int z = dat.readInt();
-		TileEntityNBT tile = (TileEntityNBT) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = (TileEntityNBT) Block.blocksList[world.getBlockId(x, y, z)].createTileEntity(world, world.getBlockMetadata(x, y, z));
-			world.setBlockTileEntity(x, y, z, tile);
-		}
-		NBTTagCompound nbt = new NBTTagCompound();
-		try {
-			NBTBase nbtbase;
-			while((nbtbase = NBTBase.readNamedTag(dat)).getId() != 0) {
-				nbt.setTag(nbtbase.getName(), nbtbase);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		tile.nbt = nbt;
-		world.markBlockForUpdate(x, y, z);
-	}
-
 	private void handleTileEntityDNA(World world, ByteArrayDataInput dat) {
 		int x = dat.readInt();
 		int y = dat.readInt();
@@ -287,19 +257,6 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		}
 		tile.nbt = nbt;
 		tile.getDNA().readFromNBT(tile.nbt);
-		world.markBlockForUpdate(x, y, z);
-	}
-
-	private void handleTileEntityMetadata(World world, ByteArrayDataInput dat) {
-		int x = dat.readInt();
-		int y = dat.readInt();
-		int z = dat.readInt();
-		TileEntityMetadata tile = (TileEntityMetadata) world.getBlockTileEntity(x, y, z);
-		if(tile == null) {
-			tile = new TileEntityMetadata();
-			world.setBlockTileEntity(x, y, z, tile);
-		}
-		tile.setTileMetadata(dat.readInt());
 		world.markBlockForUpdate(x, y, z);
 	}
 
