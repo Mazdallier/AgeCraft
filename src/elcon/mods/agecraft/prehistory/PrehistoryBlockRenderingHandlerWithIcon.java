@@ -17,7 +17,7 @@ import elcon.mods.agecraft.prehistory.tileentities.TileEntityBed;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBox;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityPot;
-import elcon.mods.core.BlockRenderingHandlerOverlay;
+import elcon.mods.core.render.BlockRenderingHandlerOverlay;
 
 public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRenderingHandler {
 
@@ -143,7 +143,7 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 				renderer.uvRotateTop = 2;
 			}
 		}
-		BlockRenderingHandlerOverlay.renderBlockWithOverlay(blockAccess, block, x, y, z, renderer, 0xFFFFFF);
+		BlockRenderingHandlerOverlay.renderBlockWithOverlay(blockAccess, block, x, y, z, renderer);
 		renderer.uvRotateSouth = 0;
 		renderer.uvRotateEast = 0;
 		renderer.uvRotateWest = 0;

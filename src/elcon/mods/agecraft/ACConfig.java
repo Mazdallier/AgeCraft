@@ -1,9 +1,9 @@
 package elcon.mods.agecraft;
 
 import net.minecraftforge.common.Configuration;
-import elcon.mods.core.ElConConfig;
+import elcon.mods.core.ECConfig;
 
-public class ACConfig extends ElConConfig {
+public class ACConfig extends ECConfig {
 
 	public ACConfig(Configuration config) {
 		super(config);

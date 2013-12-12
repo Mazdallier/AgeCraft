@@ -21,8 +21,8 @@ import cpw.mods.fml.relauncher.Side;
 import elcon.mods.agecraft.core.AgeCraftCore;
 import elcon.mods.agecraft.core.RankManager;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
+import elcon.mods.core.ECMod;
 import elcon.mods.core.ElConCore;
-import elcon.mods.core.ElConMod;
 
 @Mod(modid = ACReference.MOD_ID, name = ACReference.NAME, version = ACReference.VERSION, acceptedMinecraftVersions = ACReference.MC_VERSION, dependencies = ACReference.DEPENDENCIES)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = {"AgeCraft", "ACTile", "ACTech", "ACClothing"}, packetHandler = ACPacketHandlerClient.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = {"AgeCraft", "ACTile", "ACTech", "ACClothing"}, packetHandler = ACPacketHandler.class))
@@ -47,7 +47,7 @@ public class AgeCraft {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		minecraftDir = ElConCore.minecraftDir;
-		ElConCore.registerMod(ACReference.NAME, new ElConMod(ACReference.NAME, ACReference.VERSION, ACReference.VERSION_URL, event.getSourceFile(), event.getSuggestedConfigurationFile(), ACConfig.class, new ACSaveHandler()));
+		ElConCore.registerMod(ACReference.NAME, new ECMod(ACReference.NAME, ACReference.VERSION, ACReference.VERSION_URL, event.getSourceFile(), event.getSuggestedConfigurationFile(), ACConfig.class, new ACSaveHandler()));
 
 		ACLog.init();
 		

@@ -44,11 +44,11 @@ import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererB
 import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererBox;
 import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererCampfire;
 import elcon.mods.agecraft.prehistory.tileentities.renderers.TileEntityRendererPot;
-import elcon.mods.core.BlockRenderingHandlerOverlay;
-import elcon.mods.core.ElConConfig;
+import elcon.mods.core.ECConfig;
 import elcon.mods.core.ElConCore;
 import elcon.mods.core.player.PlayerAPI;
 import elcon.mods.core.player.PlayerAPI.PlayerCoreType;
+import elcon.mods.core.render.BlockRenderingHandlerOverlay;
 
 public class ACClientProxy extends ACCommonProxy {
 
@@ -70,7 +70,7 @@ public class ACClientProxy extends ACCommonProxy {
 		MinecraftForge.EVENT_BUS.register(eventHandler);
 
 		// register block handlers
-		RenderingRegistry.registerBlockHandler(ElConConfig.BLOCK_OVERLAY_RENDER_ID, new BlockRenderingHandlerOverlay());
+		RenderingRegistry.registerBlockHandler(ECConfig.BLOCK_OVERLAY_RENDER_ID, new BlockRenderingHandlerOverlay());
 		
 		// register key handler
 		KeyBindingRegistry.registerKeyBinding(new ACKeyHandler());

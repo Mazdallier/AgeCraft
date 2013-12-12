@@ -10,9 +10,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.tech.TechTreeServer;
-import elcon.mods.core.IElConSaveHandler;
+import elcon.mods.core.IECSaveHandler;
 
-public class ACSaveHandler implements IElConSaveHandler {
+public class ACSaveHandler implements IECSaveHandler {
 
 	@Override
 	public String[] getSaveFiles() {
