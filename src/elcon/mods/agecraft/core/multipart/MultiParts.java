@@ -11,6 +11,7 @@ import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.blocks.stone.BlockColoredStoneBrick;
 import elcon.mods.agecraft.core.blocks.stone.BlockStoneBrick;
 import elcon.mods.core.ECUtil;
+import elcon.mods.core.blocks.BlockOverlay;
 
 public class MultiParts extends ACComponent {
 
@@ -24,13 +25,13 @@ public class MultiParts extends ACComponent {
 		}
 		MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Stone.stoneBrickPillar, 0), "stone_stoneBrickPillar");
 		for(int i = 0; i < 16; i++) {
-			MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Stone.coloredStone, i), "stone_coloredStone_" + Integer.toString(i));
-			MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Stone.coloredStoneCracked, i), "stone_coloredStoneCracked_" + Integer.toString(i));
-			MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Stone.coloredStoneMossy, i), "stone_coloredStoneMossy_" + Integer.toString(i));
+			MicroMaterialRegistry.registerMaterial(new MicroMaterialColor(Stone.coloredStone, i), "stone_coloredStone_" + Integer.toString(i));
+			MicroMaterialRegistry.registerMaterial(new MicroMaterialColor(Stone.coloredStoneCracked, i), "stone_coloredStoneCracked_" + Integer.toString(i));
+			MicroMaterialRegistry.registerMaterial(new MicroMaterialColorOverlay((BlockOverlay) Stone.coloredStoneMossy, i), "stone_coloredStoneMossy_" + Integer.toString(i));
 			for(int j = 0; j < 8; j++) {
-				MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Stone.coloredStoneBrick, j + i * 8), "stone_coloredStoneBrick" + ECUtil.firstUpperCase(BlockColoredStoneBrick.types[j]) + "_" + Integer.toString(i));
+				MicroMaterialRegistry.registerMaterial(new MicroMaterialColorOverlay((BlockOverlay) Stone.coloredStoneBrick, j + i * 8), "stone_coloredStoneBrick" + ECUtil.firstUpperCase(BlockColoredStoneBrick.types[j]) + "_" + Integer.toString(i));
 			}
-			MicroMaterialRegistry.registerMaterial(new BlockMicroMaterial(Stone.coloredStoneBrickPillar, i), "stone_coloredStonePillar_" + Integer.toString(i));
+			MicroMaterialRegistry.registerMaterial(new MicroMaterialColor(Stone.coloredStoneBrickPillar, i * 3), "stone_coloredStonePillar_" + Integer.toString(i));
 		}
 		
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
