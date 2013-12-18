@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL12;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
+import elcon.mods.agecraft.core.blocks.IBlockRotated;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFence;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFenceGate;
 import elcon.mods.agecraft.core.blocks.tree.BlockWood;
@@ -29,7 +30,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	public boolean renderWorldBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
 		switch(modelID) {
 		case 91:
-			return renderBlockRotated(blockAccess, x, y, z, block, modelID, renderer);
+			return renderBlockRotated(blockAccess, x, y, z, (IBlockRotated) block, modelID, renderer);
 		case 100:
 			return renderBlockMetalFence(blockAccess, x, y, z, (BlockMetalFence) block, modelID, renderer);
 		case 101:
@@ -48,8 +49,8 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		return false;
 	}
 	
-	private boolean renderBlockRotated(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
-		int direction = blockAccess.getBlockMetadata(x, y, z) & 3;
+	private boolean renderBlockRotated(IBlockAccess blockAccess, int x, int y, int z, IBlockRotated block, int modelID, RenderBlocks renderer) {
+		int direction = block.getBlockRotation(blockAccess, x, y, z);
 		if(direction == 2) {
 			renderer.uvRotateEast = 1;
 			renderer.uvRotateWest = 1;
@@ -59,7 +60,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			renderer.uvRotateSouth = 1;
 			renderer.uvRotateNorth = 1;
 		}
-		boolean flag = renderer.renderStandardBlock(block, x, y, z);
+		boolean flag = renderer.renderStandardBlock((Block) block, x, y, z);
 		renderer.uvRotateSouth = 0;
 		renderer.uvRotateEast = 0;
 		renderer.uvRotateWest = 0;

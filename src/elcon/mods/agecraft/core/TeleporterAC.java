@@ -6,7 +6,7 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
-import elcon.mods.core.ElConCore;
+import elcon.mods.core.ECUtil;
 
 public class TeleporterAC extends Teleporter {
 
@@ -26,7 +26,7 @@ public class TeleporterAC extends Teleporter {
 		ChunkCoordinates spawn = world.getSpawnPoint();
 		int x = spawn.posX;
 		int z = spawn.posZ;
-		int y = ElConCore.getFirstUncoveredBlock(world, x, z) + 3;
+		int y = ECUtil.getFirstUncoveredBlock(world, x, z) + 3;
 		
 		EntityPlayerMP player = null;
 		if(entity instanceof EntityPlayerMP) {

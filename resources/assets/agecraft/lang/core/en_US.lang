@@ -49,6 +49,19 @@ container.armor=Armor
 recipe.workbench.shaped=Shaped Workbench Recipe
 recipe.workbench.shapeless=Shapeless Workbench Recipe
 
+stone.stone=Stone
+stone.stoneCracked=Cracked Stone
+stone.stoneMossy=Mossy Stone
+stone.stoneBrick.normal=Stone Brick
+stone.stoneBrick.cracked=Cracked Stone Brick
+stone.stoneBrick.mossy=Mossy Stone Brick
+stone.stoneBrick.small=Small Stone Brick
+stone.stoneBrick.circle=Circular Stone Brick
+stone.stoneBrick.creeper=Stone Brick Creeper
+stone.stoneBrick.chiseled=Chiseled Stone Brick
+stone.stoneBrick.smooth=Smooth Stone Brick
+stone.stoneBrick.pillar=Stone Brick Pillar
+
 trees.wood=Wood
 trees.leaves=Leaves
 trees.log=Log

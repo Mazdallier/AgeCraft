@@ -22,9 +22,10 @@
 ======= Block IDs ======
 2500-2999 	Core blocks
 	2500 Stone
-	2501 Cobblestone
+	2501 Cracked stone
 	2502 Mossy stone
 	2503 Stonebrick
+	2504 Stonebrick Pillar
 
 	2510 Ore
 	2511 Block

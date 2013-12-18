@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
-import elcon.mods.core.ElConCore;
+import elcon.mods.core.ECUtil;
 
 public class AgeTeleport {
 
@@ -68,7 +68,7 @@ public class AgeTeleport {
 			}
 		}
 
-		y = ElConCore.getFirstUncoveredBlock(world, x, z);
+		y = ECUtil.getFirstUncoveredBlock(world, x, z);
 
 		for(int i = 0; i < 5; i++) {
 			for(int j = 0; j < 5; j++) {

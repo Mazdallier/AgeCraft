@@ -12,7 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.ToolRegistry;
 import elcon.mods.agecraft.core.ToolRegistry.Tool;
-import elcon.mods.core.ElConCore;
+import elcon.mods.core.ECUtil;
 
 public class ItemBow extends ItemTool {
 
@@ -71,7 +71,7 @@ public class ItemBow extends ItemTool {
 		for(int i = 0; i < ToolRegistry.toolRodMaterials.length; i++) {
 			if(ToolRegistry.toolRodMaterials[i] != null) {
 				for(int j = 0; j < 4; j++) {
-					icons[i][j] = iconRegister.registerIcon("agecraft:tools/sticks/bow/" + ToolRegistry.toolRodMaterials[i].name + "/bow" + ElConCore.firstUpperCase(ToolRegistry.toolRodMaterials[i].name) + Integer.toString(j));
+					icons[i][j] = iconRegister.registerIcon("agecraft:tools/sticks/bow/" + ToolRegistry.toolRodMaterials[i].name + "/bow" + ECUtil.firstUpperCase(ToolRegistry.toolRodMaterials[i].name) + Integer.toString(j));
 				}
 			}
 		}

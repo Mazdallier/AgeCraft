@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 import elcon.mods.agecraft.prehistory.blocks.BlockBox;
-import elcon.mods.core.ElConCore;
+import elcon.mods.core.ECUtil;
 import elcon.mods.core.items.ItemBlockName;
 import elcon.mods.core.lang.LanguageManager;
 
@@ -84,7 +84,7 @@ public class ItemBox extends ItemBlockName {
 		icons = new Icon[TreeRegistry.trees.length];
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			if(TreeRegistry.trees[i] != null) {
-				icons[i] = iconRegister.registerIcon("agecraft:ages/prehistory/box" + ElConCore.firstUpperCase(TreeRegistry.trees[i].name));
+				icons[i] = iconRegister.registerIcon("agecraft:ages/prehistory/box" + ECUtil.firstUpperCase(TreeRegistry.trees[i].name));
 			}
 		}
 	}

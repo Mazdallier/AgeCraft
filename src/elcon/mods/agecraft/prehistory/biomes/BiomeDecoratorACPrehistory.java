@@ -12,7 +12,7 @@ import elcon.mods.agecraft.core.Metals;
 import elcon.mods.agecraft.core.world.WorldGenOre;
 import elcon.mods.agecraft.prehistory.world.WorldGenRock;
 import elcon.mods.agecraft.prehistory.world.WorldGenTempSmallTree;
-import elcon.mods.core.ElConCore;
+import elcon.mods.core.ECUtil;
 
 public class BiomeDecoratorACPrehistory {
 
@@ -74,7 +74,7 @@ public class BiomeDecoratorACPrehistory {
 		for(int i = 0; i < smallTreesPerChunk; i++) {
 			x = chunkX + rand.nextInt(16) + 8;
 			z = chunkZ + rand.nextInt(16) + 8;
-			y = ElConCore.getFirstUncoveredBlock(worldObj, x, z);
+			y = ECUtil.getFirstUncoveredBlock(worldObj, x, z);
 			tempSmallTreeGen.generate(worldObj, rand, x, y, z);
 		}
 

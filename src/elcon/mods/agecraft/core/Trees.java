@@ -37,7 +37,7 @@ import elcon.mods.agecraft.core.world.trees.WorldGenTreeSpruce;
 import elcon.mods.agecraft.dna.structure.Chromosome;
 import elcon.mods.agecraft.dna.structure.DNAObject;
 import elcon.mods.agecraft.dna.structure.Gene;
-import elcon.mods.core.ElConCore;
+import elcon.mods.core.ECUtil;
 import elcon.mods.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.core.items.ItemBlockName;
 
@@ -169,7 +169,7 @@ public class Trees extends ACComponent {
 		
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			if(TreeRegistry.trees[i] != null) {
-				DustRegistry.registerDust(new Dust(i, "wood" + ElConCore.firstUpperCase(TreeRegistry.trees[i].name), "trees." + TreeRegistry.trees[i].name, new ItemStack(dust.itemID, 1, i)));
+				DustRegistry.registerDust(new Dust(i, "wood" + ECUtil.firstUpperCase(TreeRegistry.trees[i].name), "trees." + TreeRegistry.trees[i].name, new ItemStack(dust.itemID, 1, i)));
 			}
 		}
 	}

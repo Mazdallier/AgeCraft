@@ -25,7 +25,7 @@ import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.TreeRegistry.Tree;
-import elcon.mods.core.ElConCore;
+import elcon.mods.core.ECUtil;
 
 @SideOnly(Side.CLIENT)
 public class ResourcesCore extends Resources {
@@ -86,14 +86,14 @@ public class ResourcesCore extends Resources {
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			Tree tree = TreeRegistry.trees[i];
 			if(tree != null) {
-				tree.wood = iconRegister.registerIcon("agecraft:wood/wood" + ElConCore.firstUpperCase(tree.name));
-				tree.woodTop = iconRegister.registerIcon("agecraft:wood/woodTop" + ElConCore.firstUpperCase(tree.name));
-				tree.logTop = iconRegister.registerIcon("agecraft:wood/logTop" + ElConCore.firstUpperCase(tree.name));
-				tree.planks = iconRegister.registerIcon("agecraft:wood/planks" + ElConCore.firstUpperCase(tree.name));
-				tree.leaves = iconRegister.registerIcon("agecraft:leaves/leaves" + ElConCore.firstUpperCase(tree.name));
-				tree.leavesFast = iconRegister.registerIcon("agecraft:leaves/leavesFast" + ElConCore.firstUpperCase(tree.name));
-				tree.smallSapling = iconRegister.registerIcon("agecraft:sapling/smallSapling" + ElConCore.firstUpperCase(tree.name));
-				tree.sapling = iconRegister.registerIcon("agecraft:sapling/sapling" + ElConCore.firstUpperCase(tree.name));
+				tree.wood = iconRegister.registerIcon("agecraft:wood/wood" + ECUtil.firstUpperCase(tree.name));
+				tree.woodTop = iconRegister.registerIcon("agecraft:wood/woodTop" + ECUtil.firstUpperCase(tree.name));
+				tree.logTop = iconRegister.registerIcon("agecraft:wood/logTop" + ECUtil.firstUpperCase(tree.name));
+				tree.planks = iconRegister.registerIcon("agecraft:wood/planks" + ECUtil.firstUpperCase(tree.name));
+				tree.leaves = iconRegister.registerIcon("agecraft:leaves/leaves" + ECUtil.firstUpperCase(tree.name));
+				tree.leavesFast = iconRegister.registerIcon("agecraft:leaves/leavesFast" + ECUtil.firstUpperCase(tree.name));
+				tree.smallSapling = iconRegister.registerIcon("agecraft:sapling/smallSapling" + ECUtil.firstUpperCase(tree.name));
+				tree.sapling = iconRegister.registerIcon("agecraft:sapling/sapling" + ECUtil.firstUpperCase(tree.name));
 			}
 		}
 		
@@ -103,25 +103,25 @@ public class ResourcesCore extends Resources {
 			if(metal != null) {
 				if(metal.type == OreType.METAL) {
 					if(metal.hasOre) {
-						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/metals/ore" + ElConCore.firstUpperCase(metal.name));
+						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/metals/ore" + ECUtil.firstUpperCase(metal.name));
 					}
 					if(metal.hasBlock) {
-						metal.blocks[0] = iconRegister.registerIcon("agecraft:metals/blocks/metals/block" + ElConCore.firstUpperCase(metal.name));
-						metal.blocks[1] = iconRegister.registerIcon("agecraft:metals/blocks/metals/bricks" + ElConCore.firstUpperCase(metal.name));
-						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/metals/smallBricks" + ElConCore.firstUpperCase(metal.name));
-						metal.blocks[3] = iconRegister.registerIcon("agecraft:metals/blocks/metals/blockCircle" + ElConCore.firstUpperCase(metal.name));
-						metal.blocks[4] = iconRegister.registerIcon("agecraft:metals/blocks/metals/pillar" + ElConCore.firstUpperCase(metal.name));
+						metal.blocks[0] = iconRegister.registerIcon("agecraft:metals/blocks/metals/block" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[1] = iconRegister.registerIcon("agecraft:metals/blocks/metals/bricks" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/metals/smallBricks" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[3] = iconRegister.registerIcon("agecraft:metals/blocks/metals/blockCircle" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[4] = iconRegister.registerIcon("agecraft:metals/blocks/metals/pillar" + ECUtil.firstUpperCase(metal.name));
 					}
 				} else if(metal.type == OreType.GEM) {
 					if(metal.hasOre) {
-						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/gems/ore" + ElConCore.firstUpperCase(metal.name));
+						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/gems/ore" + ECUtil.firstUpperCase(metal.name));
 					}
 					if(metal.hasBlock) {
-						metal.blocks[0] = iconRegister.registerIcon("agecraft:metals/blocks/gems/block" + ElConCore.firstUpperCase(metal.name));
-						metal.blocks[1] = iconRegister.registerIcon("agecraft:metals/blocks/gems/bricks" + ElConCore.firstUpperCase(metal.name));
-						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/gems/smallBricks" + ElConCore.firstUpperCase(metal.name));
-						metal.blocks[3] = iconRegister.registerIcon("agecraft:metals/blocks/gems/blockCircle" + ElConCore.firstUpperCase(metal.name));
-						metal.blocks[4] = iconRegister.registerIcon("agecraft:metals/blocks/gems/pillar" + ElConCore.firstUpperCase(metal.name));
+						metal.blocks[0] = iconRegister.registerIcon("agecraft:metals/blocks/gems/block" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[1] = iconRegister.registerIcon("agecraft:metals/blocks/gems/bricks" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/gems/smallBricks" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[3] = iconRegister.registerIcon("agecraft:metals/blocks/gems/blockCircle" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[4] = iconRegister.registerIcon("agecraft:metals/blocks/gems/pillar" + ECUtil.firstUpperCase(metal.name));
 					}
 				}
 			}
@@ -131,7 +131,7 @@ public class ResourcesCore extends Resources {
 		for(int i = 0; i < DustRegistry.dusts.length; i++) {
 			Dust dust = DustRegistry.dusts[i];
 			if(dust != null) {
-				dust.icon = iconRegister.registerIcon("agecraft:dusts/dust" + ElConCore.firstUpperCase(dust.name));
+				dust.icon = iconRegister.registerIcon("agecraft:dusts/dust" + ECUtil.firstUpperCase(dust.name));
 			}
 		}
 	}
@@ -145,10 +145,10 @@ public class ResourcesCore extends Resources {
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			Tree tree = TreeRegistry.trees[i];
 			if(tree != null) {
-				tree.log = iconRegister.registerIcon("agecraft:wood/logs/log" + ElConCore.firstUpperCase(tree.name));
-				tree.stick = iconRegister.registerIcon("agecraft:wood/sticks/stick" + ElConCore.firstUpperCase(tree.name));
-				tree.dust = iconRegister.registerIcon("agecraft:wood/dusts/dust" + ElConCore.firstUpperCase(tree.name));
-				tree.bucket = iconRegister.registerIcon("agecraft:wood/buckets/bucket" + ElConCore.firstUpperCase(tree.name));
+				tree.log = iconRegister.registerIcon("agecraft:wood/logs/log" + ECUtil.firstUpperCase(tree.name));
+				tree.stick = iconRegister.registerIcon("agecraft:wood/sticks/stick" + ECUtil.firstUpperCase(tree.name));
+				tree.dust = iconRegister.registerIcon("agecraft:wood/dusts/dust" + ECUtil.firstUpperCase(tree.name));
+				tree.bucket = iconRegister.registerIcon("agecraft:wood/buckets/bucket" + ECUtil.firstUpperCase(tree.name));
 			}
 		}
 		
@@ -158,22 +158,22 @@ public class ResourcesCore extends Resources {
 			if(metal != null) {
 				if(metal.type == OreType.METAL) {
 					if(metal.hasIngot) {
-						metal.ingot = iconRegister.registerIcon("agecraft:metals/ingots/ingot" + ElConCore.firstUpperCase(metal.name));
-						metal.stick = iconRegister.registerIcon("agecraft:metals/sticks/stick" + ElConCore.firstUpperCase(metal.name));
-						metal.nugget = iconRegister.registerIcon("agecraft:metals/nuggets/nugget" + ElConCore.firstUpperCase(metal.name));
+						metal.ingot = iconRegister.registerIcon("agecraft:metals/ingots/ingot" + ECUtil.firstUpperCase(metal.name));
+						metal.stick = iconRegister.registerIcon("agecraft:metals/sticks/stick" + ECUtil.firstUpperCase(metal.name));
+						metal.nugget = iconRegister.registerIcon("agecraft:metals/nuggets/nugget" + ECUtil.firstUpperCase(metal.name));
 						if(metal.hasDust) {
-							metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/metals/dust" + ElConCore.firstUpperCase(metal.name));
+							metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/metals/dust" + ECUtil.firstUpperCase(metal.name));
 						}
 						if(ToolRegistry.toolMaterials[128 + metal.id] != null) {
-							metal.bucket = iconRegister.registerIcon("agecraft:metals/buckets/bucket" + ElConCore.firstUpperCase(metal.name));
+							metal.bucket = iconRegister.registerIcon("agecraft:metals/buckets/bucket" + ECUtil.firstUpperCase(metal.name));
 						}
 					}
 				} else if(metal.type == OreType.GEM) {
 					if(metal.hasIngot) {
-						metal.ingot = iconRegister.registerIcon("agecraft:metals/gems/gem" + ElConCore.firstUpperCase(metal.name));	
+						metal.ingot = iconRegister.registerIcon("agecraft:metals/gems/gem" + ECUtil.firstUpperCase(metal.name));	
 					}
 					if(metal.hasDust) {
-						metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/gems/dust" + ElConCore.firstUpperCase(metal.name));
+						metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/gems/dust" + ECUtil.firstUpperCase(metal.name));
 					}
 				}
 			}
@@ -189,7 +189,7 @@ public class ResourcesCore extends Resources {
 						for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
 							ToolMaterial toolMaterial = ToolRegistry.toolMaterials[j];
 							if(toolMaterial != null) {
-								toolMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolMaterial.name));
+								toolMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/" + tool.name + "/" + tool.name + ECUtil.firstUpperCase(toolMaterial.name));
 							}
 						}
 					}
@@ -197,7 +197,7 @@ public class ResourcesCore extends Resources {
 						for(int j = 0; j < ToolRegistry.toolRodMaterials.length; j++) {
 							ToolRodMaterial toolRodMaterial = ToolRegistry.toolRodMaterials[j];
 							if(toolRodMaterial != null) {
-								toolRodMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/sticks/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolRodMaterial.name));
+								toolRodMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/sticks/" + tool.name + "/" + tool.name + ECUtil.firstUpperCase(toolRodMaterial.name));
 							}
 						}
 					}
@@ -206,7 +206,7 @@ public class ResourcesCore extends Resources {
 					for(int j = 0; j < ToolRegistry.toolEnhancementMaterials.length; j++) {
 						ToolEnhancementMaterial toolEnhancementMaterial = ToolRegistry.toolEnhancementMaterials[j];
 						if(toolEnhancementMaterial != null) {
-							toolEnhancementMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/enhancements/" + tool.name + "/" + tool.name + ElConCore.firstUpperCase(toolEnhancementMaterial.name));
+							toolEnhancementMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/enhancements/" + tool.name + "/" + tool.name + ECUtil.firstUpperCase(toolEnhancementMaterial.name));
 						}
 					}
 				}
@@ -217,13 +217,13 @@ public class ResourcesCore extends Resources {
 		for(int i = 0; i < ArmorRegistry.armorTypes.length; i++) {
 			ArmorType armorType = ArmorRegistry.armorTypes[i];
 			if(armorType != null) {
-				armorType.backgroundIcon = iconRegister.registerIcon("agecraft:armor/slots/slot" + ElConCore.firstUpperCase(armorType.name));
+				armorType.backgroundIcon = iconRegister.registerIcon("agecraft:armor/slots/slot" + ECUtil.firstUpperCase(armorType.name));
 				for(int j = 0; j < ArmorRegistry.armorMaterials.length; j++) {
 					ArmorMaterial armorMaterial = ArmorRegistry.armorMaterials[j];
 					if(armorMaterial != null) {
-						armorMaterial.icons[i] = iconRegister.registerIcon("agecraft:armor/" + armorType.name + "/" + armorType.name + ElConCore.firstUpperCase(armorMaterial.name));
+						armorMaterial.icons[i] = iconRegister.registerIcon("agecraft:armor/" + armorType.name + "/" + armorType.name + ECUtil.firstUpperCase(armorMaterial.name));
 						if(armorMaterial.hasOverlay) {
-							armorMaterial.iconsOverlay[i] = iconRegister.registerIcon("agecraft:armor/" + armorType.name + "/" + armorType.name + ElConCore.firstUpperCase(armorMaterial.name) + "Overlay");
+							armorMaterial.iconsOverlay[i] = iconRegister.registerIcon("agecraft:armor/" + armorType.name + "/" + armorType.name + ECUtil.firstUpperCase(armorMaterial.name) + "Overlay");
 						}
 					}
 				}

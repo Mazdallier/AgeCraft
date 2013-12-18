@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import elcon.mods.agecraft.core.AgeCraftCore;
-import elcon.mods.core.ElConCore;
+import elcon.mods.core.ECUtil;
 
 public class WorldGenTeleportSphere extends WorldGenerator {
 
@@ -126,7 +126,7 @@ public class WorldGenTeleportSphere extends WorldGenerator {
 		world.setBlock(i + 1, j + 2, k + 4, AgeCraftCore.ageTeleporterChest.blockID, 5, 0);
 		world.setBlock(i + 1, j + 3, k + 4, AgeCraftCore.ageTeleporterChest.blockID, 5, 0);
 
-        world.setBlock(i + 3, ElConCore.getFirstUncoveredBlock(world, i, k), k + 3, AgeCraftCore.ageTeleporterBeam.blockID);
+        world.setBlock(i + 3, ECUtil.getFirstUncoveredBlock(world, i, k), k + 3, AgeCraftCore.ageTeleporterBeam.blockID);
 		
 		return true;
 	}

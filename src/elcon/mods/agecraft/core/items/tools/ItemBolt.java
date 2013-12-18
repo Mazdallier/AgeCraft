@@ -10,7 +10,7 @@ import elcon.mods.agecraft.core.ToolRegistry;
 import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
-import elcon.mods.core.ElConCore;
+import elcon.mods.core.ECUtil;
 
 public class ItemBolt extends ItemTool {
 
@@ -49,18 +49,18 @@ public class ItemBolt extends ItemTool {
 		for(int i = 0; i < ToolRegistry.toolMaterials.length; i++) {
 			ToolMaterial toolMaterial = ToolRegistry.toolMaterials[i];
 			if(toolMaterial != null) {
-				iconsHead[i][0] = iconRegister.registerIcon("agecraft:tools/bolt/" + toolMaterial.name + "/bolt" + ElConCore.firstUpperCase(toolMaterial.name));
+				iconsHead[i][0] = iconRegister.registerIcon("agecraft:tools/bolt/" + toolMaterial.name + "/bolt" + ECUtil.firstUpperCase(toolMaterial.name));
 				for(int j = 0; j < 3; j++) {
-					iconsHead[i][j + 1] = iconRegister.registerIcon("agecraft:tools/bolt/" + toolMaterial.name + "/bolt" + ElConCore.firstUpperCase(toolMaterial.name) + Integer.toString(j));
+					iconsHead[i][j + 1] = iconRegister.registerIcon("agecraft:tools/bolt/" + toolMaterial.name + "/bolt" + ECUtil.firstUpperCase(toolMaterial.name) + Integer.toString(j));
 				}
 			}
 		}
 		for(int i = 0; i < ToolRegistry.toolRodMaterials.length; i++) {
 			ToolRodMaterial toolRodMaterial = ToolRegistry.toolRodMaterials[i];
 			if(toolRodMaterial != null) {
-				iconsRod[i][0] = iconRegister.registerIcon("agecraft:tools/sticks/bolt/" + toolRodMaterial.name + "/bolt" + ElConCore.firstUpperCase(toolRodMaterial.name));
+				iconsRod[i][0] = iconRegister.registerIcon("agecraft:tools/sticks/bolt/" + toolRodMaterial.name + "/bolt" + ECUtil.firstUpperCase(toolRodMaterial.name));
 				for(int j = 0; j < 3; j++) {
-					iconsRod[i][j + 1] = iconRegister.registerIcon("agecraft:tools/sticks/bolt/" + toolRodMaterial.name + "/bolt" + ElConCore.firstUpperCase(toolRodMaterial.name) + Integer.toString(j));
+					iconsRod[i][j + 1] = iconRegister.registerIcon("agecraft:tools/sticks/bolt/" + toolRodMaterial.name + "/bolt" + ECUtil.firstUpperCase(toolRodMaterial.name) + Integer.toString(j));
 				}
 			}
 		}
