@@ -14,11 +14,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.core.blocks.BlockMetadata;
 
-public class BlockStoneCracked extends BlockMetadata {
+public class BlockColoredStoneCracked extends BlockMetadata {
 
 	private Icon icon;
 	
-	public BlockStoneCracked(int id) {
+	public BlockColoredStoneCracked(int id) {
 		super(id, Material.rock);
 		setHardness(2.0F);
 		setResistance(10.0F);
@@ -34,13 +34,13 @@ public class BlockStoneCracked extends BlockMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderColor(int meta) {
-		return BlockStone.colors[meta];
+		return BlockColoredStone.colors[meta];
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
-		return BlockStone.colors[blockAccess.getBlockMetadata(x, y, z)];
+		return BlockColoredStone.colors[blockAccess.getBlockMetadata(x, y, z)];
 	}
 	
 	@Override
@@ -52,7 +52,7 @@ public class BlockStoneCracked extends BlockMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		icon = iconRegister.registerIcon("agecraft:stone/stoneCracked");
+		icon = iconRegister.registerIcon("agecraft:stone/coloredStoneCracked");
 	}
 	
 	@Override

@@ -3,36 +3,50 @@ package elcon.mods.agecraft.core;
 import net.minecraft.block.Block;
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACComponent;
+import elcon.mods.agecraft.core.blocks.stone.BlockColoredStone;
+import elcon.mods.agecraft.core.blocks.stone.BlockColoredStoneBrick;
+import elcon.mods.agecraft.core.blocks.stone.BlockColoredStoneBrickPillar;
+import elcon.mods.agecraft.core.blocks.stone.BlockColoredStoneCracked;
+import elcon.mods.agecraft.core.blocks.stone.BlockColoredStoneMossy;
 import elcon.mods.agecraft.core.blocks.stone.BlockStone;
-import elcon.mods.agecraft.core.blocks.stone.BlockStoneBrick;
-import elcon.mods.agecraft.core.blocks.stone.BlockStoneBrickPillar;
-import elcon.mods.agecraft.core.blocks.stone.BlockStoneCracked;
-import elcon.mods.agecraft.core.blocks.stone.BlockStoneMossy;
 import elcon.mods.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.core.items.ItemBlockMetadata;
+import elcon.mods.core.items.ItemBlockMetadataOverlay;
 
 public class Stone extends ACComponent {
 
 	public static Block stone;
-	public static Block stoneCracked;
-	public static Block stoneMossy;
 	public static Block stoneBrick;
 	public static Block stoneBrickPillar;
+	
+	public static Block coloredStone;
+	public static Block coloredStoneCracked;
+	public static Block coloredStoneMossy;
+	public static Block coloredStoneBrick;
+	public static Block coloredStoneBrickPillar;
 	
 	@Override
 	public void preInit() {
 		//init blocks
 		stone = new BlockStone(2500).setUnlocalizedName("stone_stone");
-		stoneCracked = new BlockStoneCracked(2501).setUnlocalizedName("stone_stoneCracked");
-		stoneMossy = new BlockStoneMossy(2502).setUnlocalizedName("stone_stoneMossy");
-		stoneBrick = new BlockStoneBrick(2503).setUnlocalizedName("stone_stoneBrick");
-		stoneBrickPillar = new BlockStoneBrickPillar(2504).setUnlocalizedName("stone_stoneBrickPillar");
+		stoneBrick = new BlockStone(2501).setUnlocalizedName("stone_stoneBrick");
+		stoneBrickPillar = new BlockStone(2502).setUnlocalizedName("stone_stoneBrickPillar");
+		
+		coloredStone = new BlockColoredStone(2503).setUnlocalizedName("stone_coloredStone");
+		coloredStoneCracked = new BlockColoredStoneCracked(2504).setUnlocalizedName("stone_coloredStoneCracked");
+		coloredStoneMossy = new BlockColoredStoneMossy(2505).setUnlocalizedName("stone_coloredStoneMossy");
+		coloredStoneBrick = new BlockColoredStoneBrick(2506).setUnlocalizedName("stone_coloredStoneBrick");
+		coloredStoneBrickPillar = new BlockColoredStoneBrickPillar(2507).setUnlocalizedName("stone_coloredStoneBrickPillar");
 		
 		//register blocks
 		GameRegistry.registerBlock(stone, ItemBlockMetadata.class, "AC_stone_stone");
-		GameRegistry.registerBlock(stoneCracked, ItemBlockMetadata.class, "AC_stone_stoneCracked");
-		GameRegistry.registerBlock(stoneMossy, ItemBlockMetadata.class, "AC_stone_stoneMossy");
-		GameRegistry.registerBlock(stoneBrick, ItemBlockExtendedMetadata.class, "AC_stone_stoneBrick");
-		GameRegistry.registerBlock(stoneBrickPillar, ItemBlockExtendedMetadata.class, "AC_stone_stoneBrickPillar");
+		GameRegistry.registerBlock(stoneBrick, ItemBlockMetadata.class, "AC_stone_stoneBrick");
+		GameRegistry.registerBlock(stoneBrickPillar, ItemBlockMetadata.class, "AC_stone_stoneBrickPillar");
+		
+		GameRegistry.registerBlock(coloredStone, ItemBlockMetadata.class, "AC_stone_coloredStone");
+		GameRegistry.registerBlock(coloredStoneCracked, ItemBlockMetadata.class, "AC_stone_coloredStoneCracked");
+		GameRegistry.registerBlock(coloredStoneMossy, ItemBlockMetadataOverlay.class, "AC_stone_coloredStoneMossy");
+		GameRegistry.registerBlock(coloredStoneBrick, ItemBlockExtendedMetadata.class, "AC_stone_coloredStoneBrick");
+		GameRegistry.registerBlock(coloredStoneBrickPillar, ItemBlockExtendedMetadata.class, "AC_coloredStone_stoneBrickPillar");
 	}
 }

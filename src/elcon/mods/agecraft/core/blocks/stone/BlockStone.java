@@ -1,7 +1,6 @@
 package elcon.mods.agecraft.core.blocks.stone;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -9,20 +8,17 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
-import elcon.mods.agecraft.core.Stone;
 import elcon.mods.core.blocks.BlockMetadata;
 
 public class BlockStone extends BlockMetadata {
 
-	public static int[] colors = new int[]{
-		0xE6E6E6, 0xA65833, 0x9948BB, 0x769FC9, 0xD3D045, 0x72AB32, 0xE989AB, 0x4D4D4D, 0x999999, 0x5C7C89, 0x7752A0, 0x37450A, 0x5E4D3C, 0x68753E, 0x8D413F, 0x1A1A1A
-	};
-	
 	private Icon icon;
+	private Icon iconCracked;
+	private Icon iconMossy;
 	
 	public BlockStone(int id) {
 		super(id, Material.rock);
@@ -33,43 +29,54 @@ public class BlockStone extends BlockMetadata {
 	}
 	
 	@Override
-	public String getUnlocalizedName() {
-		return "stone.stone";
+	public int damageDropped(int meta) {
+		return meta == 2 ? 2 : 1;
 	}
 	
 	@Override
-	public int idDropped(int meta, Random random, int fortune) {
-		return Stone.stoneCracked.blockID;
+	public float getBlockHardness(World world, int x, int y, int z) {
+		return world.getBlockMetadata(x, y, z) == 0 ? 1.5F : 2.0F;
 	}
 	
 	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderColor(int meta) {
-		return colors[meta];
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
-		return colors[blockAccess.getBlockMetadata(x, y, z)];
+	public String getUnlocalizedName(ItemStack stack) {
+		switch(stack.getItemDamage()) {
+		default:
+		case 0:
+			return "stone.stone";
+		case 1:
+			return "stone.stoneCracked";
+		case 2:
+			return "stone.stoneMossy";
+		}
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
-		return icon;
+		switch(meta) {
+		default:
+		case 0:
+			return icon;
+		case 1:
+			return iconCracked;
+		case 2:
+			return iconMossy;
+		}
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icon = iconRegister.registerIcon("agecraft:stone/stone");
+		iconCracked = iconRegister.registerIcon("agecraft:stone/stoneCracked");
+		iconMossy = iconRegister.registerIcon("agecraft:stone/stoneMossy");
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < 16; i++) {
+		for(int i = 0; i < 3; i++) {
 			list.add(new ItemStack(id, 1, i));
 		}
 	}

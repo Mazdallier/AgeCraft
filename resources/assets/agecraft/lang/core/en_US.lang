@@ -1,4 +1,5 @@
 itemGroup.AgeCraft=AgeCraft
+itemGroup.Stone=Stone
 itemGroup.Metals=Metals
 itemGroup.Wood=Wood
 itemGroup.Tools=Tools
@@ -6,14 +7,6 @@ itemGroup.Armor=Armor
 
 itemGroup.Prehistory=Prehistory
 itemGroup.Agriculture=Agriculture
-
-agecraft.version.init_log_message=Initializing remote version check against remote version authority, located at
-agecraft.version.uninitialized=Remote version check failed to initialize properly
-agecraft.version.current=Currently using the most up to date version (@REMOTE_MOD_VERSION@) of AgeCraft for @MINECRAFT_VERSION@
-agecraft.version.outdated=A new @MOD_NAME@ version exists (@REMOTE_MOD_VERSION@) for @MINECRAFT_VERSION@. Get it here: @MOD_UPDATE_LOCATION@
-agecraft.version.general_error=Error while connecting to remote version authority file; trying again
-agecraft.version.final_error=Version check stopping after three unsuccessful connection attempts
-agecraft.version.mc_version_not_found=Unable to find a version of @MOD_NAME@ for @MINECRAFT_VERSION@ in the remote version authority
 
 gui.done=Done
 gui.cancel=Cancel

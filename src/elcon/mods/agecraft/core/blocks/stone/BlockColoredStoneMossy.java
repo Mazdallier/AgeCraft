@@ -15,11 +15,11 @@ import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.Stone;
 import elcon.mods.core.blocks.BlockMetadataOverlay;
 
-public class BlockStoneMossy extends BlockMetadataOverlay {
+public class BlockColoredStoneMossy extends BlockMetadataOverlay {
 
-	private Icon overlay;
+	private Icon iconOverlay;
 	
-	public BlockStoneMossy(int id) {
+	public BlockColoredStoneMossy(int id) {
 		super(id, Material.rock);
 		setHardness(2.0F);
 		setResistance(10.0F);
@@ -35,31 +35,31 @@ public class BlockStoneMossy extends BlockMetadataOverlay {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderColor(int meta) {
-		return BlockStone.colors[meta];
+		return BlockColoredStone.colors[meta];
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
-		return BlockStone.colors[blockAccess.getBlockMetadata(x, y, z)];
+		return BlockColoredStone.colors[blockAccess.getBlockMetadata(x, y, z)];
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
-		return Stone.stoneCracked.getIcon(side, meta);
+		return Stone.coloredStoneCracked.getIcon(side, meta);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getBlockOverlayTexture(int side, int metadata) {
-		return overlay;
+		return iconOverlay;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		overlay = iconRegister.registerIcon("agecraft:stone/stoneMossy");
+		iconOverlay = iconRegister.registerIcon("agecraft:stone/coloredStoneMossy");
 	}
 	
 	@Override

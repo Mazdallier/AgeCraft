@@ -33,6 +33,7 @@ import elcon.mods.core.items.ItemBlockName;
 public class AgeCraftCore extends ACComponent {
 
 	public TechTree techTree;
+	public Stone stone;
 	public Metals ores;
 	public Trees trees;
 	public Tools tools;
@@ -50,6 +51,7 @@ public class AgeCraftCore extends ACComponent {
 	public AgeCraftCore() {
 		super();
 		techTree = new TechTree();
+		stone = new Stone();
 		ores = new Metals();
 		trees = new Trees();
 		tools = new Tools();
