@@ -9,11 +9,12 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.core.Stone;
 import elcon.mods.agecraft.core.items.tools.ItemTool;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 import elcon.mods.agecraft.prehistory.items.ItemRockPickaxe;
@@ -28,27 +29,6 @@ public class BlockStoneLayered extends BlockStone {
 		setResistance(10.0F);
 		setStepSound(Block.soundStoneFootstep);
 		setCreativeTab(CreativeTabs.tabBlock);
-		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
-			blockIcon = Block.stone.getIcon(0, 0);
-		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
-		int meta = blockAccess.getBlockMetadata(x, y, z);
-		switch(meta) {
-		case 1:
-			return 0x878787;
-		case 2:
-			return 0xA7A7A7;
-		case 3:
-			return 0xC7C7C7;
-		case 4:
-			return 0xE7E7E7;
-		default:
-			return 0xFFFFFF;
-		}
 	}
 
 	public void updateHeight(World world, int x, int y, int z, Random random) {
@@ -95,7 +75,7 @@ public class BlockStoneLayered extends BlockStone {
 					if(chance == 2) {
 						dropBlockAsItem_do(world, x, y, z, new ItemStack(PrehistoryAge.rock));
 					} else if(chance == 3) {
-						dropBlockAsItem_do(world, x, y, z, new ItemStack(Block.cobblestone));
+						dropBlockAsItem_do(world, x, y, z, new ItemStack(Stone.stone.blockID, 1, 1));
 					}
 				}
 			}
@@ -107,6 +87,35 @@ public class BlockStoneLayered extends BlockStone {
 
 	@Override
 	public int idDropped(int i, Random random, int j) {
-		return Block.cobblestone.blockID;
+		return Stone.stone.blockID;
+	}
+	
+	@Override
+	public int damageDropped(int meta) {
+		return 1;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int meta) {
+		return Stone.stone.getIcon(side, 0);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
+		int meta = blockAccess.getBlockMetadata(x, y, z);
+		switch(meta) {
+		case 1:
+			return 0x878787;
+		case 2:
+			return 0xA7A7A7;
+		case 3:
+			return 0xC7C7C7;
+		case 4:
+			return 0xE7E7E7;
+		default:
+			return 0xFFFFFF;
+		}
 	}
 }

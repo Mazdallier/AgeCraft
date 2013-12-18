@@ -1,10 +1,10 @@
 package elcon.mods.agecraft.creativetabs;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.core.Stone;
 import elcon.mods.core.lang.LanguageManager;
 
 public class CreativeTabStone extends CreativeTabs {
@@ -21,6 +21,6 @@ public class CreativeTabStone extends CreativeTabs {
 
 	@Override
 	public ItemStack getIconItemStack() {
-		return new ItemStack(Block.stone.blockID, 1, 0);
+		return new ItemStack(Stone.stone.blockID, 1, 0);
 	}
 }

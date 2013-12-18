@@ -9,6 +9,8 @@ import elcon.mods.agecraft.core.blocks.stone.BlockColoredStoneBrickPillar;
 import elcon.mods.agecraft.core.blocks.stone.BlockColoredStoneCracked;
 import elcon.mods.agecraft.core.blocks.stone.BlockColoredStoneMossy;
 import elcon.mods.agecraft.core.blocks.stone.BlockStone;
+import elcon.mods.agecraft.core.blocks.stone.BlockStoneBrick;
+import elcon.mods.agecraft.core.blocks.stone.BlockStoneBrickPillar;
 import elcon.mods.core.items.ItemBlockExtendedMetadata;
 import elcon.mods.core.items.ItemBlockMetadata;
 import elcon.mods.core.items.ItemBlockMetadataOverlay;
@@ -29,8 +31,8 @@ public class Stone extends ACComponent {
 	public void preInit() {
 		//init blocks
 		stone = new BlockStone(2500).setUnlocalizedName("stone_stone");
-		stoneBrick = new BlockStone(2501).setUnlocalizedName("stone_stoneBrick");
-		stoneBrickPillar = new BlockStone(2502).setUnlocalizedName("stone_stoneBrickPillar");
+		stoneBrick = new BlockStoneBrick(2501).setUnlocalizedName("stone_stoneBrick");
+		stoneBrickPillar = new BlockStoneBrickPillar(2502).setUnlocalizedName("stone_stoneBrickPillar");
 		
 		coloredStone = new BlockColoredStone(2503).setUnlocalizedName("stone_coloredStone");
 		coloredStoneCracked = new BlockColoredStoneCracked(2504).setUnlocalizedName("stone_coloredStoneCracked");
