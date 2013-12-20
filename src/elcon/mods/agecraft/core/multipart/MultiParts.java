@@ -31,7 +31,7 @@ public class MultiParts extends ACComponent {
 			for(int j = 0; j < 8; j++) {
 				MicroMaterialRegistry.registerMaterial(new MicroMaterialColorOverlay((BlockOverlay) Stone.coloredStoneBrick, j + i * 8), "stone_coloredStoneBrick" + ECUtil.firstUpperCase(BlockColoredStoneBrick.types[j]) + "_" + Integer.toString(i));
 			}
-			MicroMaterialRegistry.registerMaterial(new MicroMaterialColor(Stone.coloredStoneBrickPillar, i * 3), "stone_coloredStonePillar_" + Integer.toString(i));
+			MicroMaterialRegistry.registerMaterial(new MicroMaterialColor(Stone.coloredStoneBrickPillar, i * 4), "stone_coloredStonePillar_" + Integer.toString(i));
 		}
 		
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {

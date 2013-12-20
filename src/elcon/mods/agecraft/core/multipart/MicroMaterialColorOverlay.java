@@ -23,6 +23,8 @@ public class MicroMaterialColorOverlay extends MicroMaterialOverlay {
 	@Override
 	public void renderMicroFace(Vertex5[] verts, int side, Vector3 pos, LightMatrix lightMatrix, IMicroMaterialRender part) {
 		renderMicroFace(verts, side, pos, lightMatrix, getColour(part), icont());
-		renderMicroFace(verts, side, pos, lightMatrix, 0xFFFFFF, overlayIconTransformation);
+		if(hasOverlay) {
+			renderMicroFace(verts, side, pos, lightMatrix, 0xFFFFFF, overlayIconTransformation);
+		}
 	}
 }

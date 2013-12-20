@@ -8,12 +8,13 @@ import codechicken.lib.render.Vertex5;
 import codechicken.lib.vec.Vector3;
 import codechicken.microblock.BlockMicroMaterial;
 import codechicken.microblock.IMicroMaterialRender;
-import codechicken.microblock.handler.MicroblockProxy;
+import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.core.blocks.BlockOverlay;
 
 public class MicroMaterialOverlay extends BlockMicroMaterial {
 
 	public MultiIconTransformation overlayIconTransformation;
+	public boolean hasOverlay;
 
 	public MicroMaterialOverlay(BlockOverlay block, int meta) {
 		super(block, meta);
@@ -26,11 +27,14 @@ public class MicroMaterialOverlay extends BlockMicroMaterial {
 		BlockOverlay blockOverlay = (BlockOverlay) Block.blocksList[block().blockID];
 		if(blockOverlay != null) {
 			for(int i = 0; i < 6; i++) {
-				overlayIcons[i] = MicroblockProxy.renderBlocks().getIconSafe(blockOverlay.getBlockOverlayTexture(i, meta()));
+				overlayIcons[i] = blockOverlay.getBlockOverlayTexture(i, meta());
+				if(overlayIcons[i] != null) {
+					hasOverlay = true;
+				}
 			}
 		} else {
 			for(int i = 0; i < 6; i++) {
-				overlayIcons[i] = MicroblockProxy.renderBlocks().getIconSafe(null);
+				overlayIcons[i] = ResourcesCore.emptyTexture;
 			}
 		}
 		overlayIconTransformation = new MultiIconTransformation(overlayIcons);
@@ -39,6 +43,8 @@ public class MicroMaterialOverlay extends BlockMicroMaterial {
 	@Override
 	public void renderMicroFace(Vertex5[] verts, int side, Vector3 pos, LightMatrix lightMatrix, IMicroMaterialRender part) {
 		renderMicroFace(verts, side, pos, lightMatrix, getColour(part), icont());
-		renderMicroFace(verts, side, pos, lightMatrix, 0xFFFFFF, overlayIconTransformation);
+		if(hasOverlay) {
+			renderMicroFace(verts, side, pos, lightMatrix, 0xFFFFFF, overlayIconTransformation);
+		}
 	}
 }

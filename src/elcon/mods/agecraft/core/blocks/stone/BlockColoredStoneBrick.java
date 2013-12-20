@@ -33,7 +33,7 @@ public class BlockColoredStoneBrick extends BlockExtendedMetadataOverlay {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return "stone.stoneBrick" + types[stack.getItemDamage() & 7];
+		return "stone.stoneBrick." + types[stack.getItemDamage() & 7];
 	}
 	
 	@Override

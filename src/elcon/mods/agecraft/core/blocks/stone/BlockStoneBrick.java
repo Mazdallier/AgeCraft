@@ -31,7 +31,7 @@ public class BlockStoneBrick extends BlockMetadata {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return "stone.stoneBrick" + ECUtil.firstUpperCase(types[stack.getItemDamage()]);
+		return "stone.stoneBrick." + types[stack.getItemDamage()];
 	}
 	
 	@Override
