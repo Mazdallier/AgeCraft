@@ -56,6 +56,11 @@
 	2541 Sapling DNA
 	
 	2550 Workbench
+	2551 Smeltery Furnace
+	2552 Smeltery Drain
+	2553 Smeltery Faucet
+	2554 Smeltery Casting Table
+	2555 Smeltery Tank
 	
 	2996 Age Teleporter
 	2997 Age Teleporter Block

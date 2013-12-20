@@ -32,7 +32,7 @@ public class BlockWorkbench extends BlockExtendedMetadataOverlay {
 		setHardness(2.0F);
 		setResistance(5.0F);
 		setStepSound(Block.soundWoodFootstep);
-		setCreativeTab(ACCreativeTabs.wood);
+		setCreativeTab(ACCreativeTabs.crafting);
 	}
 	
 	@Override
