@@ -22,7 +22,6 @@ import elcon.mods.agecraft.core.blocks.tree.BlockWoodFence;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodFenceGate;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodWall;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
-import elcon.mods.agecraft.core.tileentities.TileEntitySmelteryFurnace;
 import elcon.mods.core.render.BlockRenderingHandlerOverlay;
 import elcon.mods.core.tileentities.TileEntityMetadata;
 
@@ -658,34 +657,32 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	private boolean renderBlockSmelteryFurnace(IBlockAccess blockAccess, int x, int y, int z, BlockSmelteryFurnace block, int modelID, RenderBlocks renderer) {
 		boolean flag = renderer.renderStandardBlock(block, x, y, z);
 		
-		System.out.println(((TileEntitySmelteryFurnace) blockAccess.getBlockTileEntity(x, y, z)).color);
-		
 		int mixedBrightness = block.getMixedBrightnessForBlock(blockAccess, x, y, z);
 		int metadata = blockAccess.getBlockMetadata(x, y, z);
 		Icon overlay = null;
 		
 		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 0);
-		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 0)) {
+		if(overlay != null) {
 			BlockRenderingHandlerOverlay.renderBottomFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
 		}
 		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 1);
-		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 1)) {
+		if(overlay != null) {
 			BlockRenderingHandlerOverlay.renderTopFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
 		}
 		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 2);
-		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 2)) {
+		if(overlay != null) {
 			BlockRenderingHandlerOverlay.renderEastFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
 		}
 		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 3);
-		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 3)) {
+		if(overlay != null) {
 			BlockRenderingHandlerOverlay.renderWestFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
 		}
 		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 4);
-		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 4)) {
+		if(overlay != null) {
 			BlockRenderingHandlerOverlay.renderNorthFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
 		}
 		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 5);
-		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 5)) {
+		if(overlay != null) {
 			BlockRenderingHandlerOverlay.renderSouthFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
 		}
 		return flag;

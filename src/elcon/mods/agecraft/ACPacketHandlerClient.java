@@ -275,7 +275,6 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		}
 		tile.hasStructure = dat.readBoolean();
 		tile.color = dat.readByte();
-		System.out.println("RECEIVE: " + tile.color);
 		world.markBlockForUpdate(x, y, z);
 	}
 
