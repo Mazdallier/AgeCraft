@@ -57,10 +57,11 @@
 	
 	2550 Workbench
 	2551 Smeltery Furnace
-	2552 Smeltery Drain
-	2553 Smeltery Faucet
-	2554 Smeltery Casting Table
-	2555 Smeltery Tank
+	2552 Smeltery Hatch
+	2553 Smeltery Drain
+	2554 Smeltery Faucet
+	2555 Smeltery Casting Table
+	2556 Smeltery Tank
 	
 	2996 Age Teleporter
 	2997 Age Teleporter Block
@@ -208,7 +209,8 @@
 	2 Chat
 10-19		Core blocks
 	10 Age Teleporter chest
-	11 Crafting
+	11 Workbench
+	12 Smeltery
 30-29		Prehistory Age
 	30 Rock sharpener
 40-49		Agriculture Age

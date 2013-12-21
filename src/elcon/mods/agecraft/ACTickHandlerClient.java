@@ -1,8 +1,10 @@
 package elcon.mods.agecraft;
 
+import java.util.Calendar;
 import java.util.EnumSet;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatMessageComponent;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.relauncher.Side;
@@ -14,6 +16,8 @@ import elcon.mods.agecraft.core.tech.gui.GuiTechTreeComponent;
 
 @SideOnly(Side.CLIENT)
 public class ACTickHandlerClient implements ITickHandler {
+	
+	public boolean welcomeMessage;
 	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
@@ -38,6 +42,24 @@ public class ACTickHandlerClient implements ITickHandler {
 			//}
 			if(((BlockLeaves) Trees.leaves).fancyGraphics != mc.gameSettings.fancyGraphics) {
 				((BlockLeaves) Trees.leaves).fancyGraphics = mc.gameSettings.fancyGraphics;
+			}
+			if(mc.theWorld != null && mc.thePlayer != null) {
+				if(!welcomeMessage) {
+					int month = Calendar.getInstance().get(Calendar.MONTH);
+					int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+					if(month == 12) {
+						if(day == 25 || day == 26) {
+							mc.thePlayer.sendChatToPlayer(ChatMessageComponent.createFromText("Merry Christmas!"));
+						} else if(day == 31) {
+							mc.thePlayer.sendChatToPlayer(ChatMessageComponent.createFromText("Last day of the year!"));
+						}
+					} else if(month == 1) {
+						if(day == 1) {
+							mc.thePlayer.sendChatToPlayer(ChatMessageComponent.createFromText("Happy new year!"));
+						}
+					}
+					welcomeMessage = true;
+				}
 			}
 		}
 	}

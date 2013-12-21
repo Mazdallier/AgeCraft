@@ -20,15 +20,18 @@ import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.PlayerTradeManager.PlayerTrade;
 import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.gui.ContainerPlayerTrade;
+import elcon.mods.agecraft.core.gui.ContainerSmeltery;
 import elcon.mods.agecraft.core.gui.ContainerWorkbench;
 import elcon.mods.agecraft.core.gui.GuiInventory;
 import elcon.mods.agecraft.core.gui.GuiPlayerTrade;
+import elcon.mods.agecraft.core.gui.GuiSmeltery;
 import elcon.mods.agecraft.core.gui.GuiWorkbench;
 import elcon.mods.agecraft.core.player.ACPlayerClient;
 import elcon.mods.agecraft.core.player.ACPlayerRender;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterBeam;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
+import elcon.mods.agecraft.core.tileentities.TileEntitySmelteryFurnace;
 import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
 import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterBeamRenderer;
 import elcon.mods.agecraft.core.tileentities.renderers.TileEntityAgeTeleporterChestRenderer;
@@ -149,6 +152,8 @@ public class ACClientProxy extends ACCommonProxy {
 			return new GuiChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
 		} else if(id == 11) {
 			return new GuiWorkbench(new ContainerWorkbench(player, player.inventory, (TileEntityWorkbench) world.getBlockTileEntity(x, y, z), world, x, y, z));
+		} else if(id == 12) {
+			return new GuiSmeltery(new ContainerSmeltery(player, (TileEntitySmelteryFurnace) world.getBlockTileEntity(x, y, z)));
 		} else if(id == 30) {
 			return new GuiSharpener(new InventorySharpener());
 		}

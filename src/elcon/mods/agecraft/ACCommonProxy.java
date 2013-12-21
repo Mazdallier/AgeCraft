@@ -11,9 +11,11 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import elcon.mods.agecraft.core.PlayerTradeManager;
 import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.gui.ContainerPlayerTrade;
+import elcon.mods.agecraft.core.gui.ContainerSmeltery;
 import elcon.mods.agecraft.core.gui.ContainerWorkbench;
 import elcon.mods.agecraft.core.player.ACPlayerServer;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
+import elcon.mods.agecraft.core.tileentities.TileEntitySmelteryFurnace;
 import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
 import elcon.mods.agecraft.prehistory.gui.ContainerSharpener;
 import elcon.mods.agecraft.prehistory.gui.InventorySharpener;
@@ -48,6 +50,8 @@ public class ACCommonProxy implements IGuiHandler {
 			return new ContainerChest(player.inventory, (TileEntityAgeTeleporterChest) world.getBlockTileEntity(x, y, z));
 		} else if(id == 11) {
 			return new ContainerWorkbench(player, player.inventory, (TileEntityWorkbench) world.getBlockTileEntity(x, y, z), world, x, y, z);
+		} else if(id == 12) {
+			return new ContainerSmeltery(player, (TileEntitySmelteryFurnace) world.getBlockTileEntity(x, y, z));
 		} else if(id == 30) {
 			return new ContainerSharpener(player, new InventorySharpener());
 		} 

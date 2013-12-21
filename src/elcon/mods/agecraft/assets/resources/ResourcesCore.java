@@ -43,6 +43,7 @@ public class ResourcesCore extends Resources {
 	public static ResourceLocation guiTechTreeIcons = new ResourceLocation("agecraft", "textures/gui/tech_tree_icons.png");
 	
 	public static ResourceLocation guiWorkbench = new ResourceLocation("agecraft", "textures/gui/crafting/workbench.png");
+	public static ResourceLocation guiSmeltery = new ResourceLocation("agecraft", "textures/gui/crafting/smeltery.png");
 	
 	public static ResourceLocation ageTeleporterBeam = new ResourceLocation("agecraft", "textures/misc/beam.png");
 	public static ResourceLocation ageTeleporterChest = new ResourceLocation("agecraft", "textures/tile/teleporter_chest.png");

@@ -3,6 +3,7 @@ package elcon.mods.agecraft.core.tileentities;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -10,7 +11,12 @@ import elcon.mods.core.tileentities.TileEntityStructure;
 
 public class TileEntitySmelteryFurnace extends TileEntityStructure {
 
+	public static final int MAX_TEMPERATURE = 100;
+	
 	public byte color = -1;
+	public int temperature;
+	public ItemStack[] fuel;
+	public ItemStack[] ores;
 	
 	public TileEntitySmelteryFurnace() {
 		super();
@@ -20,8 +26,23 @@ public class TileEntitySmelteryFurnace extends TileEntityStructure {
 		super(structure, blockID);
 	}
 	
-	public boolean isBurning() {
+	public boolean hasFuel() {
+		if(fuel != null) {
+			for(int i = 0; i < fuel.length; i++) {
+				if(fuel[i] != null && fuel[i].stackSize > 0) {
+					return true;
+				}
+			}
+		}
 		return false;
+	}
+	
+	public boolean isBurning() {
+		return hasFuel() && getTemperature() > 0;
+	}
+	
+	public int getTemperature() {
+		return temperature;
 	}
 	
 	@Override

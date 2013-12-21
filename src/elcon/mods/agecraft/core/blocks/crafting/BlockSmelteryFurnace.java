@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.ACCreativeTabs;
+import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.core.Crafting;
 import elcon.mods.agecraft.core.Stone;
 import elcon.mods.agecraft.core.blocks.stone.BlockColoredStone;
@@ -57,12 +58,24 @@ public class BlockSmelteryFurnace extends BlockStructure {
 	
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if(!world.isRemote) {
-			if(((TileEntitySmelteryFurnace) getTileEntity(world, x, y, z)).hasStructure()) {
-				//TODO: open gui
+		TileEntitySmelteryFurnace tile = (TileEntitySmelteryFurnace) getTileEntity(world, x, y, z);
+		if(world.isRemote) {
+			return tile.hasStructure;
+		} else {
+			if(tile.isMaster()) {
+				tile.validateStructure();
+			} else {
+				if(!tile.hasMasterTile) {
+					return false;
+				}
+				tile.getStructureCenter().validateStructure();
 			}
+			if(tile.hasStructure()) {
+				player.openGui(AgeCraft.instance, 12, world, tile.masterX, tile.masterY, tile.masterZ);
+				return true;
+			}
+			return false;
 		}
-		return true;
 	}
 
 	@Override
