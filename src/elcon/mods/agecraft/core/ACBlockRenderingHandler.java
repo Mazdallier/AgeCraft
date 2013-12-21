@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
@@ -13,6 +14,7 @@ import org.lwjgl.opengl.GL12;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.blocks.IBlockRotated;
+import elcon.mods.agecraft.core.blocks.crafting.BlockSmelteryFurnace;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFence;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFenceGate;
 import elcon.mods.agecraft.core.blocks.tree.BlockWood;
@@ -20,6 +22,8 @@ import elcon.mods.agecraft.core.blocks.tree.BlockWoodFence;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodFenceGate;
 import elcon.mods.agecraft.core.blocks.tree.BlockWoodWall;
 import elcon.mods.agecraft.core.tileentities.TileEntityAgeTeleporterChest;
+import elcon.mods.agecraft.core.tileentities.TileEntitySmelteryFurnace;
+import elcon.mods.core.render.BlockRenderingHandlerOverlay;
 import elcon.mods.core.tileentities.TileEntityMetadata;
 
 public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
@@ -45,6 +49,8 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			return renderBlockWoodFence(blockAccess, x, y, z, (BlockWoodFence) block, modelID, renderer);
 		case 109:
 			return renderBlockWoodFenceGate(blockAccess, x, y, z, (BlockWoodFenceGate) block, modelID, renderer);
+		case 115:
+			return renderBlockSmelteryFurnace(blockAccess, x, y, z, (BlockSmelteryFurnace) block, modelID, renderer);
 		}
 		return false;
 	}
@@ -648,6 +654,42 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		renderer.setRenderBounds(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
 		return flag;
 	}
+	
+	private boolean renderBlockSmelteryFurnace(IBlockAccess blockAccess, int x, int y, int z, BlockSmelteryFurnace block, int modelID, RenderBlocks renderer) {
+		boolean flag = renderer.renderStandardBlock(block, x, y, z);
+		
+		System.out.println(((TileEntitySmelteryFurnace) blockAccess.getBlockTileEntity(x, y, z)).color);
+		
+		int mixedBrightness = block.getMixedBrightnessForBlock(blockAccess, x, y, z);
+		int metadata = blockAccess.getBlockMetadata(x, y, z);
+		Icon overlay = null;
+		
+		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 0);
+		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 0)) {
+			BlockRenderingHandlerOverlay.renderBottomFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
+		}
+		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 1);
+		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 1)) {
+			BlockRenderingHandlerOverlay.renderTopFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
+		}
+		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 2);
+		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 2)) {
+			BlockRenderingHandlerOverlay.renderEastFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
+		}
+		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 3);
+		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 3)) {
+			BlockRenderingHandlerOverlay.renderWestFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
+		}
+		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 4);
+		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 4)) {
+			BlockRenderingHandlerOverlay.renderNorthFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
+		}
+		overlay = block.getBlockOverlayTexture(blockAccess, x, y, z, 5);
+		if(overlay != null && block.shouldSideBeRendered(blockAccess, x, y, z, 5)) {
+			BlockRenderingHandlerOverlay.renderSouthFace(blockAccess, block, x, y, z, renderer, overlay, mixedBrightness, 255.0F, 255.0F, 255.0F);
+		}
+		return flag;
+	}
 
 	@Override
 	public boolean shouldRender3DInInventory() {
@@ -684,6 +726,9 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			break;
 		case 109:
 			renderItemBlockWoodFenceGate(block, metadata, modelID, renderer);
+			break;
+		case 115:
+			renderItemBlockSmelteryFurnace((BlockSmelteryFurnace) block, metadata, modelID, renderer);
 			break;
 		}
 	}
@@ -1000,6 +1045,79 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			tessellator.draw();
 			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 		}
+	}
+	
+	private void renderItemBlockSmelteryFurnace(BlockSmelteryFurnace block, int metadata, int modelID, RenderBlocks renderer) {
+		Icon overlay = null;
+		Tessellator tessellator = Tessellator.instance;
+		if(renderer.useInventoryTint) {
+			int color = block.getRenderColor(metadata);
+			float r = (float) (color >> 16 & 255) / 255.0F;
+			float g = (float) (color >> 8 & 255) / 255.0F;
+			float b = (float) (color & 255) / 255.0F;
+			GL11.glColor4f(r, g, b, 1.0F);
+		}
+		block.setBlockBoundsForItemRender();
+		renderer.setRenderBoundsFromBlock(block);
+
+		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, -1.0F, 0.0F);
+		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 0, metadata));
+		overlay = block.getBlockOverlayTexture(0, metadata);
+		if(overlay != null) {
+			renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 1.0F, 0.0F);
+		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
+		overlay = block.getBlockOverlayTexture(1, metadata);
+		if(overlay != null) {
+			renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 0.0F, -1.0F);
+		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 2, metadata));
+		overlay = block.getBlockOverlayTexture(2, metadata);
+		if(overlay != null) {
+			renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 0.0F, 1.0F);
+		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 3, metadata));
+		overlay = block.getBlockOverlayTexture(3, metadata);
+		if(overlay != null) {
+			renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
+		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 4, metadata));
+		overlay = block.getBlockOverlayTexture(4, metadata);
+		if(overlay != null) {
+			renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+		
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(1.0F, 0.0F, 0.0F);
+		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 5, metadata));
+		overlay = block.getBlockOverlayTexture(5, metadata);
+		if(overlay != null) {
+			renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, overlay);
+		}
+		tessellator.draw();
+
+		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import elcon.mods.agecraft.core.clothing.PlayerClothingClient;
 import elcon.mods.agecraft.core.gui.GuiClothingSelector;
 import elcon.mods.agecraft.core.tech.TechTreeClient;
 import elcon.mods.agecraft.core.tileentities.TileEntityDNA;
+import elcon.mods.agecraft.core.tileentities.TileEntitySmelteryFurnace;
 
 @SideOnly(Side.CLIENT)
 public class ACPacketHandlerClient implements IPacketHandler {
@@ -79,6 +80,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			break;
 		case 90:
 			handleTileEntityDNA(world, dat);
+			break;
+		case 100:
+			handleTileEntitySmelteryFurnace(world, dat);
 			break;
 		}
 
@@ -257,6 +261,21 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		}
 		tile.nbt = nbt;
 		tile.getDNA().readFromNBT(tile.nbt);
+		world.markBlockForUpdate(x, y, z);
+	}
+	
+	private void handleTileEntitySmelteryFurnace(World world, ByteArrayDataInput dat) {
+		int x = dat.readInt();
+		int y = dat.readInt();
+		int z = dat.readInt();
+		TileEntitySmelteryFurnace tile = (TileEntitySmelteryFurnace) world.getBlockTileEntity(x, y, z);
+		if(tile == null) {
+			tile = new TileEntitySmelteryFurnace();
+			world.setBlockTileEntity(x, y, z, tile);
+		}
+		tile.hasStructure = dat.readBoolean();
+		tile.color = dat.readByte();
+		System.out.println("RECEIVE: " + tile.color);
 		world.markBlockForUpdate(x, y, z);
 	}
 

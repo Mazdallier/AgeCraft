@@ -34,13 +34,15 @@ gui.choose=Choose
 gui.addToCart=Add to Cart
 gui.showdetails=Press shift for more details
 
+container.armor=Armor
 container.trade=Trade
 container.crafting=Crafting
 container.workbench=Workbench
-container.armor=Armor
+container.smeltery=Smeltery
 
 recipe.workbench.shaped=Shaped Workbench Recipe
 recipe.workbench.shapeless=Shapeless Workbench Recipe
+recipe.smeltery=Smeltery Recipe
 
 stone.stone=Stone
 stone.stoneCracked=Cracked Stone
@@ -177,6 +179,7 @@ armor.type.leggings=Leggings
 armor.type.boots=Boots
 
 crafting.workbench=Workbench
+crafting.smelteryFurnace=Smeltery Furnace
 
 fluid.tile.water=Water
 fluid.tile.lava=Lava

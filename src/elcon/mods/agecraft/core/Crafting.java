@@ -7,11 +7,11 @@ import elcon.mods.agecraft.ACComponent;
 import elcon.mods.agecraft.core.blocks.crafting.BlockSmelteryFurnace;
 import elcon.mods.agecraft.core.blocks.crafting.BlockWorkbench;
 import elcon.mods.agecraft.core.blocks.crafting.MBStructureSmeltery;
+import elcon.mods.agecraft.core.items.ItemBlockSmelteryFurnace;
 import elcon.mods.agecraft.core.recipes.RecipesWorkbench;
 import elcon.mods.agecraft.core.tileentities.TileEntitySmelteryFurnace;
 import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
 import elcon.mods.core.items.ItemBlockExtendedMetadata;
-import elcon.mods.core.items.ItemBlockName;
 import elcon.mods.core.structure.MBStructureRegistry;
 
 public class Crafting extends ACComponent {
@@ -33,7 +33,7 @@ public class Crafting extends ACComponent {
 		
 		//register blocks
 		GameRegistry.registerBlock(workbench, ItemBlockExtendedMetadata.class, "AC_crafting_workbench");
-		GameRegistry.registerBlock(smelteryFurnace, ItemBlockName.class, "AC_crafting_smelteryFurnace");
+		GameRegistry.registerBlock(smelteryFurnace, ItemBlockSmelteryFurnace.class, "AC_crafting_smelteryFurnace");
 		
 		//register block flammability
 		Block.setBurnProperties(workbench.blockID, 5, 20);

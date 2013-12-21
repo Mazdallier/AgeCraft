@@ -97,6 +97,7 @@ public class ACClientProxy extends ACCommonProxy {
 		RenderingRegistry.registerBlockHandler(109, blockRenderingHandler);
 		RenderingRegistry.registerBlockHandler(110, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(111, blockRenderingHandlerWithIcon);
+		RenderingRegistry.registerBlockHandler(115, blockRenderingHandler);
 
 		// register item rendering handler
 		// ACItemRenderingHandler itemRenderingHandler = new ACItemRenderingHandler();
@@ -106,6 +107,7 @@ public class ACClientProxy extends ACCommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterBeam.class, new TileEntityAgeTeleporterBeamRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAgeTeleporterChest.class, new TileEntityAgeTeleporterChestRenderer());
 		
+		//register ages
 		registerPrehistory();
 	}
 	

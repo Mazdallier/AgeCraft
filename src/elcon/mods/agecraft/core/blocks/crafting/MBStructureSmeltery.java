@@ -33,7 +33,7 @@ public class MBStructureSmeltery extends MBStructure {
 
 	@Override
 	public boolean areCharAndBlockEqual(char required, int blockID, int blockMetadata, TileEntity blockTileEntity) {
-		if(required == 'F') {
+		if(required == 'F' || required == 'M') {
 			return blockID == Crafting.smelteryFurnace.blockID;
 		} else if(required == 'B') {
 			return stoneTypes.contains(blockID);

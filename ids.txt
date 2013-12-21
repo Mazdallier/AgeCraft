@@ -146,18 +146,18 @@
 	1 TechTree All Components
 	2 Clothing Update
 	3 Clothing All Update
-	4 Player Trade (To player 2)
+	4 Player Trade (to player 2)
 	5 Player Trade Accept Change
 	6 Clothing Selector Open
 	7 Clothing List
 75-90	Client to server packets
-	75 Player Trade (From player 1)
+	75 Player Trade (from player 1)
 	76 Player Trade Accept
 	77 Open Inventory
 	78 Clothing Selector
 90+ 	TileEntity packets
 	90 DNA
-	100 Ore
+	100 Smeltery Furnace
 	200 Campfire
 	201 Pot
 	202 Bed
@@ -182,6 +182,8 @@
 	109 Fence gate
 	110 Door
 	111 Ladders	
+	
+	115 Smeltery Furnace
 200-299		Prehistory
 	200 Rock
 	201 Campfire
