@@ -1,16 +1,23 @@
 package elcon.mods.agecraft.core.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.core.tileentities.TileEntitySmelteryFurnace;
 import elcon.mods.core.gui.ContainerBasic;
 
 public class ContainerSmeltery extends ContainerBasic {
 
-	private TileEntitySmelteryFurnace tile;
+	public TileEntitySmelteryFurnace tile;
 	
 	public ContainerSmeltery(EntityPlayer player, TileEntitySmelteryFurnace tile) {
 		this.tile = tile;
-		addInventoryPlayer(player.inventory, 7, 101);
+
+		addInventoryPlayer(player.inventory, 8, 102);
+	}
+	
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer player, int slotID) {
+		return null;
 	}
 	
 	@Override

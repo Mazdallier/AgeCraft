@@ -34,6 +34,7 @@ gui.choose=Choose
 gui.addToCart=Add to Cart
 gui.showdetails=Press shift for more details
 
+container.inventory=Inventory
 container.armor=Armor
 container.trade=Trade
 container.crafting=Crafting

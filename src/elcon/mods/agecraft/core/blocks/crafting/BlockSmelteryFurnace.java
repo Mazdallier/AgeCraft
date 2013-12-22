@@ -24,6 +24,7 @@ import elcon.mods.agecraft.core.blocks.stone.BlockColoredStone;
 import elcon.mods.agecraft.core.tileentities.TileEntitySmelteryFurnace;
 import elcon.mods.core.blocks.BlockStructure;
 import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.core.tileentities.TileEntityStructure;
 
 public class BlockSmelteryFurnace extends BlockStructure {
 
@@ -68,7 +69,13 @@ public class BlockSmelteryFurnace extends BlockStructure {
 				if(!tile.hasMasterTile) {
 					return false;
 				}
-				tile.getStructureCenter().validateStructure();
+				TileEntityStructure tileCenter = tile.getStructureCenter();
+				if(tileCenter != null) {
+					tileCenter.validateStructure();
+				} else {
+					tile.hasMasterTile = false;
+					return false;
+				}
 			}
 			if(tile.hasStructure()) {
 				player.openGui(AgeCraft.instance, 12, world, tile.masterX, tile.masterY, tile.masterZ);

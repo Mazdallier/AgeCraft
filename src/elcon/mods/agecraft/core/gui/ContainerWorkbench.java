@@ -2,7 +2,6 @@ package elcon.mods.agecraft.core.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -14,8 +13,9 @@ import elcon.mods.agecraft.core.recipes.RecipeWorkbenchShapeless;
 import elcon.mods.agecraft.core.recipes.RecipesWorkbench;
 import elcon.mods.agecraft.core.tileentities.TileEntityWorkbench;
 import elcon.mods.agecraft.recipes.Recipe;
+import elcon.mods.core.gui.ContainerBasic;
 
-public class ContainerWorkbench extends Container {
+public class ContainerWorkbench extends ContainerBasic {
 
 	public TileEntityWorkbench workbench;
 	public InventoryCraftMatrix craftMatrix;
@@ -49,14 +49,7 @@ public class ContainerWorkbench extends Container {
 			}
 		}
 
-		for(int i = 0; i < 3; i++) {
-			for(int j = 0; j < 9; j++) {
-				addSlotToContainer(new Slot(inventory, 9 + j + i * 9, 8 + j * 18, 84 + i * 18));
-			}
-		}
-		for(int i = 0; i < 9; i++) {
-			addSlotToContainer(new Slot(inventory, i, 8 + i * 18, 142));
-		}
+		addInventoryPlayer(inventory, 8, 84);
 		onCraftMatrixChanged(craftMatrix);
 	}
 

@@ -18,6 +18,7 @@ public class Crafting extends ACComponent {
 	
 	public static Block workbench;
 	public static Block smelteryFurnace;
+	public static Block smelteryHatch;
 	public static Block smelteryDrain;
 	public static Block smelteryFaucet;
 	public static Block smelteryCastingTable;
