@@ -38,6 +38,7 @@ import elcon.mods.agecraft.core.clothing.PlayerClothing;
 import elcon.mods.agecraft.core.clothing.PlayerClothing.ClothingPiece;
 import elcon.mods.agecraft.core.clothing.PlayerClothingServer;
 import elcon.mods.agecraft.core.gui.ContainerPlayerTrade;
+import elcon.mods.agecraft.core.gui.ContainerSmeltery;
 import elcon.mods.agecraft.core.tech.TechTreeServer;
 
 public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
@@ -66,6 +67,9 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			break;
 		case 78:
 			handleClothingSelector(dat);
+			break;
+		case 79:
+			handleSmelterySlotClick(dat);
 			break;
 		}
 
@@ -152,6 +156,11 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 		//TODO: make the player actually pay
 		PacketDispatcher.sendPacketToAllPlayers(getClothingUpdatePacket(clothing));
+	}
+	
+	private void handleSmelterySlotClick(ByteArrayDataInput dat) {
+		EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dat.readInt()).getPlayerEntityByName(dat.readUTF());
+		((ContainerSmeltery) player.openContainer).onSlotClick(dat.readBoolean(), dat.readByte(), dat.readByte());
 	}
 
 	public static Packet getTechTreeComponentPacket(String player, String pageName, String name, boolean unlocked) {

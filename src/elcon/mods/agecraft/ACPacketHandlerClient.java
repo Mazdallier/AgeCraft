@@ -276,8 +276,26 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		tile.hasStructure = dat.readBoolean();
 		tile.color = dat.readByte();
 		
-		tile.setSize(dat.readByte());
-		tile.temperature = dat.readInt();
+		if(dat.readBoolean()) {
+			tile.setSize(dat.readByte());
+			tile.temperature = dat.readInt();
+			int oreLength = dat.readInt();
+			for(int i = 0; i < oreLength; i++) {
+				try {
+					tile.ores[i] = Packet.readItemStack(dat);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			int fuelLength = dat.readInt();
+			for(int i = 0; i < fuelLength; i++) {
+				try {
+					tile.fuel[i] = Packet.readItemStack(dat);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 		world.markBlockForUpdate(x, y, z);
 	}
@@ -360,6 +378,29 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			}
 			dos.close();
 			packet.channel = "ACClothing";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Packet getSmelterySlotClickPacket(int dimensionID, String player, boolean isTopSlots, byte index, byte slotX, byte slotY) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(79);
+			dos.writeInt(dimensionID);
+			dos.writeUTF(player);
+			dos.writeBoolean(isTopSlots);
+			dos.writeByte(slotX);
+			dos.writeByte(slotY + index);
+			dos.close();
+			packet.channel = "AgeCraft";
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
 			packet.isChunkDataPacket = false;

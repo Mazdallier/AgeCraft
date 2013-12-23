@@ -7,8 +7,10 @@ import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.agecraft.ACPacketHandlerClient;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.agecraft.core.tileentities.TileEntitySmelteryFurnace;
 
@@ -23,9 +25,13 @@ public class GuiSmeltery extends GuiContainer {
 
 	public float oreScrollbar;
 	public float fuelScrollbar;
+	
+	public boolean isScrollingOre;
+	public boolean isScrollingFuel;
+	public boolean wasClicking;
 
-	public int oreIndex;
-	public int fuelIndex;
+	public byte oreIndex;
+	public byte fuelIndex;
 
 	public boolean slotOverTop;
 	public int slotOverID;
@@ -57,7 +63,7 @@ public class GuiSmeltery extends GuiContainer {
 					} else if(oreScrollbar > 1.0F) {
 						oreScrollbar = 1.0F;
 					}
-					oreIndex = (int) ((oreScrollbar * (float) scrollPerRow) + 0.5F);
+					oreIndex = (byte) ((oreScrollbar * (float) scrollPerRow) + 0.5F);
 				}
 			} else {
 				if(tile.fuel != null && tile.fuel.length > 10) {
@@ -73,7 +79,7 @@ public class GuiSmeltery extends GuiContainer {
 					} else if(fuelScrollbar > 1.0F) {
 						fuelScrollbar = 1.0F;
 					}
-					fuelIndex = (int) ((fuelScrollbar * (float) scrollPerRow) + 0.5F);
+					fuelIndex = (byte) ((fuelScrollbar * (float) scrollPerRow) + 0.5F);
 				}
 			}
 		}
@@ -86,13 +92,9 @@ public class GuiSmeltery extends GuiContainer {
 		int y = mouseY - guiTop;
 		if(x >= 62 && x < 152) {
 			if(y >= 9 && y < 45) {
-				int i = (x - 62) / 18;
-				int j = (y - 9) / 18;
-				System.out.println(i + " , " + j);
+				PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getSmelterySlotClickPacket(tile.worldObj.provider.dimensionId, mc.thePlayer.username, true, oreIndex, (byte) ((x - 62) / 18), (byte) ((y - 9) / 18)));
 			} else if(y >= 64 && y < 100) {
-				int i = (x - 62) / 18;
-				int j = (y - 64) / 18;
-				System.out.println(i + " , " + j);
+				PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getSmelterySlotClickPacket(tile.worldObj.provider.dimensionId, mc.thePlayer.username, false, fuelIndex, (byte) ((x - 62) / 18), (byte) ((y - 64) / 18)));
 			}
 		}
 	}
@@ -105,39 +107,42 @@ public class GuiSmeltery extends GuiContainer {
 		GL11.glEnable(GL11.GL_LIGHTING);
 
 		slotOverID = -1;
-		for(int j = 0; j < 2; j++) {
-			for(int i = 0; i < 5; i++) {
-				if(oreIndex * 5 + (i + j * 5) < tile.ores.length) {
-					int xx = 62 + i * 18;
-					int yy = 9 + j * 18;
-					drawItemStack(xx, yy, tile.ores[oreIndex * 5 + (i + j * 5)]);
-					if(isPointInRegion(xx, yy, 16, 16, mouseX, mouseY)) {
-						slotOverTop = true;
-						slotOverID = oreIndex * 5 + (i + j * 5);
-						GL11.glDisable(GL11.GL_LIGHTING);
-						GL11.glDisable(GL11.GL_DEPTH_TEST);
-						drawGradientRect(xx, yy, xx + 16, yy + 16, -2130706433, -2130706433);
-						GL11.glEnable(GL11.GL_LIGHTING);
-						GL11.glEnable(GL11.GL_DEPTH_TEST);
+		if(tile.ores != null) {
+			for(int j = 0; j < 2; j++) {
+				for(int i = 0; i < 5; i++) {
+					if(oreIndex * 5 + (i + j * 5) < tile.ores.length) {
+						int xx = 62 + i * 18;
+						int yy = 9 + j * 18;
+						drawItemStack(xx, yy, tile.ores[oreIndex * 5 + (i + j * 5)]);
+						if(isPointInRegion(xx, yy, 16, 16, mouseX, mouseY)) {
+							slotOverTop = true;
+							slotOverID = oreIndex * 5 + (i + j * 5);
+							GL11.glDisable(GL11.GL_LIGHTING);
+							GL11.glDisable(GL11.GL_DEPTH_TEST);
+							drawGradientRect(xx, yy, xx + 16, yy + 16, -2130706433, -2130706433);
+							GL11.glEnable(GL11.GL_LIGHTING);
+							GL11.glEnable(GL11.GL_DEPTH_TEST);
+						}
 					}
 				}
 			}
 		}
-
-		for(int j = 0; j < 2; j++) {
-			for(int i = 0; i < 5; i++) {
-				if(fuelIndex * 5 + (i + j * 5) < tile.fuel.length) {
-					int xx = 62 + i * 18;
-					int yy = 64 + j * 18;
-					drawItemStack(xx, yy, tile.fuel[fuelIndex * 5 + (i + j * 5)]);
-					if(isPointInRegion(xx, yy, 16, 16, mouseX, mouseY)) {
-						slotOverTop = false;
-						slotOverID = fuelIndex * 5 + (i + j * 5);
-						GL11.glDisable(GL11.GL_LIGHTING);
-						GL11.glDisable(GL11.GL_DEPTH_TEST);
-						drawGradientRect(xx, yy, xx + 16, yy + 16, -2130706433, -2130706433);
-						GL11.glEnable(GL11.GL_LIGHTING);
-						GL11.glEnable(GL11.GL_DEPTH_TEST);
+		if(tile.ores != null) {
+			for(int j = 0; j < 2; j++) {
+				for(int i = 0; i < 5; i++) {
+					if(fuelIndex * 5 + (i + j * 5) < tile.fuel.length) {
+						int xx = 62 + i * 18;
+						int yy = 64 + j * 18;
+						drawItemStack(xx, yy, tile.fuel[fuelIndex * 5 + (i + j * 5)]);
+						if(isPointInRegion(xx, yy, 16, 16, mouseX, mouseY)) {
+							slotOverTop = false;
+							slotOverID = fuelIndex * 5 + (i + j * 5);
+							GL11.glDisable(GL11.GL_LIGHTING);
+							GL11.glDisable(GL11.GL_DEPTH_TEST);
+							drawGradientRect(xx, yy, xx + 16, yy + 16, -2130706433, -2130706433);
+							GL11.glEnable(GL11.GL_LIGHTING);
+							GL11.glEnable(GL11.GL_DEPTH_TEST);
+						}
 					}
 				}
 			}
@@ -147,6 +152,47 @@ public class GuiSmeltery extends GuiContainer {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float f) {
 		super.drawScreen(mouseX, mouseY, f);
+		boolean flag = Mouse.isButtonDown(0);
+		int x = mouseX - guiLeft;
+		int y = mouseY - guiTop;
+
+		if(!wasClicking && flag && x >= 156 && x < 168) {
+			if(y >= 9 && y <= 45) { 
+				isScrollingOre = tile.ores.length > 10;
+				isScrollingFuel = false;
+			} else if(y >= 64 && y < 98) {
+				isScrollingOre = false;
+				isScrollingFuel = tile.ores.length > 10;
+			}
+		}
+		if(!flag) {
+			isScrollingOre = false;
+			isScrollingFuel = false;
+		}
+		wasClicking = flag;
+
+		if(isScrollingOre) {
+			oreScrollbar = ((float) (y - 9) - 7.5F) / 19.0F;
+			if(oreScrollbar < 0.0F) {
+				oreScrollbar = 0.0F;
+			}
+			if(oreScrollbar > 1.0F) {
+				oreScrollbar = 1.0F;
+			}
+			int scrollPerRow = tile.ores.length / 5 - 1;
+			oreIndex = (byte) ((oreScrollbar * (float) scrollPerRow) + 0.5F);
+		} else if(isScrollingFuel) {
+			fuelScrollbar = ((float) (y - 64) - 7.5F) / 19.0F;
+			if(fuelScrollbar < 0.0F) {
+				fuelScrollbar = 0.0F;
+			}
+			if(fuelScrollbar > 1.0F) {
+				fuelScrollbar = 1.0F;
+			}
+			int scrollPerRow = tile.fuel.length / 5 - 1;
+			fuelIndex = (byte) ((fuelScrollbar * (float) scrollPerRow) + 0.5F);
+		}
+
 		if(slotOverID >= 0) {
 			RenderHelper.disableStandardItemLighting();
 			GL11.glDisable(GL11.GL_LIGHTING);
@@ -171,9 +217,13 @@ public class GuiSmeltery extends GuiContainer {
 		mc.getTextureManager().bindTexture(ResourcesCore.guiSmeltery);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-		drawTexturedModalRect(guiLeft + 156, guiTop + 9 + (int) (oreScrollbar * 19), tile.ores.length > 10 ? 232 : 244, 0, 12, 15);
-		drawTexturedModalRect(guiLeft + 156, guiTop + 64 + (int) (fuelScrollbar * 19), tile.fuel.length > 10 ? 232 : 244, 0, 12, 15);
-
+		if(tile.ores != null) {
+			drawTexturedModalRect(guiLeft + 156, guiTop + 9 + (int) (oreScrollbar * 19), tile.ores.length > 10 ? 232 : 244, 0, 12, 15);
+		}
+		if(tile.fuel != null) {
+			drawTexturedModalRect(guiLeft + 156, guiTop + 64 + (int) (fuelScrollbar * 19), tile.fuel.length > 10 ? 232 : 244, 0, 12, 15);
+		}
+			
 		if(tile.isBurning()) {
 			drawTexturedModalRect(guiLeft + 31, guiTop + 81, 232, 15, 14, 14);
 

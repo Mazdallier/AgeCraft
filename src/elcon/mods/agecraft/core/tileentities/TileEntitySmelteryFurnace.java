@@ -2,7 +2,6 @@ package elcon.mods.agecraft.core.tileentities;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.util.Random;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,43 +13,41 @@ import elcon.mods.core.tileentities.TileEntityStructure;
 public class TileEntitySmelteryFurnace extends TileEntityStructure {
 
 	public static final int MAX_TEMPERATURE = 1000;
-	
+
 	public byte color = -1;
-	
+
 	public byte size;
 	public int temperature;
 	public ItemStack[] fuel;
 	public ItemStack[] ores;
-	
+
 	public TileEntitySmelteryFurnace() {
 		super();
 	}
-	
+
 	public TileEntitySmelteryFurnace(String structure, int blockID) {
 		super(structure, blockID);
 	}
-	
+
 	@Override
 	public void markStructureBlocks() {
 		super.markStructureBlocks();
 		setSize((byte) (structurePattern.charAt(8) - '0'));
+		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
-	
+
 	public void setSize(byte size) {
 		this.size = size;
 		if(size >= 3) {
-			Random random = new Random();
-			fuel = new ItemStack[size * size];
-			ores = new ItemStack[(int) Math.pow(size - 2, 3)];
-			for(int i = 0; i < fuel.length; i++) {
-				fuel[i] = new ItemStack(1 + random.nextInt(16), 1 + random.nextInt(64), 0);
+			if(fuel == null || fuel.length != (size * size)) {
+				fuel = new ItemStack[size * size];
 			}
-			for(int i = 0; i < ores.length; i++) {
-				ores[i] = new ItemStack(1 + random.nextInt(16), 1 + random.nextInt(64), 0);
+			if(ores == null || ores.length != ((int) Math.pow(size - 2, 3))) {
+				ores = new ItemStack[(int) Math.pow(size - 2, 3)];
 			}
 		}
 	}
-	
+
 	public boolean hasFuel() {
 		if(fuel != null) {
 			for(int i = 0; i < fuel.length; i++) {
@@ -61,15 +58,15 @@ public class TileEntitySmelteryFurnace extends TileEntityStructure {
 		}
 		return false;
 	}
-	
+
 	public boolean isBurning() {
 		return hasFuel() && getTemperature() > 0;
 	}
-	
+
 	public int getTemperature() {
 		return temperature;
 	}
-	
+
 	@Override
 	public Packet getDescriptionPacket() {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -82,9 +79,24 @@ public class TileEntitySmelteryFurnace extends TileEntityStructure {
 
 			dos.writeBoolean(hasStructure());
 			dos.writeByte(color);
-			
-			dos.writeByte(size);
-			dos.writeInt(temperature);
+
+			dos.writeBoolean(isMaster());
+			if(isMaster()) {
+				dos.writeByte(size);
+				dos.writeInt(temperature);
+				dos.writeInt(ores == null ? -1 : ores.length);
+				if(ores != null) {
+					for(int i = 0; i < ores.length; i++) {
+						Packet.writeItemStack(ores[i], dos);
+					}
+				}
+				dos.writeInt(fuel == null ? -1 : fuel.length);
+				if(fuel != null) {
+					for(int i = 0; i < fuel.length; i++) {
+						Packet.writeItemStack(fuel[i], dos);
+					}
+				}
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -95,31 +107,31 @@ public class TileEntitySmelteryFurnace extends TileEntityStructure {
 		packet.isChunkDataPacket = true;
 		return packet;
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		color = nbt.getByte("Color");
 		setSize(nbt.getByte("Size"));
 		temperature = nbt.getInteger("Temperature");
-		
+
 		if(nbt.hasKey("Ores")) {
 			NBTTagList oreList = nbt.getTagList("Ores");
 			for(int i = 0; i < oreList.tagCount(); i++) {
 				NBTTagCompound tag = (NBTTagCompound) oreList.tagAt(i);
-				int slot = tag.getByte("Slot") & 255;
+				int slot = tag.getInteger("Slot");
 				ItemStack stack = ItemStack.loadItemStackFromNBT(tag);
 				if(stack != null && slot >= 0 && slot < ores.length) {
 					ores[slot] = stack;
 				}
 			}
 		}
-		
+
 		if(nbt.hasKey("Fuel")) {
 			NBTTagList fuelList = nbt.getTagList("Fuel");
 			for(int i = 0; i < fuelList.tagCount(); i++) {
 				NBTTagCompound tag = (NBTTagCompound) fuelList.tagAt(i);
-				int slot = tag.getByte("Slot") & 255;
+				int slot = tag.getInteger("Slot");
 				ItemStack stack = ItemStack.loadItemStackFromNBT(tag);
 				if(stack != null && slot >= 0 && slot < fuel.length) {
 					fuel[slot] = stack;
@@ -127,20 +139,20 @@ public class TileEntitySmelteryFurnace extends TileEntityStructure {
 			}
 		}
 	}
-	
+
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setByte("Color", color);
 		nbt.setByte("Size", size);
 		nbt.setInteger("Temperature", temperature);
-		
+
 		if(ores != null) {
 			NBTTagList oreList = new NBTTagList();
 			for(int i = 0; i < ores.length; i++) {
 				if(ores[i] != null) {
 					NBTTagCompound tag = new NBTTagCompound();
-					tag.setByte("Slot", (byte) i);
+					tag.setInteger("Slot", i);
 					ores[i].writeToNBT(tag);
 					oreList.appendTag(tag);
 				}
@@ -152,7 +164,7 @@ public class TileEntitySmelteryFurnace extends TileEntityStructure {
 			for(int i = 0; i < fuel.length; i++) {
 				if(fuel[i] != null) {
 					NBTTagCompound tag = new NBTTagCompound();
-					tag.setByte("Slot", (byte) i);
+					tag.setInteger("Slot", i);
 					fuel[i].writeToNBT(tag);
 					fuelList.appendTag(tag);
 				}

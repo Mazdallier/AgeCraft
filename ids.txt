@@ -156,7 +156,7 @@
 	76 Player Trade Accept
 	77 Open Inventory
 	78 Clothing Selector
-	79 Smeltery Scroll
+	79 Smeltery Slot Click
 90+ 	TileEntity packets
 	90 DNA
 	100 Smeltery Furnace
