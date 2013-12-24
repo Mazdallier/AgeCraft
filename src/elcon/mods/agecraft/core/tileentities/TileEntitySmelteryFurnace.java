@@ -18,8 +18,8 @@ public class TileEntitySmelteryFurnace extends TileEntityStructure {
 
 	public byte size;
 	public int temperature;
-	public ItemStack[] fuel;
 	public ItemStack[] ores;
+	public ItemStack[] fuel;
 
 	public TileEntitySmelteryFurnace() {
 		super();
@@ -126,7 +126,6 @@ public class TileEntitySmelteryFurnace extends TileEntityStructure {
 				}
 			}
 		}
-
 		if(nbt.hasKey("Fuel")) {
 			NBTTagList fuelList = nbt.getTagList("Fuel");
 			for(int i = 0; i < fuelList.tagCount(); i++) {
