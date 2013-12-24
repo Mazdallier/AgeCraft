@@ -1,7 +1,5 @@
 package elcon.mods.agecraft.core.gui;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Slot;
@@ -58,49 +56,61 @@ public class ContainerSmeltery extends ContainerBasic {
 		return player.getDistanceSq(tile.xCoord + 0.5D, tile.yCoord + 0.5D, tile.zCoord + 0.5D) <= 64.0D;
 	}
 
-	public void onSlotClick(boolean isTopSlots, int slotX, int slotY) {
+	public void onSlotClick(boolean isTopSlots, int slotX, int slotY, boolean isRightClick, boolean pressedShift) {
 		System.out.println("clicked slot: " + isTopSlots + " " + slotX + ", " + slotY);
 		boolean hasChanged = false;
+		int slotID = slotX + slotY * 5;
 		if(isTopSlots) {
-			if((slotX + slotY * 5) < tile.ores.length) {
-				ItemStack stack = tile.ores[slotX + slotY * 5];
+			if(slotID < tile.ores.length) {
+				ItemStack stack = tile.ores[slotID];
 				if(player.inventory.getItemStack() != null) {
 					ItemStack stackRest = addStackToOres(player.inventory.getItemStack().copy());
 					player.inventory.setItemStack(stackRest);
 					hasChanged = true;
 				} else {
 					if(stack != null) {
-						if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+						if(pressedShift) {
 							ItemStack stackRest = stack.copy();
-							player.inventory.addItemStackToInventory(stackRest);
-							tile.ores[slotX + slotY * 5] = stackRest;
+							if(!player.inventory.addItemStackToInventory(stackRest)) {
+								tile.ores[slotID] = stackRest;
+							} else {
+								tile.ores[slotID] = null;
+							}
 							hasChanged = true;
 						} else {
 							player.inventory.setItemStack(stack.copy());
-							tile.ores[slotX + slotY * 5] = null;
+							tile.ores[slotID] = null;
 							hasChanged = true;
 						}
 					}
 				}
 			}
 		} else {
-			if((slotX + slotY * 5) < tile.fuel.length) {
-				ItemStack stack = tile.fuel[slotX + slotY * 5];
+			if(slotID < tile.fuel.length) {
+				ItemStack stack = tile.fuel[slotID];
 				if(player.inventory.getItemStack() != null) {
 					ItemStack stackRest = addStackToFuel(player.inventory.getItemStack().copy());
 					player.inventory.setItemStack(stackRest);
 					hasChanged = true;
 				} else {
 					if(stack != null) {
-						if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-							ItemStack stackRest = stack.copy();
-							player.inventory.addItemStackToInventory(stackRest);
-							tile.fuel[slotX + slotY * 5] = stackRest;
+						if(isRightClick) {
+							player.inventory.setItemStack(tile.fuel[slotID].splitStack(tile.fuel[slotID].stackSize / 2));
 							hasChanged = true;
 						} else {
-							player.inventory.setItemStack(stack.copy());
-							tile.fuel[slotX + slotY * 5] = null;
-							hasChanged = true;
+							if(pressedShift) {
+								ItemStack stackRest = stack.copy();
+								if(!player.inventory.addItemStackToInventory(stackRest)) {
+									tile.fuel[slotID] = stackRest;
+								} else {
+									tile.fuel[slotID] = null;
+								}
+								hasChanged = true;
+							} else {
+								player.inventory.setItemStack(stack.copy());
+								tile.fuel[slotID] = null;
+								hasChanged = true;
+							}
 						}
 					}
 				}
@@ -128,7 +138,7 @@ public class ContainerSmeltery extends ContainerBasic {
 		}
 		return stack;
 	}
-	
+
 	private ItemStack addStackToFuel(ItemStack stack) {
 		for(int i = 0; i < tile.fuel.length; i++) {
 			if(tile.fuel[i] == null) {

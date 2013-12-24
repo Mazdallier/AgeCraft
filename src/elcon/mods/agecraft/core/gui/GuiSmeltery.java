@@ -4,6 +4,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -90,11 +91,12 @@ public class GuiSmeltery extends GuiContainer {
 		super.mouseClicked(mouseX, mouseY, id);
 		int x = mouseX - guiLeft;
 		int y = mouseY - guiTop;
+		boolean pressedShift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
 		if(x >= 62 && x < 152) {
 			if(y >= 9 && y < 45) {
-				PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getSmelterySlotClickPacket(tile.worldObj.provider.dimensionId, mc.thePlayer.username, true, oreIndex, (byte) ((x - 62) / 18), (byte) ((y - 9) / 18)));
+				PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getSmelterySlotClickPacket(tile.worldObj.provider.dimensionId, mc.thePlayer.username, true, oreIndex, (byte) ((x - 62) / 18), (byte) ((y - 9) / 18), Mouse.isButtonDown(1), pressedShift));
 			} else if(y >= 64 && y < 100) {
-				PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getSmelterySlotClickPacket(tile.worldObj.provider.dimensionId, mc.thePlayer.username, false, fuelIndex, (byte) ((x - 62) / 18), (byte) ((y - 64) / 18)));
+				PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getSmelterySlotClickPacket(tile.worldObj.provider.dimensionId, mc.thePlayer.username, false, fuelIndex, (byte) ((x - 62) / 18), (byte) ((y - 64) / 18), Mouse.isButtonDown(1), pressedShift));
 			}
 		}
 	}

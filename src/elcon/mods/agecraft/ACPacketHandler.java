@@ -160,7 +160,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 	
 	private void handleSmelterySlotClick(ByteArrayDataInput dat) {
 		EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dat.readInt()).getPlayerEntityByName(dat.readUTF());
-		((ContainerSmeltery) player.openContainer).onSlotClick(dat.readBoolean(), dat.readByte(), dat.readByte());
+		((ContainerSmeltery) player.openContainer).onSlotClick(dat.readBoolean(), dat.readByte(), dat.readByte(), dat.readBoolean(), dat.readBoolean());
 	}
 
 	public static Packet getTechTreeComponentPacket(String player, String pageName, String name, boolean unlocked) {

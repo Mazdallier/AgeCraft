@@ -388,7 +388,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		return null;
 	}
 	
-	public static Packet getSmelterySlotClickPacket(int dimensionID, String player, boolean isTopSlots, byte index, byte slotX, byte slotY) {
+	public static Packet getSmelterySlotClickPacket(int dimensionID, String player, boolean isTopSlots, byte index, byte slotX, byte slotY, boolean isRightClick, boolean pressedShift) {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			DataOutputStream dos = new DataOutputStream(bos);
@@ -399,6 +399,8 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			dos.writeBoolean(isTopSlots);
 			dos.writeByte(slotX);
 			dos.writeByte(slotY + index);
+			dos.writeBoolean(isRightClick);
+			dos.writeBoolean(pressedShift);
 			dos.close();
 			packet.channel = "AgeCraft";
 			packet.data = bos.toByteArray();
