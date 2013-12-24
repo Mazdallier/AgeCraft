@@ -7,7 +7,7 @@ public class Matter {
 
 	public ItemStack solid;
 	public FluidStack fluid;
-	//public GasStack gas;
+	public FluidStack gas;
 	
 	public double meltingTemperature;
 	public double boilingTemperature;
