@@ -37,7 +37,7 @@ public class BlockStoneBrick extends BlockMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
-		if((side == 0 || side == 1) && meta == 7) {
+		if((side == 0 || side == 1) && meta == 6) {
 			return iconChiseledTop;
 		}
 		return icons[meta];
