@@ -16,7 +16,7 @@ import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.prehistory.recipes.RecipesCampfire;
 import elcon.mods.agecraft.prehistory.recipes.RecipesCampfire.RecipeCampfire;
 
-public class TileEntityCampfire extends TileEntity {
+public class TileEntityCampfire extends TileEntityExtended {
 
 	public static final int MAX_LOGS = 8;
 	
