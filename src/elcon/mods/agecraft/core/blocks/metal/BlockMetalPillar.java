@@ -16,18 +16,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import elcon.mods.agecraft.ACCreativeTabs;
 import elcon.mods.agecraft.core.MetalRegistry;
+import elcon.mods.agecraft.core.blocks.IBlockRotated;
 import elcon.mods.agecraft.core.items.tools.ItemTool;
 import elcon.mods.core.blocks.BlockExtendedMetadata;
 import elcon.mods.core.lang.LanguageManager;
 
-public class BlockMetalBlock extends BlockExtendedMetadata {
+public class BlockMetalPillar extends BlockExtendedMetadata implements IBlockRotated {
 
-	public BlockMetalBlock(int id) {
+	public BlockMetalPillar(int id) {
 		super(id, Material.iron);
 		setStepSound(Block.soundMetalFootstep);
 		setCreativeTab(ACCreativeTabs.metals);
 	}
-
+	
 	@Override
 	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
 		if(stack != null) {
@@ -45,18 +46,43 @@ public class BlockMetalBlock extends BlockExtendedMetadata {
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		int type = stack.getItemDamage() & 3;
-		switch(type) {
+		return "metals.pillar";
+	}
+
+	@Override
+	public int getBlockRotation(IBlockAccess blockAccess, int x, int y, int z) {
+		return getMetadata(blockAccess, x, y, z) & 3;
+	}
+	
+	@Override
+	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
+		return (meta - (meta & 3)) / 4;
+	}
+	
+	@Override
+	public int getPlacedMetadata(EntityPlayer player, ItemStack stack, World world, int x, int y, int z, int side, float xx, float yy, float zz) {
+		switch(side) {
 		default:
 		case 0:
-			return "metals.block";
 		case 1:
-			return "metals.bricks";
+			return stack.getItemDamage();
 		case 2:
-			return "metals.smallBricks";
 		case 3:
-			return "metals.blockCircle";
+			return stack.getItemDamage() | 1;
+		case 4:
+		case 5:
+			return stack.getItemDamage() | 2;
 		}
+	}
+	
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
+	
+	@Override
+	public int getRenderType() {
+		return 91;
 	}
 	
 	@Override
@@ -108,7 +134,15 @@ public class BlockMetalBlock extends BlockExtendedMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta) {
-		return MetalRegistry.metals[(meta - (meta & 3)) / 4].blocks[meta & 3];
+		int direction = meta & 3;
+		if(direction == 0 && (side == 0 || side == 1)) {
+			return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockPillarTop;
+		} else if(direction == 1 && (side == 2 || side == 3)) {
+			return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockPillarTop;
+		} else if(direction == 2 && (side == 4 || side == 5)) {
+			return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockPillarTop;
+		}
+		return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockPillar;
 	}
 	
 	@Override
@@ -116,9 +150,7 @@ public class BlockMetalBlock extends BlockExtendedMetadata {
 	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
 			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasBlock) {
-				for(int j = 0; j < 4; j++) {
-					list.add(new ItemStack(id, 1, i * 4 + j));
-				}
+				list.add(new ItemStack(id, 1, i * 4));
 			}
 		}
 	}

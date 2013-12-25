@@ -16,6 +16,7 @@ import elcon.mods.agecraft.core.blocks.metal.BlockMetalDoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFence;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFenceGate;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalLadder;
+import elcon.mods.agecraft.core.blocks.metal.BlockMetalPillar;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalTrapdoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneOre;
 import elcon.mods.agecraft.core.items.ItemGem;
@@ -31,6 +32,7 @@ public class Metals extends ACComponent {
 
 	public static Block ore;
 	public static Block block;
+	public static Block blockPillar;
 	public static Block fence;
 	public static Block fenceGate;
 	public static Block door;
@@ -49,15 +51,17 @@ public class Metals extends ACComponent {
 		// init blocks
 		ore = new BlockStoneOre(2510).setUnlocalizedName("metal_ore");
 		block = new BlockMetalBlock(2511).setUnlocalizedName("metal_block");
-		fence = new BlockMetalFence(2512).setUnlocalizedName("metal_fence");
-		fenceGate = new BlockMetalFenceGate(2513).setUnlocalizedName("metal_fenceGate");
-		door = new BlockMetalDoor(2514).setUnlocalizedName("metal_door");
-		trapdoor = new BlockMetalTrapdoor(2515).setUnlocalizedName("metal_trapdoor");
-		ladder = new BlockMetalLadder(2516).setUnlocalizedName("metal_ladder");
+		blockPillar = new BlockMetalPillar(2512).setUnlocalizedName("metal_blockPillar");
+		fence = new BlockMetalFence(2513).setUnlocalizedName("metal_fence");
+		fenceGate = new BlockMetalFenceGate(2514).setUnlocalizedName("metal_fenceGate");
+		door = new BlockMetalDoor(2515).setUnlocalizedName("metal_door");
+		trapdoor = new BlockMetalTrapdoor(2516).setUnlocalizedName("metal_trapdoor");
+		ladder = new BlockMetalLadder(2517).setUnlocalizedName("metal_ladder");
 
 		// register blocks
 		GameRegistry.registerBlock(ore, ItemBlockExtendedMetadata.class, "AC_metal_ore");
 		GameRegistry.registerBlock(block, ItemBlockExtendedMetadata.class, "AC_metal_block");
+		GameRegistry.registerBlock(blockPillar, ItemBlockExtendedMetadata.class, "AC_metal_blockPillar");
 		GameRegistry.registerBlock(fence, ItemBlockExtendedMetadata.class, "AC_metal_fence");
 		GameRegistry.registerBlock(fenceGate, ItemBlockExtendedMetadata.class, "AC_metal_fenceGate");
 		GameRegistry.registerBlock(door, ItemMetalDoor.class, "AC_metal_door");

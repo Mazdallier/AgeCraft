@@ -33,12 +33,13 @@
 
 	2510 Ore
 	2511 Block
-	2512 Fence
-	2513 Fence gate
-	2514 Door
-	2515 Trapdoor
-	2516 Ladders
-	2517 Design blocks
+	2512 Block Pillar
+	2513 Fence
+	2514 Fence gate
+	2515 Door
+	2516 Trapdoor
+	2517 Ladders
+	2518 Design blocks
 	
 	2520 Wood
 	2521 Log

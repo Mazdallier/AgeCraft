@@ -45,17 +45,17 @@ public class ACTickHandlerClient implements ITickHandler {
 			}
 			if(mc.theWorld != null && mc.thePlayer != null) {
 				if(!welcomeMessage) {
-					int month = Calendar.getInstance().get(Calendar.MONTH);
+					int month = 1 + Calendar.getInstance().get(Calendar.MONTH);
 					int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 					if(month == 12) {
 						if(day == 25 || day == 26) {
-							mc.thePlayer.sendChatToPlayer(ChatMessageComponent.createFromText("Merry Christmas!"));
+							mc.thePlayer.sendChatToPlayer(ChatMessageComponent.createFromText("<AgeCraftTeam> Merry Christmas!"));
 						} else if(day == 31) {
-							mc.thePlayer.sendChatToPlayer(ChatMessageComponent.createFromText("Last day of the year!"));
+							mc.thePlayer.sendChatToPlayer(ChatMessageComponent.createFromText("<AgeCraftTeam> Last day of the year!"));
 						}
 					} else if(month == 1) {
 						if(day == 1) {
-							mc.thePlayer.sendChatToPlayer(ChatMessageComponent.createFromText("Happy new year!"));
+							mc.thePlayer.sendChatToPlayer(ChatMessageComponent.createFromText("<AgeCraftTeam> Happy new year!"));
 						}
 					}
 					welcomeMessage = true;

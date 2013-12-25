@@ -111,7 +111,8 @@ public class ResourcesCore extends Resources {
 						metal.blocks[1] = iconRegister.registerIcon("agecraft:metals/blocks/metals/bricks" + ECUtil.firstUpperCase(metal.name));
 						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/metals/smallBricks" + ECUtil.firstUpperCase(metal.name));
 						metal.blocks[3] = iconRegister.registerIcon("agecraft:metals/blocks/metals/blockCircle" + ECUtil.firstUpperCase(metal.name));
-						metal.blocks[4] = iconRegister.registerIcon("agecraft:metals/blocks/metals/pillar" + ECUtil.firstUpperCase(metal.name));
+						metal.blockPillar = iconRegister.registerIcon("agecraft:metals/blocks/metals/pillar" + ECUtil.firstUpperCase(metal.name));
+						metal.blockPillarTop = iconRegister.registerIcon("agecraft:metals/blocks/metals/pillarTop" + ECUtil.firstUpperCase(metal.name));
 					}
 				} else if(metal.type == OreType.GEM) {
 					if(metal.hasOre) {
@@ -122,7 +123,8 @@ public class ResourcesCore extends Resources {
 						metal.blocks[1] = iconRegister.registerIcon("agecraft:metals/blocks/gems/bricks" + ECUtil.firstUpperCase(metal.name));
 						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/gems/smallBricks" + ECUtil.firstUpperCase(metal.name));
 						metal.blocks[3] = iconRegister.registerIcon("agecraft:metals/blocks/gems/blockCircle" + ECUtil.firstUpperCase(metal.name));
-						metal.blocks[4] = iconRegister.registerIcon("agecraft:metals/blocks/gems/pillar" + ECUtil.firstUpperCase(metal.name));
+						metal.blockPillar = iconRegister.registerIcon("agecraft:metals/blocks/gems/pillar" + ECUtil.firstUpperCase(metal.name));
+						metal.blockPillarTop = iconRegister.registerIcon("agecraft:metals/blocks/gems/pillarTop" + ECUtil.firstUpperCase(metal.name));
 					}
 				}
 			}

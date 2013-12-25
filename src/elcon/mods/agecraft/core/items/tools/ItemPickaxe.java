@@ -9,6 +9,7 @@ import elcon.mods.agecraft.core.blocks.metal.BlockMetalDoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFence;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFenceGate;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalLadder;
+import elcon.mods.agecraft.core.blocks.metal.BlockMetalPillar;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalTrapdoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneLayered;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneOre;
@@ -26,7 +27,9 @@ public class ItemPickaxe extends ItemTool {
 		} else if(block instanceof BlockStoneOre) {
 			return getToolHarvestLevel(stack) >= MetalRegistry.metals[meta].harvestLevel;
 		} else if(block instanceof BlockMetalBlock) {
-			return getToolHarvestLevel(stack) >= MetalRegistry.metals[(meta - (meta & 7)) / 8].harvestLevel;
+			return getToolHarvestLevel(stack) >= MetalRegistry.metals[(meta - (meta & 3)) / 4].harvestLevel;
+		} else if(block instanceof BlockMetalPillar) {
+			return getToolHarvestLevel(stack) >= MetalRegistry.metals[(meta - (meta & 3)) / 4].harvestLevel;
 		} else if(block instanceof BlockMetalFence) {
 			return getToolHarvestLevel(stack) >= MetalRegistry.metals[meta].harvestLevel;
 		} else if(block instanceof BlockMetalFenceGate) {
