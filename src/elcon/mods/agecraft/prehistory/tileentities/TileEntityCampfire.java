@@ -9,12 +9,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.prehistory.recipes.RecipesCampfire;
 import elcon.mods.agecraft.prehistory.recipes.RecipesCampfire.RecipeCampfire;
+import elcon.mods.core.tileentities.TileEntityExtended;
 
 public class TileEntityCampfire extends TileEntityExtended {
 
