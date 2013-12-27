@@ -1,6 +1,5 @@
 package elcon.mods.agecraft.prehistory.recipes;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
 import elcon.mods.agecraft.recipes.Recipe;
 import elcon.mods.agecraft.recipes.RecipeType;
+import elcon.mods.agecraft.recipes.WrappedStack;
 
 public class RecipesSharpener {
 
@@ -23,13 +23,13 @@ public class RecipesSharpener {
 		}
 
 		@Override
-		public List<ItemStack> getInput() {
-			return Arrays.asList(new ItemStack(PrehistoryAge.rock.blockID, 2, 0));
+		public List<WrappedStack> getInput() {
+			return WrappedStack.createList(new ItemStack(PrehistoryAge.rock.blockID, 2, 0));
 		}
 
 		@Override
-		public List<ItemStack> getOutput() {
-			return Arrays.asList(output);
+		public List<WrappedStack> getOutput() {
+			return WrappedStack.createList(output);
 		}
 
 		@Override

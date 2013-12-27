@@ -1,7 +1,6 @@
 package elcon.mods.agecraft.core.recipes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +11,7 @@ import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.gui.InventoryCraftMatrix;
 import elcon.mods.agecraft.recipes.Recipe;
 import elcon.mods.agecraft.recipes.RecipeType;
+import elcon.mods.agecraft.recipes.WrappedStack;
 
 public class RecipeWorkbenchShapeless extends Recipe {
 
@@ -78,13 +78,13 @@ public class RecipeWorkbenchShapeless extends Recipe {
 	}
 	
 	@Override
-	public List<ItemStack> getInput() {
-		return input;
+	public List<WrappedStack> getInput() {
+		return WrappedStack.createList(input);
 	}
 
 	@Override
-	public List<ItemStack> getOutput() {
-		return Arrays.asList(output);
+	public List<WrappedStack> getOutput() {
+		return WrappedStack.createList(output);
 	}
 
 	@Override

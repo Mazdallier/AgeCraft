@@ -1,6 +1,5 @@
 package elcon.mods.agecraft.prehistory.recipes;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.recipes.Recipe;
 import elcon.mods.agecraft.recipes.RecipeType;
+import elcon.mods.agecraft.recipes.WrappedStack;
 
 public class RecipesBarrel {
 
@@ -28,13 +28,13 @@ public class RecipesBarrel {
 		}
 		
 		@Override
-		public List<ItemStack> getInput() {
-			return Arrays.asList(input);
+		public List<WrappedStack> getInput() {
+			return WrappedStack.createList(input);
 		}
 
 		@Override
-		public List<ItemStack> getOutput() {
-			return Arrays.asList(output);
+		public List<WrappedStack> getOutput() {
+			return WrappedStack.createList(output);
 		}
 
 		@Override

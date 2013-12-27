@@ -30,7 +30,7 @@ public class ACUtil {
 		sb.append(']');
 		return sb.toString();
 	}
-	
+
 	public static boolean arraysEqual(Object[] array1, Object[] array2) {
 		if(array1.length != array2.length) {
 			return false;
@@ -42,7 +42,7 @@ public class ACUtil {
 		}
 		return true;
 	}
-	
+
 	public static boolean areItemStacksEqualNoSize(ItemStack stack1, ItemStack stack2) {
 		if(stack1 == null && stack2 == null) {
 			return true;
@@ -75,6 +75,38 @@ public class ACUtil {
 
 	public static boolean areItemStacksDamageEqual(ItemStack stack1, ItemStack stack2) {
 		return stack1.getItemDamage() == OreDictionary.WILDCARD_VALUE || stack2.getItemDamage() == OreDictionary.WILDCARD_VALUE || stack1.getItemDamage() == stack2.getItemDamage();
+	}
+
+	public static int compareItemStacks(ItemStack stack1, ItemStack stack2) {
+		if(stack1 != null && stack2 != null) {
+			if(stack1.itemID == stack2.itemID) {
+				if(stack1.getItemDamage() == stack2.getItemDamage()) {
+					if(stack1.hasTagCompound() && stack2.hasTagCompound()) {
+						if(stack1.getTagCompound().equals(stack2.getTagCompound())) {
+							return (stack1.stackSize - stack2.stackSize);
+						} else {
+							return (stack1.getTagCompound().hashCode() - stack2.getTagCompound().hashCode());
+						}
+					} else if(!(stack1.hasTagCompound()) && stack2.hasTagCompound()) {
+						return 1;
+					} else if(stack1.hasTagCompound() && !(stack2.hasTagCompound())) {
+						return -1;
+					} else {
+						return (stack1.stackSize - stack2.stackSize);
+					}
+				} else {
+					return (stack1.getItemDamage() - stack2.getItemDamage());
+				}
+			} else {
+				return (stack1.itemID - stack2.itemID);
+			}
+		} else if(stack1 != null && stack2 == null) {
+			return -1;
+		} else if(stack1 == null && stack2 != null) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	public static boolean isItemStackDamageable(ItemStack stack) {
@@ -138,14 +170,14 @@ public class ACUtil {
 			return stack;
 		}
 	}
-	
+
 	public static FluidStack getFluidContainerStack(ItemStack stack) {
 		if(stack != null && stack.getItem() instanceof IFluidContainerItem) {
 			return ((IFluidContainerItem) stack.getItem()).getFluid(stack);
 		}
 		return FluidContainerRegistry.getFluidForFilledItem(stack);
 	}
-	
+
 	public static ItemStack fillFluidContainer(ItemStack stack, FluidStack fluidStack) {
 		if(stack != null && stack.getItem() instanceof IFluidContainerItem) {
 			((IFluidContainerItem) stack.getItem()).fill(stack, fluidStack, true);
@@ -153,12 +185,40 @@ public class ACUtil {
 		}
 		return FluidContainerRegistry.fillFluidContainer(fluidStack, stack);
 	}
-	
+
 	public static ItemStack drainFluidContainer(ItemStack stack, int amount) {
 		if(stack != null && stack.getItem() instanceof IFluidContainerItem) {
 			((IFluidContainerItem) stack.getItem()).drain(stack, amount, true);
 			return stack;
 		}
 		return ACUtil.consumeItem(stack);
+	}
+
+	public static int compareFluidStack(FluidStack stack1, FluidStack stack2) {
+		if(stack1 != null && stack2 != null) {
+			if(stack1.fluidID == stack2.fluidID) {
+				if(stack1.tag != null && stack2.tag != null) {
+					if(stack1.tag.equals(stack2.tag)) {
+						return (stack1.amount - stack2.amount);
+					} else {
+						return (stack1.tag.hashCode() - stack2.tag.hashCode());
+					}
+				} else if(stack1.tag != null && stack2.tag == null) {
+					return -1;
+				} else if(stack1.tag == null && stack2.tag != null) {
+					return 1;
+				} else {
+					return (stack1.amount - stack2.amount);
+				}
+			} else {
+				return (stack1.fluidID - stack2.fluidID);
+			}
+		} else if(stack1 != null && stack2 == null) {
+			return -1;
+		} else if(stack1 == null && stack2 != null) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 }

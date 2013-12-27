@@ -1,6 +1,5 @@
 package elcon.mods.agecraft.prehistory.recipes;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +12,7 @@ import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.recipes.Recipe;
 import elcon.mods.agecraft.recipes.RecipeType;
+import elcon.mods.agecraft.recipes.WrappedStack;
 
 public class RecipesCampfire {
 
@@ -52,13 +52,13 @@ public class RecipesCampfire {
 		}
 
 		@Override
-		public List<ItemStack> getInput() {
-			return Arrays.asList(raw);
+		public List<WrappedStack> getInput() {
+			return WrappedStack.createList(raw);
 		}
 
 		@Override
-		public List<ItemStack> getOutput() {
-			return Arrays.asList(cooked);
+		public List<WrappedStack> getOutput() {
+			return WrappedStack.createList(cooked);
 		}
 
 		@Override
