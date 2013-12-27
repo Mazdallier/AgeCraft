@@ -162,10 +162,31 @@ public class Trees extends ACComponent {
 	@Override
 	public void init() {
 		//register trees
-		TreeRegistry.registerTree(new Tree(0, "oak", 0x48B518, true, 0xB4905A, new WorldGenTreeOak()));
-		TreeRegistry.registerTree(new Tree(1, "birch", 0x80A755, false, 0xD7C185, new WorldGenTreeBirch()));
-		TreeRegistry.registerTree(new Tree(2, "spruce", 0x619961, false, 0x785836, new WorldGenTreeSpruce()));
-		TreeRegistry.registerTree(new Tree(3, "jungle", 0x48B518, true, 0xB1805C, new WorldGenTreeJungle()));
+		//TODO: colors and world gen
+		TreeRegistry.registerTree(new Tree(0, "acacia", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(1, "alder", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(2, "beech", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(3, "birch", 0x80A755, false, 0xD7C185, new WorldGenTreeBirch()));
+		TreeRegistry.registerTree(new Tree(4, "buckeye", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(5, "cherryBlossom", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(6, "coniferous", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(7, "darkOak", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(8, "dogwood", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(9, "elm", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(10, "eucalyptus", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(11, "fir", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(12, "filbert", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(13, "jungle", 0x48B518, true, 0xB1805C, new WorldGenTreeJungle()));
+		TreeRegistry.registerTree(new Tree(14, "maple", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(15, "oak", 0x48B518, true, 0xB4905A, new WorldGenTreeOak()));
+		TreeRegistry.registerTree(new Tree(16, "palm", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(17, "pine", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(18, "poplar", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(19, "spruce", 0x619961, false, 0x785836, new WorldGenTreeSpruce()));
+		TreeRegistry.registerTree(new Tree(20, "tupelo", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(21, "willow", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(22, "yew", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(23, "yellow", 0xFFFFFF, true, 0xFFFFFF, null));
 		
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			if(TreeRegistry.trees[i] != null) {

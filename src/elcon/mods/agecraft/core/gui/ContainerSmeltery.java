@@ -95,7 +95,12 @@ public class ContainerSmeltery extends ContainerBasic {
 				} else {
 					if(stack != null) {
 						if(isRightClick) {
-							player.inventory.setItemStack(tile.fuel[slotID].splitStack(tile.fuel[slotID].stackSize / 2));
+							if(tile.fuel[slotID].stackSize > 1) {
+								player.inventory.setItemStack(tile.fuel[slotID].splitStack(tile.fuel[slotID].stackSize / 2));
+							} else {
+								player.inventory.setItemStack(tile.fuel[slotID].copy());
+								tile.fuel[slotID] = null;
+							}
 							hasChanged = true;
 						} else {
 							if(pressedShift) {
