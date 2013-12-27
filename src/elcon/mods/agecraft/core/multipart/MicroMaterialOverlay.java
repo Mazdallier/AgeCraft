@@ -8,6 +8,8 @@ import codechicken.lib.render.Vertex5;
 import codechicken.lib.vec.Vector3;
 import codechicken.microblock.BlockMicroMaterial;
 import codechicken.microblock.IMicroMaterialRender;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
 import elcon.mods.core.blocks.BlockOverlay;
 
@@ -21,6 +23,7 @@ public class MicroMaterialOverlay extends BlockMicroMaterial {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void loadIcons() {
 		super.loadIcons();
 		Icon[] overlayIcons = new Icon[6];
@@ -41,6 +44,7 @@ public class MicroMaterialOverlay extends BlockMicroMaterial {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void renderMicroFace(Vertex5[] verts, int side, Vector3 pos, LightMatrix lightMatrix, IMicroMaterialRender part) {
 		renderMicroFace(verts, side, pos, lightMatrix, getColour(part), icont());
 		if(hasOverlay) {

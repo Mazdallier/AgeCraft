@@ -4,23 +4,24 @@ import codechicken.lib.lighting.LightMatrix;
 import codechicken.lib.render.Vertex5;
 import codechicken.lib.vec.Vector3;
 import codechicken.microblock.IMicroMaterialRender;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.core.blocks.BlockOverlay;
 
 public class MicroMaterialColorOverlay extends MicroMaterialOverlay {
 
-	public int color = 0xFFFFFF;
-	
 	public MicroMaterialColorOverlay(BlockOverlay block, int meta) {
 		super(block, meta);
-		color = block.getRenderColor(meta);
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public int getColour(IMicroMaterialRender part) {
-		return color << 8 | 0xFF;
+		return block().getRenderColor(meta()) << 8 | 0xFF;
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void renderMicroFace(Vertex5[] verts, int side, Vector3 pos, LightMatrix lightMatrix, IMicroMaterialRender part) {
 		renderMicroFace(verts, side, pos, lightMatrix, getColour(part), icont());
 		if(hasOverlay) {
