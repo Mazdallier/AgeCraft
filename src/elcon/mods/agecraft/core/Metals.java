@@ -19,6 +19,7 @@ import elcon.mods.agecraft.core.blocks.metal.BlockMetalLadder;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalPillar;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalTrapdoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneOre;
+import elcon.mods.agecraft.core.fluids.FluidName;
 import elcon.mods.agecraft.core.items.ItemGem;
 import elcon.mods.agecraft.core.items.ItemIngot;
 import elcon.mods.agecraft.core.items.ItemMetalBucket;
@@ -129,8 +130,14 @@ public class Metals extends ACComponent {
 		MetalRegistry.registerMetal(new Metal(52, "sulphur", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(dust, 1, 52), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xF4D41F, 12, 12, 20, 128));
 
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
-			if(MetalRegistry.metals[i] != null) {
-				DustRegistry.registerDust(new Dust(128 + i, MetalRegistry.metals[i].name, "metals." + MetalRegistry.metals[i].name, new ItemStack(dust.itemID, 1, i)));
+			Metal metal = MetalRegistry.metals[i];
+			if(metal != null) {
+				DustRegistry.registerDust(new Dust(128 + i, metal.name, "metals." + metal.name, new ItemStack(dust.itemID, 1, i)));
+		
+				//TODO: set density, viscosity and temperature
+				//TODO: add blocks
+				metal.fluid = new FluidName(metal.name);
+				FluidRegistry.registerFluid(metal.fluid);
 			}
 		}
 	}

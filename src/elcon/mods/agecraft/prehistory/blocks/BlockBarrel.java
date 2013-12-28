@@ -202,6 +202,11 @@ public class BlockBarrel extends BlockExtendedContainer implements IWailaBlock {
 	}
 	
 	@Override
+	public Class<?> getTileEntityClass() {
+		return TileEntityBarrel.class;
+	}
+	
+	@Override
 	public String getLocalizedName() {
 		return LanguageManager.getLocalization(getUnlocalizedName());
 	}

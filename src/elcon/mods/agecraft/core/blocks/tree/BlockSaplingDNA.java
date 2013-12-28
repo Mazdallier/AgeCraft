@@ -78,6 +78,11 @@ public class BlockSaplingDNA extends BlockExtendedContainer implements IPlantabl
 	}
 
 	@Override
+	public Class<?> getTileEntityClass() {
+		return TileEntityDNATree.class;
+	}
+	
+	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == Item.dyePowder && player.inventory.getCurrentItem().getItemDamage() == 15) {
 			if(!world.isRemote) {

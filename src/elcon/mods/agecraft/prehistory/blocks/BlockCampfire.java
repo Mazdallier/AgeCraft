@@ -52,6 +52,11 @@ public class BlockCampfire extends BlockExtendedContainer implements IWailaBlock
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityCampfire();
 	}
+	
+	@Override
+	public Class<?> getTileEntityClass() {
+		return TileEntityCampfire.class;
+	}
 
 	@Override
 	public int getLightValue(IBlockAccess blockAccess, int x, int y, int z) {

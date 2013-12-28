@@ -193,6 +193,11 @@ public class BlockPot extends BlockExtendedContainer implements IWailaBlock {
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityPot();
 	}
+	
+	@Override
+	public Class<?> getTileEntityClass() {
+		return TileEntityPot.class;
+	}
 
 	@Override
 	public boolean isOpaqueCube() {

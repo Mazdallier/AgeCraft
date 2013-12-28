@@ -133,6 +133,11 @@ public class BlockBox extends BlockExtendedContainer implements IWailaBlock {
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityBox();
 	}
+	
+	@Override
+	public Class<?> getTileEntityClass() {
+		return TileEntityBox.class;
+	}
 
 	@Override
 	public String getLocalizedName() {

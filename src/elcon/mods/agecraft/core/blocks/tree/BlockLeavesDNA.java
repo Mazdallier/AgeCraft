@@ -230,6 +230,11 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 	}
 	
 	@Override
+	public Class<?> getTileEntityClass() {
+		return TileEntityDNATree.class;
+	}
+	
+	@Override
 	public void beginLeavesDecay(World world, int x, int y, int z) {
 		world.setBlockMetadataWithNotify(x, y, z, world.getBlockMetadata(x, y, z) | 2, 3);
 	}

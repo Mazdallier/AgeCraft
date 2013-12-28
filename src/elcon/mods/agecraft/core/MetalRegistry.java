@@ -2,6 +2,7 @@ package elcon.mods.agecraft.core;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraftforge.fluids.Fluid;
 import elcon.mods.agecraft.ACLog;
 
 public class MetalRegistry {
@@ -49,6 +50,8 @@ public class MetalRegistry {
 		public Icon nugget;
 		public Icon dust;
 		public Icon bucket;
+		
+		public Fluid fluid;
 		
 		public Metal(int id, String name, OreType type, float hardness, float resistane, int harvestLevel, float blockHardness, float blockResistane, ItemStack drop, int dropMin, int dropMax, boolean fortune, boolean hasOre, boolean hasIngot, boolean hasBlock, boolean hasDoor, boolean hasDust, int redstonePower, int fireSpreadSpeed, int flammability, int metalColor, int oreGenSize, int oreGenPerChunk, int oreGenMinY, int oreGenMaxY) {
 			this.id = id;

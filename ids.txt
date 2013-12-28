@@ -20,7 +20,7 @@
 
 
 ======= Block IDs ======
-2500-2999 	Core blocks
+2500-2899 	Core blocks
 	2500 Stone
 	2501 Stonebrick
 	2502 Stonebrick Pillar
@@ -63,7 +63,49 @@
 	2554 Smeltery Faucet
 	2555 Smeltery Casting Table
 	2556 Smeltery Tank
+
+2800-2989	Fluids
+	2800 Copper
+	2801 Tin
+	2802 Bronze
+	2803 Silver
+	2804 Iron
+	2805 Gold
+	2806 Zinc
+	2807 Nickel
+	2808 Aluminium
+	2809 Platinum
+	2810 Lead
+	2811 Steel
+	2812 Cobalt
+	2813 Mithril
+	2814 Adamantite
+	2815 Tungsten
+	2816 Uranium
 	
+	2832 Coal
+	2833 Amethyst
+	2834 Beryl Red
+	2835 Beryl Yellow
+	2836 Beryl Blue
+	2837 Beryl Green
+	2838 Diamond
+	2839 Emerald
+	2840 Jade
+	2841 Lapis Lazuli
+	2842 Onyx
+	2843 Opal
+	2844 Quartz
+	2845 Ruby
+	2846 Sapphire
+	2847 Tiger Eye
+	2848 Topaz
+	2849 Turquoise
+	2850 Redstone
+	2851 Salt
+	2852 Sulphur
+	
+2990-2999	More core blocks	
 	2996 Age Teleporter
 	2997 Age Teleporter Block
 	2998 Age Teleporter Beam

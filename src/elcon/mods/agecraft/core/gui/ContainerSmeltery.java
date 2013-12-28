@@ -57,7 +57,6 @@ public class ContainerSmeltery extends ContainerBasic {
 	}
 
 	public void onSlotClick(boolean isTopSlots, int slotX, int slotY, boolean isRightClick, boolean pressedShift) {
-		System.out.println("clicked slot: " + isTopSlots + " " + slotX + ", " + slotY);
 		boolean hasChanged = false;
 		int slotID = slotX + slotY * 5;
 		if(isTopSlots) {
