@@ -67,7 +67,7 @@ public class TileEntityDNA extends TileEntityNBT implements IDNAOwner {
 	}
 	
 	@Override
-	public int getPacketID() {
+	public byte getPacketID() {
 		return 90;
 	}
 	

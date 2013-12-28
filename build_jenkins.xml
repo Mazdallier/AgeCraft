@@ -37,6 +37,7 @@
 		</copy>
 		<copy todir="${build.mcp_location}/src/minecraft">
 			<fileset dir="${build.elconcore_location}/src/" excludes="/elcon/mods/example/**" />
+			<fileset dir="${build.elconcore_location}/src/" excludes="mcmod.info" />
 		</copy>
 		<copy todir="${build.mcp_location}/src/minecraft">
 			<fileset dir="src/" />
