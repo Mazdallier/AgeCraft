@@ -15,8 +15,8 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
-import elcon.mods.agecraft.core.fluids.FluidTankTile;
 import elcon.mods.agecraft.prehistory.recipes.RecipesBarrel;
+import elcon.mods.core.fluid.FluidTankTile;
 import elcon.mods.core.tileentities.TileEntityExtended;
 
 public class TileEntityBarrel extends TileEntityExtended implements IFluidHandler {

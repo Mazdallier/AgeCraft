@@ -11,8 +11,8 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.agecraft.core.fluids.FluidRenderer;
 import elcon.mods.agecraft.prehistory.tileentities.TileEntityBarrel;
+import elcon.mods.core.render.FluidRenderer;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityRendererBarrel extends TileEntitySpecialRenderer {

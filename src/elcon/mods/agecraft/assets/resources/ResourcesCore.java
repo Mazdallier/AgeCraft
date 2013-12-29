@@ -114,6 +114,9 @@ public class ResourcesCore extends Resources {
 						metal.blockPillar = iconRegister.registerIcon("agecraft:metals/blocks/metals/pillar" + ECUtil.firstUpperCase(metal.name));
 						metal.blockPillarTop = iconRegister.registerIcon("agecraft:metals/blocks/metals/pillarTop" + ECUtil.firstUpperCase(metal.name));
 					}
+					metal.fluidStill = iconRegister.registerIcon("agecraft:metals/fluids/metals/fluidStill" + ECUtil.firstUpperCase(metal.name));
+					metal.fluidFlowing = iconRegister.registerIcon("agecraft:metals/fluids/metals/fluidFlowing" + ECUtil.firstUpperCase(metal.name));
+					metal.fluid.setIcons(metal.fluidStill, metal.fluidFlowing);
 				} else if(metal.type == OreType.GEM) {
 					if(metal.hasOre) {
 						metal.ore = iconRegister.registerIcon("agecraft:metals/ores/gems/ore" + ECUtil.firstUpperCase(metal.name));
@@ -126,6 +129,9 @@ public class ResourcesCore extends Resources {
 						metal.blockPillar = iconRegister.registerIcon("agecraft:metals/blocks/gems/pillar" + ECUtil.firstUpperCase(metal.name));
 						metal.blockPillarTop = iconRegister.registerIcon("agecraft:metals/blocks/gems/pillarTop" + ECUtil.firstUpperCase(metal.name));
 					}
+					metal.fluidStill = iconRegister.registerIcon("agecraft:metals/fluids/gems/fluidStill" + ECUtil.firstUpperCase(metal.name));
+					metal.fluidFlowing = iconRegister.registerIcon("agecraft:metals/fluids/gems/fluidFlowing" + ECUtil.firstUpperCase(metal.name));
+					metal.fluid.setIcons(metal.fluidStill, metal.fluidFlowing);
 				}
 			}
 		}

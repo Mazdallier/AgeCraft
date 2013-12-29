@@ -1,6 +1,7 @@
 package elcon.mods.agecraft.core;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -15,11 +16,11 @@ import elcon.mods.agecraft.core.blocks.metal.BlockMetalBlock;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalDoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFence;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalFenceGate;
+import elcon.mods.agecraft.core.blocks.metal.BlockMetalFluid;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalLadder;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalPillar;
 import elcon.mods.agecraft.core.blocks.metal.BlockMetalTrapdoor;
 import elcon.mods.agecraft.core.blocks.metal.BlockStoneOre;
-import elcon.mods.agecraft.core.fluids.FluidName;
 import elcon.mods.agecraft.core.items.ItemGem;
 import elcon.mods.agecraft.core.items.ItemIngot;
 import elcon.mods.agecraft.core.items.ItemMetalBucket;
@@ -27,6 +28,8 @@ import elcon.mods.agecraft.core.items.ItemMetalDoor;
 import elcon.mods.agecraft.core.items.ItemMetalDust;
 import elcon.mods.agecraft.core.items.ItemMetalStick;
 import elcon.mods.agecraft.core.items.ItemNugget;
+import elcon.mods.core.blocks.BlockFluidMetadata;
+import elcon.mods.core.fluid.FluidMetadata;
 import elcon.mods.core.items.ItemBlockExtendedMetadata;
 
 public class Metals extends ACComponent {
@@ -39,6 +42,8 @@ public class Metals extends ACComponent {
 	public static Block door;
 	public static Block trapdoor;
 	public static Block ladder;
+	public static Block designBlock;
+	public static Block fluid;
 
 	public static Item ingot;
 	public static Item gem;
@@ -59,6 +64,8 @@ public class Metals extends ACComponent {
 		trapdoor = new BlockMetalTrapdoor(2516).setUnlocalizedName("metal_trapdoor");
 		ladder = new BlockMetalLadder(2517).setUnlocalizedName("metal_ladder");
 
+		fluid = new BlockMetalFluid(2519).setUnlocalizedName("metal_fluid");
+
 		// register blocks
 		GameRegistry.registerBlock(ore, ItemBlockExtendedMetadata.class, "AC_metal_ore");
 		GameRegistry.registerBlock(block, ItemBlockExtendedMetadata.class, "AC_metal_block");
@@ -69,6 +76,8 @@ public class Metals extends ACComponent {
 		GameRegistry.registerBlock(trapdoor, ItemBlockExtendedMetadata.class, "AC_metal_trapdoor");
 		GameRegistry.registerBlock(ladder, ItemBlockExtendedMetadata.class, "AC_metal_ladder");
 
+		GameRegistry.registerBlock(fluid, ItemBlockExtendedMetadata.class, "AC_metal_fluid");
+
 		// init items
 		ingot = new ItemIngot(12500).setUnlocalizedName("metal_ingot");
 		gem = new ItemGem(12501).setUnlocalizedName("metal_gem");
@@ -76,8 +85,8 @@ public class Metals extends ACComponent {
 		nugget = new ItemNugget(12503).setUnlocalizedName("metal_nugget");
 		dust = new ItemMetalDust(12504).setUnlocalizedName("metal_dust");
 		bucket = new ItemMetalBucket(12505).setUnlocalizedName("metal_bucket");
-		
-		//register items
+
+		// register items
 		GameRegistry.registerItem(ingot, "AC_metal_ingot");
 		GameRegistry.registerItem(gem, "AC_metal_gem");
 		GameRegistry.registerItem(stick, "AC_metal_stick");
@@ -129,17 +138,19 @@ public class Metals extends ACComponent {
 		MetalRegistry.registerMetal(new Metal(51, "salt", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(dust, 1, 51), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xD8D2D4, 12, 12, 20, 128));
 		MetalRegistry.registerMetal(new Metal(52, "sulphur", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(dust, 1, 52), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xF4D41F, 12, 12, 20, 128));
 
+		FluidMetadata[] fluids = new FluidMetadata[MetalRegistry.metals.length];
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
 			Metal metal = MetalRegistry.metals[i];
 			if(metal != null) {
 				DustRegistry.registerDust(new Dust(128 + i, metal.name, "metals." + metal.name, new ItemStack(dust.itemID, 1, i)));
-		
-				//TODO: set density, viscosity and temperature
-				//TODO: add blocks
-				metal.fluid = new FluidName(metal.name);
+
+				// TODO: set density, viscosity and temperature
+				metal.fluid = (FluidMetadata) new FluidMetadata(metal.name, i).setLuminosity(7).setRarity(EnumRarity.common).setTemperature(1000).setBlockID(fluid);
+				fluids[i] = metal.fluid;
 				FluidRegistry.registerFluid(metal.fluid);
 			}
 		}
+		((BlockFluidMetadata) fluid).setFluids(fluids);
 	}
 
 	@Override
