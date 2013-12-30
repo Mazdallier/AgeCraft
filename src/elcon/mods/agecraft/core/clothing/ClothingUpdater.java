@@ -104,7 +104,7 @@ public class ClothingUpdater implements Runnable {
 		}
 	}
 	
-	public void downloadCateogry(List<ClothingCategory> categories) {
+	public void downloadCateogries(List<ClothingCategory> categories) {
 		for(ClothingCategory category : categories) {
 			try {
 				ACLog.info("[Clothing] Updating category " + category.name + " to version " + versions.get(category.name).version);

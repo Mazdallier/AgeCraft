@@ -218,8 +218,14 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			String name = dat.readUTF();
 			String versionURL = dat.readUTF();
 			String updateURL = dat.readUTF();
+			int expansions = dat.readInt();
+			ArrayList<String> expansionURLs = new ArrayList<String>();
+			for(int j = 0; j < expansions; j++) {
+				expansionURLs.add(dat.readUTF());
+			}
 			if(ClothingRegistry.getClothingCategory(name) == null) {
 				ClothingCategory category = new ClothingCategory(name, versionURL, updateURL);
+				category.expansionURLs.addAll(expansionURLs);
 				ClothingRegistry.registerClothingCategory(category);
 				ClothingUpdater.instance.localCategories.add(category);
 				categories.add(category);
@@ -232,7 +238,7 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			@Override
 			public void run() {
 				ClothingUpdater.instance.saveLocalCategories();
-				ClothingUpdater.instance.downloadCateogry(categories);
+				ClothingUpdater.instance.downloadCateogries(categories);
 				PlayerClothingClient.updatePlayerClothingAll();
 			}
 		};

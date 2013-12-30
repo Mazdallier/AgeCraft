@@ -89,10 +89,12 @@ public class GuiClothingSelector extends GuiScreen {
 		clothingTypes.addAll(ClothingRegistry.types.values());
 		Collections.sort(clothingTypes, new ClothingTypeIndexComparator());
 
+		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();
+		
 		int index = 0;
 		clothingCategories.clear();
 		for(ClothingCategory category : ClothingRegistry.categories.values()) {
-			if(category.enabled) {
+			if(category.enabled && (clothing.hasUnlockedCategory(category.name) && category.hideIfLocked)) {
 				clothingCategories.add(category);
 				if(category.name.equalsIgnoreCase("general")) {
 					currentClothingCategory = index;
@@ -101,7 +103,6 @@ public class GuiClothingSelector extends GuiScreen {
 			}
 		}
 
-		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();
 		clothing.player = mc.thePlayer.username + "-Temp";
 		PlayerClothingClient.addPlayerClothing(clothing);
 		clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();

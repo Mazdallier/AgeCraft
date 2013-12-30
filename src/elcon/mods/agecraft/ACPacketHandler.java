@@ -374,6 +374,10 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 				dos.writeUTF(category.name);
 				dos.writeUTF(category.versionURL);
 				dos.writeUTF(category.updateURL);
+				dos.writeInt(category.expansionURLs.size());
+				for(String url : category.expansionURLs) {
+					dos.writeUTF(url);
+				}
 			}
 			dos.close();
 			packet.channel = "ACClothing";

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 
@@ -65,8 +66,20 @@ public class PlayerClothing implements Serializable {
 	public String clothingTypeExclusive = "";
 	public int clothingColorExclusive = -1;
 	
+	public LinkedList<String> unlockedCategories = new LinkedList<String>();
+	public HashMap<String, LinkedList<String>> unlockedClothing = new HashMap<String, LinkedList<String>>();
+	
 	public PlayerClothing(String player) {
 		this.player = player;
+		
+		//TODO: replace with prehistory for first release
+		unlockedCategories.add("general");
+		LinkedList<String> clothings = new LinkedList<String>();
+		HashMap<ClothingType, HashMap<String, Clothing>> clothing = ClothingRegistry.getClothingCategory("general").clothing;
+		for(HashMap<String, Clothing> value : clothing.values()) {
+			clothings.addAll(value.keySet());
+		}
+		unlockedClothing.put("general", clothings);
 	}
 	
 	public String getClothingFileName() {
@@ -187,6 +200,47 @@ public class PlayerClothing implements Serializable {
 			}
 		}
 		return false;
+	}
+	
+	public void unlockCategory(String category) {
+		unlockedCategories.add(category);
+	}
+	
+	public void unlockClothing(String category, String clothing) {
+		LinkedList<String> clothings = unlockedClothing.get(category);
+		if(clothings == null) {
+			clothings = new LinkedList<String>();
+			unlockedClothing.put(category, clothings);
+		}
+		clothings.add(clothing);
+	}
+	
+	public void lockCategory(String category) {
+		unlockedCategories.remove(category);
+	}
+	
+	public void lockClothing(String category, String clothing) {
+		LinkedList<String> clothings = unlockedClothing.get(category);
+		if(clothings == null) {
+			clothings = new LinkedList<String>();
+			unlockedClothing.put(category, clothings);
+			return;
+		}
+		clothings.remove(clothing);
+	}
+	
+	public boolean hasUnlockedCategory(String category) {
+		return unlockedCategories.contains(category);
+	}
+	
+	public boolean hasUnlockedClothing(String category, String clothing) {
+		LinkedList<String> clothings = unlockedClothing.get(category);
+		if(clothings == null) {
+			clothings = new LinkedList<String>();
+			unlockedClothing.put(category, clothings);
+			return false;
+		}
+		return clothings.contains(clothing);
 	}
 
 	public PlayerClothing copy() {

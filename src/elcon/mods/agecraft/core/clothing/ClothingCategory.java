@@ -14,6 +14,7 @@ public class ClothingCategory {
 	public String updateURL;
 	public ArrayList<String> expansionURLs = new ArrayList<String>();
 	public boolean enabled;
+	public boolean hideIfLocked;
 	
 	public HashMap<ClothingType, HashMap<String, Clothing>> clothing = new HashMap<ClothingType, HashMap<String, Clothing>>();
 	
@@ -22,6 +23,11 @@ public class ClothingCategory {
 		this.versionURL = versionURL;
 		this.updateURL = updateURL;
 		this.enabled = true;
+		this.hideIfLocked = false;
+	}
+	
+	public void setHideIfLocked(boolean flag) {
+		hideIfLocked = flag;
 	}
 	
 	public String getLocalizedName() {
