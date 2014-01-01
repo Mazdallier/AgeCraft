@@ -13,6 +13,8 @@ clothing.type.pants=Pants
 clothing.type.boots=Boots
 
 clothing.category.general=General
+clothing.category.special=Special
+clothing.category.prehistory=Prehistory
 
 clothing.general.skin.steve=Steve's Skin
 clothing.general.hair.steve=Steve's Hair

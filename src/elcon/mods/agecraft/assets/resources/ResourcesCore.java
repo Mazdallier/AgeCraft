@@ -52,6 +52,7 @@ public class ResourcesCore extends Resources {
 	
 	public static Icon missingTexture;
 	public static Icon emptyTexture;
+	public static Icon iconLock;
 	
 	public static Icon[][][] doorWoodIcons = new Icon[4][2][2];
 	public static Icon[] trapdoorWoodIcons = new Icon[2];
@@ -147,8 +148,9 @@ public class ResourcesCore extends Resources {
 	
 	@Override
 	public void registerItemIcons(IconRegister iconRegister) {
-		ResourcesCore.missingTexture = iconRegister.registerIcon("agecraft:missingTexture");
-		ResourcesCore.emptyTexture = iconRegister.registerIcon("agecraft:emptyTexture");
+		missingTexture = iconRegister.registerIcon("agecraft:missingTexture");
+		emptyTexture = iconRegister.registerIcon("agecraft:emptyTexture");
+		iconLock = iconRegister.registerIcon("agecraft:lock");
 		
 		//trees
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {

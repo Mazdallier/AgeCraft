@@ -68,7 +68,10 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		case 78:
 			handleClothingSelector(dat);
 			break;
-		case 79:
+		case 79: 
+			handleClothingUnlockRequest(dat);
+			break;
+		case 80:
 			handleSmelterySlotClick(dat);
 			break;
 		}
@@ -156,6 +159,11 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		}
 		//TODO: make the player actually pay
 		PacketDispatcher.sendPacketToAllPlayers(getClothingUpdatePacket(clothing));
+	}
+	
+	private void handleClothingUnlockRequest(ByteArrayDataInput dat) {
+		String player = dat.readUTF();
+		PacketDispatcher.sendPacketToPlayer(getClothingUnlocksPacket(player), (Player) FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dat.readInt()).getPlayerEntityByName(player));
 	}
 	
 	private void handleSmelterySlotClick(ByteArrayDataInput dat) {
@@ -363,7 +371,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		return null;
 	}
 	
-	public static Packet getClothingList() {
+	public static Packet getClothingListPacket() {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			DataOutputStream dos = new DataOutputStream(bos);
@@ -391,6 +399,32 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		return null;
 	}
 	
+	public static Packet getClothingUnlocksPacket(String username) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(8);
+			PlayerClothing clothing = PlayerClothingServer.getPlayerClothing(username);
+			dos.writeInt(clothing.unlockedCategories.size());
+			for(String category : clothing.unlockedCategories) {
+				dos.writeUTF(category);
+				dos.writeInt(clothing.unlockedClothing.get(category).size());
+				for(String piece : clothing.unlockedClothing.get(category)) {
+					dos.writeUTF(piece);
+				}
+			}
+			packet.channel = "ACClothing";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	@Override
 	// SERVER
 	public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager) {
@@ -403,7 +437,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 		PacketDispatcher.sendPacketToPlayer(getTechTreeAllComponentsPacket(netHandler.getPlayer().username), player);
 		ACLog.info("[TechTree] Send all components to " + netHandler.getPlayer().username);
 		
-		PacketDispatcher.sendPacketToPlayer(getClothingList(), player);
+		PacketDispatcher.sendPacketToPlayer(getClothingListPacket(), player);
 		if(!PlayerClothingServer.players.containsKey(netHandler.getPlayer().username)) {
 			PlayerClothingServer.createDefaultClothing(netHandler.getPlayer().username);
 		}

@@ -51,6 +51,11 @@ public class BlockSmelteryFurnace extends BlockStructure {
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntitySmelteryFurnace(getStructureName(), blockID);
 	}
+	
+	@Override
+	public Class<?> getTileEntityClass() {
+		return TileEntitySmelteryFurnace.class;
+	}
 
 	@Override
 	public String getStructureName() {

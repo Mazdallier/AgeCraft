@@ -78,6 +78,9 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		case 7:
 			handleClothingList(dat);
 			break;
+		case 8:
+			handleClothingUnlocks(dat);
+			break;
 		case 90:
 			handleTileEntityDNA(world, dat);
 			break;
@@ -243,6 +246,21 @@ public class ACPacketHandlerClient implements IPacketHandler {
 			}
 		};
 	}
+	
+	private void handleClothingUnlocks(ByteArrayDataInput dat) {
+		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(Minecraft.getMinecraft().thePlayer.username);
+		clothing.unlockedCategories.clear();
+		clothing.unlockedClothing.clear();
+		int categories = dat.readInt();
+		for(int i = 0; i < categories; i++) {
+			String category = dat.readUTF();
+			clothing.unlockCategory(category);
+			int pieces = dat.readInt();
+			for(int j = 0; j < pieces; j++) {
+				clothing.unlockClothing(category, dat.readUTF());
+			}
+		}
+	}
 
 	private void handleTileEntityDNA(World world, ByteArrayDataInput dat) {
 		int x = dat.readInt();
@@ -394,12 +412,32 @@ public class ACPacketHandlerClient implements IPacketHandler {
 		return null;
 	}
 	
-	public static Packet getSmelterySlotClickPacket(int dimensionID, String player, boolean isTopSlots, byte index, byte slotX, byte slotY, boolean isRightClick, boolean pressedShift) {
+	public static Packet getClothingUnlockRequest() {
 		try {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			DataOutputStream dos = new DataOutputStream(bos);
 			Packet250CustomPayload packet = new Packet250CustomPayload();
 			dos.writeInt(79);
+			dos.writeUTF(Minecraft.getMinecraft().thePlayer.username);
+			dos.writeInt(Minecraft.getMinecraft().thePlayer.worldObj.provider.dimensionId);
+			dos.close();
+			packet.channel = "ACClothing";
+			packet.data = bos.toByteArray();
+			packet.length = bos.size();
+			packet.isChunkDataPacket = false;
+			return packet;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public static Packet getSmelterySlotClickPacket(int dimensionID, String player, boolean isTopSlots, byte index, byte slotX, byte slotY, boolean isRightClick, boolean pressedShift) {
+		try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			DataOutputStream dos = new DataOutputStream(bos);
+			Packet250CustomPayload packet = new Packet250CustomPayload();
+			dos.writeInt(80);
 			dos.writeInt(dimensionID);
 			dos.writeUTF(player);
 			dos.writeBoolean(isTopSlots);

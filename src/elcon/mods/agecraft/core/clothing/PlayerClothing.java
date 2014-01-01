@@ -80,6 +80,14 @@ public class PlayerClothing implements Serializable {
 			clothings.addAll(value.keySet());
 		}
 		unlockedClothing.put("general", clothings);
+		
+		unlockedCategories.add("prehistory");
+		clothings = new LinkedList<String>();
+		clothing = ClothingRegistry.getClothingCategory("general").clothing;
+		for(HashMap<String, Clothing> value : clothing.values()) {
+			clothings.addAll(value.keySet());
+		}
+		unlockedClothing.put("prehistory", clothings);
 	}
 	
 	public String getClothingFileName() {

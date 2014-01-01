@@ -153,12 +153,14 @@
 	5 Player Trade Accept Change
 	6 Clothing Selector Open
 	7 Clothing List
+	8 Clothing Unlocks
 75-90	Client to server packets
 	75 Player Trade (from player 1)
 	76 Player Trade Accept
 	77 Open Inventory
 	78 Clothing Selector
-	79 Smeltery Slot Click
+	79 Clothing Unlocks Request
+	80 Smeltery Slot Click
 90+ 	TileEntity packets
 	90 DNA
 	100 Smeltery Furnace

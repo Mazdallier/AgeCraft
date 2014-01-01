@@ -10,6 +10,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.EntityLivingBase;
 
 import org.lwjgl.input.Mouse;
@@ -69,6 +70,11 @@ public class GuiClothingSelector extends GuiScreen {
 	public List<String> clothingTypesChangeable;
 	public int clothingTypesChangeableCount;
 
+	public boolean[] isClothingCategoryEnabled;
+	public boolean[] isClothingEnabled;
+	
+	public PlayerClothing playerClothing;
+	
 	public GuiClothingSelector(List<String> clothingTypesChangable) {
 		this.clothingTypesChangeable = clothingTypesChangable;
 		xSize = 256;
@@ -76,6 +82,8 @@ public class GuiClothingSelector extends GuiScreen {
 		allowUserInput = true;
 
 		totalPrice = 0;
+		
+		PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getClothingUnlockRequest());
 	}
 
 	@Override
@@ -89,13 +97,15 @@ public class GuiClothingSelector extends GuiScreen {
 		clothingTypes.addAll(ClothingRegistry.types.values());
 		Collections.sort(clothingTypes, new ClothingTypeIndexComparator());
 
-		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();
+		playerClothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username);
 		
 		int index = 0;
 		clothingCategories.clear();
+		isClothingCategoryEnabled = new boolean[ClothingRegistry.categories.size()];
 		for(ClothingCategory category : ClothingRegistry.categories.values()) {
-			if(category.enabled && (clothing.hasUnlockedCategory(category.name) && category.hideIfLocked)) {
+			if(category.enabled && (playerClothing.hasUnlockedCategory(category.name) || !category.hideIfLocked)) {
 				clothingCategories.add(category);
+				isClothingCategoryEnabled[index] = playerClothing.hasUnlockedCategory(category.name);
 				if(category.name.equalsIgnoreCase("general")) {
 					currentClothingCategory = index;
 				}
@@ -103,6 +113,7 @@ public class GuiClothingSelector extends GuiScreen {
 			}
 		}
 
+		PlayerClothing clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();
 		clothing.player = mc.thePlayer.username + "-Temp";
 		PlayerClothingClient.addPlayerClothing(clothing);
 		clothing = PlayerClothingClient.getPlayerClothing(mc.thePlayer.username).copy();
@@ -168,7 +179,11 @@ public class GuiClothingSelector extends GuiScreen {
 
 		buttonsClothingCategories.buttons.clear();
 		for(int i = 0; i < clothingCategories.size(); i++) {
-			buttonsClothingCategories.addButton(new GuiToggleButton(100 + i, guiLeft + 267, guiTop + 19 + i * 16, 140, 166, 82, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing.category." + clothingCategories.get(i).name), true));
+			GuiToggleButton button = new GuiToggleButton(100 + i, guiLeft + 267, guiTop + 19 + i * 16, 140, 166, 82, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing.category." + clothingCategories.get(i).name), true);
+			if(playerClothing.hasUnlockedCategory(clothingCategories.get(i).name)) {
+				button.enabled = false;
+			}
+			buttonsClothingCategories.addButton(button);
 		}
 		updateClothingList();
 		updateTempPieceClothing();
@@ -182,15 +197,20 @@ public class GuiClothingSelector extends GuiScreen {
 	public void updateClothingList() {
 		Collection<Clothing> clothingPiecesList = clothingCategories.get(currentClothingCategory).clothing.get(ClothingRegistry.types.get(clothingTypes.get(currentClothingType).name)).values();
 		clothingPieces.clear();
-		clothingPieces.addAll(clothingPiecesList);
+		isClothingEnabled = new boolean[clothingPiecesList.size()];
+		int index = 0;
+		for(Clothing clothing : clothingPiecesList) {
+			if(clothing != null && (playerClothing.hasUnlockedClothing(clothingCategories.get(currentClothingCategory).name, clothing.name) || !clothing.hideIfLocked)) {
+				clothingPieces.add(clothing);
+				isClothingEnabled[index] = playerClothing.hasUnlockedClothing(clothingCategories.get(currentClothingCategory).name, clothing.name);
+				index++;
+			}
+		}
 		buttonsClothingPieces.buttons.clear();
 		if(clothingPiecesList != null) {
-			int index = 0;
-			for(Clothing clothing : clothingPiecesList) {
-				if(clothing != null) {
-					buttonsClothingPieces.addButton(new GuiToggleButton(1000 + index, guiLeft + 267, guiTop + 19 + index * 16, 140, 166, 82, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing." + clothing.category.name + "." + clothing.type.name + "." + clothing.name), true));
-					index++;
-				}
+			for(int i = 0; i < clothingPieces.size(); i++) {
+				Clothing clothing = clothingPieces.get(i);
+				buttonsClothingPieces.addButton(new GuiToggleButton(1000 + i, guiLeft + 267, guiTop + 19 + i * 16, 140, 166, 82, 16, ResourcesCore.guiClothingSelector, LanguageManager.getLocalization("clothing." + clothing.category.name + "." + clothing.type.name + "." + clothing.name), true));
 			}
 		}
 		((GuiToggleButton) buttonsClothingPieces.buttons.get(currentClothingPiece)).toggled = true;
@@ -261,8 +281,11 @@ public class GuiClothingSelector extends GuiScreen {
 			updateTempPieceClothing();
 		} else if(button.id == 21) {
 			currentClothingCategory--;
-			if(currentClothingCategory < 0) {
-				currentClothingCategory = 0;
+			while(!playerClothing.hasUnlockedCategory(clothingCategories.get(currentClothingCategory).name) || clothingCategories.get(currentClothingCategory).clothing.get(clothingTypes.get(currentClothingType)).size() <= 0) {
+				currentClothingCategory--;
+				if(currentClothingCategory < 0) {
+					currentClothingCategory = clothingCategories.size() - 1;
+				}
 			}
 			currentClothingPiece = 0;
 			currentClothingColor = -1;
@@ -281,8 +304,11 @@ public class GuiClothingSelector extends GuiScreen {
 			}
 		} else if(button.id == 23) {
 			currentClothingCategory++;
-			if(currentClothingCategory >= clothingCategories.size()) {
-				currentClothingCategory = clothingCategories.size() - 1;
+			while(!playerClothing.hasUnlockedCategory(clothingCategories.get(currentClothingCategory).name) || clothingCategories.get(currentClothingCategory).clothing.get(clothingTypes.get(currentClothingType)).size() <= 0) {
+				currentClothingCategory++;
+				if(currentClothingCategory >= clothingCategories.size()) {
+					currentClothingCategory = 0;
+				}
 			}
 			currentClothingPiece = 0;
 			currentClothingColor = -1;
@@ -339,23 +365,35 @@ public class GuiClothingSelector extends GuiScreen {
 			PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getClothingSelectorPacket(mc.thePlayer.username, clothingPiecesCart));
 			mc.thePlayer.closeScreen();
 		} else if(button.id >= 100 && button.id <= 1000 && rightList == 0) {
-			for(net.minecraft.client.gui.GuiButton b : buttonsClothingCategories.buttons) {
-				((GuiToggleButton) b).toggled = false;
+			if(isClothingCategoryEnabled[button.id - 100]) {
+				for(net.minecraft.client.gui.GuiButton b : buttonsClothingCategories.buttons) {
+					((GuiToggleButton) b).toggled = false;
+				}
+				((GuiToggleButton) button).toggled = true;
+				currentClothingCategory = button.id - 100;
+				currentClothingPiece = 0;
+				currentClothingColor = -1;
+				updateClothingList();
+				updateTempPieceClothing();
+			} else {
+				for(int i = 0; i < buttonsClothingCategories.buttons.size(); i++) {
+					((GuiToggleButton) buttonsClothingCategories.buttons.get(i)).toggled = (i == currentClothingCategory);
+				}
 			}
-			((GuiToggleButton) button).toggled = true;
-			currentClothingCategory = button.id - 100;
-			currentClothingPiece = 0;
-			currentClothingColor = -1;
-			updateClothingList();
-			updateTempPieceClothing();
 		} else if(button.id >= 1000 && rightList == 1) {
-			for(net.minecraft.client.gui.GuiButton b : buttonsClothingPieces.buttons) {
-				((GuiToggleButton) b).toggled = false;
+			if(isClothingEnabled[button.id - 1000]) {
+				for(net.minecraft.client.gui.GuiButton b : buttonsClothingPieces.buttons) {
+					((GuiToggleButton) b).toggled = false;
+				}
+				((GuiToggleButton) button).toggled = true;
+				currentClothingPiece = button.id - 1000;
+				currentClothingColor = -1;
+				updateTempPieceClothing();
+			} else {
+				for(int i = 0; i < buttonsClothingPieces.buttons.size(); i++) {
+					((GuiToggleButton) buttonsClothingPieces.buttons.get(i)).toggled = (i == currentClothingPiece);
+				}
 			}
-			((GuiToggleButton) button).toggled = true;
-			currentClothingPiece = button.id - 1000;
-			currentClothingColor = -1;
-			updateTempPieceClothing();
 		}
 	}
 
@@ -460,6 +498,10 @@ public class GuiClothingSelector extends GuiScreen {
 				}
 				for(net.minecraft.client.gui.GuiButton button : buttonsClothingCategories.buttons) {
 					button.drawButton(mc, mouseX, mouseY);
+					if(!isClothingCategoryEnabled[button.id - 100]) {
+						mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
+						drawTexturedModelRectFromIcon(button.xPosition + 68, button.yPosition, ResourcesCore.iconLock, 16, 16);
+					}
 				}
 			} else if(rightList == 1) {
 				if(buttonsClothingPieces.buttons.size() <= buttonsClothingPieces.size) {
@@ -468,6 +510,10 @@ public class GuiClothingSelector extends GuiScreen {
 				}
 				for(net.minecraft.client.gui.GuiButton button : buttonsClothingPieces.buttons) {
 					button.drawButton(mc, mouseX, mouseY);
+					if(!isClothingEnabled[button.id - 1000]) {
+						mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
+						drawTexturedModelRectFromIcon(button.xPosition + 68, button.yPosition, ResourcesCore.iconLock, 16, 16);
+					}
 				}
 			}
 		}
