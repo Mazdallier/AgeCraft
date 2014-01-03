@@ -200,15 +200,15 @@ public class ClothingUpdater implements Runnable {
 							if(!line.startsWith("#") && line.length() > 1) {
 								String[] split = line.split("=");
 								if(split[0].equals("lockedByDefault")) {
-									category.defaultUnlocked = !Boolean.getBoolean(split[1]);
+									category.defaultUnlocked = split[1].equals("false");
 								} else if(split[0].equals("hideIfLocked")) {
-									category.hideIfLocked = Boolean.getBoolean(split[1]);
+									category.hideIfLocked = split[1].equals("true");
 								} else {
-									String[] clothingSplit = split[0].split(".");
+									String[] clothingSplit = split[0].split("\\.");
 									Clothing clothing = category.clothing.get(ClothingRegistry.getClothingType(clothingSplit[0])).get(clothingSplit[1]);
 									clothing.price = Integer.parseInt(split[1]);
-									clothing.defaultUnlocked = !Boolean.getBoolean(split[2]);
-									clothing.hideIfLocked = Boolean.getBoolean(split[3]);
+									clothing.defaultUnlocked = split[2].equals("false");
+									clothing.hideIfLocked = split[3].equals("true");
 								}
 							}
 						}

@@ -281,7 +281,7 @@ public class GuiClothingSelector extends GuiScreen {
 			updateTempPieceClothing();
 		} else if(button.id == 21) {
 			currentClothingCategory--;
-			while(!playerClothing.hasUnlockedCategory(clothingCategories.get(currentClothingCategory).name) || clothingCategories.get(currentClothingCategory).clothing.get(clothingTypes.get(currentClothingType)).size() <= 0) {
+			while(!playerClothing.hasUnlockedCategory(clothingCategories.get(currentClothingCategory).name) || clothingCategories.get(currentClothingCategory).clothing.get(clothingTypes.get(currentClothingType)) == null || clothingCategories.get(currentClothingCategory).clothing.get(clothingTypes.get(currentClothingType)).size() <= 0) {
 				currentClothingCategory--;
 				if(currentClothingCategory < 0) {
 					currentClothingCategory = clothingCategories.size() - 1;
@@ -304,7 +304,7 @@ public class GuiClothingSelector extends GuiScreen {
 			}
 		} else if(button.id == 23) {
 			currentClothingCategory++;
-			while(!playerClothing.hasUnlockedCategory(clothingCategories.get(currentClothingCategory).name) || clothingCategories.get(currentClothingCategory).clothing.get(clothingTypes.get(currentClothingType)).size() <= 0) {
+			while(!playerClothing.hasUnlockedCategory(clothingCategories.get(currentClothingCategory).name) || clothingCategories.get(currentClothingCategory).clothing.get(clothingTypes.get(currentClothingType)) == null || clothingCategories.get(currentClothingCategory).clothing.get(clothingTypes.get(currentClothingType)).size() <= 0) {
 				currentClothingCategory++;
 				if(currentClothingCategory >= clothingCategories.size()) {
 					currentClothingCategory = 0;
@@ -365,7 +365,7 @@ public class GuiClothingSelector extends GuiScreen {
 			PacketDispatcher.sendPacketToServer(ACPacketHandlerClient.getClothingSelectorPacket(mc.thePlayer.username, clothingPiecesCart));
 			mc.thePlayer.closeScreen();
 		} else if(button.id >= 100 && button.id <= 1000 && rightList == 0) {
-			if(isClothingCategoryEnabled[button.id - 100]) {
+			if(isClothingCategoryEnabled[button.id - 100] && clothingCategories.get(button.id - 100).clothing.get(clothingTypes.get(currentClothingType)) != null && clothingCategories.get(button.id - 100).clothing.get(clothingTypes.get(currentClothingType)).size() > 0) {
 				for(net.minecraft.client.gui.GuiButton b : buttonsClothingCategories.buttons) {
 					((GuiToggleButton) b).toggled = false;
 				}

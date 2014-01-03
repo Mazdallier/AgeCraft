@@ -254,6 +254,8 @@ public class PlayerClothing implements Serializable {
 		clothing.clothingPiecesOwned.putAll(clothingPiecesOwned);
 		clothing.clothingPiecesWorn.putAll(clothingPiecesWorn);
 		clothing.clothingPiecesWornColor.putAll(clothingPiecesWornColor);
+		clothing.unlockedCategories.addAll(unlockedCategories);
+		clothing.unlockedClothing.putAll(unlockedClothing);
 		return clothing;
 	}
 }
