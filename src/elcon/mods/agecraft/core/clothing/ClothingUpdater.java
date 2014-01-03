@@ -191,6 +191,32 @@ public class ClothingUpdater implements Runnable {
 						}
 					}
 				}
+				File configFile = new File(dirs[i], category.name + ".config");
+				if(configFile.exists()) {
+					try {
+						BufferedReader reader = new BufferedReader(new FileReader(configFile));
+						String line = "";
+						while((line = reader.readLine()) != null) {
+							if(!line.startsWith("#") && line.length() > 1) {
+								String[] split = line.split("=");
+								if(split[0].equals("lockedByDefault")) {
+									category.defaultUnlocked = !Boolean.getBoolean(split[1]);
+								} else if(split[0].equals("hideIfLocked")) {
+									category.hideIfLocked = Boolean.getBoolean(split[1]);
+								} else {
+									String[] clothingSplit = split[0].split(".");
+									Clothing clothing = category.clothing.get(ClothingRegistry.getClothingType(clothingSplit[0])).get(clothingSplit[1]);
+									clothing.price = Integer.parseInt(split[1]);
+									clothing.defaultUnlocked = !Boolean.getBoolean(split[2]);
+									clothing.hideIfLocked = Boolean.getBoolean(split[3]);
+								}
+							}
+						}
+						reader.close();
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
 				ACLog.info("[Clothing] Loaded clothing category: " + category.name);
 			}
 			ACLog.info("[Clothing] Loaded " + categoryCount + " categories with " + clothingCount + " clothing pieces with a total of " + colorCount + " colors. (Average: " + (clothingCount == 0 ? 0 : (colorCount / clothingCount)) + " colors/clothing piece)");

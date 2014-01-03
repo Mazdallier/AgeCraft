@@ -10,12 +10,14 @@ public class Clothing {
 	public ClothingCategory category;
 	public boolean[] colors = new boolean[16];
 	public int price;
+	public boolean defaultUnlocked;
 	public boolean hideIfLocked;
 	
 	public Clothing(String name, ClothingType type, ClothingCategory category) {
 		this.name = name;
 		this.type = type;
 		this.category = category;
+		this.defaultUnlocked = true;
 		this.hideIfLocked = false;
 		disableAllColors();
 	}

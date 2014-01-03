@@ -72,22 +72,20 @@ public class PlayerClothing implements Serializable {
 	public PlayerClothing(String player) {
 		this.player = player;
 		
-		//TODO: replace with prehistory for first release
-		unlockedCategories.add("general");
-		LinkedList<String> clothings = new LinkedList<String>();
-		HashMap<ClothingType, HashMap<String, Clothing>> clothing = ClothingRegistry.getClothingCategory("general").clothing;
-		for(HashMap<String, Clothing> value : clothing.values()) {
-			clothings.addAll(value.keySet());
+		for(ClothingCategory category : ClothingRegistry.categories.values()) {
+			if(category.defaultUnlocked) {
+				unlockedCategories.add(category.name);
+				LinkedList<String> clothings = new LinkedList<String>();
+				for(HashMap<String, Clothing> value : category.clothing.values()) {
+					for(Clothing piece : value.values()) {
+						if(piece.defaultUnlocked) {
+							clothings.add(piece.name);
+						}
+					}
+				}
+				unlockedClothing.put(category.name, clothings);
+			}
 		}
-		unlockedClothing.put("general", clothings);
-		
-		unlockedCategories.add("prehistory");
-		clothings = new LinkedList<String>();
-		clothing = ClothingRegistry.getClothingCategory("general").clothing;
-		for(HashMap<String, Clothing> value : clothing.values()) {
-			clothings.addAll(value.keySet());
-		}
-		unlockedClothing.put("prehistory", clothings);
 	}
 	
 	public String getClothingFileName() {
