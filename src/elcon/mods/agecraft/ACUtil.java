@@ -122,7 +122,6 @@ public class ACUtil {
 					if(entity instanceof EntityPlayer) {
 						EntityPlayer entityplayer = (EntityPlayer) entity;
 						entityplayer.addStat(StatList.objectBreakStats[stack.itemID], 1);
-
 						if(stack.stackSize == 0 && stack.getItem() instanceof ItemBow) {
 							entityplayer.destroyCurrentEquippedItem();
 						}

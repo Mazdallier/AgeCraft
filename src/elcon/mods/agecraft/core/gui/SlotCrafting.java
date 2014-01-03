@@ -53,10 +53,9 @@ public class SlotCrafting extends Slot {
 			ItemStack stackInSlot = craftMatrix.getStackInSlot(i);
 			if(stackInSlot != null) {
 				if(stackInSlot.getItem().isDamageable()) {
+					ACUtil.damageItem(stackInSlot, 1, currentPlayer);
 					if(stackInSlot.getItemDamage() > stackInSlot.getMaxDamage()) {
 						stackInSlot = null;
-					} else {
-						ACUtil.damageItem(stackInSlot, 1, currentPlayer);
 					}
 					craftMatrix.setInventorySlotContents(i, stackInSlot);					
 				} else {

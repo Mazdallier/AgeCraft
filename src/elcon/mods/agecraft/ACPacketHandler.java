@@ -409,9 +409,11 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			dos.writeInt(clothing.unlockedCategories.size());
 			for(String category : clothing.unlockedCategories) {
 				dos.writeUTF(category);
-				dos.writeInt(clothing.unlockedClothing.get(category).size());
-				for(String piece : clothing.unlockedClothing.get(category)) {
-					dos.writeUTF(piece);
+				dos.writeInt(clothing.unlockedClothing.get(category) != null ? clothing.unlockedClothing.get(category).size() : 0);
+				if(clothing.unlockedClothing.get(category) != null) { 
+					for(String piece : clothing.unlockedClothing.get(category)) {
+						dos.writeUTF(piece);
+					}
 				}
 			}
 			packet.channel = "ACClothing";
