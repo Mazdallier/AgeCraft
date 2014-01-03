@@ -31,27 +31,22 @@ public class RecipeMicroblocks extends Recipe {
 	}
 
 	public ItemStack getCraftingResult(InventoryCraftMatrix inventory) {
-		System.out.println("HOLLOWING");
 		ItemStack stack = getHollowResult(inventory);
 		if(stack != null) {
 			return stack;
 		}
-		System.out.println("GLUING");
 		stack = getGluingResult(inventory);
 		if(stack != null) {
 			return stack;
 		}
-		System.out.println("THINNING");
 		stack = getThinningResult(inventory);
 		if(stack != null) {
 			return stack;
 		}
-		System.out.println("SPLITTING");
 		stack = getSplittingResult(inventory);
 		if(stack != null) {
 			return stack;
 		}
-		System.out.println("HOLLOWFILLING");
 		stack = getHollowFillResult(inventory);
 		return stack;
 	}
