@@ -48,7 +48,7 @@ public class AgeCraft {
 	public void preInit(FMLPreInitializationEvent event) {
 		minecraftDir = ElConCore.minecraftDir;
 		ECMod mod = new ECMod(ACReference.MOD_ID, ACReference.VERSION, ACReference.VERSION_URL, event.getSourceFile(), event.getSuggestedConfigurationFile(), ACConfig.class, new ACSaveHandler());
-		mod.localizationURLs.add("https://raw.github.com/AgeCraft/AgeCraft/master/clothing-localization.zip");
+		mod.localizationURLs.add("https://raw.github.com/AgeCraft/AgeCraft/master/clothing-localizations.zip");
 		ElConCore.registerMod(ACReference.MOD_ID, mod);
 
 		ACLog.init();
