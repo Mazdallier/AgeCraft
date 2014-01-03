@@ -5,6 +5,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
+import elcon.mods.agecraft.ACUtil;
 
 public class SlotCrafting extends Slot {
 
@@ -51,19 +52,28 @@ public class SlotCrafting extends Slot {
 		for(int i = 0; i < craftMatrix.getSizeInventory(); ++i) {
 			ItemStack stackInSlot = craftMatrix.getStackInSlot(i);
 			if(stackInSlot != null) {
-				craftMatrix.decrStackSize(i, 1);
-				if(stackInSlot.getItem().hasContainerItem()) {
-					ItemStack stackContainer = stackInSlot.getItem().getContainerItemStack(stackInSlot);
-					if(stackContainer.isItemStackDamageable() && stackContainer.getItemDamage() > stackContainer.getMaxDamage()) {
-						stackContainer = null;
+				if(stackInSlot.getItem().isDamageable()) {
+					if(stackInSlot.getItemDamage() > stackInSlot.getMaxDamage()) {
+						stackInSlot = null;
+					} else {
+						ACUtil.damageItem(stackInSlot, 1, currentPlayer);
 					}
-					if(stackContainer != null && (!stackInSlot.getItem().doesContainerItemLeaveCraftingGrid(stackInSlot) || !player.inventory.addItemStackToInventory(stackContainer))) {
-						if(craftMatrix.getStackInSlot(i) == null) {
-							craftMatrix.setInventorySlotContents(i, stackContainer);
-						} else {
-							currentPlayer.dropPlayerItem(stackContainer);
+					craftMatrix.setInventorySlotContents(i, stackInSlot);					
+				} else {
+					craftMatrix.decrStackSize(i, 1);
+					if(stackInSlot.getItem().hasContainerItem()) {
+						ItemStack stackContainer = stackInSlot.getItem().getContainerItemStack(stackInSlot);
+						if(stackContainer.isItemStackDamageable() && stackContainer.getItemDamage() > stackContainer.getMaxDamage()) {
+							stackContainer = null;
 						}
-					}
+						if(stackContainer != null && (!stackInSlot.getItem().doesContainerItemLeaveCraftingGrid(stackInSlot) || !player.inventory.addItemStackToInventory(stackContainer))) {
+							if(craftMatrix.getStackInSlot(i) == null) {
+								craftMatrix.setInventorySlotContents(i, stackContainer);
+							} else {
+								currentPlayer.dropPlayerItem(stackContainer);
+							}
+						}
+					} 
 				}
 			}
 		}

@@ -23,6 +23,7 @@ public class RecipesWorkbench {
 	}
 	
 	public static void addRecipes() {
+		recipes.add(new RecipeMicroblocks());
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			if(TreeRegistry.trees[i] != null) {
 				addShapelessRecipe(new ItemStack(Trees.planks.blockID, 4, i), 0, 1, new ItemStack(Trees.wood, 1, i * 4));
@@ -38,6 +39,10 @@ public class RecipesWorkbench {
 				}
 			} else if(recipe instanceof RecipeWorkbenchShapeless) {
 				 if(((RecipeWorkbenchShapeless) recipe).matches(inventory)) {
+					return recipe;
+				}
+			} else if(recipe instanceof RecipeMicroblocks) {
+				if(((RecipeMicroblocks) recipe).matches(inventory)) {
 					return recipe;
 				}
 			}
@@ -66,6 +71,8 @@ public class RecipesWorkbench {
 					return null;
 				}
 				return r.output.copy();
+			} else if(recipe instanceof RecipeMicroblocks) {
+				return ((RecipeMicroblocks) recipe).getCraftingResult(inventory);
 			}
 		}
 		return null;

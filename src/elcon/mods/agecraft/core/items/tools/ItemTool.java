@@ -77,6 +77,11 @@ public abstract class ItemTool extends Item {
 		ACUtil.damageItem(stack, ToolRegistry.tools[getToolType(stack)].damageBlock, entity);
 		return true;
 	}
+	
+	@Override
+	public boolean isDamageable() {
+		return true;
+	}
 
 	@Override
 	public int getMaxDamage(ItemStack stack) {
