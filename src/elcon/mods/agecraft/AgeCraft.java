@@ -18,6 +18,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+import elcon.mods.agecraft.assets.resources.Resources;
 import elcon.mods.agecraft.core.AgeCraftCore;
 import elcon.mods.agecraft.core.RankManager;
 import elcon.mods.agecraft.prehistory.PrehistoryProvider;
@@ -121,5 +122,6 @@ public class AgeCraft {
 		for(ACComponent component : components) {
 			component.postInit();
 		}
+		Resources.instance.postInitCall();
 	}
 }

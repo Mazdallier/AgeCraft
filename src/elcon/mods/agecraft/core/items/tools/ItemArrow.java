@@ -19,6 +19,7 @@ public class ItemArrow extends ItemTool {
 	
 	public ItemArrow(int id) {
 		super(id);
+		setMaxStackSize(64);
 	}
 	
 	@Override

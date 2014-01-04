@@ -62,20 +62,20 @@ public class ACPlayerRender extends PlayerCoreRender {
 					GL11.glEnable(GL11.GL_TEXTURE_2D);
 					GL11.glDepthMask(true);
 					fontRenderer.drawString(label, -fontRenderer.getStringWidth(label) / 2, 0, 553648127);
-					
+
 					if(entity instanceof EntityPlayer && RankManager.getRank(((EntityPlayer) entity).username).name.equals(RankManager.developer.name)) {
 						int halfLabelLength = fontRenderer.getStringWidth(label) / 2;
 						Minecraft.getMinecraft().getTextureManager().bindTexture(ResourcesCore.gear);
 						tessellator.startDrawingQuads();
 						tessellator.setColorRGBA_F(0.0F, 0.0F, 0.0F, 1.0F);
-						//tessellator.setColorRGBA_I(RankManager.getColor(((EntityPlayer) entity).username), 255);
+						// tessellator.setColorRGBA_I(RankManager.getColor(((EntityPlayer) entity).username), 255);
 						tessellator.addVertexWithUV((double) (-halfLabelLength - 10), -0.5D, 0.0D, 0.0D, 0.0D);
 						tessellator.addVertexWithUV((double) (-halfLabelLength - 10), 7.5D, 0.0D, 0.0D, 1.0D);
 						tessellator.addVertexWithUV((double) (-halfLabelLength - 2), 7.5D, 0.0D, 1.0D, 1.0D);
 						tessellator.addVertexWithUV((double) (-halfLabelLength - 2), -0.5D, 0.0D, 1.0D, 0.0D);
 						tessellator.draw();
 					}
-					
+
 					GL11.glEnable(GL11.GL_LIGHTING);
 					GL11.glDisable(GL11.GL_BLEND);
 					GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -139,20 +139,20 @@ public class ACPlayerRender extends PlayerCoreRender {
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			GL11.glDepthMask(true);
 			fontRenderer.drawString(label, -fontRenderer.getStringWidth(label) / 2, b0, -1);
-			
+
 			if(entity instanceof EntityPlayer && RankManager.getRank(((EntityPlayer) entity).username).name.equals(RankManager.developer.name)) {
 				int halfLabelLength = fontRenderer.getStringWidth(label) / 2;
 				Minecraft.getMinecraft().getTextureManager().bindTexture(ResourcesCore.gear);
 				tessellator.startDrawingQuads();
 				tessellator.setColorRGBA_F(0.0F, 0.0F, 0.0F, 1.0F);
-				//tessellator.setColorRGBA_I(RankManager.getColor(((EntityPlayer) entity).username), 255);
+				// tessellator.setColorRGBA_I(RankManager.getColor(((EntityPlayer) entity).username), 255);
 				tessellator.addVertexWithUV((double) (-halfLabelLength - 10), (double) (-0.5D + b0), 0.0D, 0.0D, 0.0D);
 				tessellator.addVertexWithUV((double) (-halfLabelLength - 10), (double) (7.5D + b0), 0.0D, 0.0D, 1.0D);
 				tessellator.addVertexWithUV((double) (-halfLabelLength - 2), (double) (7.5D + b0), 0.0D, 1.0D, 1.0D);
 				tessellator.addVertexWithUV((double) (-halfLabelLength - 2), (double) (-0.5D + b0), 0.0D, 1.0D, 0.0D);
 				tessellator.draw();
 			}
-			
+
 			GL11.glEnable(GL11.GL_LIGHTING);
 			GL11.glDisable(GL11.GL_BLEND);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -160,6 +160,7 @@ public class ACPlayerRender extends PlayerCoreRender {
 		}
 	}
 
+	@Override
 	public FontRenderer getFontRendererFromRenderManager() {
 		return player.getRenderManager().getFontRenderer();
 	}

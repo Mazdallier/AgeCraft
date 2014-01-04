@@ -19,6 +19,7 @@ public class ItemBolt extends ItemTool {
 	
 	public ItemBolt(int id) {
 		super(id);
+		setMaxStackSize(64);
 	}
 	
 	@Override

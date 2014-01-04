@@ -50,6 +50,11 @@ public class ResourcesCore extends Resources {
 	
 	public static ResourceLocation gear = new ResourceLocation("agecraft", "textures/misc/gear.png");
 	
+	public static ResourceLocation[] arrowHeads = new ResourceLocation[ToolRegistry.toolMaterials.length];
+	public static ResourceLocation[] arrowRods = new ResourceLocation[ToolRegistry.toolRodMaterials.length];
+	public static ResourceLocation[] boltHeads = new ResourceLocation[ToolRegistry.toolMaterials.length];
+	public static ResourceLocation[] boltRods = new ResourceLocation[ToolRegistry.toolRodMaterials.length];
+	
 	public static Icon missingTexture;
 	public static Icon emptyTexture;
 	public static Icon iconLock;
@@ -110,7 +115,7 @@ public class ResourcesCore extends Resources {
 					if(metal.hasBlock) {
 						metal.blocks[0] = iconRegister.registerIcon("agecraft:metals/blocks/metals/block" + ECUtil.firstUpperCase(metal.name));
 						metal.blocks[1] = iconRegister.registerIcon("agecraft:metals/blocks/metals/bricks" + ECUtil.firstUpperCase(metal.name));
-						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/metals/smallBricks" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/metals/bricksSmall" + ECUtil.firstUpperCase(metal.name));
 						metal.blocks[3] = iconRegister.registerIcon("agecraft:metals/blocks/metals/blockCircle" + ECUtil.firstUpperCase(metal.name));
 						metal.blockPillar = iconRegister.registerIcon("agecraft:metals/blocks/metals/pillar" + ECUtil.firstUpperCase(metal.name));
 						metal.blockPillarTop = iconRegister.registerIcon("agecraft:metals/blocks/metals/pillarTop" + ECUtil.firstUpperCase(metal.name));
@@ -125,7 +130,7 @@ public class ResourcesCore extends Resources {
 					if(metal.hasBlock) {
 						metal.blocks[0] = iconRegister.registerIcon("agecraft:metals/blocks/gems/block" + ECUtil.firstUpperCase(metal.name));
 						metal.blocks[1] = iconRegister.registerIcon("agecraft:metals/blocks/gems/bricks" + ECUtil.firstUpperCase(metal.name));
-						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/gems/smallBricks" + ECUtil.firstUpperCase(metal.name));
+						metal.blocks[2] = iconRegister.registerIcon("agecraft:metals/blocks/gems/bricksSmall" + ECUtil.firstUpperCase(metal.name));
 						metal.blocks[3] = iconRegister.registerIcon("agecraft:metals/blocks/gems/blockCircle" + ECUtil.firstUpperCase(metal.name));
 						metal.blockPillar = iconRegister.registerIcon("agecraft:metals/blocks/gems/pillar" + ECUtil.firstUpperCase(metal.name));
 						metal.blockPillarTop = iconRegister.registerIcon("agecraft:metals/blocks/gems/pillarTop" + ECUtil.firstUpperCase(metal.name));
@@ -241,11 +246,29 @@ public class ResourcesCore extends Resources {
 			}
 		}
 		
-		
 		//fluids
 		for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
 			if(fluid != null) {
 				registerContainerIcon(fluid.getName(), 0, iconRegister.registerIcon("agecraft:fluids/bucket/" + fluid.getName()));
+			}
+		}
+	}
+	
+	@Override
+	public void postInit() {
+		//arrow
+		for(int i = 0; i < ToolRegistry.toolMaterials.length; i++) {
+			ToolMaterial toolMaterial = ToolRegistry.toolMaterials[i];
+			if(toolMaterial != null) {
+				arrowHeads[i] = new ResourceLocation("agecraft", "textures/entity/arrow/arrowHead" + ECUtil.firstUpperCase(toolMaterial.name));
+				boltHeads[i] = new ResourceLocation("agecraft", "textures/entity/bolt/boltHead" + ECUtil.firstUpperCase(toolMaterial.name));
+			}
+		}
+		for(int i = 0; i < ToolRegistry.toolRodMaterials.length; i++) {
+			ToolRodMaterial toolRodMaterial = ToolRegistry.toolRodMaterials[i];
+			if(toolRodMaterial != null) {
+				arrowRods[i] = new ResourceLocation("agecraft", "textures/entity/arrow/arrowRod" + ECUtil.firstUpperCase(toolRodMaterial.name));
+				boltRods[i] = new ResourceLocation("agecraft", "textures/entity/bolt/boltRod" + ECUtil.firstUpperCase(toolRodMaterial.name));
 			}
 		}
 	}

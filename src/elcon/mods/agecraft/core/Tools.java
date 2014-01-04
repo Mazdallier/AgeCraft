@@ -1,13 +1,17 @@
 package elcon.mods.agecraft.core;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.agecraft.ACComponent;
+import elcon.mods.agecraft.AgeCraft;
 import elcon.mods.agecraft.core.ToolRegistry.Tool;
 import elcon.mods.agecraft.core.ToolRegistry.ToolCreativeEntry;
 import elcon.mods.agecraft.core.ToolRegistry.ToolMaterial;
 import elcon.mods.agecraft.core.ToolRegistry.ToolRodMaterial;
+import elcon.mods.agecraft.core.entity.EntityArrow;
+import elcon.mods.agecraft.core.entity.EntityBolt;
 import elcon.mods.agecraft.core.items.tools.ItemArrow;
 import elcon.mods.agecraft.core.items.tools.ItemAxe;
 import elcon.mods.agecraft.core.items.tools.ItemBattleAxe;
@@ -106,6 +110,10 @@ public class Tools extends ACComponent {
 		GameRegistry.registerItem(arrow, "AC_tools_arrow");
 		GameRegistry.registerItem(bolt, "AC_tools_bolt");
 		GameRegistry.registerItem(fishingRod, "AC_tools_fishingRod");
+		
+		//register entities
+		EntityRegistry.registerModEntity(EntityArrow.class, "Arrow", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 5, true);
+		EntityRegistry.registerModEntity(EntityBolt.class, "Bolt", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 5, true);
 	}
 
 	@Override

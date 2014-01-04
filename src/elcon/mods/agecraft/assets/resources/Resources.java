@@ -28,11 +28,21 @@ public class Resources {
 		}
 	}
 	
+	public void postInitCall() {
+		for(Resources resource : resources) {
+			resource.postInit();
+		}
+	}
+	
 	public void registerBlockIcons(IconRegister iconRegister) {
 		
 	}
 
 	public void registerItemIcons(IconRegister iconRegister) {
+		
+	}
+	
+	public void postInit() {
 		
 	}
 }
