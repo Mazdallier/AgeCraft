@@ -118,6 +118,7 @@ metals.door.full=Full Cut Door
 metals.trapdoor.standard=Trapdoor
 metals.trapdoor.solid=Solid Trapdoor
 metals.ladder=Ladder
+metals.fluid=Fluid
 metals.ingot=Ingot
 metals.gem=Gem
 metals.stick=Stick
@@ -163,6 +164,7 @@ metals.turquoise=Turquoise
 metals.redstone=Redstone
 metals.salt=Salt
 metals.sulphur=Sulphur
+metals.charcoal=Charcoal
 
 tools.type.default=Tool
 tools.type.sword=Sword

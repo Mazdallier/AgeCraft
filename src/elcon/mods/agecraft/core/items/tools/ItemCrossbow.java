@@ -97,7 +97,7 @@ public class ItemCrossbow extends ItemTool {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if(player.capabilities.isCreativeMode || player.inventory.hasItem(Tools.bolt.itemID)) {
+		if(player.capabilities.isCreativeMode || findBolt(player.inventory) >= 0) {
 			int boltSlot = findBolt(player.inventory);
 			ItemStack boltStack = boltSlot >= 0 ? player.inventory.getStackInSlot(boltSlot) : null;
 			NBTTagCompound tag = new NBTTagCompound();

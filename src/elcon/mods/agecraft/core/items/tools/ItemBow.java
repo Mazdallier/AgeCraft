@@ -97,7 +97,7 @@ public class ItemBow extends ItemTool {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if(player.capabilities.isCreativeMode || player.inventory.hasItem(Tools.arrow.itemID)) {
+		if(player.capabilities.isCreativeMode || findArrow(player.inventory) >= 0) {
 			int arrowSlot = findArrow(player.inventory);
 			ItemStack arrowStack = arrowSlot >= 0 ? player.inventory.getStackInSlot(arrowSlot) : null;
 			NBTTagCompound tag = new NBTTagCompound();

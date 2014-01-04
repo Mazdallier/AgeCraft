@@ -137,7 +137,8 @@ public class Metals extends ACComponent {
 		MetalRegistry.registerMetal(new Metal(50, "redstone", OreType.GEM, 3.0F, 5.0F, 5, 5.0F, 10.0F, new ItemStack(dust, 1, 50), 4, 5, true, true, false, true, false, true, 15, 0, 0, 0xE3260C, 8, 8, 0, 26));
 		MetalRegistry.registerMetal(new Metal(51, "salt", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(dust, 1, 51), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xD8D2D4, 12, 12, 20, 128));
 		MetalRegistry.registerMetal(new Metal(52, "sulphur", OreType.GEM, 3.0F, 5.0F, 6, 5.0F, 10.0F, new ItemStack(dust, 1, 52), 1, 1, true, true, false, false, false, true, 0, 0, 0, 0xF4D41F, 12, 12, 20, 128));
-
+		MetalRegistry.registerMetal(new Metal(53, "charcoal", OreType.GEM, 3.0F, 5.0F, 0, 5.0F, 10.0F, new ItemStack(gem, 1, 53), 1, 1, true, false, true, true, false, true, 0, 5, 5, 0x0D0D0D, 16, 15, 0, 128));
+		
 		FluidMetadata[] fluids = new FluidMetadata[MetalRegistry.metals.length];
 		for(int i = 0; i < MetalRegistry.metals.length; i++) {
 			Metal metal = MetalRegistry.metals[i];
@@ -145,7 +146,7 @@ public class Metals extends ACComponent {
 				DustRegistry.registerDust(new Dust(128 + i, metal.name, "metals." + metal.name, new ItemStack(dust.itemID, 1, i)));
 
 				// TODO: set density, viscosity and temperature
-				metal.fluid = (FluidMetadata) new FluidMetadata(metal.name, i).setLuminosity(7).setRarity(EnumRarity.common).setTemperature(1000).setBlockID(fluid);
+				metal.fluid = (FluidMetadata) new FluidMetadata(metal.name, i).setRarity(EnumRarity.common).setLuminosity(7).setTemperature(1000).setBlockID(fluid);
 				fluids[i] = metal.fluid;
 				FluidRegistry.registerFluid(metal.fluid);
 			}
