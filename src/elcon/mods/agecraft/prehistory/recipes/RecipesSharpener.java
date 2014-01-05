@@ -5,13 +5,13 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.prehistory.PrehistoryAge;
-import elcon.mods.agecraft.recipes.Recipe;
+import elcon.mods.agecraft.recipes.RecipeSimple;
 import elcon.mods.agecraft.recipes.RecipeType;
 import elcon.mods.agecraft.recipes.WrappedStack;
 
 public class RecipesSharpener {
 
-	public static class RecipeSharpener extends Recipe {
+	public static class RecipeSharpener extends RecipeSimple {
 
 		public boolean[] input = new boolean[64];
 		public ItemStack output;

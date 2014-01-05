@@ -135,14 +135,14 @@ public class ItemCrossbow extends ItemTool {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public Icon getIcon(ItemStack stack, int renderPass) {
 		Tool tool = ToolRegistry.tools[getToolType(stack)];
 		if(renderPass == 0) {
 			int toolRodMaterial = getToolRodMaterial(stack);
 			if(toolRodMaterial != -1 && icons[toolRodMaterial][0] != null) {
-				EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-				if(player.getItemInUse() != null && ItemStack.areItemStacksEqual(stack, player.getItemInUse())) {
-					int duration = player.getItemInUseDuration();
+				if(Minecraft.getMinecraft().thePlayer.getItemInUse() != null && ItemStack.areItemStacksEqual(stack, Minecraft.getMinecraft().thePlayer.getItemInUse())) {
+					int duration = Minecraft.getMinecraft().thePlayer.getItemInUseDuration();
 					if(duration >= 18) {
 						return icons[toolRodMaterial][3];
 					} else if(duration > 13) {
@@ -159,12 +159,11 @@ public class ItemCrossbow extends ItemTool {
 				return ToolRegistry.toolEnhancementMaterials[toolEnhancement].icons[tool.id];
 			}
 		} else if(renderPass == 2 || renderPass == 3) {
-			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			if(player.getItemInUse() != null && ItemStack.areItemStacksEqual(stack, player.getItemInUse())) {
+			if(Minecraft.getMinecraft().thePlayer.getItemInUse() != null && ItemStack.areItemStacksEqual(stack, Minecraft.getMinecraft().thePlayer.getItemInUse())) {
 				NBTTagCompound tag = stack.getTagCompound().getCompoundTag("Bolt");
 				int toolMaterial = tag.getInteger("Material");
 				int toolRodMaterial = tag.getInteger("RodMaterial");
-				int duration = player.getItemInUseDuration();
+				int duration = Minecraft.getMinecraft().thePlayer.getItemInUseDuration();
 				if(renderPass == 2) {
 					if(duration >= 18) {
 						return ((ItemBolt) Tools.bolt).iconsRod[toolRodMaterial][3];
@@ -188,6 +187,7 @@ public class ItemCrossbow extends ItemTool {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
 		Tool tool = ToolRegistry.tools[getToolType(stack)];
 		if(renderPass == 1) {

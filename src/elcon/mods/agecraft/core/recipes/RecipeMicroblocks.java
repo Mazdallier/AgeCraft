@@ -274,12 +274,12 @@ public class RecipeMicroblocks extends Recipe {
 	}
 
 	@Override
-	public List<WrappedStack> getInput() {
+	public List<List<WrappedStack>> getInputs() {
 		return null;
 	}
 
 	@Override
-	public List<WrappedStack> getOutput() {
+	public List<WrappedStack> getOutput(List<WrappedStack> input) {
 		return null;
 	}
 

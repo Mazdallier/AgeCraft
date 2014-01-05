@@ -6,13 +6,13 @@ import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import elcon.mods.agecraft.ACUtil;
-import elcon.mods.agecraft.recipes.Recipe;
+import elcon.mods.agecraft.recipes.RecipeSimple;
 import elcon.mods.agecraft.recipes.RecipeType;
 import elcon.mods.agecraft.recipes.WrappedStack;
 
 public class RecipesBarrel {
 
-	public static class RecipeBarrel extends Recipe {
+	public static class RecipeBarrel extends RecipeSimple {
 
 		public ItemStack input;
 		public ItemStack output;

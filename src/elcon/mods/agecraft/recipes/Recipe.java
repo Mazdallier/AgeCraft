@@ -8,9 +8,9 @@ public abstract class Recipe {
 		RecipeManager.addRecipe(this);
 	}
 
-	public abstract List<WrappedStack> getInput();
+	public abstract List<List<WrappedStack>> getInputs();
 	
-	public abstract List<WrappedStack> getOutput();
+	public abstract List<WrappedStack> getOutput(List<WrappedStack> input);
 	
 	public abstract RecipeType getRecipeType();
 	

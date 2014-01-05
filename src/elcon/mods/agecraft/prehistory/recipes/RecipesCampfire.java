@@ -10,13 +10,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
-import elcon.mods.agecraft.recipes.Recipe;
+import elcon.mods.agecraft.recipes.RecipeSimple;
 import elcon.mods.agecraft.recipes.RecipeType;
 import elcon.mods.agecraft.recipes.WrappedStack;
 
 public class RecipesCampfire {
 
-	public static class RecipeCampfire extends Recipe {
+	public static class RecipeCampfire extends RecipeSimple {
 		
 		public ItemStack raw;
 		public ItemStack cooked;

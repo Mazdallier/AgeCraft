@@ -9,13 +9,13 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import elcon.mods.agecraft.ACUtil;
 import elcon.mods.agecraft.core.Metals;
-import elcon.mods.agecraft.recipes.Recipe;
+import elcon.mods.agecraft.recipes.RecipeSimple;
 import elcon.mods.agecraft.recipes.RecipeType;
 import elcon.mods.agecraft.recipes.WrappedStack;
 
 public class RecipesSmeltery {
 
-	public static class RecipeSmeltery extends Recipe {
+	public static class RecipeSmeltery extends RecipeSimple {
 
 		public ArrayList<ItemStack> input = new ArrayList<ItemStack>();
 		public ArrayList<FluidStack> output = new ArrayList<FluidStack>();
