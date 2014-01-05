@@ -172,7 +172,7 @@ public class Tools extends ACComponent {
 		}));
 
 		// register tool materials
-		ToolRegistry.registerToolMaterial(new ToolMaterial(127, "stone", "tools.materials.stone", new ItemStack(Block.cobblestone, 1, 0), 138, 1.5F, 2, 1));
+		ToolRegistry.registerToolMaterial(new ToolMaterial(127, "stone", "tools.materials.stone", new ItemStack(Stone.stone, 1, 1), 138, 1.5F, 2, 1));
 		ToolRegistry.registerToolMaterial(new ToolMaterial(128, "copper", "metals.copper", new ItemStack(Metals.ingot, 1, 0), 144, 2.25F, 2, 3));
 		ToolRegistry.registerToolMaterial(new ToolMaterial(130, "bronze", "metals.bronze", new ItemStack(Metals.ingot, 1, 2), 166, 3.0F, 3, 4));
 		ToolRegistry.registerToolMaterial(new ToolMaterial(131, "silver", "metals.silver", new ItemStack(Metals.ingot, 1, 3), 156, 3.75F, 4, 2));
@@ -185,10 +185,30 @@ public class Tools extends ACComponent {
 		ToolRegistry.registerToolMaterial(new ToolMaterial(142, "adamantite", "metals.adamantite", new ItemStack(Metals.ingot, 1, 14), 1411, 8.25F, 10, 10));
 
 		// register tool rod materials
-		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(0, "woodOak", "tools.materials.woodOak", new ItemStack(Trees.stick, 1, 0), 27, 0.25F, 0));
-		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(1, "woodBirch", "tools.materials.woodBirch", new ItemStack(Trees.stick, 1, 1), 27, 0.25F, 0));
-		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(2, "woodSpruce", "tools.materials.woodSpruce", new ItemStack(Trees.stick, 1, 2), 27, 0.25F, 0));
-		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(3, "woodJungle", "tools.materials.woodJungle", new ItemStack(Trees.stick, 1, 3), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(0, "woodAcacia", "tools.materials.woodAcacia", new ItemStack(Trees.stick, 1, 0), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(1, "woodAlder", "tools.materials.woodAlder", new ItemStack(Trees.stick, 1, 1), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(2, "woodBeech", "tools.materials.woodBeech", new ItemStack(Trees.stick, 1, 2), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(3, "woodBirch", "tools.materials.woodBirch", new ItemStack(Trees.stick, 1, 3), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(4, "woodBuckeye", "tools.materials.woodBuckeye", new ItemStack(Trees.stick, 1, 4), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(5, "woodCherryBlossom", "tools.materials.woodCherryBlossom", new ItemStack(Trees.stick, 1, 5), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(6, "woodConiferous", "tools.materials.woodConiferous", new ItemStack(Trees.stick, 1, 6), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(7, "woodDarkOak", "tools.materials.woodDarkOak", new ItemStack(Trees.stick, 1, 7), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(8, "woodDogwood", "tools.materials.woodDogwood", new ItemStack(Trees.stick, 1, 8), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(9, "woodElm", "tools.materials.woodElm", new ItemStack(Trees.stick, 1, 9), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(10, "woodEucalyptus", "tools.materials.woodEucalyptus", new ItemStack(Trees.stick, 1, 10), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(11, "woodFir", "tools.materials.woodFir", new ItemStack(Trees.stick, 1, 11), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(12, "woodFilbert", "tools.materials.woodFilbert", new ItemStack(Trees.stick, 1, 12), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(13, "woodJungle", "tools.materials.woodJungle", new ItemStack(Trees.stick, 1, 13), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(14, "woodMaple", "tools.materials.woodMaple", new ItemStack(Trees.stick, 1, 14), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(15, "woodOak", "tools.materials.woodOak", new ItemStack(Trees.stick, 1, 16), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(16, "woodPalm", "tools.materials.woodPalm", new ItemStack(Trees.stick, 1, 16), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(17, "woodPine", "tools.materials.woodPine", new ItemStack(Trees.stick, 1, 17), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(18, "woodPoplar", "tools.materials.woodPoplar", new ItemStack(Trees.stick, 1, 18), 27, 0.25F, 0));		
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(19, "woodSpruce", "tools.materials.woodSpruce", new ItemStack(Trees.stick, 1, 19), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(20, "woodTupelo", "tools.materials.woodTupelo", new ItemStack(Trees.stick, 1, 20), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(21, "woodWillow", "tools.materials.woodWillow", new ItemStack(Trees.stick, 1, 21), 27, 0.25F, 0));		
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(22, "woodYew", "tools.materials.woodYew", new ItemStack(Trees.stick, 1, 22), 27, 0.25F, 0));
+		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(23, "woodYellow", "tools.materials.woodYellow", new ItemStack(Trees.stick, 1, 23), 27, 0.25F, 0));
 
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(128, "copper", "metals.copper", new ItemStack(Metals.stick, 1, 0), 92, 0.75F, 1));
 		ToolRegistry.registerToolRodMaterial(new ToolRodMaterial(130, "bronze", "metals.bronze", new ItemStack(Metals.stick, 1, 2), 111, 1.0F, 2));

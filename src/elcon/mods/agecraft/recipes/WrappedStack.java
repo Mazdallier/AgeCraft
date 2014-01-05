@@ -158,12 +158,16 @@ public class WrappedStack implements Comparable<WrappedStack> {
 	}
 
 	public static boolean canBeWrapped(Object object) {
-		if(object instanceof Item || object instanceof Block || object instanceof ItemStack) {
+		if(object instanceof Item || object instanceof Block) {
 			return true;
-		} else if(object instanceof Fluid || object instanceof FluidStack) { 
+		} else if(object instanceof ItemStack) {
+			return ((ItemStack) object).stackSize > 0;
+		} else if(object instanceof Fluid) { 
 			return true;
+		} else if(object instanceof FluidStack) {
+			return ((FluidStack) object).amount > 0;
 		} else if(object instanceof WrappedStack) {
-			return true;
+			return ((WrappedStack) object).getStackSize() > 0;
 		}
 		return false;
 	}

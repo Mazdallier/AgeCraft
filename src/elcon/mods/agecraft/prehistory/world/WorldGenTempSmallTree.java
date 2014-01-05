@@ -16,7 +16,7 @@ public class WorldGenTempSmallTree extends WorldGenerator {
 		if(world.isBlockSolidOnSide(x, y - 1, z, ForgeDirection.UP)) {
 			world.setBlock(x, y - 1, z, Block.grass.blockID, 0, 0);
 			
-			int treeType = random.nextInt(4);
+			int treeType = random.nextInt(24);
 			TileEntityMetadata tile = new TileEntityMetadata();
 			tile.setTileMetadata(treeType);
 			world.setBlock(x, y, z, Trees.log.blockID, 0, 0);

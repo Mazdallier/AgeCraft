@@ -23,6 +23,7 @@ public class RecipesWorkbench {
 	}
 	
 	public static void addRecipes() {
+		recipes.add(new RecipeTools());
 		recipes.add(new RecipeMicroblocks());
 		for(int i = 0; i < TreeRegistry.trees.length; i++) {
 			if(TreeRegistry.trees[i] != null) {
@@ -39,6 +40,10 @@ public class RecipesWorkbench {
 				}
 			} else if(recipe instanceof RecipeWorkbenchShapeless) {
 				 if(((RecipeWorkbenchShapeless) recipe).matches(inventory)) {
+					return recipe;
+				}
+			} else if(recipe instanceof RecipeTools) {
+				if(((RecipeTools) recipe).matches(inventory)) {
 					return recipe;
 				}
 			} else if(recipe instanceof RecipeMicroblocks) {
@@ -71,6 +76,8 @@ public class RecipesWorkbench {
 					return null;
 				}
 				return r.output.copy();
+			} else if(recipe instanceof RecipeTools) {
+				return ((RecipeTools) recipe).getCraftingResult(inventory);
 			} else if(recipe instanceof RecipeMicroblocks) {
 				return ((RecipeMicroblocks) recipe).getCraftingResult(inventory);
 			}

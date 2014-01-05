@@ -43,7 +43,7 @@ import elcon.mods.core.items.ItemBlockName;
 
 public class Trees extends ACComponent {
 
-	public static final int MAX_TREE_TYPE = 3;
+	public static final int MAX_TREE_TYPE = 23;
 	
 	public static final int MAX_BIOME_TYPE = 22;
 	
