@@ -230,7 +230,7 @@ public class Tools extends ACComponent {
 						if(ToolRegistry.toolMaterials[j] != null) {
 							if(tool.hasRod) {
 								if(j == 127) {
-									ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, 0, -1));
+									ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, 15, -1));
 								} else {
 									ToolRegistry.registerToolCreativeEntry(new ToolCreativeEntry(i, j, j, -1));
 								}

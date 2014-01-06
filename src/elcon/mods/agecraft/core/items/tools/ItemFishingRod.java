@@ -19,6 +19,12 @@ public class ItemFishingRod extends ItemTool {
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldRotateAroundWhenRendering() {
+		return true;
+	}
+	
+	@Override
 	public Icon getIcon(ItemStack stack, int pass) {
 		Tool tool = ToolRegistry.tools[getToolType(stack)];
 		if(pass == 1) {

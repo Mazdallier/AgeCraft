@@ -1,9 +1,8 @@
 package elcon.mods.agecraft.core.recipes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -39,23 +38,22 @@ public class RecipeTools extends Recipe {
 		patterns.put("___M__R__", 9);
 		patterns.put("____M__R_", 9);
 		patterns.put("_____M__R", 9);
-		//TODO: check recipes 13 and 14
 		patterns.put("MM__R____", 13);
 		patterns.put("_MM__R___", 13);
 		patterns.put("___MM__R_", 13);
-		patterns.put("____MM_R_", 13);
-		patterns.put("_MM_R____", 13);
-		patterns.put("__MM_R___", 13);
-		patterns.put("____MM_R_", 13);
 		patterns.put("____MM__R", 13);
-		patterns.put("M___R____", 14);
-		patterns.put("_M___R___", 14);
-		patterns.put("___M___R_", 14);
-		patterns.put("____M__R_", 14);
-		patterns.put("__M_R____", 14);
-		patterns.put("___M_R___", 14);
-		patterns.put("_____M_R_", 14);
-		patterns.put("____M___R", 14);	
+		patterns.put("MM_R_____", 13);
+		patterns.put("_MM_R____", 13);
+		patterns.put("___MM_R__", 13);
+		patterns.put("____MM_R_", 13);
+		patterns.put("M___R____", 13);
+		patterns.put("_M___R___", 13);
+		patterns.put("___M___R_", 13);
+		patterns.put("____M___R", 13);
+		patterns.put("_M_R_____", 13);
+		patterns.put("__M_R____", 13);
+		patterns.put("____M_R__", 13);
+		patterns.put("_____M_R_", 13);
 		patterns.put("M__R__F__", 20);
 		patterns.put("_M__R__F_", 20);
 		patterns.put("__M__R__F", 20);
@@ -123,8 +121,8 @@ public class RecipeTools extends Recipe {
 	}
 	
 	@Override
-	public List<List<WrappedStack>> getInputs() {
-		ArrayList<List<WrappedStack>> list = new ArrayList<List<WrappedStack>>();
+	public Map<List<WrappedStack>, List<WrappedStack>> getRecipes() {
+		HashMap<List<WrappedStack>, List<WrappedStack>> map = new HashMap<List<WrappedStack>, List<WrappedStack>>();
 		boolean[] done = new boolean[ToolRegistry.tools.length];
 		for(String pattern : patterns.keySet()) {
 			if(!done[patterns.get(pattern)]) {
@@ -143,18 +141,14 @@ public class RecipeTools extends Recipe {
 				}
 				for(int i = 0; i < TreeRegistry.trees.length; i++) {
 					if(TreeRegistry.trees[i] != null) {
-						list.add(WrappedStack.createList(Arrays.asList(new ItemStack(Stone.stone.blockID, materials, 1), new ItemStack(Trees.stick.itemID, rodMaterials, i), new ItemStack(Item.feather.itemID, feathers, 0))));
+						//TODO: add input and output to the map
+						//list.add(WrappedStack.createList(Arrays.asList(new ItemStack(Stone.stone.blockID, materials, 1), new ItemStack(Trees.stick.itemID, rodMaterials, i), new ItemStack(Item.feather.itemID, feathers, 0))));
 					}
 				}
 				done[patterns.get(pattern)] = true;
 			}
 		}
-		return list;
-	}
-
-	@Override
-	public List<WrappedStack> getOutput(List<WrappedStack> input) {
-		return null;
+		return map;
 	}
 
 	@Override

@@ -1,18 +1,16 @@
 package elcon.mods.agecraft.recipes;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class RecipeSimple extends Recipe {
 
 	@Override
-	public List<List<WrappedStack>> getInputs() {
-		return Arrays.asList(getInput());
-	}
-	
-	@Override
-	public List<WrappedStack> getOutput(List<WrappedStack> input) {
-		return getOutput();
+	public Map<List<WrappedStack>, List<WrappedStack>> getRecipes() {
+		HashMap<List<WrappedStack>, List<WrappedStack>> map = new HashMap<List<WrappedStack>, List<WrappedStack>>();
+		map.put(getInput(), getOutput());
+		return map;
 	}
 
 	public abstract List<WrappedStack> getInput();

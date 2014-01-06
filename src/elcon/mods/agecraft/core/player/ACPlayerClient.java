@@ -55,7 +55,7 @@ public class ACPlayerClient extends PlayerCoreClient {
 				if(j > 0) {
 					return Item.bow.getItemIconForUseDuration(0);
 				}
-			}
+			}		
 			icon = stack.getItem().getIcon(stack, renderPass, player, player.getItemInUse(), player.getItemInUseCount());
 		}
 		return icon;

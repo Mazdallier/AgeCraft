@@ -50,8 +50,6 @@ public class MetalRegistry {
 		public Icon nugget;
 		public Icon dust;
 		public Icon bucket;
-		public Icon fluidStill;
-		public Icon fluidFlowing;
 		
 		public FluidMetadata fluid;
 		

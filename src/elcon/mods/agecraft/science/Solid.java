@@ -37,6 +37,6 @@ public class Solid {
 	}
 	
 	public static void registerSolids() {
-		registerSolid(new Solid("water", new ItemStack(Block.ice), 0.9167));
+		registerSolid(new Solid("water", new ItemStack(Block.ice), 0.917));
 	}
 }

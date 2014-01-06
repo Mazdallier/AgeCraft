@@ -36,6 +36,6 @@ public class Gas {
 	}
 	
 	public static void registerGasses() {
-		registerGas(new Gas("water", null, 0.804));
+		registerGas(new Gas("water", null, 0.598));
 	}
 }

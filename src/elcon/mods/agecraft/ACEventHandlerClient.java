@@ -38,11 +38,22 @@ public class ACEventHandlerClient {
 				enumaction = stack.getItemUseAction();
 			}
 			IItemRenderer customRenderer = MinecraftForgeClient.getItemRenderer(stack, EQUIPPED);
-			GL11.glTranslatef(0.0F, 0.125F, 0.3125F);
-			GL11.glRotatef(-20.0F, 0.0F, 1.0F, 0.0F);
-			GL11.glScalef(0.625F, -0.625F, 0.625F);
-			GL11.glRotatef(-100.0F, 1.0F, 0.0F, 0.0F);
-			GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
+			if(stack.itemID == Tools.bow.itemID) {
+				GL11.glTranslatef(0.0F, 0.125F, 0.3125F);
+				GL11.glRotatef(-20.0F, 0.0F, 1.0F, 0.0F);
+				GL11.glScalef(0.625F, -0.625F, 0.625F);
+				GL11.glRotatef(-100.0F, 1.0F, 0.0F, 0.0F);
+				GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
+			} else if(stack.itemID == Tools.crossbow.itemID) {
+				GL11.glRotatef(95.0F, 0.0F, 1.0F, 0.0F);
+				GL11.glTranslatef(0.15F, 0.17F, 0.1F);
+				
+				GL11.glTranslatef(0.0F, 0.125F, 0.3125F);
+				GL11.glRotatef(-8.0F, 0.0F, 1.0F, 0.0F);
+				GL11.glScalef(0.625F, -0.625F, 0.625F);
+				GL11.glRotatef(-109.0F, 1.0F, 0.0F, 0.0F);
+				GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
+			}
 			if(stack.getItem().requiresMultipleRenderPasses()) {
 				for(int i = 0; i < stack.getItem().getRenderPasses(stack.getItemDamage()); i++) {
 					int color = stack.getItem().getColorFromItemStack(stack, i);

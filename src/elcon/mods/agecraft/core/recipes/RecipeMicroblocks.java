@@ -3,6 +3,7 @@ package elcon.mods.agecraft.core.recipes;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.item.ItemStack;
 import scala.Tuple2;
@@ -274,12 +275,7 @@ public class RecipeMicroblocks extends Recipe {
 	}
 
 	@Override
-	public List<List<WrappedStack>> getInputs() {
-		return null;
-	}
-
-	@Override
-	public List<WrappedStack> getOutput(List<WrappedStack> input) {
+	public Map<List<WrappedStack>, List<WrappedStack>> getRecipes() {
 		return null;
 	}
 
