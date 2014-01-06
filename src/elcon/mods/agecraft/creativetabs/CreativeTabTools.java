@@ -27,7 +27,7 @@ public class CreativeTabTools extends CreativeTabs {
 		NBTTagCompound nbt2 = new NBTTagCompound();
 		nbt2.setInteger("Type", 0);
 		nbt2.setInteger("Material", 127);
-		nbt2.setInteger("RodMaterial", 0);
+		nbt2.setInteger("RodMaterial", 15);
 		nbt2.setInteger("EnhancementMaterial", 0);
 		nbt.setTag("Tool", nbt2);
 		stack.setTagCompound(nbt);

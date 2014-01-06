@@ -21,6 +21,6 @@ public class CreativeTabWood extends CreativeTabs {
 
 	@Override
 	public ItemStack getIconItemStack() {
-		return new ItemStack(Trees.wood, 1, 0);
+		return new ItemStack(Trees.wood, 1, 60);
 	}
 }

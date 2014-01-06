@@ -4,6 +4,7 @@ itemGroup.Metals=Metals
 itemGroup.Wood=Wood
 itemGroup.Tools=Tools
 itemGroup.Armor=Armor
+itemGroup.Crafting=Crafting
 
 itemGroup.Prehistory=Prehistory
 itemGroup.Agriculture=Agriculture

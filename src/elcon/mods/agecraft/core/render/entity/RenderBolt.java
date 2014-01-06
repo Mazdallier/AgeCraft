@@ -10,16 +10,15 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import elcon.mods.agecraft.assets.resources.ResourcesCore;
-import elcon.mods.agecraft.core.entity.EntityArrow;
 import elcon.mods.agecraft.core.entity.EntityBolt;
 
 public class RenderBolt extends Render {
 
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float f1, float f2) {
-		bindTexture(getBoltHeadTexture((EntityArrow) entity));
+		bindTexture(getBoltHeadTexture((EntityBolt) entity));
 		renderBolt((EntityBolt) entity, x, y, z, f1, f2);
-		bindTexture(getBoltRodTexture((EntityArrow) entity));
+		bindTexture(getBoltRodTexture((EntityBolt) entity));
 		renderBolt((EntityBolt) entity, x, y, z, f1, f2);
 	}
 
@@ -62,7 +61,7 @@ public class RenderBolt extends Render {
 		tessellator.addVertexWithUV(-7.0D, -2.0D, 2.0D, (double) u2, (double) v2);
 		tessellator.addVertexWithUV(-7.0D, -2.0D, -2.0D, (double) u1, (double) v2);
 		tessellator.draw();
-		for(int i = 0; i < 4; ++i) {
+		/*for(int i = 0; i < 4; ++i) {
 			GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
 			GL11.glNormal3f(0.0F, 0.0F, f3);
 			tessellator.startDrawingQuads();
@@ -71,16 +70,16 @@ public class RenderBolt extends Render {
 			tessellator.addVertexWithUV(8.0D, 2.0D, 0.0D, (double) u4, (double) v4);
 			tessellator.addVertexWithUV(-8.0D, 2.0D, 0.0D, (double) u3, (double) v4);
 			tessellator.draw();
-		}
+		}*/
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		GL11.glPopMatrix();
 	}
 
-	public ResourceLocation getBoltHeadTexture(EntityArrow entity) {
+	public ResourceLocation getBoltHeadTexture(EntityBolt entity) {
 		return ResourcesCore.boltHeads[entity.getMaterial()];
 	}
 
-	public ResourceLocation getBoltRodTexture(EntityArrow entity) {
+	public ResourceLocation getBoltRodTexture(EntityBolt entity) {
 		return ResourcesCore.boltRods[entity.getRodMaterial()];
 	}
 

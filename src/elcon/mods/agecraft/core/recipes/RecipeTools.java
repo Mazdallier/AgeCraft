@@ -1,5 +1,6 @@
 package elcon.mods.agecraft.core.recipes;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,8 +142,16 @@ public class RecipeTools extends Recipe {
 				}
 				for(int i = 0; i < TreeRegistry.trees.length; i++) {
 					if(TreeRegistry.trees[i] != null) {
-						//TODO: add input and output to the map
-						//list.add(WrappedStack.createList(Arrays.asList(new ItemStack(Stone.stone.blockID, materials, 1), new ItemStack(Trees.stick.itemID, rodMaterials, i), new ItemStack(Item.feather.itemID, feathers, 0))));
+						ItemStack output = new ItemStack(ToolRegistry.tools[patterns.get(pattern)].item.itemID, 1, 0);
+						NBTTagCompound nbt = new NBTTagCompound();
+						NBTTagCompound tag = new NBTTagCompound();
+						tag.setInteger("Type", patterns.get(pattern));
+						tag.setInteger("Material", 127);
+						tag.setInteger("RodMaterial", i);
+						tag.setInteger("EnhancementMaterial", 0);
+						nbt.setCompoundTag("Tool", tag);
+						output.setTagCompound(nbt);
+						map.put(WrappedStack.createList(Arrays.asList(new ItemStack(Stone.stone.blockID, materials, 1), new ItemStack(Trees.stick.itemID, rodMaterials, i), new ItemStack(Item.feather.itemID, feathers, 0))), WrappedStack.createList(output));
 					}
 				}
 				done[patterns.get(pattern)] = true;

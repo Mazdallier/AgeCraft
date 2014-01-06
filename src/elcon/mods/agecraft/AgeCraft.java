@@ -122,6 +122,8 @@ public class AgeCraft {
 		for(ACComponent component : components) {
 			component.postInit();
 		}
-		Resources.instance.postInitCall();
+		if(Resources.instance != null) {
+			Resources.instance.postInitCall();
+		}
 	}
 }

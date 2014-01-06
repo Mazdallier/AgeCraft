@@ -21,6 +21,6 @@ public class CreativeTabCrafting extends CreativeTabs {
 
 	@Override
 	public ItemStack getIconItemStack() {
-		return new ItemStack(Crafting.workbench, 1, 0);
+		return new ItemStack(Crafting.workbench, 1, 15);
 	}
 }

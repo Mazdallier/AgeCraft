@@ -3,6 +3,7 @@ package elcon.mods.agecraft.core.recipes;
 import java.util.LinkedList;
 
 import net.minecraft.item.ItemStack;
+import elcon.mods.agecraft.core.Stone;
 import elcon.mods.agecraft.core.TreeRegistry;
 import elcon.mods.agecraft.core.Trees;
 import elcon.mods.agecraft.core.gui.InventoryCraftMatrix;
@@ -29,6 +30,12 @@ public class RecipesWorkbench {
 			if(TreeRegistry.trees[i] != null) {
 				addShapelessRecipe(new ItemStack(Trees.planks.blockID, 4, i), 0, 1, new ItemStack(Trees.wood, 1, i * 4));
 			}
+		}
+		addShapelessRecipe(new ItemStack(Stone.stone.blockID, 1, 1), 1, 0, new ItemStack(Stone.stone.blockID, 1, 0));
+		addShapelessRecipe(new ItemStack(Stone.stoneBrick.blockID, 1, 1), 1, 0, new ItemStack(Stone.stoneBrick.blockID, 1, 0));
+		for(int i = 0; i < 16; i++) {
+			addShapelessRecipe(new ItemStack(Stone.coloredStoneCracked.blockID, 1, i), 1, 0, new ItemStack(Stone.coloredStone.blockID, 1, i));
+			addShapelessRecipe(new ItemStack(Stone.coloredStoneBrick.blockID, 1, 1 + i* 8), 1, 0, new ItemStack(Stone.coloredStoneBrick.blockID, 1, i * 8));
 		}
 	}
 	
