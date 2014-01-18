@@ -13,6 +13,4 @@ public class ACReference {
     public static final String CLIENT_PROXY_CLASS = "elcon.mods.agecraft.ACClientProxy";
     
     public static final String VERSION_URL = "https://raw.github.com/AgeCraft/AgeCraft/master/version.xml";
-    
-    public static final int SECOND_IN_TICKS = 20;
 }
