@@ -406,7 +406,7 @@ public class ACPacketHandler implements IPacketHandler, IConnectionHandler {
 			Packet250CustomPayload packet = new Packet250CustomPayload();
 			dos.writeInt(8);
 			PlayerClothing clothing = PlayerClothingServer.getPlayerClothing(username);
-			dos.writeInt(clothing.unlockedCategories.size());
+			dos.writeInt(clothing.unlockedCategories != null ? clothing.unlockedCategories.size() : 0);
 			for(String category : clothing.unlockedCategories) {
 				dos.writeUTF(category);
 				dos.writeInt(clothing.unlockedClothing.get(category) != null ? clothing.unlockedClothing.get(category).size() : 0);
