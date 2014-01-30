@@ -1,6 +1,29 @@
-/*.bat
-/buid/
-/releases/
-/build_number.properties
-/agecraft-keystore
-/private.properties
+## Gralde
+/.gradle
+/build
+/gradle
+/gradlew
+/gradlew.bat
+
+## ForgeGradle
+/run
+
+## Eclipse
+/eclipse
+/.settings
+/.metadata
+/.classpath
+/.project
+/bin
+
+## IntelliJ
+/out
+/.idea
+/*.iml
+/*.ipr
+/*.iws
+/atlassian-ide-plugin.xml
+
+## Project
+/lib
+/releases
