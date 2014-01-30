@@ -42,6 +42,12 @@ processResources {
         
         expand 'version': project.config.mod_version, 'mcversion': project.config.minecraft_version, 'buildnumber': "${System.getenv().BUILD_NUMBER}"
     }
+	
+	from(sourceSets.main.java.srcDirs) {
+        include 'ACReference.java'
+        
+        expand 'version': project.config.mod_version, 'mcversion': project.config.minecraft_version, 'buildnumber': "${System.getenv().BUILD_NUMBER}"
+    }
     
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
