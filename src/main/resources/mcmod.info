@@ -3,7 +3,7 @@
   "modid": "AgeCraft",
   "name": "AgeCraft",
   "description": "Agecraft adds ages and evolution to Minecraft.",
-  "version": "@VERSION@",
+  "version": "${version}",
   "url": "http://www.minecraftforum.net/topic/1571244-",
   "updateUrl": "",
   "authorList": [
