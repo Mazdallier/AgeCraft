@@ -62,3 +62,14 @@ task release(type: Copy) {
 		logger.ino "copying ${file}"
 	}
 }
+
+task cleanJenkins(type: Delete) {
+	delete 'packages'
+}
+
+task jenkins(type: Copy) {
+	dependsOn cleanJenkins
+
+	from project.tasks.jar.destinationDir
+	into project.file(config.jenkins_location.replace('{NAME}', config.mod_name).replace('{MC}', config.minecraft_version).replace('{MODVER}', config.mod_version).replace('{BUILD}', "${System.getenv().BUILD_NUMBER}"))
+}
