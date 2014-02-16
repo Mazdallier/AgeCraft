@@ -1,0 +1,20 @@
+[
+{
+  "modid": "AgeCraft",
+  "name": "AgeCraft",
+  "description": "Agecraft adds ages and evolution to Minecraft.",
+  "version": "${version}",
+  "url": "http://www.minecraftforum.net/topic/1571244-",
+  "updateUrl": "",
+  "authorList": [
+    "ElConquistador"
+  ],
+  "credits": "AgeCraft Team",
+  "logoFile": "/assets/agecraft/textures/logo/logo.png",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]

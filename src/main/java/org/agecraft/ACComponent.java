@@ -1,12 +1,28 @@
 package org.agecraft;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
 
-public class ACComponent {
+import elcon.mods.elconqore.EQUtil;
+import elcon.mods.elconqore.network.EQCodec;
+import elcon.mods.elconqore.network.EQMessage;
+import elcon.mods.elconqore.network.EQPacketHandler;
 
-	public ACComponent() {
-		AgeCraft.instance.components.add(this);
+public abstract class ACComponent {
+
+	public static ArrayList<ACComponent> components = new ArrayList<ACComponent>();
+	
+	public String name;
+	
+	public EQPacketHandler<EQMessage> packetHandler;
+	
+	public ACComponent(String name, boolean hasPacketHandler) {
+		this.name = name;
+		
+		if(hasPacketHandler) {
+			packetHandler = new EQPacketHandler<EQMessage>("AgeCraft-" + EQUtil.firstUpperCase(name), new EQCodec(getMessages()));
+		}
+			
+		components.add(this);
 	}
 
 	public void preInit() {
@@ -21,16 +37,7 @@ public class ACComponent {
 
 	}
 	
-	public String firstCaps(String s) {
-		return Character.toString(s.charAt(0)).toUpperCase() + s.substring(1, s.length());
-	}
-	
-	public IACPacketHandler getPacketHandler() {
-		return null;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public IACPacketHandlerClient getPacketHandlerClient() {
-		return null;
+	public Class<? extends EQMessage>[] getMessages() {
+		return new Class[]{};
 	}
 }

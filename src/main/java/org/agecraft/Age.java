@@ -2,10 +2,12 @@ package org.agecraft;
 
 import org.agecraft.prehistory.PrehistoryAge;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.elconqore.EQUtil;
+import elcon.mods.elconqore.network.EQCodec;
+import elcon.mods.elconqore.network.EQMessage;
+import elcon.mods.elconqore.network.EQPacketHandler;
 
-public class Age {
+public abstract class Age {
 
 	public static Age[] ages = new Age[32];
 	
@@ -23,31 +25,25 @@ public class Age {
 	public int ageID;
 	public String ageName;
 	
+	public EQPacketHandler<EQMessage> packetHandler;
+	
 	public Age(int id, String name) {
 		ageID = id;
 		ageName = name;
+		
+		packetHandler = new EQPacketHandler<EQMessage>("AgeCraft-" + EQUtil.firstUpperCase(ageName), new EQCodec(getMessages()));
 		
 		ages[ageID] = this;
 	}
 	
 	public void preInit() {
-		
 	}
 	
 	public void init() {
-		
 	}
 	
 	public void postInit() {
-		
 	}
 	
-	public IACPacketHandler getPacketHandler() {
-		return null;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public IACPacketHandlerClient getPacketHandlerClient() {
-		return null;
-	}
+	public abstract Class<? extends EQMessage>[] getMessages();
 }

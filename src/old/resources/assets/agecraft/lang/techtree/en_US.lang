@@ -1,0 +1,21 @@
+techtree.name=Technology Tree
+techtree.locked=Unkown Technology
+techtree.unlocked=Discovered Technology
+techtree.popup=Technology Discovered!
+
+techtree.general.name=General
+
+techtree.general.paper.name=Paper
+techtree.general.paper.description=Paper is needed for books
+techtree.general.planks.name=Planks
+techtree.general.planks.description=Planks are needed for the bookshelf frame.
+techtree.general.book.name=Book
+techtree.general.book.description=Books can be put into bookshelves.
+techtree.general.bookShelf.name=Bookshelves
+techtree.general.bookShelf.description=Bookshelves contain create knowledge
+techtree.general.enchantmentTable.name=Enchantment Table
+techtree.general.enchantmentTable.description=Enchanting requires knowledge.
+techtree.general.enchantedBook.name=Enchanted Book
+techtree.general.enchantedBook.description=Enchanting, success!
+techtree.general.expBottle.name=Experience Bottle
+techtree.general.expBottle.description=Exp o' bottle
