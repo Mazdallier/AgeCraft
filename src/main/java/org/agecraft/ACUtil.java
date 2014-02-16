@@ -64,7 +64,7 @@ public class ACUtil {
 	public static boolean areItemStacksDamageEqual(ItemStack stack1, ItemStack stack2) {
 		return stack1.getItemDamage() == OreDictionary.WILDCARD_VALUE || stack2.getItemDamage() == OreDictionary.WILDCARD_VALUE || stack1.getItemDamage() == stack2.getItemDamage();
 	}
-	
+
 	public static int compareItemStacks(ItemStack stack1, ItemStack stack2) {
 		if(stack1 != null && stack2 != null) {
 			if(Item.getIdFromItem(stack1.getItem()) != Item.getIdFromItem(stack2.getItem())) {

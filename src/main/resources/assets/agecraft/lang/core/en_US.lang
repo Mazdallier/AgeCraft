@@ -9,6 +9,10 @@ itemGroup.Crafting=Crafting
 itemGroup.Prehistory=Prehistory
 itemGroup.Agriculture=Agriculture
 
+age.name=Age
+age.enter=Entering the %s Age
+age.leave=Leaving the %s Age
+
 gui.done=Done
 gui.cancel=Cancel
 gui.open=Open

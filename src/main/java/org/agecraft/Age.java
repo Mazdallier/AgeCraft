@@ -1,5 +1,9 @@
 package org.agecraft;
 
+import net.minecraft.world.World;
+import net.minecraft.world.biome.WorldChunkManager;
+import net.minecraft.world.chunk.IChunkProvider;
+
 import org.agecraft.prehistory.PrehistoryAge;
 
 import cpw.mods.fml.relauncher.Side;
@@ -48,9 +52,13 @@ public abstract class Age {
 
 	public void postInit() {
 	}
-
-	public abstract Class<? extends EQMessage>[] getMessages();
 	
 	@SideOnly(Side.CLIENT)
 	public abstract AgeClient getAgeClient();
+	
+	public abstract Class<? extends EQMessage>[] getMessages();
+
+	public abstract WorldChunkManager getWorldChunkManager(World world);
+
+	public abstract IChunkProvider getChunkProvider(World world);
 }
