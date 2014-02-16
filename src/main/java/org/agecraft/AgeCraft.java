@@ -1,5 +1,6 @@
 package org.agecraft;
 
+import org.agecraft.core.AgeCraftCore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +30,9 @@ public class AgeCraft {
 		EQMod mod = new EQMod(this, ACReference.VERSION_URL, new ACConfig(event.getSuggestedConfigurationFile()), event.getSourceFile());
 		mod.localizationURLs.add("https://raw.github.com/AgeCraft/AgeCraft/master/clothing-localizations.zip");
 		
+		//init components
+		new AgeCraftCore();
+		
 		for(int i = 0; i < Age.ages.length; i++) {
 			if(Age.ages[i] != null) {
 				Age.ages[i].preInit();
@@ -37,7 +41,6 @@ public class AgeCraft {
 		for(ACComponent component : ACComponent.components) {
 			component.preInit();
 		}
-		proxy.registerResources();
 		proxy.registerPlayerAPI();
 	}
 	
@@ -69,5 +72,6 @@ public class AgeCraft {
 		for(ACComponent component : ACComponent.components) {
 			component.postInit();
 		}
+		proxy.postInit();
 	}
 }

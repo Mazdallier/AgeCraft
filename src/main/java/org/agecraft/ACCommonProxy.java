@@ -10,10 +10,6 @@ import elcon.mods.elconqore.player.PlayerAPI;
 import elcon.mods.elconqore.player.PlayerAPI.PlayerCoreType;
 
 public class ACCommonProxy implements IGuiHandler {
-
-	public void registerResources() {
-
-	}
 	
 	public void registerPlayerAPI() {
 		PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
@@ -23,14 +19,18 @@ public class ACCommonProxy implements IGuiHandler {
 	public void registerRenderingInformation() {
 
 	}
+	
+	public void postInit() {
+		
+	}
 
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		return null;
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		return null;
 	}
 }

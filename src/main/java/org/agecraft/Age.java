@@ -2,10 +2,13 @@ package org.agecraft;
 
 import org.agecraft.prehistory.PrehistoryAge;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.EQUtil;
 import elcon.mods.elconqore.network.EQCodec;
 import elcon.mods.elconqore.network.EQMessage;
 import elcon.mods.elconqore.network.EQPacketHandler;
+import elcon.mods.elconqore.network.EQPacketHandlerServer;
 
 public abstract class Age {
 
@@ -20,30 +23,34 @@ public abstract class Age {
 	public static Age earlyModern;
 	public static Age industrial;
 	public static Age modern;
-	public static Age future;	
-	
+	public static Age future;
+
 	public int ageID;
 	public String ageName;
-	
+
 	public EQPacketHandler<EQMessage> packetHandler;
-	
+
 	public Age(int id, String name) {
 		ageID = id;
 		ageName = name;
-		
+
 		packetHandler = new EQPacketHandler<EQMessage>("AgeCraft-" + EQUtil.firstUpperCase(ageName), new EQCodec(getMessages()));
-		
+		packetHandler.setServerHandler(new EQPacketHandlerServer());
+
 		ages[ageID] = this;
 	}
-	
+
 	public void preInit() {
 	}
-	
+
 	public void init() {
 	}
-	
+
 	public void postInit() {
 	}
-	
+
 	public abstract Class<? extends EQMessage>[] getMessages();
+	
+	@SideOnly(Side.CLIENT)
+	public abstract AgeClient getAgeClient();
 }
