@@ -12,7 +12,7 @@ public class AgeCraftCore extends ACComponent {
 	
 	public AgeCraftCore() {
 		super("core", true);
-		instance = new AgeCraftCore();
+		instance = this;
 	}
 	
 	@Override
