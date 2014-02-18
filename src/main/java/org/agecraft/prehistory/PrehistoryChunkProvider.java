@@ -16,12 +16,12 @@ public class PrehistoryChunkProvider extends AgeChunkProvider {
 
 	@Override
 	public Block getDefaultBlock() {
-		return Blocks.sponge;
+		return Blocks.stone;
 	}
 	
 	@Override
 	public Block getDefaultFluid() {
-		return Blocks.lava;
+		return Blocks.water;
 	}
 	
 	@Override

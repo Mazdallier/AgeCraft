@@ -37,6 +37,7 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 import org.agecraft.Age;
+import org.agecraft.core.biomes.AgeBiome;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import elcon.mods.elconqore.EQUtil;
@@ -364,7 +365,14 @@ public abstract class AgeChunkProvider implements IChunkProvider {
 			(new WorldGenDungeons()).generate(world, random, yy, zz, j2);
 		}
 
-		biome.decorate(world, random, x, z);
+		if(biome instanceof AgeBiome) {
+			AgeBiome ageBiome = (AgeBiome) biome;
+			ageBiome.chunkProvider = this;
+			ageBiome.decorate(world, random, x, z);
+			ageBiome.chunkProvider = null;
+		} else {
+			biome.decorate(world, random, x, z);
+		}
 		SpawnerAnimals.performWorldGenSpawning(world, biome, x + 8, z + 8, 16, 16, random);
 		x += 8;
 		z += 8;
