@@ -24,9 +24,9 @@ public abstract class AgeBiome extends BiomeGenBase {
 		spawnableWaterCreatureList.clear();
 		spawnableCaveCreatureList.clear();
 	}
-	
-	public abstract BiomeGenBase getMutation();
 
+	public abstract BiomeGenBase getMutation();
+	
 	@Override
 	public void decorate(World world, Random random, int chunkX, int chunkZ) {
 		if(chunkProvider == null) {
