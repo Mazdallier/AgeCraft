@@ -14,6 +14,16 @@ import net.minecraft.world.biome.BiomeCache;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.gen.layer.GenLayer;
+import net.minecraft.world.gen.layer.GenLayerAddIsland;
+import net.minecraft.world.gen.layer.GenLayerAddSnow;
+import net.minecraft.world.gen.layer.GenLayerEdge;
+import net.minecraft.world.gen.layer.GenLayerFuzzyZoom;
+import net.minecraft.world.gen.layer.GenLayerIsland;
+import net.minecraft.world.gen.layer.GenLayerRemoveTooMuchOcean;
+import net.minecraft.world.gen.layer.GenLayerRiverInit;
+import net.minecraft.world.gen.layer.GenLayerSmooth;
+import net.minecraft.world.gen.layer.GenLayerVoronoiZoom;
+import net.minecraft.world.gen.layer.GenLayerZoom;
 import net.minecraft.world.gen.layer.IntCache;
 
 import org.agecraft.Age;
@@ -186,8 +196,82 @@ public abstract class AgeChunkManager extends WorldChunkManager {
 	public void cleanupCache() {
 		biomeCache.cleanupCache();
 	}
+	
+	public static GenLayer[] initVanillaGenLayers(AgeChunkManager ageManager, long seed, WorldType worldType) {
+		boolean flag = false;
+		GenLayerIsland genLayerIsland = new GenLayerIsland(1L);
+		GenLayerFuzzyZoom genLayerFuzzyZoom = new GenLayerFuzzyZoom(2000L, genLayerIsland);
+		GenLayerAddIsland genLayerAddIsland = new GenLayerAddIsland(1L, genLayerFuzzyZoom);
+		GenLayerZoom genLayerZoom = new GenLayerZoom(2001L, genLayerAddIsland);
+		genLayerAddIsland = new GenLayerAddIsland(2L, genLayerZoom);
+		genLayerAddIsland = new GenLayerAddIsland(50L, genLayerAddIsland);
+		genLayerAddIsland = new GenLayerAddIsland(70L, genLayerAddIsland);
+		GenLayerRemoveTooMuchOcean genLayerRemoveTooMuchOcean = new GenLayerRemoveTooMuchOcean(2L, genLayerAddIsland);
+		GenLayerAddSnow genLayerAddSnow = new GenLayerAddSnow(2L, genLayerRemoveTooMuchOcean);
+		genLayerAddIsland = new GenLayerAddIsland(3L, genLayerAddSnow);
+		GenLayerEdge genLayerEdge = new GenLayerEdge(2L, genLayerAddIsland, GenLayerEdge.Mode.COOL_WARM);
+		genLayerEdge = new GenLayerEdge(2L, genLayerEdge, GenLayerEdge.Mode.HEAT_ICE);
+		genLayerEdge = new GenLayerEdge(3L, genLayerEdge, GenLayerEdge.Mode.SPECIAL);
+		genLayerZoom = new GenLayerZoom(2002L, genLayerEdge);
+		genLayerZoom = new GenLayerZoom(2003L, genLayerZoom);
+		genLayerAddIsland = new GenLayerAddIsland(4L, genLayerZoom);
+		AgeGenLayerAddSpecialIsland genLayerAddSpecialIsland = new AgeGenLayerAddSpecialIsland(5L, genLayerAddIsland, BiomeGenBase.mushroomIsland);
+		AgeGenLayerDeepOcean genLayerDeepOcean = new AgeGenLayerDeepOcean(4L, genLayerAddSpecialIsland, BiomeGenBase.deepOcean);
+		GenLayer genLayer1 = GenLayerZoom.magnify(1000L, genLayerDeepOcean, 0);
+		byte biomeSize = 4;
+		if(worldType == WorldType.LARGE_BIOMES) {
+			biomeSize = 6;
+		}
+		if(flag) {
+			biomeSize = 4;
+		}
+		biomeSize = GenLayer.getModdedBiomeSize(worldType, biomeSize);
+
+		GenLayer genLayerPreRiverInit = GenLayerZoom.magnify(1000L, genLayer1, 0);
+		GenLayerRiverInit genLayerRiverInit = new GenLayerRiverInit(100L, genLayerPreRiverInit);
+
+		GenLayer genLayerBiome = new AgeGenLayerBiome(ageManager, 200L, genLayer1, worldType);
+		genLayerBiome = GenLayerZoom.magnify(1000L, genLayerBiome, 2);
+		genLayerBiome = new AgeGenLayerBiomeEdge(ageManager, 1000L, genLayerBiome);
+
+		GenLayer genLayer2 = GenLayerZoom.magnify(1000L, genLayerRiverInit, 2);
+		AgeGenLayerHills genLayerHills = new AgeGenLayerHills(ageManager, 1000L, genLayerBiome, genLayer2);
+		genLayerPreRiverInit = GenLayerZoom.magnify(1000L, genLayerRiverInit, 2);
+		genLayerPreRiverInit = GenLayerZoom.magnify(1000L, genLayerPreRiverInit, biomeSize);
+		AgeGenLayerRiver genLayerRiver = new AgeGenLayerRiver(1L, genLayerPreRiverInit, BiomeGenBase.river);
+		GenLayerSmooth genLayerSmooth1 = new GenLayerSmooth(1000L, genLayerRiver);
+
+		genLayerBiome = new AgeGenLayerRareBiome(1001L, genLayerHills, BiomeGenBase.plains, BiomeGenBase.getBiome(BiomeGenBase.plains.biomeID + 128));
+		for(int i = 0; i < biomeSize; ++i) {
+			genLayerBiome = new GenLayerZoom((long) (1000 + i), genLayerBiome);
+			if(i == 0) {
+				genLayerBiome = new GenLayerAddIsland(3L, genLayerBiome);
+			}
+			if(i == 1) {
+				genLayerBiome = new AgeGenLayerShore(ageManager, 1000L, genLayerBiome);
+			}
+		}
+		GenLayerSmooth genLayerSmooth2 = new GenLayerSmooth(1000L, genLayerBiome);
+		AgeGenLayerRiverMix genLayerRiverMix = new AgeGenLayerRiverMix(ageManager, 100L, genLayerSmooth2, genLayerSmooth1);
+		GenLayerVoronoiZoom genLayerVoronoiZoom = new GenLayerVoronoiZoom(10L, genLayerRiverMix);
+		genLayerRiverMix.initWorldGenSeed(seed);
+		genLayerVoronoiZoom.initWorldGenSeed(seed);
+		return new GenLayer[]{genLayerRiverMix, genLayerVoronoiZoom, genLayerRiverMix};
+	}
 
 	public abstract List<BiomeGenBase> getSpawnBiomes();
 
+	public abstract BiomeGenBase[][] getBiomeGroups();
+	
 	public abstract GenLayer[] initGenLayers(long seed, WorldType worldType);
+	
+	public abstract int getBiomeInt(AgeGenLayerBiome genLayer, int oldValue1, int oldValue2, BiomeGenBase[][] biomeGroups);
+	
+	public abstract int getBiomeEdgeInt(AgeGenLayerBiomeEdge genLayer, int[] oldList, int[] list, int j, int i, int width, int oldValue);
+	
+	public abstract int getHillsInt(AgeGenLayerHills genLayer, int oldValue);
+	
+	public abstract int getRiverMixInt(AgeGenLayerRiverMix genLayer, int biome, int river);
+	
+	public abstract int getShoreInt(AgeGenLayerShore genLayer, int[] oldList, int[] list, int j, int i, int width, int oldValue, BiomeGenBase oldBiome);
 }
