@@ -1,11 +1,12 @@
 package org.agecraft.core.dimension;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
+
+import org.agecraft.core.biomes.AgeBiome;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AgeGenLayerHills extends GenLayer {
 
@@ -36,7 +37,12 @@ public class AgeGenLayerHills extends GenLayer {
 					logger.debug("old! " + oldValue);
 				}
 				if(oldValue != 0 && prevValue >= 2 && (prevValue - 2) % 29 == 1 && oldValue < 128) {
-					if(BiomeGenBase.getBiome(oldValue + 128) != null) {
+					if(BiomeGenBase.getBiome(oldValue) instanceof AgeBiome) {
+						BiomeGenBase biome = ((AgeBiome) BiomeGenBase.getBiome(oldValue)).getMutation();
+						if(biome !=null) {
+							list[j + i * width] = biome.biomeID;
+						}
+					} else if(BiomeGenBase.getBiome(oldValue + 128) != null) {
 						list[j + i * width] = oldValue + 128;
 					} else {
 						list[j + i * width] = oldValue;
@@ -45,9 +51,13 @@ public class AgeGenLayerHills extends GenLayer {
 					list[j + i * width] = oldValue;
 				} else {
 					int newValue = chunkManager.getHillsInt(this, oldValue);
-					//TODO: create AgeBiome.getMutation() and replace all BiomeGenBase with AgeBiome
 					if(flag && newValue != oldValue) {
-						if(BiomeGenBase.getBiome(newValue + 128) != null) {
+						if(BiomeGenBase.getBiome(newValue) instanceof AgeBiome) {
+							BiomeGenBase biome = ((AgeBiome) BiomeGenBase.getBiome(newValue)).getMutation();
+							if(biome !=null) {
+								newValue = biome.biomeID;
+							}
+						} else if(BiomeGenBase.getBiome(newValue + 128) != null) {
 							newValue += 128;
 						} else {
 							newValue = oldValue;
