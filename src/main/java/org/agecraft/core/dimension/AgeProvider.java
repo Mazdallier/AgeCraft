@@ -12,7 +12,6 @@ public class AgeProvider extends WorldProvider {
 	public Age age;
 
 	public AgeProvider() {
-		age = Age.ages[dimensionId - 10];
 	}
 
 	@Override
@@ -32,6 +31,7 @@ public class AgeProvider extends WorldProvider {
 	
 	@Override
 	protected void registerWorldChunkManager() {
+		age = Age.ages[dimensionId - 10];
 		worldChunkMgr = age.getWorldChunkManager(worldObj);
 	}
 	
