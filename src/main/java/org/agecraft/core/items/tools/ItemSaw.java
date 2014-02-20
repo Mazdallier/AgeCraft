@@ -1,7 +1,6 @@
 package org.agecraft.core.items.tools;
 
 import net.minecraft.item.ItemStack;
-import codechicken.microblock.Saw;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

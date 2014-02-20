@@ -60,7 +60,7 @@ public class ToolRegistry {
 		public int attackStrength;
 		public int harvestLevel;
 		
-		public IIcon[] IIcons = new IIcon[128];
+		public IIcon[] icons = new IIcon[128];
 		
 		public ToolMaterial(int id, String name, String localization, ItemStack stack, int durability, float efficiency, int attackStrength, int harvestLevel) {
 			this.id = id;
@@ -88,7 +88,7 @@ public class ToolRegistry {
 		public float efficiency;
 		public int attackStrength;
 		
-		public IIcon[] IIcons = new IIcon[128];
+		public IIcon[] icons = new IIcon[128];
 		
 		public ToolRodMaterial(int id, String name, String localization, ItemStack stack, int durability, float efficiency, int attackStrength) {
 			this.id = id;
@@ -111,7 +111,7 @@ public class ToolRegistry {
 		
 		public ItemStack stack;
 		
-		public IIcon[] IIcons = new IIcon[128];
+		public IIcon[] icons = new IIcon[128];
 		
 		public ToolEnhancementMaterial(int id, String name, String localization, ItemStack stack) {
 			this.id = id;

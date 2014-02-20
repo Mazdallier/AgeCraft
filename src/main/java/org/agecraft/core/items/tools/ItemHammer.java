@@ -1,12 +1,12 @@
 package org.agecraft.core.items.tools;
 
-import org.agecraft.ACUtil;
-import org.agecraft.core.Stone;
-import org.agecraft.core.blocks.stone.BlockColoredStoneBrick;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import org.agecraft.ACUtil;
+import org.agecraft.core.Stone;
+import org.agecraft.core.blocks.stone.BlockColoredStoneBrick;
 
 public class ItemHammer extends ItemTool {
 

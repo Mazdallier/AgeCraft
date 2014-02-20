@@ -1,13 +1,19 @@
 package org.agecraft.core.registry;
 
+import java.util.HashMap;
+
 import org.agecraft.AgeCraft;
 
 public class Registry<T> {
+	
+	public static HashMap<String, Registry> registries = new HashMap<String, Registry>();
 	
 	private T[] registered;
 	
 	public Registry(int maxSize) {
 		this.registered = (T[]) new Object[maxSize];
+		
+		registries.put(getClass().getSimpleName().replaceAll("Registry", "").toLowerCase(), this);
 	}
 	
 	public T[] getAll() {

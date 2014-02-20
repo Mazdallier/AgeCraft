@@ -1,17 +1,14 @@
 package org.agecraft.core.items.tools;
 
-import org.agecraft.assets.resources.ResourcesCore;
-import org.agecraft.core.ToolRegistry;
-import org.agecraft.core.ToolRegistry.Tool;
-import org.agecraft.core.ToolRegistry.ToolMaterial;
-import org.agecraft.core.ToolRegistry.ToolRodMaterial;
+import javax.swing.Icon;
 
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+
+import org.agecraft.core.registry.ToolRegistry;
+import org.agecraft.core.registry.ToolRegistry.ToolRodMaterial;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.ECUtil;
 
 public class ItemBolt extends ItemTool {
 

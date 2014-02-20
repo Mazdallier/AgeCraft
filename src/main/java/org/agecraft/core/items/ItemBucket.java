@@ -2,30 +2,32 @@ package org.agecraft.core.items;
 
 import java.util.List;
 
-import org.agecraft.ACCreativeTabs;
-import org.agecraft.assets.resources.ResourcesCore;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumMovingObjectType;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ItemFluidContainer;
+
+import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.AgeCraftCoreClient;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public abstract class ItemBucket extends ItemFluidContainer {
 
-	public ItemBucket(int id) {
-		super(id);
+	public ItemBucket() {
+		super(0);
 		setCapacity(FluidContainerRegistry.BUCKET_VOLUME);
 		setCreativeTab(ACCreativeTabs.tools);
 	}
@@ -44,7 +46,7 @@ public abstract class ItemBucket extends ItemFluidContainer {
 		if(mop == null) {
 			return stack;
 		}
-		if(mop.typeOfHit == EnumMovingObjectType.TILE) {
+		if(mop.typeOfHit == MovingObjectType.BLOCK) {
 			if(hasFluid(stack)) {
 				if(mop.sideHit == 0) {
 					mop.blockY--;
@@ -76,9 +78,9 @@ public abstract class ItemBucket extends ItemFluidContainer {
 				if(!world.canMineBlock(player, mop.blockX, mop.blockY, mop.blockZ)) {
 					return stack;
 				}
-				Fluid fluid = FluidRegistry.lookupFluidForBlock(Block.blocksList[world.getBlockId(mop.blockX, mop.blockY, mop.blockZ)]);
+				Fluid fluid = FluidRegistry.lookupFluidForBlock(world.getBlock(mop.blockX, mop.blockY, mop.blockZ));
 				if(fluid != null && !getFluidBlacklist(stack).contains(fluid)) {
-					ItemStack newStack = new ItemStack(stack.itemID, 1, stack.getItemDamage());
+					ItemStack newStack = new ItemStack(stack.getItem(), 1, stack.getItemDamage());
 					newStack.stackTagCompound = stack.stackTagCompound;
 					int amount = fill(newStack, new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME), true);
 					if(amount > 0) {
@@ -88,7 +90,7 @@ public abstract class ItemBucket extends ItemFluidContainer {
 								return newStack;
 							}
 							if(!player.inventory.addItemStackToInventory(newStack)) {
-								player.dropPlayerItem(newStack);
+								player.dropPlayerItemWithRandomChoice(newStack, false);
 							}
 						}
 						return stack;
@@ -100,8 +102,8 @@ public abstract class ItemBucket extends ItemFluidContainer {
 	}
 
 	public boolean tryPlaceContainedFluid(World world, int x, int y, int z, ItemStack stack) {
-		Material material = world.getBlockMaterial(x, y, z);
-		boolean isMaterialSolid = !world.getBlockMaterial(x, y, z).isSolid();
+		Material material = world.getBlock(x, y, z).getMaterial();
+		boolean isMaterialSolid = !material.isSolid();
 		if(!world.isAirBlock(x, y, z) && !isMaterialSolid) {
 			return false;
 		} else {
@@ -112,15 +114,15 @@ public abstract class ItemBucket extends ItemFluidContainer {
 				}
 			} else {
 				if(!world.isRemote && isMaterialSolid && !material.isLiquid()) {
-					world.destroyBlock(x, y, z, true);
+					world.setBlockToAir(x, y, z);
 				}
-				int blockID = getFluid(stack).getFluid().getBlockID();
-				if(blockID == Block.waterStill.blockID) {
-					blockID = Block.waterMoving.blockID;
-				} else if(blockID == Block.lavaStill.blockID) {
-					blockID = Block.lavaMoving.blockID;
+				Block block = getFluid(stack).getFluid().getBlock();
+				if(block == Blocks.water) {
+					block = Blocks.flowing_water;
+				} else if(block == Blocks.lava) {
+					block = Blocks.flowing_lava;
 				}
-				world.setBlock(x, y, z, blockID, 0, 3);
+				world.setBlock(x, y, z, block, 0, 3);
 			}
 			return true;
 		}
@@ -132,8 +134,8 @@ public abstract class ItemBucket extends ItemFluidContainer {
 	}
 	
 	@Override
-	public ItemStack getContainerItemStack(ItemStack stack) {
-		return new ItemStack(stack.itemID, 1, stack.getItemDamage());
+	public ItemStack getContainerItem(ItemStack stack) {
+		return new ItemStack(stack.getItem(), 1, stack.getItemDamage());
 	}
 
 	@Override
@@ -148,19 +150,19 @@ public abstract class ItemBucket extends ItemFluidContainer {
 	}
 	
 	@Override
-	public Icon getIcon(ItemStack stack, int pass) {
+	public IIcon getIcon(ItemStack stack, int pass) {
 		if(pass == 0) {
 			return getIconIndex(stack);
 		} else if(pass == 1) {
-			return hasFluid(stack) && ResourcesCore.fluidContainerIcons.containsKey(getFluid(stack).getFluid().getName()) ? ResourcesCore.fluidContainerIcons.get(getFluid(stack).getFluid().getName())[0] : ResourcesCore.emptyTexture;
+			return hasFluid(stack) && AgeCraftCoreClient.fluidContainerIcons.containsKey(getFluid(stack).getFluid().getName()) ? AgeCraftCoreClient.fluidContainerIcons.get(getFluid(stack).getFluid().getName())[0] : AgeCraftCoreClient.emptyTexture;
 		}
-		return ResourcesCore.emptyTexture;
+		return AgeCraftCoreClient.emptyTexture;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIconIndex(ItemStack stack) {
-		return ResourcesCore.emptyTexture;
+	public IIcon getIconIndex(ItemStack stack) {
+		return AgeCraftCoreClient.emptyTexture;
 	}
 
 	@Override

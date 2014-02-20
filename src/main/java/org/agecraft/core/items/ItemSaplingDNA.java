@@ -2,32 +2,32 @@ package org.agecraft.core.items;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
-import org.agecraft.core.TreeRegistry;
 import org.agecraft.core.Trees;
-import org.agecraft.dna.DNA;
-import org.agecraft.dna.DNAUtil;
-import org.agecraft.dna.storage.DNAStorage;
+import org.agecraft.core.dna.DNA;
+import org.agecraft.core.dna.DNAUtil;
+import org.agecraft.core.dna.storage.DNAStorage;
+import org.agecraft.core.registry.TreeRegistry;
 import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.color.Color;
-import elcon.mods.core.items.ItemBlockName;
-import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.elconqore.items.ItemBlockName;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class ItemSaplingDNA extends ItemBlockName {
 
-	public ItemSaplingDNA(int id) {
-		super(id);
+	public ItemSaplingDNA(Block block) {
+		super(block);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ItemSaplingDNA extends ItemBlockName {
 				DNAStorage dna = DNA.createDNAStorage(Trees.treeDNA);
 				NBTTagCompound tag = new NBTTagCompound();
 				dna.writeToNBT(tag);
-				nbt.setCompoundTag("DNA", tag);
+				nbt.setTag("DNA", tag);
 				stack.setTagCompound(nbt);
 			} else if(stack.getTagCompound().hasKey("Defaults")) {
 				if(stack.getTagCompound().hasKey("DNA")) {
@@ -53,7 +53,7 @@ public class ItemSaplingDNA extends ItemBlockName {
 					dna.getGene(0, 1).allel2 = treeType;
 					NBTTagCompound tagDNA = new NBTTagCompound();
 					dna.writeToNBT(tagDNA);
-					stack.getTagCompound().setCompoundTag("DNA", tagDNA);
+					stack.getTagCompound().setTag("DNA", tagDNA);
 					stack.getTagCompound().removeTag("Defaults");
 				}
 			}
@@ -61,7 +61,7 @@ public class ItemSaplingDNA extends ItemBlockName {
 	}
 
 	@Override
-	public String getItemDisplayName(ItemStack stack) {
+	public String getItemStackDisplayName(ItemStack stack) {
 		if(!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
 		}
@@ -69,11 +69,11 @@ public class ItemSaplingDNA extends ItemBlockName {
 		if(nbt.hasKey("DNA")) {
 			DNAStorage dna = new DNAStorage(Trees.treeDNA.id);
 			dna.readFromNBT(nbt.getCompoundTag("DNA"));
-			return LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 0).getActive()].name) + " " + LanguageManager.getLocalization("trees.sapling");
+			return LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(dna.getGene(0, 0).getActive()).name) + " " + LanguageManager.getLocalization("trees.sapling");
 		} else if(nbt.hasKey("Defaults")) {
-			return LanguageManager.getLocalization("trees." + TreeRegistry.trees[nbt.getCompoundTag("Defaults").getInteger("TreeType")].name) + " " + LanguageManager.getLocalization("trees.sapling");
+			return LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(nbt.getCompoundTag("Defaults").getInteger("TreeType")).name) + " " + LanguageManager.getLocalization("trees.sapling");
 		}
-		return super.getItemDisplayName(stack);
+		return super.getItemStackDisplayName(stack);
 	}
 
 	@Override
@@ -87,11 +87,11 @@ public class ItemSaplingDNA extends ItemBlockName {
 			if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 				DNAStorage dna = new DNAStorage(Trees.treeDNA.id);
 				dna.readFromNBT(nbt.getCompoundTag("DNA"));
-				list.add(Color.TEXT_COLOR_PREFIX_DARK_BLUE + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 0).getActive()].name) + "-" + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 0).getInActive()].name) + " Wood");
-				list.add(Color.TEXT_COLOR_PREFIX_DARK_BLUE + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 1).getActive()].name) + "-" + LanguageManager.getLocalization("trees." + TreeRegistry.trees[dna.getGene(0, 1).getInActive()].name) + " Leaves");
+				list.add(EnumChatFormatting.DARK_BLUE + LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(dna.getGene(0, 0).getActive()).name) + "-" + LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(dna.getGene(0, 0).getInActive()).name) + " Wood");
+				list.add(EnumChatFormatting.DARK_BLUE + LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(dna.getGene(0, 1).getActive()).name) + "-" + LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(dna.getGene(0, 1).getInActive()).name) + " Leaves");
 				list.add(Integer.toString(dna.getGene(0, 2).getActive(), 16));
-				list.add(BiomeGenBase.biomeList[dna.getGene(1, 1).getActive()].biomeName);
-				list.add("T: " + DNAUtil.intToPlusMin(dna.getGene(1, 1).getActive()) + Color.TEXT_COLOR_PREFIX_GRAY + " H: " + DNAUtil.intToPlusMin(dna.getGene(1, 2).getActive()));
+				list.add(BiomeGenBase.getBiome(dna.getGene(1, 1).getActive()).biomeName);
+				list.add("T: " + DNAUtil.intToPlusMin(dna.getGene(1, 1).getActive()) + EnumChatFormatting.GRAY + " H: " + DNAUtil.intToPlusMin(dna.getGene(1, 2).getActive()));
 				list.add("S: " + DNAUtil.intToSpeed(dna.getGene(2, 0).getActive()) + " T: " + DNAUtil.intToSpeed(dna.getGene(2, 1).getActive()) + " B: " + DNAUtil.intToSpeed(dna.getGene(2, 2).getActive()));
 				list.add("Saplings: " +  DNAUtil.intToGoodBadSimple(dna.getGene(4, 0).getActive()));
 				list.add("T: " + Integer.toString(dna.getGene(3, 0).getActive()) + "x" + Integer.toString(dna.getGene(3, 0).getActive()) + " L: " + Integer.toString(dna.getGene(3, 1).getActive()) + " H: " + Integer.toString(dna.getGene(3, 2).getActive()));
@@ -103,7 +103,7 @@ public class ItemSaplingDNA extends ItemBlockName {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIconIndex(ItemStack stack) {
+	public IIcon getIconIndex(ItemStack stack) {
 		if(!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
 		}
@@ -111,15 +111,15 @@ public class ItemSaplingDNA extends ItemBlockName {
 		if(nbt.hasKey("DNA")) {
 			DNAStorage dna = new DNAStorage(Trees.treeDNA.id);
 			dna.readFromNBT(nbt.getCompoundTag("DNA"));
-			return TreeRegistry.trees[dna.getGene(0, 0).getActive()].sapling;
+			return TreeRegistry.instance.get(dna.getGene(0, 0).getActive()).sapling;
 		} else if(nbt.hasKey("Defaults")) {
-			return TreeRegistry.trees[nbt.getCompoundTag("Defaults").getInteger("TreeType")].sapling;
+			return TreeRegistry.instance.get(nbt.getCompoundTag("Defaults").getInteger("TreeType")).sapling;
 		}
 		return null;
 	}
 
 	@Override
-	public Icon getIcon(ItemStack stack, int pass) {
+	public IIcon getIcon(ItemStack stack, int pass) {
 		return getIconIndex(stack);
 	}
 }

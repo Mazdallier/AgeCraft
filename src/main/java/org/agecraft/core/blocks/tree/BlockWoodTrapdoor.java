@@ -2,38 +2,41 @@ package org.agecraft.core.blocks.tree;
 
 import java.util.List;
 
-import org.agecraft.ACCreativeTabs;
-import org.agecraft.assets.resources.ResourcesCore;
-import org.agecraft.core.TreeRegistry;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHalfSlab;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.AgeCraftCoreClient;
+import org.agecraft.core.registry.TreeRegistry;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.blocks.BlockExtendedMetadata;
-import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.elconqore.blocks.BlockExtendedMetadata;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 
 	public static String[] types = new String[]{"standard", "solid"};
 	
-	public BlockWoodTrapdoor(int id) {
-		super(id, Material.wood);
+	public BlockWoodTrapdoor() {
+		super(Material.wood);
 		setHardness(2.0F);
 		setResistance(5.0F);
-		setStepSound(Block.soundWoodFootstep);
+		setStepSound(Block.soundTypeWood);
 		setCreativeTab(ACCreativeTabs.wood);
 		
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
@@ -41,7 +44,7 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[(stack.getItemDamage() - (stack.getItemDamage() & 31)) / 32].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("trees." + TreeRegistry.instance.get((stack.getItemDamage() - (stack.getItemDamage() & 31)) / 32).name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 	
 	@Override
@@ -96,7 +99,7 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float xx, float yy, float zz) {
 		setMetadata(world, x, y, z, getMetadata(world, x, y, z) ^ 4);
-		world.markBlockForRenderUpdate(x, y, z);
+		world.markBlockForUpdate(x, y, z);
 		if(world.isRemote) {
 			world.playAuxSFXAtEntity((EntityPlayer) null, 1003, x, y, z, 0);
 		}
@@ -108,13 +111,13 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 		boolean isOpen = (meta & 4) != 0;
 		if(isOpen != powered) {
 			setMetadata(world, x, y, z, meta ^ 4);
-			world.markBlockForRenderUpdate(x, y, z);
+			world.markBlockForUpdate(x, y, z);
 			world.playAuxSFXAtEntity((EntityPlayer) null, 1003, x, y, z, 0);
 		}
 	}
 
 	@Override
-	public void onNeighborBlockChange(World world, int x, int y, int z, int id) {
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 		if(!world.isRemote) {
 			int meta = getMetadata(world, x, y, z);
 			int oldX = x;
@@ -133,12 +136,12 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 				oldX--;
 			}
 
-			if(!(isValidSupportBlock(world.getBlockId(oldX, y, oldZ)) || world.isBlockSolidOnSide(oldX, y, oldZ, ForgeDirection.getOrientation((meta & 3) + 2)))) {
+			if(!(isValidSupportBlock(world.getBlock(oldX, y, oldZ)) || world.isSideSolid(oldX, y, oldZ, ForgeDirection.getOrientation((meta & 3) + 2)))) {
 				world.setBlockToAir(x, y, z);
 				dropBlockAsItem(world, x, y, z, meta, 0);
 			}
 			boolean powered = world.isBlockIndirectlyGettingPowered(x, y, z);
-			if(powered || id > 0 && Block.blocksList[id].canProvidePower()) {
+			if(powered || block != null && block.canProvidePower()) {
 				onPoweredBlockChange(world, x, y, z, powered);
 			}
 		}
@@ -193,16 +196,15 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 			if(side == 5) {
 				x--;
 			}
-			return isValidSupportBlock(world.getBlockId(x, y, z)) || world.isBlockSolidOnSide(x, y, z, ForgeDirection.UP);
+			return isValidSupportBlock(world.getBlock(x, y, z)) || world.isSideSolid(x, y, z, ForgeDirection.UP);
 		}
 	}
 
-	public boolean isValidSupportBlock(int blockID) {
-		if(blockID <= 0) {
+	public boolean isValidSupportBlock(Block block) {
+		if(block != null) {
 			return false;
 		} else {
-			Block block = Block.blocksList[blockID];
-			return block != null && block.blockMaterial.isOpaque() && block.renderAsNormalBlock() || block == Block.glowStone || block instanceof BlockHalfSlab || block instanceof BlockStairs;
+			return block != null && block.getMaterial().isOpaque() && block.renderAsNormalBlock() || block == Blocks.glowstone || block instanceof BlockSlab || block instanceof BlockStairs;
 		}
 	}
 
@@ -224,35 +226,35 @@ public class BlockWoodTrapdoor extends BlockExtendedMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderColor(int meta) {
-		return TreeRegistry.trees[(meta - (meta & 31)) / 32].woodColor;
+		return TreeRegistry.instance.get((meta - (meta & 31)) / 32).woodColor;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
 		int meta = getMetadata(blockAccess, x, y, z);
-		return TreeRegistry.trees[(meta - (meta & 31)) / 32].woodColor;
+		return TreeRegistry.instance.get((meta - (meta & 31)) / 32).woodColor;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
-		return ResourcesCore.trapdoorWoodIcons[(meta & 16) / 16];
+	public IIcon getIcon(int side, int meta) {
+		return AgeCraftCoreClient.trapdoorWoodIcons[(meta & 16) / 16];
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
+	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return getIcon(side, getMetadata(blockAccess, x, y, z));
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < TreeRegistry.trees.length; i++) {
-			if(TreeRegistry.trees[i] != null) {
-				list.add(new ItemStack(id, 1, (i * 32)));
-				list.add(new ItemStack(id, 1, (i * 32) | 16));
+	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
+		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
+			if(TreeRegistry.instance.get(i) != null) {
+				list.add(new ItemStack(item, 1, (i * 32)));
+				list.add(new ItemStack(item, 1, (i * 32) | 16));
 			}
 		}
 	}

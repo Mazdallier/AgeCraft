@@ -1,11 +1,12 @@
 package org.agecraft.core.dimension;
 
+import net.minecraft.world.WorldProvider;
+import net.minecraft.world.chunk.IChunkProvider;
+
 import org.agecraft.Age;
 
 import elcon.mods.elconqore.EQUtil;
 import elcon.mods.elconqore.lang.LanguageManager;
-import net.minecraft.world.WorldProvider;
-import net.minecraft.world.chunk.IChunkProvider;
 
 public class AgeProvider extends WorldProvider {
 

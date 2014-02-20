@@ -2,30 +2,32 @@ package org.agecraft.core.blocks.tree;
 
 import java.util.List;
 
-import org.agecraft.ACCreativeTabs;
-import org.agecraft.core.TreeRegistry;
-import org.agecraft.core.Trees;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.Trees;
+import org.agecraft.core.registry.TreeRegistry;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.blocks.BlockExtendedMetadata;
-import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.elconqore.blocks.BlockExtendedMetadata;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class BlockLog extends BlockExtendedMetadata {
 
-	public BlockLog(int id) {
-		super(id, Material.wood);
+	public BlockLog() {
+		super(Material.wood);
 		setHardness(2.0F);
-		setStepSound(Block.soundWoodFootstep);
+		setStepSound(Block.soundTypeWood);
 		setCreativeTab(ACCreativeTabs.wood);
 		
 		setBlockBounds(0.3125F, 0.0F, 0.3125F, 0.6875F, 0.75F, 0.6875F);
@@ -33,7 +35,7 @@ public class BlockLog extends BlockExtendedMetadata {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(stack.getItemDamage()).name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 	
 	@Override
@@ -84,26 +86,26 @@ public class BlockLog extends BlockExtendedMetadata {
 	}
 	
 	public boolean canConnectTo(IBlockAccess blockAccess, int x, int y, int z, int meta, boolean leaves) {
-		if(leaves && (blockAccess.getBlockId(x, y, z) == Trees.leaves.blockID || blockAccess.getBlockId(x, y, z) == Trees.leavesDNA.blockID)) {
+		if(leaves && (Block.getIdFromBlock(blockAccess.getBlock(x, y, z)) == Block.getIdFromBlock(Trees.leaves) || Block.getIdFromBlock(blockAccess.getBlock(x, y, z)) == Block.getIdFromBlock(Trees.leavesDNA))) {
 			return true;
-		} else if(blockAccess.getBlockId(x, y, z) == blockID || blockAccess.getBlockId(x, y, z) == Trees.wood.blockID) {
+		} else if(Block.getIdFromBlock(blockAccess.getBlock(x, y, z)) == Block.getIdFromBlock(this) || Block.getIdFromBlock(blockAccess.getBlock(x, y, z)) == Block.getIdFromBlock(Trees.wood)) {
 			return meta == getMetadata(blockAccess, x, y, z);
 		}
 		return false;
 	}
 	
 	@Override
-	public void breakBlock(World world, int x, int y, int z, int id, int meta) {
-		super.breakBlock(world, x, y, z, id, meta);
+	public void breakBlock(World world, int x, int y, int z, Block block, int meta) {
+		super.breakBlock(world, x, y, z, block, meta);
 		byte size = 4;
 		int range = size + 1;
 		if(world.checkChunksExist(x - range, y - range, z - range, x + range, y + range, z + range)) {
 			for(int i = -size; i <= size; ++i) {
 				for(int j = -size; j <= size; ++j) {
 					for(int k = -size; k <= size; ++k) {
-						int blockID = world.getBlockId(x + i, y + j, z + k);
-						if(Block.blocksList[blockID] != null) {
-							Block.blocksList[blockID].beginLeavesDecay(world, x + i, y + j, z + k);
+						Block otherBlock = world.getBlock(x + i, y + j, z + k);
+						if(otherBlock != null) {
+							otherBlock.beginLeavesDecay(world, x + i, y + j, z + k);
 						}
 					}
 				}
@@ -117,12 +119,12 @@ public class BlockLog extends BlockExtendedMetadata {
 	}
 	
 	@Override
-	public boolean canSustainLeaves(World world, int x, int y, int z) {
+	public boolean canSustainLeaves(IBlockAccess blockAccess, int x, int y, int z) {
 		return true;
 	}
 
 	@Override
-	public boolean isWood(World world, int x, int y, int z) {
+	public boolean isWood(IBlockAccess blockAccess, int x, int y, int z) {
 		return true;
 	}
 	
@@ -143,22 +145,22 @@ public class BlockLog extends BlockExtendedMetadata {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
-		return side == 0 || side == 1 ? TreeRegistry.trees[meta].logTop : TreeRegistry.trees[meta].wood;
+	public IIcon getIcon(int side, int meta) {
+		return side == 0 || side == 1 ? TreeRegistry.instance.get(meta).logTop : TreeRegistry.instance.get(meta).wood;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
+	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return getIcon(side, getMetadata(blockAccess, x, y, z));
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < TreeRegistry.trees.length; i++) {
-			if(TreeRegistry.trees[i] != null) {
-				list.add(new ItemStack(id, 1, i));
+	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
+		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
+			if(TreeRegistry.instance.get(i) != null) {
+				list.add(new ItemStack(item, 1, i));
 			}
 		}
 	}

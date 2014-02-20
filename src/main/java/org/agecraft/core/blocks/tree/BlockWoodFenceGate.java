@@ -2,37 +2,39 @@ package org.agecraft.core.blocks.tree;
 
 import java.util.List;
 
-import org.agecraft.ACCreativeTabs;
-import org.agecraft.core.TreeRegistry;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.registry.TreeRegistry;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.blocks.BlockExtendedMetadata;
-import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.elconqore.blocks.BlockExtendedMetadata;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class BlockWoodFenceGate extends BlockExtendedMetadata {
 
-	public BlockWoodFenceGate(int id) {
-		super(id, Material.wood);
+	public BlockWoodFenceGate() {
+		super(Material.wood);
 		setHardness(2.0F);
 		setResistance(5.0F);
-		setStepSound(Block.soundWoodFootstep);
+		setStepSound(Block.soundTypeWood);
 		setCreativeTab(ACCreativeTabs.wood);
 	}
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[(stack.getItemDamage() - (stack.getItemDamage() & 7)) / 8].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("trees." + TreeRegistry.instance.get((stack.getItemDamage() - (stack.getItemDamage() & 7)) / 8).name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 	
 	@Override
@@ -42,7 +44,7 @@ public class BlockWoodFenceGate extends BlockExtendedMetadata {
 	
 	@Override
 	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
-		return !world.getBlockMaterial(x, y - 1, z).isSolid() ? false : super.canPlaceBlockAt(world, x, y, z);
+		return !world.getBlock(x, y - 1, z).getMaterial().isSolid() ? false : super.canPlaceBlockAt(world, x, y, z);
 	}
 	
 	@Override
@@ -93,11 +95,11 @@ public class BlockWoodFenceGate extends BlockExtendedMetadata {
 	}
 
 	@Override
-	public void onNeighborBlockChange(World world, int x, int y, int z, int blockID) {
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 		if(!world.isRemote) {
 			int meta = getMetadata(world, x, y, z);
 			boolean indirectPower = world.isBlockIndirectlyGettingPowered(x, y, z);
-			if(indirectPower || blockID > 0 && Block.blocksList[blockID].canProvidePower()) {
+			if(indirectPower || block != null && block.canProvidePower()) {
 				if(indirectPower && !isFenceGateOpen(meta)) {
 					setMetadata(world, x, y, z, meta | 4);
 					world.markBlockForUpdate(x, y, z);
@@ -143,21 +145,21 @@ public class BlockWoodFenceGate extends BlockExtendedMetadata {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
-		return TreeRegistry.trees[(meta - (meta & 7)) / 8].planks;
+	public IIcon getIcon(int side, int meta) {
+		return TreeRegistry.instance.get((meta - (meta & 7)) / 8).planks;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
+	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return getIcon(side, getMetadata(blockAccess, x, y, z));
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < TreeRegistry.trees.length; i++) {
-			if(TreeRegistry.trees[i] != null) {
+	public void getSubBlocks(Item id, CreativeTabs creativeTab, List list) {
+		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
+			if(TreeRegistry.instance.get(i) != null) {
 				list.add(new ItemStack(id, 1, i * 8));
 			}
 		}

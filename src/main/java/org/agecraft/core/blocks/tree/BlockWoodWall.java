@@ -2,35 +2,37 @@ package org.agecraft.core.blocks.tree;
 
 import java.util.List;
 
-import org.agecraft.ACCreativeTabs;
-import org.agecraft.core.TreeRegistry;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.registry.TreeRegistry;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.blocks.BlockExtendedMetadata;
-import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.elconqore.blocks.BlockExtendedMetadata;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class BlockWoodWall extends BlockExtendedMetadata {
 
-	public BlockWoodWall(int id) {
-		super(id, Material.wood);
+	public BlockWoodWall() {
+		super(Material.wood);
 		setHardness(2.0F);
-		setStepSound(Block.soundWoodFootstep);
+		setStepSound(Block.soundTypeWood);
 		setCreativeTab(ACCreativeTabs.wood);
 	}
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("trees." + TreeRegistry.trees[stack.getItemDamage()].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(stack.getItemDamage()).name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 	
 	@Override
@@ -83,12 +85,11 @@ public class BlockWoodWall extends BlockExtendedMetadata {
 	}
 
 	public boolean canConnectTo(IBlockAccess blockAccess, int x, int y, int z, int meta) {
-		int id = blockAccess.getBlockId(x, y, z);
-		if(id == blockID) {
+		Block block = blockAccess.getBlock(x, y, z);
+		if(Block.getIdFromBlock(block) == Block.getIdFromBlock(this)) {
 			return meta == getMetadata(blockAccess, x, y, z);
 		}
-		Block block = Block.blocksList[id];
-		return block != null && block.blockMaterial.isOpaque() && block.renderAsNormalBlock() ? block.blockMaterial != Material.pumpkin : false;
+		return block != null && block.getMaterial().isOpaque() && block.renderAsNormalBlock() ? block.getMaterial() != Material.gourd : false;
 	}
 	
 	@Override
@@ -119,22 +120,22 @@ public class BlockWoodWall extends BlockExtendedMetadata {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
-		return side == 0 || side == 1 ? TreeRegistry.trees[meta].woodTop : TreeRegistry.trees[meta].wood;
+	public IIcon getIcon(int side, int meta) {
+		return side == 0 || side == 1 ? TreeRegistry.instance.get(meta).woodTop : TreeRegistry.instance.get(meta).wood;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
+	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return getIcon(side, getMetadata(blockAccess, x, y, z));
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < TreeRegistry.trees.length; i++) {
-			if(TreeRegistry.trees[i] != null) {
-				list.add(new ItemStack(id, 1, i));
+	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
+		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
+			if(TreeRegistry.instance.get(i) != null) {
+				list.add(new ItemStack(item, 1, i));
 			}
 		}
 	}

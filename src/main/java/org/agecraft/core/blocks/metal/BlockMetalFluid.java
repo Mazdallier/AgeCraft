@@ -2,16 +2,16 @@ package org.agecraft.core.blocks.metal;
 
 import java.util.List;
 
-import org.agecraft.ACCreativeTabs;
-import org.agecraft.core.MetalRegistry;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+
+import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.registry.MetalRegistry;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.blocks.BlockFluidMetadata;
-import elcon.mods.core.lang.LanguageManager;
+import elcon.mods.elconqore.blocks.BlockFluidMetadata;
 
 public class BlockMetalFluid extends BlockFluidMetadata {
 

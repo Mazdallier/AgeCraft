@@ -18,7 +18,6 @@ import net.minecraftforge.common.ForgeHooks;
 import org.agecraft.core.Stone;
 import org.agecraft.core.items.tools.ItemTool;
 import org.agecraft.prehistory.PrehistoryAge;
-import org.agecraft.prehistory.items.ItemRockPickaxe;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

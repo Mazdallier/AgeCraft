@@ -6,27 +6,22 @@ import net.minecraft.item.ItemStack;
 
 public class ItemBlockSmelteryFurnace extends ItemBlockWithMetadata {
 
-	public ItemBlockSmelteryFurnace(int id, Block block) {
-		super(id, block);
-	}
-	
-	@Override
-	public String getItemDisplayName(ItemStack stack) {
-		return getItemStackDisplayName(stack);
+	public ItemBlockSmelteryFurnace(Block block) {
+		super(block, block);
 	}
 	
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		return Block.blocksList[getBlockID()].getLocalizedName();
+		return field_150939_a.getLocalizedName();
 	}
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return Block.blocksList[getBlockID()].getUnlocalizedName();
+		return field_150939_a.getUnlocalizedName();
 	}
 	
 	@Override
 	public String getUnlocalizedName() {
-		return Block.blocksList[getBlockID()].getUnlocalizedName();
+		return field_150939_a.getUnlocalizedName();
 	}
 }

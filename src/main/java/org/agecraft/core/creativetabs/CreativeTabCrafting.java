@@ -16,7 +16,9 @@ public class CreativeTabCrafting extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
-		return Item.getItemFromBlock(Crafting.workbench);
+		//TODO
+		return null;
+		//return Item.getItemFromBlock(Crafting.workbench);
 	}
 	
 	@Override
@@ -27,6 +29,8 @@ public class CreativeTabCrafting extends CreativeTabs {
 
 	@Override
 	public ItemStack getIconItemStack() {
-		return new ItemStack(Crafting.workbench, 1, 15);
+		//TODO
+		return null;
+		//return new ItemStack(Crafting.workbench, 1, 15);
 	}
 }

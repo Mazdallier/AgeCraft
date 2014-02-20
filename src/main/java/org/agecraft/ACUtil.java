@@ -98,6 +98,19 @@ public class ACUtil {
 		}
 	}
 	
+	public static ItemStack consumeItem(ItemStack stack) {
+		if(stack.stackSize == 1) {
+			if(stack.getItem().hasContainerItem(stack)) {
+				return stack.getItem().getContainerItem(stack);
+			} else {
+				return null;
+			}
+		} else {
+			stack.splitStack(1);
+			return stack;
+		}
+	}
+	
 	public static int compareFluidStack(FluidStack stack1, FluidStack stack2) {
 		if(stack1 != null && stack2 != null) {
 			if(stack1.fluidID == stack2.fluidID) {

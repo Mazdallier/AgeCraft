@@ -1,25 +1,23 @@
 package org.agecraft.core.items.tools;
 
-import org.agecraft.assets.resources.ResourcesCore;
-import org.agecraft.core.ToolRegistry;
-import org.agecraft.core.Tools;
-import org.agecraft.core.ToolRegistry.Tool;
-import org.agecraft.core.entity.EntityArrow;
+import javax.swing.Icon;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+
+import org.agecraft.core.Tools;
+import org.agecraft.core.registry.ToolRegistry;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.ECUtil;
 
 public class ItemBow extends ItemTool {
 

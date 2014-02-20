@@ -1,7 +1,8 @@
 package org.agecraft.core.items.tools;
 
-import org.agecraft.core.MetalRegistry;
-import org.agecraft.core.ToolRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+
 import org.agecraft.core.blocks.metal.BlockMetalBlock;
 import org.agecraft.core.blocks.metal.BlockMetalDoor;
 import org.agecraft.core.blocks.metal.BlockMetalFence;
@@ -11,9 +12,8 @@ import org.agecraft.core.blocks.metal.BlockMetalPillar;
 import org.agecraft.core.blocks.metal.BlockMetalTrapdoor;
 import org.agecraft.core.blocks.metal.BlockStoneLayered;
 import org.agecraft.core.blocks.metal.BlockStoneOre;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
+import org.agecraft.core.registry.MetalRegistry;
+import org.agecraft.core.registry.ToolRegistry;
 
 public class ItemPickaxe extends ItemTool {
 

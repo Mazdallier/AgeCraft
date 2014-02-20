@@ -1,19 +1,21 @@
 package org.agecraft.core.items;
 
-import org.agecraft.core.TreeRegistry;
-
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import org.agecraft.core.registry.TreeRegistry;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.core.items.ItemBlockExtendedMetadata;
+import elcon.mods.elconqore.items.ItemBlockExtendedMetadata;
 
 public class ItemLog extends ItemBlockExtendedMetadata {
 
-	public ItemLog(int id) {
-		super(id);
+	public ItemLog(Block block) {
+		super(block);
 	}
 
 	@Override
@@ -32,7 +34,7 @@ public class ItemLog extends ItemBlockExtendedMetadata {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIconFromDamage(int meta) {
-		return TreeRegistry.trees[meta].log;
+	public IIcon getIconFromDamage(int meta) {
+		return TreeRegistry.instance.get(meta).log;
 	}
 }
