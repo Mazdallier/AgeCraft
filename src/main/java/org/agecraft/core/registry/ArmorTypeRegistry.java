@@ -20,6 +20,11 @@ public class ArmorTypeRegistry extends Registry<ArmorType> {
 			this.name = name;
 			this.hasHeraldry = hasHeraldry;
 		}
+		
+		@Override
+		public String toString() {
+			return name;
+		}
 	}
 	
 	public static ArmorTypeRegistry instance = new ArmorTypeRegistry();

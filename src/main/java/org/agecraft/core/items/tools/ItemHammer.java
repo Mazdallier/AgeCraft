@@ -4,19 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import org.agecraft.ACUtil;
-import org.agecraft.core.Stone;
-import org.agecraft.core.blocks.stone.BlockColoredStoneBrick;
-
 public class ItemHammer extends ItemTool {
-
-	public ItemHammer(int id) {
-		super(id);
-	}
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-		int blockID = world.getBlockId(x, y, z);
+		/*int blockID = world.getBlockId(x, y, z);
 		int blockMetadata = world.getBlockMetadata(x, y, z);
 		if(blockID == Stone.stone.blockID && blockMetadata == 0) {
 			if(!world.isRemote) {
@@ -45,7 +37,7 @@ public class ItemHammer extends ItemTool {
 				ACUtil.damageItem(stack, 1, player);
 			}
 			return true;
-		}
+		}*/
 		return false;
 	}
 }

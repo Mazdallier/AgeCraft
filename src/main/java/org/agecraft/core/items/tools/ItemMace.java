@@ -6,10 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class ItemMace extends ItemTool {
-
-	public ItemMace(int id) {
-		super(id);
-	}
 	
 	@Override
 	public EnumAction getItemUseAction(ItemStack stack) {

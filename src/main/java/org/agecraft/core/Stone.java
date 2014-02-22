@@ -40,7 +40,7 @@ public class Stone extends ACComponent {
 		stoneBrick = new BlockStoneBrick().setBlockName("AC_stone_stoneBrick");
 		stoneBrickPillar = new BlockStoneBrickPillar().setBlockName("AC_stone_stoneBrickPillar");
 		
-		coloredStone = new BlockColoredStone(2503).setBlockName("AC_stone_coloredStone");
+		coloredStone = new BlockColoredStone().setBlockName("AC_stone_coloredStone");
 		coloredStoneCracked = new BlockColoredStoneCracked().setBlockName("AC_stone_coloredStoneCracked");
 		coloredStoneMossy = new BlockColoredStoneMossy().setBlockName("AC_stone_coloredStoneMossy");
 		coloredStoneBrick = new BlockColoredStoneBrick().setBlockName("AC_stone_coloredStoneBrick");
@@ -53,7 +53,7 @@ public class Stone extends ACComponent {
 		
 		GameRegistry.registerBlock(coloredStone, ItemBlockMetadata.class, "AC_stone_coloredStone");
 		GameRegistry.registerBlock(coloredStoneCracked, ItemBlockMetadata.class, "AC_stone_coloredStoneCracked");
-		GameRegistry.registerBlock(coloredStoneMossy, ItemBlockMetadataOverlay.class, "AC_stone_coloredStoneMossy");
+		GameRegistry.registerBlock(coloredStoneMossy, ItemBlockMetadata.class, "AC_stone_coloredStoneMossy");
 		GameRegistry.registerBlock(coloredStoneBrick, ItemBlockExtendedMetadata.class, "AC_stone_coloredStoneBrick");
 		GameRegistry.registerBlock(coloredStoneBrickPillar, ItemBlockExtendedMetadata.class, "AC_coloredStone_stoneBrickPillar");
 	}

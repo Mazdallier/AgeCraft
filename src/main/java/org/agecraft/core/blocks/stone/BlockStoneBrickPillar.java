@@ -1,10 +1,10 @@
 package org.agecraft.core.blocks.stone;
 
-import javax.swing.Icon;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -17,14 +17,14 @@ import elcon.mods.elconqore.blocks.IBlockRotated;
 
 public class BlockStoneBrickPillar extends BlockMetadata implements IBlockRotated {
 
-	private Icon icon;
-	private Icon iconTop;
+	private IIcon icon;
+	private IIcon iconTop;
 	
-	public BlockStoneBrickPillar(int id) {
-		super(id, Material.rock);
+	public BlockStoneBrickPillar() {
+		super(Material.rock);
 		setHardness(1.5F);
 		setResistance(10.0F);
-		setStepSound(Block.soundStoneFootstep);
+		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
 	}
 	
@@ -71,7 +71,7 @@ public class BlockStoneBrickPillar extends BlockMetadata implements IBlockRotate
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	public IIcon getIcon(int side, int meta) {
 		if(meta == 0 && (side == 0 || side == 1)) {
 			return iconTop;
 		} else if(meta == 1 && (side == 2 || side == 3)) {
@@ -84,7 +84,7 @@ public class BlockStoneBrickPillar extends BlockMetadata implements IBlockRotate
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerBlockIcons(IIconRegister iconRegister) {
 		icon = iconRegister.registerIcon("agecraft:stone/stoneBrickPillar");
 		iconTop = iconRegister.registerIcon("agecraft:stone/stoneBrickPillarTop");
 	}

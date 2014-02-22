@@ -2,7 +2,9 @@ package org.agecraft;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ACUtil {
@@ -109,6 +111,29 @@ public class ACUtil {
 			stack.splitStack(1);
 			return stack;
 		}
+	}
+	
+	public static FluidStack getFluidContainerStack(ItemStack stack) {
+		if(stack != null && stack.getItem() instanceof IFluidContainerItem) {
+			return ((IFluidContainerItem) stack.getItem()).getFluid(stack);
+		}
+		return FluidContainerRegistry.getFluidForFilledItem(stack);
+	}
+
+	public static ItemStack fillFluidContainer(ItemStack stack, FluidStack fluidStack) {
+		if(stack != null && stack.getItem() instanceof IFluidContainerItem) {
+			((IFluidContainerItem) stack.getItem()).fill(stack, fluidStack, true);
+			return stack;
+		}
+		return FluidContainerRegistry.fillFluidContainer(fluidStack, stack);
+	}
+
+	public static ItemStack drainFluidContainer(ItemStack stack, int amount) {
+		if(stack != null && stack.getItem() instanceof IFluidContainerItem) {
+			((IFluidContainerItem) stack.getItem()).drain(stack, amount, true);
+			return stack;
+		}
+		return ACUtil.consumeItem(stack);
 	}
 	
 	public static int compareFluidStack(FluidStack stack1, FluidStack stack2) {

@@ -1,41 +1,40 @@
 package org.agecraft.core.items.tools;
 
-import javax.swing.Icon;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import org.agecraft.core.AgeCraftCoreClient;
 import org.agecraft.core.Tools;
+import org.agecraft.core.registry.ToolEnhancementMaterialRegistry;
 import org.agecraft.core.registry.ToolRegistry;
+import org.agecraft.core.registry.ToolRegistry.Tool;
+import org.agecraft.core.registry.ToolRodMaterialRegistry;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.elconqore.EQUtil;
 
 public class ItemBow extends ItemTool {
 
-	public Icon[][] icons = new Icon[256][4];
-	
-	public ItemBow(int id) {
-		super(id);
-	}
+	public IIcon[][] icons = new IIcon[256][4];
 	
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount) {
-		int duration = getMaxItemUseDuration(stack) - itemInUseCount;
+		/*int duration = getMaxItemUseDuration(stack) - itemInUseCount;
 		boolean infiniteArrows = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) > 0;
-		if(infiniteArrows || player.inventory.hasItem(Tools.arrow.itemID)) {
+		if(infiniteArrows || player.inventory.hasItem(Tools.arrow)) {
 			int arrowSlot = findArrow(player.inventory);
 			ItemStack arrowStack = arrowSlot >= 0 ? player.inventory.getStackInSlot(arrowSlot) : null;
 			if(arrowStack == null && player.capabilities.isCreativeMode) {
-				ItemStack temp = new ItemStack(Tools.arrow.itemID, 1, 0);
+				ItemStack temp = new ItemStack(Tools.arrow, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
 				NBTTagCompound tag = new NBTTagCompound();
 				tag.setInteger("Type", 19);
@@ -81,7 +80,8 @@ public class ItemBow extends ItemTool {
 			if(!world.isRemote) {
 				world.spawnEntityInWorld(entityArrow);
 			}
-		}
+		}*/
+		//TODO: this
 	}
 	
 	@Override
@@ -107,7 +107,7 @@ public class ItemBow extends ItemTool {
 				tag.setInteger("Material", 142);
 				tag.setInteger("RodMaterial", 142);
 			}
-			stack.getTagCompound().setCompoundTag("Arrow", tag);
+			stack.getTagCompound().setTag("Arrow", tag);
 			player.setItemInUse(stack, getMaxItemUseDuration(stack));
 		}
 		return stack;
@@ -118,7 +118,7 @@ public class ItemBow extends ItemTool {
 		int slot = -1;
 		for(int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack stackSlot = inventory.getStackInSlot(i);
-			if(stackSlot != null && stackSlot.itemID == Tools.arrow.itemID) {
+			if(stackSlot != null && Item.getIdFromItem(stackSlot.getItem()) == Item.getIdFromItem(Tools.arrow)) {
 				if(stackArrow == null || Tools.arrow.getToolAttackStrength(stackSlot) > Tools.arrow.getToolAttackStrength(stackArrow)) {
 					stackArrow = stackSlot;
 					slot = i;
@@ -135,8 +135,8 @@ public class ItemBow extends ItemTool {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(ItemStack stack, int renderPass) {
-		Tool tool = ToolRegistry.tools[getToolType(stack)];
+	public IIcon getIcon(ItemStack stack, int renderPass) {
+		Tool tool = ToolRegistry.instance.get(getToolType(stack));
 		if(renderPass == 0) {
 			int toolRodMaterial = getToolRodMaterial(stack);
 			if(toolRodMaterial != -1 && icons[toolRodMaterial][0] != null) {
@@ -154,8 +154,8 @@ public class ItemBow extends ItemTool {
 			}
 		} else if(renderPass == 1) {
 			int toolEnhancement = getToolEnhancementMaterial(stack);
-			if(toolEnhancement != -1 && ToolRegistry.toolEnhancementMaterials[toolEnhancement] != null) {
-				return ToolRegistry.toolEnhancementMaterials[toolEnhancement].icons[tool.id];
+			if(toolEnhancement != -1 && ToolEnhancementMaterialRegistry.instance.get(toolEnhancement) != null) {
+				return ToolEnhancementMaterialRegistry.instance.get(toolEnhancement).icons[tool.id];
 			}
 		} else if(renderPass == 2 || renderPass == 3) {
 			if(Minecraft.getMinecraft().thePlayer.getItemInUse() != null && ItemStack.areItemStacksEqual(stack, Minecraft.getMinecraft().thePlayer.getItemInUse())) {
@@ -182,13 +182,12 @@ public class ItemBow extends ItemTool {
 				}
 			}
 		}
-		return ResourcesCore.emptyTexture;
+		return AgeCraftCoreClient.emptyTexture;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
-		Tool tool = ToolRegistry.tools[getToolType(stack)];
+	public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
 		if(renderPass == 0) {
 			int toolRodMaterial = getToolRodMaterial(stack);
 			if(toolRodMaterial != -1 && icons[toolRodMaterial][0] != null) {
@@ -234,11 +233,11 @@ public class ItemBow extends ItemTool {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
-		for(int i = 0; i < ToolRegistry.toolRodMaterials.length; i++) {
-			if(ToolRegistry.toolRodMaterials[i] != null) {
+	public void registerIcons(IIconRegister iconRegister) {
+		for(int i = 0; i < ToolRodMaterialRegistry.instance.getAll().length; i++) {
+			if(ToolRodMaterialRegistry.instance.get(i) != null) {
 				for(int j = 0; j < 4; j++) {
-					icons[i][j] = iconRegister.registerIcon("agecraft:tools/sticks/bow/" + ToolRegistry.toolRodMaterials[i].name + "/bow" + ECUtil.firstUpperCase(ToolRegistry.toolRodMaterials[i].name) + Integer.toString(j));
+					icons[i][j] = iconRegister.registerIcon("agecraft:tools/sticks/bow/" + ToolRodMaterialRegistry.instance.get(i).name + "/bow" + EQUtil.firstUpperCase(ToolRodMaterialRegistry.instance.get(i).name) + Integer.toString(j));
 				}
 			}
 		}

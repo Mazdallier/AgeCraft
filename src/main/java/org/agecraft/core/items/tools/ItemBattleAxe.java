@@ -6,10 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class ItemBattleAxe extends ItemTool {
-
-	public ItemBattleAxe(int id) {
-		super(id);
-	}
 	
 	@Override
 	public EnumAction getItemUseAction(ItemStack stack) {

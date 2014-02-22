@@ -2,12 +2,13 @@ package org.agecraft.core.blocks.stone;
 
 import java.util.List;
 
-import javax.swing.Icon;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 import org.agecraft.ACCreativeTabs;
@@ -19,13 +20,13 @@ import elcon.mods.elconqore.blocks.BlockMetadataOverlay;
 
 public class BlockColoredStoneMossy extends BlockMetadataOverlay {
 
-	private Icon iconOverlay;
+	private IIcon iconOverlay;
 	
-	public BlockColoredStoneMossy(int id) {
-		super(id, Material.rock);
+	public BlockColoredStoneMossy() {
+		super(Material.rock);
 		setHardness(2.0F);
 		setResistance(10.0F);
-		setStepSound(Block.soundStoneFootstep);
+		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
 	}
 	
@@ -48,27 +49,27 @@ public class BlockColoredStoneMossy extends BlockMetadataOverlay {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	public IIcon getIcon(int side, int meta) {
 		return Stone.coloredStoneCracked.getIcon(side, meta);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getBlockOverlayTexture(int side, int metadata) {
+	public IIcon getBlockOverlayTexture(int side, int metadata) {
 		return iconOverlay;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerBlockIcons(IIconRegister iconRegister) {
 		iconOverlay = iconRegister.registerIcon("agecraft:stone/coloredStoneMossy");
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
+	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < 16; i++) {
-			list.add(new ItemStack(id, 1, i));
+			list.add(new ItemStack(item, 1, i));
 		}
 	}
 }

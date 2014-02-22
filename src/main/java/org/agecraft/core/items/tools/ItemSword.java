@@ -7,10 +7,6 @@ import net.minecraft.world.World;
 
 public class ItemSword extends ItemTool {
 
-	public ItemSword(int id) {
-		super(id);
-	}
-	
 	@Override
 	public EnumAction getItemUseAction(ItemStack stack) {
 		return EnumAction.block;

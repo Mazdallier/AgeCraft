@@ -8,7 +8,7 @@ public class Registry<T> {
 	
 	public static HashMap<String, Registry> registries = new HashMap<String, Registry>();
 	
-	private T[] registered;
+	private Object[] registered;
 	
 	public Registry(int maxSize) {
 		this.registered = (T[]) new Object[maxSize];
@@ -16,12 +16,12 @@ public class Registry<T> {
 		registries.put(getClass().getSimpleName().replaceAll("Registry", "").toLowerCase(), this);
 	}
 	
-	public T[] getAll() {
+	public Object[] getAll() {
 		return registered;
 	}
 	
 	public T get(int index) {
-		return registered[index];
+		return (T) registered[index];
 	}
 	
 	public void setAll(T[] registered) {

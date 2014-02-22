@@ -3,15 +3,14 @@ package org.agecraft.core.items.tools;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Icon;
-
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.EnchantmentThorns;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityMultiPart;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -21,62 +20,63 @@ import net.minecraft.potion.Potion;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import org.agecraft.ACCreativeTabs;
-import org.agecraft.ACUtil;
+import org.agecraft.core.AgeCraftCoreClient;
+import org.agecraft.core.registry.ToolEnhancementMaterialRegistry;
+import org.agecraft.core.registry.ToolMaterialRegistry;
 import org.agecraft.core.registry.ToolRegistry;
+import org.agecraft.core.registry.ToolRegistry.Tool;
 import org.agecraft.core.registry.ToolRegistry.ToolCreativeEntry;
+import org.agecraft.core.registry.ToolRodMaterialRegistry;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public abstract class ItemTool extends Item {
 
-	public ItemTool(int id) {
-		super(id - 256);
+	public ItemTool() {
 		setMaxStackSize(1);
 		setCreativeTab(ACCreativeTabs.tools);
 	}
 
 	@Override
-	public String getItemDisplayName(ItemStack stack) {
-		return getItemStackDisplayName(stack);
+	public String getItemStackDisplayName(ItemStack stack) {
+		if(ToolRegistry.instance.get(getToolType(stack)).hasHead) {
+			return LanguageManager.getLocalization(ToolMaterialRegistry.instance.get(getToolMaterial(stack)).localization) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		} else {
+			return LanguageManager.getLocalization(ToolRodMaterialRegistry.instance.get(getToolRodMaterial(stack)).localization) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		}
 	}
 
 	@Override
-	public String getItemStackDisplayName(ItemStack stack) {
-		if(ToolRegistry.tools[getToolType(stack)].hasHead) {
-			return LanguageManager.getLocalization(ToolRegistry.toolMaterials[getToolMaterial(stack)].localization) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
-		} else {
-			return LanguageManager.getLocalization(ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].localization) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
-		}
-	}
-		
-	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return "tools.type." + ToolRegistry.tools[getToolType(stack)].name;
+		return "tools.type." + ToolRegistry.instance.get(getToolType(stack)).name;
 	}
 
 	@Override
 	public String getUnlocalizedName() {
 		return "tools.type.default";
 	}
-	
+
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase entityLiving, EntityLivingBase entity) {
-		System.out.println(ToolRegistry.tools[getToolType(stack)].damageEntity);
-		ACUtil.damageItem(stack, ToolRegistry.tools[getToolType(stack)].damageEntity, entity);
+		stack.damageItem(ToolRegistry.instance.get(getToolType(stack)).damageEntity, entity);
+		//ACUtil.damageItem(stack, ToolRegistry.instance.get(getToolType(stack)).damageEntity, entity);
 		return true;
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, int blockID, int x, int y, int z, EntityLivingBase entity) {
-		ACUtil.damageItem(stack, ToolRegistry.tools[getToolType(stack)].damageBlock, entity);
+	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity) {
+		stack.damageItem(ToolRegistry.instance.get(getToolType(stack)).damageBlock, entity);
+		//ACUtil.damageItem(stack, ToolRegistry.instance.get(getToolType(stack)).damageBlock, entity);
 		return true;
 	}
-	
+
 	@Override
 	public boolean isDamageable() {
 		return true;
@@ -88,14 +88,14 @@ public abstract class ItemTool extends Item {
 	}
 
 	@Override
-	public float getStrVsBlock(ItemStack stack, Block block, int metadata) {
+	public float getDigSpeed(ItemStack stack, Block block, int metadata) {
 		return isEffectiveAgainstBlock(stack, block) && canHarvestBlock(stack, block, metadata) ? getToolEfficiency(stack) : 1.0F;
 	}
 
 	public boolean canHarvestBlock(ItemStack stack, Block block, int meta) {
 		return canHarvestBlock(block, stack);
 	}
-	
+
 	@Override
 	public boolean canHarvestBlock(Block block, ItemStack stack) {
 		return isEffectiveAgainstBlock(stack, block);
@@ -109,85 +109,98 @@ public abstract class ItemTool extends Item {
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
 		if(entity.canAttackWithItem()) {
 			if(!entity.hitByEntity(player)) {
-				float damage = (float) (getBaseAttackDamage(stack) + getToolAttackStrength(stack));
-				int i = 0;
-				float extraDamage = 0.0F;
+				float f = (float) player.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+				int knockbackModifier = 0;
+				float enchantmentModifier = 0.0F;
 				if(entity instanceof EntityLivingBase) {
-					extraDamage = EnchantmentHelper.getEnchantmentModifierLiving(player, (EntityLivingBase) entity);
-					i += EnchantmentHelper.getKnockbackModifier(player, (EntityLivingBase) entity);
+					enchantmentModifier = EnchantmentHelper.getEnchantmentModifierLiving(player, (EntityLivingBase) entity);
+					knockbackModifier += EnchantmentHelper.getKnockbackModifier(player, (EntityLivingBase) entity);
 				}
 				if(player.isSprinting()) {
-					i++;
+					knockbackModifier++;
 				}
-				if(damage > 0.0F || extraDamage > 0.0F) {
-					boolean criricalHit = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null && entity instanceof EntityLivingBase;
-					if(criricalHit && damage > 0.0F) {
-						damage *= 1.5F;
+				if(f > 0.0F || enchantmentModifier > 0.0F) {
+					boolean flag = player.fallDistance > 0.0F && !player.onGround && !player.isOnLadder() && !player.isInWater() && !player.isPotionActive(Potion.blindness) && player.ridingEntity == null && entity instanceof EntityLivingBase;
+
+					if(flag && f > 0.0F) {
+						f *= 1.5F;
 					}
-					damage += extraDamage;
-					boolean fire = false;
+
+					f += enchantmentModifier;
+					boolean flag1 = false;
 					int j = EnchantmentHelper.getFireAspectModifier(player);
+
 					if(entity instanceof EntityLivingBase && j > 0 && !entity.isBurning()) {
-						fire = true;
+						flag1 = true;
 						entity.setFire(1);
 					}
-					boolean attack = entity.attackEntityFrom(DamageSource.causePlayerDamage(player), damage);
-					if(attack) {
-						if(i > 0) {
-							entity.addVelocity((double) (-MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F));
+
+					boolean flag2 = entity.attackEntityFrom(DamageSource.causePlayerDamage(player), f);
+
+					if(flag2) {
+						if(knockbackModifier > 0) {
+							entity.addVelocity((double) (-MathHelper.sin(player.rotationYaw * (float) Math.PI / 180.0F) * (float) knockbackModifier * 0.5F), 0.1D, (double) (MathHelper.cos(player.rotationYaw * (float) Math.PI / 180.0F) * (float) knockbackModifier * 0.5F));
 							player.motionX *= 0.6D;
 							player.motionZ *= 0.6D;
 							player.setSprinting(false);
 						}
-						if(criricalHit) {
+
+						if(flag) {
 							player.onCriticalHit(entity);
 						}
-						if(extraDamage > 0.0F) {
+
+						if(enchantmentModifier > 0.0F) {
 							player.onEnchantmentCritical(entity);
 						}
-						if(damage >= 18.0F) {
+
+						if(f >= 18.0F) {
 							player.triggerAchievement(AchievementList.overkill);
 						}
-						player.setLastAttacker(entity);
-						if(entity instanceof EntityLivingBase) {
-							EnchantmentThorns.func_92096_a(player, (EntityLivingBase) entity, player.worldObj.rand);
-						}
-					}
 
-					ItemStack itemstack = player.getCurrentEquippedItem();
-					Object object = entity;
-					
-					if(entity instanceof EntityDragonPart) {
-						IEntityMultiPart entityMultipart = ((EntityDragonPart) entity).entityDragonObj;
-						if(entityMultipart != null && entityMultipart instanceof EntityLivingBase) {
-							object = (EntityLivingBase) entityMultipart;
+						player.setLastAttacker(entity);
+
+						if(entity instanceof EntityLivingBase) {
+							EnchantmentHelper.func_151384_a((EntityLivingBase) entity, player);
 						}
-					}
-					if(itemstack != null && object instanceof EntityLivingBase) {
-						itemstack.hitEntity((EntityLivingBase) object, player);
-						if(itemstack.stackSize <= 0) {
-							player.destroyCurrentEquippedItem();
+
+						EnchantmentHelper.func_151385_b(player, entity);
+						ItemStack itemstack = player.getCurrentEquippedItem();
+						Object object = entity;
+
+						if(entity instanceof EntityDragonPart) {
+							IEntityMultiPart ientitymultipart = ((EntityDragonPart) entity).entityDragonObj;
+
+							if(ientitymultipart != null && ientitymultipart instanceof EntityLivingBase) {
+								object = (EntityLivingBase) ientitymultipart;
+							}
 						}
-					}
-					if(entity instanceof EntityLivingBase) {
-						player.addStat(StatList.damageDealtStat, Math.round(damage * 10.0F));
-						if(j > 0 && attack) {
-							entity.setFire(j * 4);
-						} else if(fire) {
-							entity.extinguish();
+						if(itemstack != null && object instanceof EntityLivingBase) {
+							itemstack.hitEntity((EntityLivingBase) object, player);
+
+							if(itemstack.stackSize <= 0) {
+								player.destroyCurrentEquippedItem();
+							}
 						}
+						if(entity instanceof EntityLivingBase) {
+							player.addStat(StatList.damageDealtStat, Math.round(f * 10.0F));
+							if(j > 0) {
+								entity.setFire(j * 4);
+							}
+						}
+						player.addExhaustion(0.3F);
+					} else if(flag1) {
+						entity.extinguish();
 					}
-					player.addExhaustion(0.3F);
 				}
 			}
 		}
 		return true;
 	}
-	
+
 	public boolean isEffectiveAgainstBlock(ItemStack stack, Block block) {
-		Block[] blocksEffectiveAgainst = ToolRegistry.tools[getToolType(stack)].blocksEffectiveAgainst;
+		Block[] blocksEffectiveAgainst = ToolRegistry.instance.get(getToolType(stack)).blocksEffectiveAgainst;
 		for(int i = 0; i < blocksEffectiveAgainst.length; ++i) {
-			if(blocksEffectiveAgainst[i].blockID == block.blockID) {
+			if(Block.getIdFromBlock(blocksEffectiveAgainst[i]) == Block.getIdFromBlock(block)) {
 				return true;
 			}
 		}
@@ -212,45 +225,45 @@ public abstract class ItemTool extends Item {
 	}
 
 	@Override
-	public Icon getIcon(ItemStack stack, int pass) {
-		Tool tool = ToolRegistry.tools[getToolType(stack)];
+	public IIcon getIcon(ItemStack stack, int pass) {
+		Tool tool = ToolRegistry.instance.get(getToolType(stack));
 		if(pass == 0 && tool.hasRod) {
 			int toolRodMaterial = getToolRodMaterial(stack);
-			if(toolRodMaterial != -1 && ToolRegistry.toolRodMaterials[toolRodMaterial] != null) {
-				return ToolRegistry.toolRodMaterials[toolRodMaterial].icons[tool.id];
+			if(toolRodMaterial != -1 && ToolRodMaterialRegistry.instance.get(toolRodMaterial) != null) {
+				return ToolRodMaterialRegistry.instance.get(toolRodMaterial).icons[tool.id];
 			}
 		} else if(pass == 1 && tool.hasHead) {
 			int toolMaterial = getToolMaterial(stack);
-			if(toolMaterial != -1 && ToolRegistry.toolMaterials[toolMaterial] != null) {
-				return ToolRegistry.toolMaterials[toolMaterial].icons[tool.id];
+			if(toolMaterial != -1 && ToolMaterialRegistry.instance.get(toolMaterial) != null) {
+				return ToolMaterialRegistry.instance.get(toolMaterial).icons[tool.id];
 			}
 		} else if(pass == 2 && tool.hasEnhancements) {
 			int toolEnhancement = getToolEnhancementMaterial(stack);
-			if(toolEnhancement != -1 && ToolRegistry.toolEnhancementMaterials[toolEnhancement] != null) {
-				return ToolRegistry.toolEnhancementMaterials[toolEnhancement].icons[tool.id];
+			if(toolEnhancement != -1 && ToolEnhancementMaterialRegistry.instance.get(toolEnhancement) != null) {
+				return ToolEnhancementMaterialRegistry.instance.get(toolEnhancement).icons[tool.id];
 			}
 		}
-		return ResourcesCore.emptyTexture;
+		return AgeCraftCoreClient.emptyTexture;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerIcons(IIconRegister iconRegister) {
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(int id, CreativeTabs creativeTabs, List list) {
-		if(ToolRegistry.toolCreativeEntries.containsKey(id - 12520)) {
-			ArrayList<ToolCreativeEntry> entries = ToolRegistry.toolCreativeEntries.get(id - 12520);
+	public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
+		if(ToolRegistry.toolCreativeEntries.containsKey(ToolRegistry.getToolID(item))) {
+			ArrayList<ToolCreativeEntry> entries = ToolRegistry.toolCreativeEntries.get(ToolRegistry.getToolID(item));
 			for(ToolCreativeEntry entry : entries) {
-				ItemStack stack = new ItemStack(id, 1, 0);
+				ItemStack stack = new ItemStack(item, 1, 0);
 				NBTTagCompound nbt = new NBTTagCompound();
 				NBTTagCompound nbt2 = new NBTTagCompound();
 				nbt2.setInteger("Type", entry.tool);
 				nbt2.setInteger("Material", entry.toolMaterial);
 				nbt2.setInteger("RodMaterial", entry.toolRodMaterial);
-				nbt2.setInteger("EnhancementMaterial", entry.toolEnhancement);
+				nbt2.setInteger("EnhancementMaterial", entry.toolEnhancementMaterial);
 				nbt.setTag("Tool", nbt2);
 				stack.setTagCompound(nbt);
 				list.add(stack);
@@ -270,7 +283,7 @@ public abstract class ItemTool extends Item {
 			nbt2.setInteger("Material", -1);
 			nbt2.setInteger("RodMaterial", -1);
 			nbt2.setInteger("EnhancementMaterial", -1);
-			nbt.setCompoundTag("Tool", nbt2);
+			nbt.setTag("Tool", nbt2);
 		}
 		return nbt.getCompoundTag("Tool");
 	}
@@ -296,28 +309,24 @@ public abstract class ItemTool extends Item {
 	}
 
 	public int getToolDurability(ItemStack stack) {
-		NBTTagCompound nbt = getToolNBT(stack);
-		Tool tool = ToolRegistry.tools[getToolType(stack)];
-		return (tool.hasHead ? ToolRegistry.toolMaterials[getToolMaterial(stack)].durability : 0) + (tool.hasRod ? ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].durability : 0);
+		Tool tool = ToolRegistry.instance.get(getToolType(stack));
+		return (tool.hasHead ? ToolMaterialRegistry.instance.get(getToolMaterial(stack)).durability : 0) + (tool.hasRod ? ToolRodMaterialRegistry.instance.get(getToolRodMaterial(stack)).durability : 0);
 	}
 
 	public float getToolEfficiency(ItemStack stack) {
-		NBTTagCompound nbt = getToolNBT(stack);
-		Tool tool = ToolRegistry.tools[getToolType(stack)];
-		return (tool.hasHead ? ToolRegistry.toolMaterials[getToolMaterial(stack)].efficiency : 0) + (tool.hasRod ? ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].efficiency : 0);
+		Tool tool = ToolRegistry.instance.get(getToolType(stack));
+		return (tool.hasHead ? ToolMaterialRegistry.instance.get(getToolMaterial(stack)).efficiency : 0) + (tool.hasRod ? ToolRodMaterialRegistry.instance.get(getToolRodMaterial(stack)).efficiency : 0);
 	}
 
 	public int getToolAttackStrength(ItemStack stack) {
-		NBTTagCompound nbt = getToolNBT(stack);
-		if(!ToolRegistry.tools[getToolType(stack)].hasHead) {
-			return ToolRegistry.toolRodMaterials[getToolRodMaterial(stack)].attackStrength;
+		if(!ToolRegistry.instance.get(getToolType(stack)).hasHead) {
+			return ToolRodMaterialRegistry.instance.get(getToolRodMaterial(stack)).attackStrength;
 		}
-		return ToolRegistry.toolMaterials[getToolMaterial(stack)].attackStrength;
+		return ToolMaterialRegistry.instance.get(getToolMaterial(stack)).attackStrength;
 	}
-	
+
 	public int getToolHarvestLevel(ItemStack stack) {
-		NBTTagCompound nbt = getToolNBT(stack);
-		Tool tool = ToolRegistry.tools[getToolType(stack)];
-		return (tool.hasHead ? ToolRegistry.toolMaterials[getToolMaterial(stack)].harvestLevel : 0);
+		Tool tool = ToolRegistry.instance.get(getToolType(stack));
+		return (tool.hasHead ? ToolMaterialRegistry.instance.get(getToolMaterial(stack)).harvestLevel : 0);
 	}
 }

@@ -25,6 +25,11 @@ public class BiomeRegistry extends Registry<Biome> {
 			this.temperature = (float) Math.round(temperature * 10F) / 10F;
 			this.humidity = (float) Math.round(humidity * 10F) / 10F;
 		}
+		
+		@Override
+		public String toString() {
+			return name;
+		}
 	}
 	
 	public static BiomeRegistry instance = new BiomeRegistry();

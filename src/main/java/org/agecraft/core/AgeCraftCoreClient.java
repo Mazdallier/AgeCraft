@@ -20,11 +20,14 @@ import org.agecraft.core.registry.DustRegistry.Dust;
 import org.agecraft.core.registry.MetalRegistry;
 import org.agecraft.core.registry.MetalRegistry.Metal;
 import org.agecraft.core.registry.MetalRegistry.OreType;
+import org.agecraft.core.registry.ToolEnhancementMaterialRegistry;
+import org.agecraft.core.registry.ToolEnhancementMaterialRegistry.ToolEnhancementMaterial;
+import org.agecraft.core.registry.ToolMaterialRegistry;
+import org.agecraft.core.registry.ToolMaterialRegistry.ToolMaterial;
 import org.agecraft.core.registry.ToolRegistry;
 import org.agecraft.core.registry.ToolRegistry.Tool;
-import org.agecraft.core.registry.ToolRegistry.ToolEnhancementMaterial;
-import org.agecraft.core.registry.ToolRegistry.ToolMaterial;
-import org.agecraft.core.registry.ToolRegistry.ToolRodMaterial;
+import org.agecraft.core.registry.ToolRodMaterialRegistry;
+import org.agecraft.core.registry.ToolRodMaterialRegistry.ToolRodMaterial;
 import org.agecraft.core.registry.TreeRegistry;
 import org.agecraft.core.registry.TreeRegistry.Tree;
 
@@ -32,7 +35,7 @@ import elcon.mods.elconqore.EQUtil;
 
 public class AgeCraftCoreClient extends ACComponentClient {
 
-	public static AgeCraftCoreClient instance = new AgeCraftCoreClient(AgeCraftCore.instance);
+	public static AgeCraftCoreClient instance;
 
 	public static ResourceLocation guiIcons = new ResourceLocation("agecraft", "textures/gui/icons.png");
 	public static ResourceLocation guiInventory = new ResourceLocation("agecraft", "textures/gui/inventory.png");
@@ -54,10 +57,10 @@ public class AgeCraftCoreClient extends ACComponentClient {
 
 	public static ResourceLocation gear = new ResourceLocation("agecraft", "textures/misc/gear.png");
 
-	public static ResourceLocation[] arrowHeads = new ResourceLocation[ToolRegistry.toolMaterials.length];
-	public static ResourceLocation[] arrowRods = new ResourceLocation[ToolRegistry.toolRodMaterials.length];
-	public static ResourceLocation[] boltHeads = new ResourceLocation[ToolRegistry.toolMaterials.length];
-	public static ResourceLocation[] boltRods = new ResourceLocation[ToolRegistry.toolRodMaterials.length];
+	public static ResourceLocation[] arrowHeads = new ResourceLocation[ToolMaterialRegistry.instance.getAll().length];
+	public static ResourceLocation[] arrowRods = new ResourceLocation[ToolRodMaterialRegistry.instance.getAll().length];
+	public static ResourceLocation[] boltHeads = new ResourceLocation[ToolMaterialRegistry.instance.getAll().length];
+	public static ResourceLocation[] boltRods = new ResourceLocation[ToolRodMaterialRegistry.instance.getAll().length];
 
 	public static IIcon missingTexture;
 	public static IIcon emptyTexture;
@@ -74,6 +77,7 @@ public class AgeCraftCoreClient extends ACComponentClient {
 
 	public AgeCraftCoreClient(ACComponent component) {
 		super(component);
+		instance = this;
 	}
 
 	@Override
@@ -160,7 +164,7 @@ public class AgeCraftCoreClient extends ACComponentClient {
 		missingTexture = iconRegister.registerIcon("agecraft:missingTexture");
 		emptyTexture = iconRegister.registerIcon("agecraft:emptyTexture");
 		iconLock = iconRegister.registerIcon("agecraft:lock");
-
+		
 		// trees
 		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
 			Tree tree = TreeRegistry.instance.get(i);
@@ -184,7 +188,7 @@ public class AgeCraftCoreClient extends ACComponentClient {
 						if(metal.hasDust) {
 							metal.dust = iconRegister.registerIcon("agecraft:metals/dusts/metals/dust" + EQUtil.firstUpperCase(metal.name));
 						}
-						if(ToolRegistry.toolMaterials[128 + metal.id] != null) {
+						if(ToolMaterialRegistry.instance.get(128 + metal.id) != null) {
 							metal.bucket = iconRegister.registerIcon("agecraft:metals/buckets/bucket" + EQUtil.firstUpperCase(metal.name));
 						}
 					}
@@ -200,22 +204,22 @@ public class AgeCraftCoreClient extends ACComponentClient {
 		}
 
 		// tools
-		for(int i = 0; i < ToolRegistry.tools.length; i++) {
-			Tool tool = ToolRegistry.tools[i];
+		for(int i = 0; i < ToolRegistry.instance.getAll().length; i++) {
+			Tool tool = ToolRegistry.instance.get(i);
 			if(tool != null) {
 				tool.outline = iconRegister.registerIcon("agecraft:tools/outline/" + tool.name);
 				if(tool.id != 17 && tool.id != 18 && tool.id != 19 && tool.id != 20 && tool.id != 21) {
 					if(tool.hasHead) {
-						for(int j = 0; j < ToolRegistry.toolMaterials.length; j++) {
-							ToolMaterial toolMaterial = ToolRegistry.toolMaterials[j];
+						for(int j = 0; j < ToolMaterialRegistry.instance.getAll().length; j++) {
+							ToolMaterial toolMaterial = ToolMaterialRegistry.instance.get(j);
 							if(toolMaterial != null) {
 								toolMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/" + tool.name + "/" + tool.name + EQUtil.firstUpperCase(toolMaterial.name));
 							}
 						}
 					}
 					if(tool.hasRod) {
-						for(int j = 0; j < ToolRegistry.toolRodMaterials.length; j++) {
-							ToolRodMaterial toolRodMaterial = ToolRegistry.toolRodMaterials[j];
+						for(int j = 0; j < ToolRodMaterialRegistry.instance.getAll().length; j++) {
+							ToolRodMaterial toolRodMaterial = ToolRodMaterialRegistry.instance.get(j);
 							if(toolRodMaterial != null) {
 								toolRodMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/sticks/" + tool.name + "/" + tool.name + EQUtil.firstUpperCase(toolRodMaterial.name));
 							}
@@ -223,8 +227,8 @@ public class AgeCraftCoreClient extends ACComponentClient {
 					}
 				}
 				if(tool.hasEnhancements) {
-					for(int j = 0; j < ToolRegistry.toolEnhancementMaterials.length; j++) {
-						ToolEnhancementMaterial toolEnhancementMaterial = ToolRegistry.toolEnhancementMaterials[j];
+					for(int j = 0; j < ToolEnhancementMaterialRegistry.instance.getAll().length; j++) {
+						ToolEnhancementMaterial toolEnhancementMaterial = ToolEnhancementMaterialRegistry.instance.get(j);
 						if(toolEnhancementMaterial != null) {
 							toolEnhancementMaterial.icons[i] = iconRegister.registerIcon("agecraft:tools/enhancements/" + tool.name + "/" + tool.name + EQUtil.firstUpperCase(toolEnhancementMaterial.name));
 						}
@@ -261,15 +265,15 @@ public class AgeCraftCoreClient extends ACComponentClient {
 	@Override
 	public void postInit() {
 		// arrow
-		for(int i = 0; i < ToolRegistry.toolMaterials.length; i++) {
-			ToolMaterial toolMaterial = ToolRegistry.toolMaterials[i];
+		for(int i = 0; i < ToolMaterialRegistry.instance.getAll().length; i++) {
+			ToolMaterial toolMaterial = ToolMaterialRegistry.instance.get(i);
 			if(toolMaterial != null) {
 				arrowHeads[i] = new ResourceLocation("agecraft", "textures/entity/arrow/arrowHead" + EQUtil.firstUpperCase(toolMaterial.name) + ".png");
 				boltHeads[i] = new ResourceLocation("agecraft", "textures/entity/bolt/boltHead" + EQUtil.firstUpperCase(toolMaterial.name) + ".png");
 			}
 		}
-		for(int i = 0; i < ToolRegistry.toolRodMaterials.length; i++) {
-			ToolRodMaterial toolRodMaterial = ToolRegistry.toolRodMaterials[i];
+		for(int i = 0; i < ToolRodMaterialRegistry.instance.getAll().length; i++) {
+			ToolRodMaterial toolRodMaterial = ToolRodMaterialRegistry.instance.get(i);
 			if(toolRodMaterial != null) {
 				arrowRods[i] = new ResourceLocation("agecraft", "textures/entity/arrow/arrowRod" + EQUtil.firstUpperCase(toolRodMaterial.name) + ".png");
 				boltRods[i] = new ResourceLocation("agecraft", "textures/entity/bolt/boltRod" + EQUtil.firstUpperCase(toolRodMaterial.name) + ".png");

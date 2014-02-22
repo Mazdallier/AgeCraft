@@ -2,15 +2,15 @@ package org.agecraft.core.blocks.metal;
 
 import java.util.List;
 
-import javax.swing.Icon;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -22,25 +22,26 @@ import org.agecraft.core.registry.MetalRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.blocks.BlockExtendedMetadata;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class BlockMetalFenceGate extends BlockExtendedMetadata {
 
-	public BlockMetalFenceGate(int id) {
-		super(id, Material.iron);
-		setStepSound(Block.soundMetalFootstep);
+	public BlockMetalFenceGate() {
+		super(Material.iron);
+		setStepSound(Block.soundTypeMetal);
 		setCreativeTab(ACCreativeTabs.metals);
 	}
 	
 	@Override
 	public float getBlockHardness(World world, int x, int y, int z) {
 		int meta = getMetadata(world, x, y, z);
-		return MetalRegistry.metals[(meta - (meta & 7)) / 8].blockHardness;
+		return MetalRegistry.instance.get((meta - (meta & 7)) / 8).blockHardness;
 	}
 	
 	@Override
 	public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
 		int meta = getMetadata(world, x, y, z);
-		return MetalRegistry.metals[(meta - (meta & 7)) / 8].blockResistance / 5.0F;
+		return MetalRegistry.instance.get((meta - (meta & 7)) / 8).blockResistance / 5.0F;
 	}
 	
 	@Override
@@ -55,7 +56,7 @@ public class BlockMetalFenceGate extends BlockExtendedMetadata {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[(stack.getItemDamage() - (stack.getItemDamage() & 7)) / 8].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("metals." + MetalRegistry.instance.get((stack.getItemDamage() - (stack.getItemDamage() & 7)) / 8).name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 	
 	@Override
@@ -65,7 +66,7 @@ public class BlockMetalFenceGate extends BlockExtendedMetadata {
 	
 	@Override
 	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
-		return !world.getBlockMaterial(x, y - 1, z).isSolid() ? false : super.canPlaceBlockAt(world, x, y, z);
+		return !world.getBlock(x, y - 1, z).getMaterial().isSolid() ? false : super.canPlaceBlockAt(world, x, y, z);
 	}
 	
 	@Override
@@ -116,11 +117,11 @@ public class BlockMetalFenceGate extends BlockExtendedMetadata {
 	}
 
 	@Override
-	public void onNeighborBlockChange(World world, int x, int y, int z, int blockID) {
+	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
 		if(!world.isRemote) {
 			int meta = getMetadata(world, x, y, z);
 			boolean indirectPower = world.isBlockIndirectlyGettingPowered(x, y, z);
-			if(indirectPower || blockID > 0 && Block.blocksList[blockID].canProvidePower()) {
+			if(indirectPower || block != null && block.canProvidePower()) {
 				if(indirectPower && !isFenceGateOpen(meta)) {
 					setMetadata(world, x, y, z, meta | 4);
 					world.markBlockForUpdate(x, y, z);
@@ -166,22 +167,22 @@ public class BlockMetalFenceGate extends BlockExtendedMetadata {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
-		return MetalRegistry.metals[(meta - (meta & 7)) / 8].blocks[0];
+	public IIcon getIcon(int side, int meta) {
+		return MetalRegistry.instance.get((meta - (meta & 7)) / 8).blocks[0];
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getBlockTexture(IBlockAccess blockAccess, int x, int y, int z, int side) {
+	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return getIcon(side, getMetadata(blockAccess, x, y, z));
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < MetalRegistry.metals.length; i++) {
-			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasDoor) {
-				list.add(new ItemStack(id, 1, i * 8));
+	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
+		for(int i = 0; i < MetalRegistry.instance.getAll().length; i++) {
+			if(MetalRegistry.instance.get(i) != null && MetalRegistry.instance.get(i).hasDoor) {
+				list.add(new ItemStack(item, 1, i * 8));
 			}
 		}
 	}

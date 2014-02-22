@@ -1,22 +1,24 @@
 package org.agecraft.core.items.tools;
 
-import javax.swing.Icon;
-
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 
-import org.agecraft.core.registry.ToolRegistry;
-import org.agecraft.core.registry.ToolRegistry.ToolRodMaterial;
+import org.agecraft.core.AgeCraftCoreClient;
+import org.agecraft.core.registry.ToolMaterialRegistry;
+import org.agecraft.core.registry.ToolRodMaterialRegistry;
+import org.agecraft.core.registry.ToolRodMaterialRegistry.ToolRodMaterial;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.elconqore.EQUtil;
 
 public class ItemBolt extends ItemTool {
 
-	public Icon[][] iconsHead = new Icon[256][4];
-	public Icon[][] iconsRod = new Icon[256][4];
+	public IIcon[][] iconsHead = new IIcon[256][4];
+	public IIcon[][] iconsRod = new IIcon[256][4];
 	
-	public ItemBolt(int id) {
-		super(id);
+	public ItemBolt() {
 		setMaxStackSize(64);
 	}
 	
@@ -26,40 +28,39 @@ public class ItemBolt extends ItemTool {
 	}
 	
 	@Override
-	public Icon getIcon(ItemStack stack, int pass) {
-		Tool tool = ToolRegistry.tools[getToolType(stack)];
+	public IIcon getIcon(ItemStack stack, int pass) {
 		if(pass == 0) {
 			int toolRodMaterial = getToolRodMaterial(stack);
-			if(toolRodMaterial != -1 && ToolRegistry.toolRodMaterials[toolRodMaterial] != null) {
+			if(toolRodMaterial != -1 && ToolRodMaterialRegistry.instance.get(toolRodMaterial) != null) {
 				return iconsRod[toolRodMaterial][0];
 			}
 		} else if(pass == 1) {
 			int toolMaterial = getToolMaterial(stack);
-			if(toolMaterial != -1 && ToolRegistry.toolMaterials[toolMaterial] != null) {
+			if(toolMaterial != -1 && ToolMaterialRegistry.instance.get(toolMaterial) != null) {
 				return iconsHead[toolMaterial][0];
 			}
 		}
-		return ResourcesCore.emptyTexture;
+		return AgeCraftCoreClient.emptyTexture;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
-		for(int i = 0; i < ToolRegistry.toolMaterials.length; i++) {
-			ToolMaterial toolMaterial = ToolRegistry.toolMaterials[i];
+	public void registerIcons(IIconRegister iconRegister) {
+		for(int i = 0; i < ToolMaterialRegistry.instance.getAll().length; i++) {
+			org.agecraft.core.registry.ToolMaterialRegistry.ToolMaterial toolMaterial = ToolMaterialRegistry.instance.get(i);
 			if(toolMaterial != null) {
-				iconsHead[i][0] = iconRegister.registerIcon("agecraft:tools/bolt/" + toolMaterial.name + "/bolt" + ECUtil.firstUpperCase(toolMaterial.name));
+				iconsHead[i][0] = iconRegister.registerIcon("agecraft:tools/bolt/" + toolMaterial.name + "/bolt" + EQUtil.firstUpperCase(toolMaterial.name));
 				for(int j = 0; j < 3; j++) {
-					iconsHead[i][j + 1] = iconRegister.registerIcon("agecraft:tools/bolt/" + toolMaterial.name + "/bolt" + ECUtil.firstUpperCase(toolMaterial.name) + Integer.toString(j));
+					iconsHead[i][j + 1] = iconRegister.registerIcon("agecraft:tools/bolt/" + toolMaterial.name + "/bolt" + EQUtil.firstUpperCase(toolMaterial.name) + Integer.toString(j));
 				}
 			}
 		}
-		for(int i = 0; i < ToolRegistry.toolRodMaterials.length; i++) {
-			ToolRodMaterial toolRodMaterial = ToolRegistry.toolRodMaterials[i];
+		for(int i = 0; i < ToolRodMaterialRegistry.instance.getAll().length; i++) {
+			ToolRodMaterial toolRodMaterial = ToolRodMaterialRegistry.instance.get(i);
 			if(toolRodMaterial != null) {
-				iconsRod[i][0] = iconRegister.registerIcon("agecraft:tools/sticks/bolt/" + toolRodMaterial.name + "/bolt" + ECUtil.firstUpperCase(toolRodMaterial.name));
+				iconsRod[i][0] = iconRegister.registerIcon("agecraft:tools/sticks/bolt/" + toolRodMaterial.name + "/bolt" + EQUtil.firstUpperCase(toolRodMaterial.name));
 				for(int j = 0; j < 3; j++) {
-					iconsRod[i][j + 1] = iconRegister.registerIcon("agecraft:tools/sticks/bolt/" + toolRodMaterial.name + "/bolt" + ECUtil.firstUpperCase(toolRodMaterial.name) + Integer.toString(j));
+					iconsRod[i][j + 1] = iconRegister.registerIcon("agecraft:tools/sticks/bolt/" + toolRodMaterial.name + "/bolt" + EQUtil.firstUpperCase(toolRodMaterial.name) + Integer.toString(j));
 				}
 			}
 		}

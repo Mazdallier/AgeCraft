@@ -37,6 +37,11 @@ public class ArmorMaterialRegistry extends Registry<ArmorMaterial> {
 			
 			this.durability = durability;
 		}
+		
+		@Override
+		public String toString() {
+			return name;
+		}
 	}
 	
 	public static ArmorMaterialRegistry instance = new ArmorMaterialRegistry();

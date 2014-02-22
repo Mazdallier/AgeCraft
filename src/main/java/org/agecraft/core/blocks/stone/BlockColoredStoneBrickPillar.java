@@ -2,13 +2,14 @@ package org.agecraft.core.blocks.stone;
 
 import java.util.List;
 
-import javax.swing.Icon;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -21,14 +22,14 @@ import elcon.mods.elconqore.blocks.IBlockRotated;
 
 public class BlockColoredStoneBrickPillar extends BlockExtendedMetadata implements IBlockRotated {
 
-	private Icon icon;
-	private Icon iconTop;
+	private IIcon icon;
+	private IIcon iconTop;
 	
-	public BlockColoredStoneBrickPillar(int id) {
-		super(id, Material.rock);
+	public BlockColoredStoneBrickPillar() {
+		super(Material.rock);
 		setHardness(1.5F);
 		setResistance(10.0F);
-		setStepSound(Block.soundStoneFootstep);
+		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
 	}
 	
@@ -87,7 +88,7 @@ public class BlockColoredStoneBrickPillar extends BlockExtendedMetadata implemen
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	public IIcon getIcon(int side, int meta) {
 		int direction = meta & 3;
 		if(direction == 0 && (side == 0 || side == 1)) {
 			return iconTop;
@@ -101,16 +102,16 @@ public class BlockColoredStoneBrickPillar extends BlockExtendedMetadata implemen
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerBlockIcons(IIconRegister iconRegister) {
 		icon = iconRegister.registerIcon("agecraft:stone/coloredStoneBrickPillar");
 		iconTop = iconRegister.registerIcon("agecraft:stone/coloredStoneBrickPillarTop");
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
+	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < 16; i++) {
-			list.add(new ItemStack(id, 1, i * 4));
+			list.add(new ItemStack(item, 1, i * 4));
 		}
 	}
 }

@@ -25,6 +25,11 @@ public class DustRegistry extends Registry<Dust> {
 			
 			this.stack = stack;
 		}
+		
+		@Override
+		public String toString() {
+			return name;
+		}
 	}
 
 	public static DustRegistry instance = new DustRegistry();

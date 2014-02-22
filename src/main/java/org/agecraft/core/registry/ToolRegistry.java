@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
+import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 
-import org.agecraft.AgeCraft;
+import org.agecraft.core.items.tools.ItemTool;
+import org.agecraft.core.registry.ToolRegistry.Tool;
 
-public class ToolRegistry {
+public class ToolRegistry extends Registry<Tool> {
 
 	public static class Tool {
 		
@@ -45,80 +45,10 @@ public class ToolRegistry {
 			
 			this.blocksEffectiveAgainst = blocksEffectiveAgainst;
 		}
-	}
-	
-	public static class ToolMaterial {
 		
-		public int id;
-		public String name;
-		public String localization;
-		
-		public ItemStack stack;
-		
-		public int durability;
-		public float efficiency;
-		public int attackStrength;
-		public int harvestLevel;
-		
-		public IIcon[] icons = new IIcon[128];
-		
-		public ToolMaterial(int id, String name, String localization, ItemStack stack, int durability, float efficiency, int attackStrength, int harvestLevel) {
-			this.id = id;
-			this.name = name;
-			this.localization = localization;
-			
-			this.stack = stack;
-			
-			this.durability = durability;
-			this.efficiency = efficiency;
-			this.attackStrength = attackStrength;
-			this.harvestLevel = harvestLevel;
-		}
-	}
-	
-	public static class ToolRodMaterial {
-		
-		public int id;
-		public String name;
-		public String localization;
-		
-		public ItemStack stack;
-		
-		public int durability;
-		public float efficiency;
-		public int attackStrength;
-		
-		public IIcon[] icons = new IIcon[128];
-		
-		public ToolRodMaterial(int id, String name, String localization, ItemStack stack, int durability, float efficiency, int attackStrength) {
-			this.id = id;
-			this.name = name;
-			this.localization = localization;
-			
-			this.stack = stack;
-			
-			this.durability = durability;
-			this.efficiency = efficiency;
-			this.attackStrength = attackStrength;
-		}
-	}
-	
-	public static class ToolEnhancementMaterial {
-		
-		public int id;
-		public String name;
-		public String localization;
-		
-		public ItemStack stack;
-		
-		public IIcon[] icons = new IIcon[128];
-		
-		public ToolEnhancementMaterial(int id, String name, String localization, ItemStack stack) {
-			this.id = id;
-			this.name = name;
-			this.localization = localization;
-			
-			this.stack = stack;
+		@Override
+		public String toString() {
+			return name;
 		}
 	}
 	
@@ -127,48 +57,41 @@ public class ToolRegistry {
 		public int tool;
 		public int toolMaterial;
 		public int toolRodMaterial;
-		public int toolEnhancement;
+		public int toolEnhancementMaterial;
 		
-		public ToolCreativeEntry(int tool, int toolMaterial, int toolRodMaterial, int toolEnhancement) {
+		public ToolCreativeEntry(int tool, int toolMaterial, int toolRodMaterial, int toolEnhancementMaterial) {
 			this.tool = tool;
 			this.toolMaterial = toolMaterial;
 			this.toolRodMaterial = toolRodMaterial;
-			this.toolEnhancement = toolEnhancement;
+			this.toolEnhancementMaterial = toolEnhancementMaterial;
+		}
+		
+		@Override
+		public String toString() {
+			return "[tool=" + tool + ", toolMaterial=" + toolMaterial + ", toolRodMaterial=" + toolRodMaterial + ", toolEnhancementMaterial=" + toolEnhancementMaterial + "]";
 		}
 	}
-	
-	public static Tool[] tools = new Tool[128];
-	public static ToolMaterial[] toolMaterials = new ToolMaterial[256];
-	public static ToolRodMaterial[] toolRodMaterials = new ToolRodMaterial[256];
-	public static ToolEnhancementMaterial[] toolEnhancementMaterials = new ToolEnhancementMaterial[256];
+
+	public static ToolRegistry instance = new ToolRegistry();
+
 	public static HashMap<Integer, ArrayList<ToolCreativeEntry>> toolCreativeEntries = new HashMap<Integer, ArrayList<ToolCreativeEntry>>();
 	
+	public ToolRegistry() {
+		super(128);
+	}
+	
+	public static int getToolID(Item item) {
+		int itemID = Item.getIdFromItem(item);
+		for(int i = 0; i < instance.getAll().length; i++) {
+			if(instance.get(i) != null && Item.getIdFromItem(instance.get(i).item) == itemID) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public static void registerTool(Tool tool) {
-		if(tools[tool.id] != null) {
-			AgeCraft.log.warn("[ToolRegistry] Overriding existing tool (" + tools[tool.id].id + ": " + tools[tool.id].name.toUpperCase() + ") with new tool (" + tool.id + ": " + tool.name.toUpperCase() + ")");
-		}
-		tools[tool.id]= tool;
-	}
-	
-	public static void registerToolMaterial(ToolMaterial toolMaterial) {
-		if(toolMaterials[toolMaterial.id] != null) {
-			AgeCraft.log.warn("[ToolRegistry] Overriding existing tool material (" + toolMaterials[toolMaterial.id].id + ": " + toolMaterials[toolMaterial.id].name.toUpperCase() + ") with new tool material (" + toolMaterial.id + ": " + toolMaterial.name.toUpperCase() + ")");
-		}
-		toolMaterials[toolMaterial.id]= toolMaterial;
-	}
-	
-	public static void registerToolRodMaterial(ToolRodMaterial toolRodMaterial) {
-		if(toolRodMaterials[toolRodMaterial.id] != null) {
-			AgeCraft.log.warn("[ToolRegistry] Overriding existing tool rod material (" + toolRodMaterials[toolRodMaterial.id].id + ": " + toolRodMaterials[toolRodMaterial.id].name.toUpperCase() + ") with new tool rod material (" + toolRodMaterial.id + ": " + toolRodMaterial.name.toUpperCase() + ")");
-		}
-		toolRodMaterials[toolRodMaterial.id]= toolRodMaterial;
-	}
-	
-	public static void registerToolEnhancementMaterial(ToolEnhancementMaterial toolEnhancementMaterial) {
-		if(toolEnhancementMaterials[toolEnhancementMaterial.id] != null) {
-			AgeCraft.log.warn("[ToolRegistry] Overriding existing tool enhancement material (" + toolEnhancementMaterials[toolEnhancementMaterial.id].id + ": " + toolEnhancementMaterials[toolEnhancementMaterial.id].name.toUpperCase() + ") with new tool enhancement material (" + toolEnhancementMaterial.id + ": " + toolEnhancementMaterial.name.toUpperCase() + ")");
-		}
-		toolEnhancementMaterials[toolEnhancementMaterial.id]= toolEnhancementMaterial;
+		instance.set(tool.id, tool);
 	}
 	
 	public static void registerToolCreativeEntry(ToolCreativeEntry toolCreativeEntry) {

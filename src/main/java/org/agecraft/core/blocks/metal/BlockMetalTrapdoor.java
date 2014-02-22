@@ -12,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
@@ -22,6 +21,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.AgeCraftCoreClient;
+import org.agecraft.core.items.tools.ItemTool;
 import org.agecraft.core.registry.MetalRegistry;
 
 import cpw.mods.fml.relauncher.Side;
@@ -260,7 +261,7 @@ public class BlockMetalTrapdoor extends BlockExtendedMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return ResourcesCore.trapdoorMetalIcons[(meta & 16) / 16];
+		return AgeCraftCoreClient.trapdoorMetalIcons[(meta & 16) / 16];
 	}
 	
 	@Override

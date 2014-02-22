@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.items.tools.ItemTool;
 import org.agecraft.core.registry.MetalRegistry;
 
 import cpw.mods.fml.relauncher.Side;

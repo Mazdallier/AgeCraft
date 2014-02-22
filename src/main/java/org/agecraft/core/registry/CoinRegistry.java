@@ -21,6 +21,11 @@ public class CoinRegistry extends Registry<Coin> {
 			this.value = value;
 			this.stack = stack;
 		}
+		
+		@Override
+		public String toString() {
+			return name;
+		}
 	}
 	
 	public static CoinRegistry instance = new CoinRegistry();

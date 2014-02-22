@@ -17,6 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.items.tools.ItemTool;
 import org.agecraft.core.registry.MetalRegistry;
 import org.agecraft.core.registry.MetalRegistry.Metal;
 

@@ -67,7 +67,7 @@ public class Metals extends ACComponent {
 		block = new BlockMetalBlock().setBlockName("AC_metal_block");
 		blockPillar = new BlockMetalPillar().setBlockName("AC_metal_blockPillar");
 		fence = new BlockMetalFence().setBlockName("AC_metal_fence");
-		fenceGate = new BlockMetalFenceGate(2514).setBlockName("AC_metal_fenceGate");
+		fenceGate = new BlockMetalFenceGate().setBlockName("AC_metal_fenceGate");
 		door = new BlockMetalDoor().setBlockName("AC_metal_door");
 		trapdoor = new BlockMetalTrapdoor().setBlockName("AC_metal_trapdoor");
 		ladder = new BlockMetalLadder().setBlockName("AC_metal_ladder");
@@ -87,12 +87,12 @@ public class Metals extends ACComponent {
 		GameRegistry.registerBlock(fluid, ItemBlockExtendedMetadata.class, "AC_metal_fluid");
 
 		// init items
-		ingot = new ItemIngot(12500).setUnlocalizedName("AC_metal_ingot");
-		gem = new ItemGem(12501).setUnlocalizedName("AC_metal_gem");
-		stick = new ItemMetalStick(12502).setUnlocalizedName("AC_metal_stick");
-		nugget = new ItemNugget(12503).setUnlocalizedName("AC_metal_nugget");
-		dust = new ItemMetalDust(12504).setUnlocalizedName("AC_metal_dust");
-		bucket = new ItemMetalBucket(12505).setUnlocalizedName("AC_metal_bucket");
+		ingot = new ItemIngot().setUnlocalizedName("AC_metal_ingot");
+		gem = new ItemGem().setUnlocalizedName("AC_metal_gem");
+		stick = new ItemMetalStick().setUnlocalizedName("AC_metal_stick");
+		nugget = new ItemNugget().setUnlocalizedName("AC_metal_nugget");
+		dust = new ItemMetalDust().setUnlocalizedName("AC_metal_dust");
+		bucket = new ItemMetalBucket().setUnlocalizedName("AC_metal_bucket");
 
 		// register items
 		GameRegistry.registerItem(ingot, "AC_metal_ingot");
@@ -101,10 +101,7 @@ public class Metals extends ACComponent {
 		GameRegistry.registerItem(nugget, "AC_metal_nugget");
 		GameRegistry.registerItem(dust, "AC_metal_dust");
 		GameRegistry.registerItem(bucket, "AC_metal_bucket");
-	}
 
-	@Override
-	public void init() {
 		// init metals
 		MetalRegistry.registerMetal(new Metal(0, "copper", OreType.METAL, 3.0F, 5.0F, 1, 5.0F, 10.0F, new ItemStack(ore, 1, 0), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0xC9571C, 8, 15, 0, 96));
 		MetalRegistry.registerMetal(new Metal(1, "tin", OreType.METAL, 3.0F, 5.0F, 1, 5.0F, 10.0F, new ItemStack(ore, 1, 1), 1, 1, false, true, true, true, true, true, 0, 0, 0, 0xABABAB, 8, 10, 0, 96));

@@ -2,15 +2,18 @@ package org.agecraft.core.blocks.stone;
 
 import java.util.List;
 
-import javax.swing.Icon;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import org.agecraft.ACClientProxy;
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.AgeCraft;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -18,15 +21,15 @@ import elcon.mods.elconqore.blocks.BlockMetadata;
 
 public class BlockStone extends BlockMetadata {
 
-	private Icon icon;
-	private Icon iconCracked;
-	private Icon iconMossy;
+	private IIcon icon;
+	private IIcon iconCracked;
+	private IIcon iconMossy;
 	
-	public BlockStone(int id) {
-		super(id, Material.rock);
+	public BlockStone() {
+		super(Material.rock);
 		setHardness(1.5F);
 		setResistance(10.0F);
-		setStepSound(Block.soundStoneFootstep);
+		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
 	}
 	
@@ -55,7 +58,7 @@ public class BlockStone extends BlockMetadata {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	public IIcon getIcon(int side, int meta) {
 		switch(meta) {
 		default:
 		case 0:
@@ -69,17 +72,19 @@ public class BlockStone extends BlockMetadata {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister iconRegister) {
+	public void registerBlockIcons(IIconRegister iconRegister) {
 		icon = iconRegister.registerIcon("agecraft:stone/stone");
 		iconCracked = iconRegister.registerIcon("agecraft:stone/stoneCracked");
 		iconMossy = iconRegister.registerIcon("agecraft:stone/stoneMossy");
+		
+		((ACClientProxy) AgeCraft.proxy).registerBlockIcons(iconRegister);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
+	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < 3; i++) {
-			list.add(new ItemStack(id, 1, i));
+			list.add(new ItemStack(item, 1, i));
 		}
 	}
 }

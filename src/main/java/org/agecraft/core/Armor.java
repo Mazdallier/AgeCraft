@@ -39,10 +39,7 @@ public class Armor extends ACComponent {
 		GameRegistry.registerItem(chestplate, "AC_armor_cheastplate");
 		GameRegistry.registerItem(leggings, "AC_armor_leggings");
 		GameRegistry.registerItem(boots, "AC_armor_boots");
-	}
-	
-	@Override
-	public void init() {
+
 		//register armor types
 		ArmorTypeRegistry.registerArmorType(new ArmorType(0, "helmet", true));
 		ArmorTypeRegistry.registerArmorType(new ArmorType(1, "chestplate", true));

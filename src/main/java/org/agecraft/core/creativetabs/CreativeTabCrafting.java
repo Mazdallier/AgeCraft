@@ -1,6 +1,7 @@
 package org.agecraft.core.creativetabs;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
@@ -17,7 +18,7 @@ public class CreativeTabCrafting extends CreativeTabs {
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
 		//TODO
-		return null;
+		return Item.getItemFromBlock(Blocks.crafting_table);
 		//return Item.getItemFromBlock(Crafting.workbench);
 	}
 	
@@ -30,7 +31,7 @@ public class CreativeTabCrafting extends CreativeTabs {
 	@Override
 	public ItemStack getIconItemStack() {
 		//TODO
-		return null;
+		return new ItemStack(Blocks.crafting_table);
 		//return new ItemStack(Crafting.workbench, 1, 15);
 	}
 }

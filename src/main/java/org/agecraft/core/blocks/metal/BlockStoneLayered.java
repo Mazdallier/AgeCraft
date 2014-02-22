@@ -17,7 +17,6 @@ import net.minecraftforge.common.ForgeHooks;
 
 import org.agecraft.core.Stone;
 import org.agecraft.core.items.tools.ItemTool;
-import org.agecraft.prehistory.PrehistoryAge;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -78,7 +77,7 @@ public class BlockStoneLayered extends BlockStone {
 			if(player.getCurrentEquippedItem() != null) {
 				if(player.getCurrentEquippedItem().getItem() instanceof ItemTool) {
 					shouldDropItems = ((ItemTool) player.getCurrentEquippedItem().getItem()).canHarvestBlock(player.getCurrentEquippedItem(), this, meta);
-				} else if(player.getCurrentEquippedItem().getItem() instanceof ItemRockPickaxe) {
+				}/* else if(player.getCurrentEquippedItem().getItem() instanceof ItemRockPickaxe) {
 					shouldDropItems = false;
 					int chance = world.rand.nextInt(4);
 					if(chance == 2) {
@@ -86,7 +85,8 @@ public class BlockStoneLayered extends BlockStone {
 					} else if(chance == 3) {
 						dropBlockAsItem(world, x, y, z, new ItemStack(Stone.stone, 1, 1));
 					}
-				}
+				}*/
+				//TODO: re-add after prehistory items
 			}
 			if(shouldDropItems) {
 				dropBlockAsItem(world, x, y, z, meta, EnchantmentHelper.getFortuneModifier(player));

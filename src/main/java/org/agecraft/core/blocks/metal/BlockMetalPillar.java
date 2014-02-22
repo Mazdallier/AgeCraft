@@ -2,20 +2,20 @@ package org.agecraft.core.blocks.metal;
 
 import java.util.List;
 
-import javax.swing.Icon;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.items.tools.ItemTool;
 import org.agecraft.core.registry.MetalRegistry;
 
 import cpw.mods.fml.relauncher.Side;
@@ -44,7 +44,7 @@ public class BlockMetalPillar extends BlockExtendedMetadata implements IBlockRot
 
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("metals." + MetalRegistry.metals[(stack.getItemDamage() - (stack.getItemDamage() & 3)) / 4].name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
+		return LanguageManager.getLocalization("metals." + MetalRegistry.instance.get((stack.getItemDamage() - (stack.getItemDamage() & 3)) / 4).name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
 
 	@Override
@@ -94,66 +94,66 @@ public class BlockMetalPillar extends BlockExtendedMetadata implements IBlockRot
 	}
 	
 	@Override
-	public boolean isBlockNormalCube(World world, int x, int y, int z) {
+	public boolean isNormalCube(IBlockAccess blockAcces, int x, int y, int z) {
 		return blockMaterial.isOpaque() && renderAsNormalBlock();
 	}
 	
 	@Override
 	public boolean canConnectRedstone(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		int meta = getMetadata(blockAccess, x, y, z);
-		return MetalRegistry.metals[(meta - (meta & 3)) / 4].redstonePower > 0 && side != -1;
+		return MetalRegistry.instance.get((meta - (meta & 3)) / 4).redstonePower > 0 && side != -1;
 	}
 	
 	@Override
 	public int isProvidingWeakPower(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		int meta = getMetadata(blockAccess, x, y, z);
-		return MetalRegistry.metals[(meta - (meta & 3)) / 4].redstonePower;
+		return MetalRegistry.instance.get((meta - (meta & 3)) / 4).redstonePower;
 	}
 	
 	@Override
-	public int getFireSpreadSpeed(World world, int x, int y, int z, int metadata, ForgeDirection face) {
-		int meta = getMetadata(world, x, y, z);
-		return MetalRegistry.metals[(meta - (meta & 3)) / 4].fireSpreadSpeed;
-	}
-	
-	@Override
-	public int getFlammability(IBlockAccess blockAccess, int x, int y, int z, int metadata, ForgeDirection face) {
+	public int getFireSpreadSpeed(IBlockAccess blockAccess, int x, int y, int z, ForgeDirection face) {
 		int meta = getMetadata(blockAccess, x, y, z);
-		return MetalRegistry.metals[(meta - (meta & 3)) / 4].flammability;
+		return MetalRegistry.instance.get((meta - (meta & 3)) / 4).fireSpreadSpeed;
+	}
+	
+	@Override
+	public int getFlammability(IBlockAccess blockAccess, int x, int y, int z, ForgeDirection face) {
+		int meta = getMetadata(blockAccess, x, y, z);
+		return MetalRegistry.instance.get((meta - (meta & 3)) / 4).flammability;
 	}
 	
 	@Override
 	public float getBlockHardness(World world, int x, int y, int z) {
 		int meta = getMetadata(world, x, y, z);
-		return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockHardness;
+		return MetalRegistry.instance.get((meta - (meta & 3)) / 4).blockHardness;
 	}
 	
 	@Override
 	public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
 		int meta = getMetadata(world, x, y, z);
-		return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockResistance / 5.0F;
+		return MetalRegistry.instance.get((meta - (meta & 3)) / 4).blockResistance / 5.0F;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side, int meta) {
+	public IIcon getIcon(int side, int meta) {
 		int direction = meta & 3;
 		if(direction == 0 && (side == 0 || side == 1)) {
-			return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockPillarTop;
+			return MetalRegistry.instance.get((meta - (meta & 3)) / 4).blockPillarTop;
 		} else if(direction == 1 && (side == 2 || side == 3)) {
-			return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockPillarTop;
+			return MetalRegistry.instance.get((meta - (meta & 3)) / 4).blockPillarTop;
 		} else if(direction == 2 && (side == 4 || side == 5)) {
-			return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockPillarTop;
+			return MetalRegistry.instance.get((meta - (meta & 3)) / 4).blockPillarTop;
 		}
-		return MetalRegistry.metals[(meta - (meta & 3)) / 4].blockPillar;
+		return MetalRegistry.instance.get((meta - (meta & 3)) / 4).blockPillar;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < MetalRegistry.metals.length; i++) {
-			if(MetalRegistry.metals[i] != null && MetalRegistry.metals[i].hasBlock) {
-				list.add(new ItemStack(id, 1, i * 4));
+	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
+		for(int i = 0; i < MetalRegistry.instance.getAll().length; i++) {
+			if(MetalRegistry.instance.get(i) != null && MetalRegistry.instance.get(i).hasBlock) {
+				list.add(new ItemStack(item, 1, i * 4));
 			}
 		}
 	}

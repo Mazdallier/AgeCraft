@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.Fluid;
 
 import org.agecraft.core.registry.MetalRegistry;
 import org.agecraft.core.registry.MetalRegistry.OreType;
-import org.agecraft.core.registry.ToolRegistry;
+import org.agecraft.core.registry.ToolMaterialRegistry;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -61,7 +61,7 @@ public class ItemMetalBucket extends ItemBucket {
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < MetalRegistry.instance.getAll().length; i++) {
-			if(MetalRegistry.instance.get(i) != null && MetalRegistry.instance.get(i).type == OreType.METAL && MetalRegistry.instance.get(i).hasIngot && ToolRegistry.toolMaterials[128 + i] != null) {
+			if(MetalRegistry.instance.get(i) != null && MetalRegistry.instance.get(i).type == OreType.METAL && MetalRegistry.instance.get(i).hasIngot && ToolMaterialRegistry.instance.get(128 + i) != null) {
 				list.add(new ItemStack(item, 1, i));
 			}
 		}
