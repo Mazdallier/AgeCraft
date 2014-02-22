@@ -11,6 +11,7 @@ import org.agecraft.core.player.ACPlayerRender;
 import org.agecraft.core.player.ACPlayerServer;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.player.PlayerAPI;
@@ -39,6 +40,10 @@ public class ACClientProxy extends ACCommonProxy {
 				component.getComponentClient().registerRenderingInformation();
 			}
 		}
+		
+		//register event handlers
+		FMLCommonHandler.instance().bus().register(new ACEventHandlerClient());
+		FMLCommonHandler.instance().bus().register(new ACTickHandlerClient());
 		
 		//register block rendering handlers
 		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();

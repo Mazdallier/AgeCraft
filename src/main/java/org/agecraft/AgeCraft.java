@@ -11,6 +11,7 @@ import org.agecraft.core.dimension.AgeProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -76,6 +77,10 @@ public class AgeCraft {
 		for(ACComponent component : ACComponent.components) {
 			component.init();
 		}
+		
+		//register event handlers
+		FMLCommonHandler.instance().bus().register(new ACEventHandler());
+		FMLCommonHandler.instance().bus().register(new ACKeyHandler());
 		
 		//register gui handler
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
