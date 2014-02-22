@@ -19,6 +19,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.blocks.BlockExtendedMetadata;
 import elcon.mods.elconqore.blocks.IBlockRotated;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class BlockColoredStoneBrickPillar extends BlockExtendedMetadata implements IBlockRotated {
 
@@ -31,6 +32,11 @@ public class BlockColoredStoneBrickPillar extends BlockExtendedMetadata implemen
 		setResistance(10.0F);
 		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
 	}
 	
 	@Override

@@ -17,6 +17,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.EQUtil;
 import elcon.mods.elconqore.blocks.BlockExtendedMetadataOverlay;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class BlockColoredStoneBrick extends BlockExtendedMetadataOverlay {
 
@@ -32,6 +33,11 @@ public class BlockColoredStoneBrick extends BlockExtendedMetadataOverlay {
 		setResistance(10.0F);
 		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
 	}
 	
 	@Override

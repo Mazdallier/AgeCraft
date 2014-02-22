@@ -11,6 +11,10 @@ import org.agecraft.core.blocks.stone.BlockColoredStoneMossy;
 import org.agecraft.core.blocks.stone.BlockStone;
 import org.agecraft.core.blocks.stone.BlockStoneBrick;
 import org.agecraft.core.blocks.stone.BlockStoneBrickPillar;
+import org.agecraft.core.blocks.stone.BlockStoneCracked;
+import org.agecraft.core.blocks.stone.BlockStoneMossy;
+import org.agecraft.core.registry.StoneTypeRegistry;
+import org.agecraft.core.registry.StoneTypeRegistry.StoneType;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.elconqore.items.ItemBlockExtendedMetadata;
@@ -18,8 +22,9 @@ import elcon.mods.elconqore.items.ItemBlockMetadata;
 
 public class Stone extends ACComponent {
 
-	//TODO: change stone to support more types
 	public static Block stone;
+	public static Block stoneCracked;
+	public static Block stoneMossy;
 	public static Block stoneBrick;
 	public static Block stoneBrickPillar;
 	
@@ -37,6 +42,8 @@ public class Stone extends ACComponent {
 	public void preInit() {
 		//init blocks
 		stone = new BlockStone().setBlockName("AC_stone_stone");
+		stoneCracked = new BlockStoneCracked().setBlockName("AC_stone_stoneCracked");
+		stoneMossy = new BlockStoneMossy().setBlockName("AC_stone_stoneMossy");
 		stoneBrick = new BlockStoneBrick().setBlockName("AC_stone_stoneBrick");
 		stoneBrickPillar = new BlockStoneBrickPillar().setBlockName("AC_stone_stoneBrickPillar");
 		
@@ -48,13 +55,21 @@ public class Stone extends ACComponent {
 		
 		//register blocks
 		GameRegistry.registerBlock(stone, ItemBlockMetadata.class, "AC_stone_stone");
-		GameRegistry.registerBlock(stoneBrick, ItemBlockMetadata.class, "AC_stone_stoneBrick");
-		GameRegistry.registerBlock(stoneBrickPillar, ItemBlockMetadata.class, "AC_stone_stoneBrickPillar");
+		GameRegistry.registerBlock(stoneCracked, ItemBlockMetadata.class, "AC_stone_stoneCracked");
+		GameRegistry.registerBlock(stoneMossy, ItemBlockMetadata.class, "AC_stone_stoneMossy");
+		GameRegistry.registerBlock(stoneBrick, ItemBlockExtendedMetadata.class, "AC_stone_stoneBrick");
+		GameRegistry.registerBlock(stoneBrickPillar, ItemBlockExtendedMetadata.class, "AC_stone_stoneBrickPillar");
 		
 		GameRegistry.registerBlock(coloredStone, ItemBlockMetadata.class, "AC_stone_coloredStone");
 		GameRegistry.registerBlock(coloredStoneCracked, ItemBlockMetadata.class, "AC_stone_coloredStoneCracked");
 		GameRegistry.registerBlock(coloredStoneMossy, ItemBlockMetadata.class, "AC_stone_coloredStoneMossy");
 		GameRegistry.registerBlock(coloredStoneBrick, ItemBlockExtendedMetadata.class, "AC_stone_coloredStoneBrick");
 		GameRegistry.registerBlock(coloredStoneBrickPillar, ItemBlockExtendedMetadata.class, "AC_coloredStone_stoneBrickPillar");
+		
+		//register stone types
+		StoneTypeRegistry.registerStoneType(new StoneType(0, "stone"));
+		StoneTypeRegistry.registerStoneType(new StoneType(1, "granite"));
+		StoneTypeRegistry.registerStoneType(new StoneType(2, "diorite"));
+		StoneTypeRegistry.registerStoneType(new StoneType(3, "andesite"));
 	}
 }

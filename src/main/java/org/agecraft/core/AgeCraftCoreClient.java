@@ -11,6 +11,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 import org.agecraft.ACComponent;
 import org.agecraft.ACComponentClient;
+import org.agecraft.core.blocks.stone.BlockStoneBrick;
 import org.agecraft.core.registry.ArmorMaterialRegistry;
 import org.agecraft.core.registry.ArmorMaterialRegistry.ArmorMaterial;
 import org.agecraft.core.registry.ArmorTypeRegistry;
@@ -20,6 +21,8 @@ import org.agecraft.core.registry.DustRegistry.Dust;
 import org.agecraft.core.registry.MetalRegistry;
 import org.agecraft.core.registry.MetalRegistry.Metal;
 import org.agecraft.core.registry.MetalRegistry.OreType;
+import org.agecraft.core.registry.StoneTypeRegistry;
+import org.agecraft.core.registry.StoneTypeRegistry.StoneType;
 import org.agecraft.core.registry.ToolEnhancementMaterialRegistry;
 import org.agecraft.core.registry.ToolEnhancementMaterialRegistry.ToolEnhancementMaterial;
 import org.agecraft.core.registry.ToolMaterialRegistry;
@@ -101,21 +104,22 @@ public class AgeCraftCoreClient extends ACComponentClient {
 		trapdoorMetalIcons[0] = iconRegister.registerIcon("agecraft:door/metal/trapdoorMetalStandard");
 		trapdoorMetalIcons[1] = iconRegister.registerIcon("agecraft:door/metal/trapdoorMetalSolid");
 
-		// trees
-		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
-			Tree tree = TreeRegistry.instance.get(i);
-			if(tree != null) {
-				tree.wood = iconRegister.registerIcon("agecraft:wood/wood" + EQUtil.firstUpperCase(tree.name));
-				tree.woodTop = iconRegister.registerIcon("agecraft:wood/woodTop" + EQUtil.firstUpperCase(tree.name));
-				tree.logTop = iconRegister.registerIcon("agecraft:wood/logTop" + EQUtil.firstUpperCase(tree.name));
-				tree.planks = iconRegister.registerIcon("agecraft:wood/planks" + EQUtil.firstUpperCase(tree.name));
-				tree.leaves = iconRegister.registerIcon("agecraft:leaves/leaves" + EQUtil.firstUpperCase(tree.name));
-				tree.leavesFast = iconRegister.registerIcon("agecraft:leaves/leavesFast" + EQUtil.firstUpperCase(tree.name));
-				tree.smallSapling = iconRegister.registerIcon("agecraft:sapling/smallSapling" + EQUtil.firstUpperCase(tree.name));
-				tree.sapling = iconRegister.registerIcon("agecraft:sapling/sapling" + EQUtil.firstUpperCase(tree.name));
+		// stone
+		for(int i = 0; i < StoneTypeRegistry.instance.getAll().length; i++) {
+			StoneType stoneType = StoneTypeRegistry.instance.get(i);
+			if(stoneType != null) {
+				stoneType.icon = iconRegister.registerIcon("agecraft:stone/" + stoneType.name);
+				stoneType.iconCracked = iconRegister.registerIcon("agecraft:stone/" + stoneType.name + "Cracked");
+				stoneType.iconMossy = iconRegister.registerIcon("agecraft:stone/" + stoneType.name + "Mossy");
+				stoneType.iconChiseledTop = iconRegister.registerIcon("agecraft:stone/" + stoneType.name + "BrickChiseledTop");
+				stoneType.iconBrickPillar = iconRegister.registerIcon("agecraft:stone/" + stoneType.name + "BrickPillar");
+				stoneType.iconBrickPillarTop = iconRegister.registerIcon("agecraft:stone/" + stoneType.name + "BrickPillarTop");
+				for(int j = 0; j < BlockStoneBrick.types.length; j++) {
+					stoneType.iconsBrick[j] = iconRegister.registerIcon("agecraft:stone/" + stoneType.name + "Brick" + EQUtil.firstUpperCase(BlockStoneBrick.types[j]));
+				}
 			}
 		}
-
+		
 		// metals
 		for(int i = 0; i < MetalRegistry.instance.getAll().length; i++) {
 			Metal metal = MetalRegistry.instance.get(i);
@@ -147,6 +151,21 @@ public class AgeCraftCoreClient extends ACComponentClient {
 					}
 					metal.fluid.setIcons(iconRegister.registerIcon("agecraft:metals/fluids/gems/fluid" + EQUtil.firstUpperCase(metal.name)));
 				}
+			}
+		}
+		
+		// trees
+		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
+			Tree tree = TreeRegistry.instance.get(i);
+			if(tree != null) {
+				tree.wood = iconRegister.registerIcon("agecraft:wood/wood" + EQUtil.firstUpperCase(tree.name));
+				tree.woodTop = iconRegister.registerIcon("agecraft:wood/woodTop" + EQUtil.firstUpperCase(tree.name));
+				tree.logTop = iconRegister.registerIcon("agecraft:wood/logTop" + EQUtil.firstUpperCase(tree.name));
+				tree.planks = iconRegister.registerIcon("agecraft:wood/planks" + EQUtil.firstUpperCase(tree.name));
+				tree.leaves = iconRegister.registerIcon("agecraft:leaves/leaves" + EQUtil.firstUpperCase(tree.name));
+				tree.leavesFast = iconRegister.registerIcon("agecraft:leaves/leavesFast" + EQUtil.firstUpperCase(tree.name));
+				tree.smallSapling = iconRegister.registerIcon("agecraft:sapling/smallSapling" + EQUtil.firstUpperCase(tree.name));
+				tree.sapling = iconRegister.registerIcon("agecraft:sapling/sapling" + EQUtil.firstUpperCase(tree.name));
 			}
 		}
 

@@ -2,28 +2,25 @@ package org.agecraft.core.blocks.stone;
 
 import java.util.List;
 
+import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.registry.StoneTypeRegistry;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import elcon.mods.elconqore.blocks.BlockExtendedMetadata;
+import elcon.mods.elconqore.lang.LanguageManager;
 
-import org.agecraft.ACCreativeTabs;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.elconqore.EQUtil;
-import elcon.mods.elconqore.blocks.BlockMetadata;
-
-public class BlockStoneBrick extends BlockMetadata {
+public class BlockStoneBrick extends BlockExtendedMetadata {
 
 	public static final String[] types = new String[]{"normal", "cracked", "mossy", "small", "circle", "creeper", "chiseled", "smooth"};
-	
-	private IIcon icons[] = new IIcon[8];
-	private IIcon iconChiseledTop;
-	
+
 	public BlockStoneBrick() {
 		super(Material.rock);
 		setHardness(1.5F);
@@ -33,33 +30,33 @@ public class BlockStoneBrick extends BlockMetadata {
 	}
 	
 	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types." + StoneTypeRegistry.instance.get((stack.getItemDamage() - (stack.getItemDamage() & 7)) / 8).name));
+	}
+	
+	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return "stone.stoneBrick." + types[stack.getItemDamage()];
+		return "stone.stoneBrick." + types[stack.getItemDamage() & 7];
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		if((side == 0 || side == 1) && meta == 6) {
-			return iconChiseledTop;
+		if((side == 0 || side == 1) && (meta & 7) == 6) {
+			return StoneTypeRegistry.instance.get((meta - (meta & 7)) / 8).iconChiseledTop;
 		}
-		return icons[meta];
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister iconRegister) {
-		for(int i = 0; i < types.length; i++) {
-			icons[i] = iconRegister.registerIcon("agecraft:stone/stoneBrick" + EQUtil.firstUpperCase(types[i]));
-		}
-		iconChiseledTop = iconRegister.registerIcon("agecraft:stone/stoneBrickChiseledTop");
+		return StoneTypeRegistry.instance.get((meta - (meta & 7)) / 8).iconsBrick[meta & 7];
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
 		for(int i = 0; i < types.length; i++) {
-			list.add(new ItemStack(item, 1, i));
+			for(int j = 0; j < StoneTypeRegistry.instance.getAll().length; j++) {
+				if(StoneTypeRegistry.instance.get(j) != null) {
+					list.add(new ItemStack(item, 1, i + j * 8));
+				}
+			}
 		}
 	}
 }

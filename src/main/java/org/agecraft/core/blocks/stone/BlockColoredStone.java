@@ -18,6 +18,7 @@ import org.agecraft.core.Stone;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.blocks.BlockMetadata;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class BlockColoredStone extends BlockMetadata {
 
@@ -33,6 +34,11 @@ public class BlockColoredStone extends BlockMetadata {
 		setResistance(10.0F);
 		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
+	}
+	
+	@Override
+	public String getLocalizedName(ItemStack stack) {
+		return String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
 	}
 	
 	@Override
