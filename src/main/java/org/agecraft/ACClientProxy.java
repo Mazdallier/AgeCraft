@@ -1,11 +1,14 @@
 package org.agecraft;
 
+import java.io.File;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 import org.agecraft.core.ACBlockRenderingHandler;
 import org.agecraft.core.ACBlockRenderingHandlerWithIcon;
+import org.agecraft.core.clothing.PlayerClothingClient;
 import org.agecraft.core.player.ACPlayerClient;
 import org.agecraft.core.player.ACPlayerRender;
 import org.agecraft.core.player.ACPlayerServer;
@@ -14,12 +17,13 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.elconqore.ElConQore;
 import elcon.mods.elconqore.player.PlayerAPI;
 import elcon.mods.elconqore.player.PlayerAPI.PlayerCoreType;
 
 @SideOnly(Side.CLIENT)
 public class ACClientProxy extends ACCommonProxy {
-	
+
 	@Override
 	public void registerPlayerAPI() {
 		PlayerAPI.register(PlayerCoreType.CLIENT, ACPlayerClient.class);
@@ -27,7 +31,7 @@ public class ACClientProxy extends ACCommonProxy {
 		PlayerAPI.register(PlayerCoreType.RENDER, ACPlayerRender.class);
 		AgeCraft.log.info("Registered PlayerAPI classes");
 	}
-	
+
 	@Override
 	public void registerRenderingInformation() {
 		for(int i = 0; i < Age.ages.length; i++) {
@@ -40,12 +44,16 @@ public class ACClientProxy extends ACCommonProxy {
 				component.getComponentClient().registerRenderingInformation();
 			}
 		}
-		
-		//register event handlers
+
+		// init player clothing client
+		PlayerClothingClient.clothingDir = new File(ElConQore.minecraftDir, File.separator + "clothing");
+		PlayerClothingClient.clothingFileDir = new File(ElConQore.minecraftDir, File.separator + "playerSkins");
+
+		// register event handlers
 		FMLCommonHandler.instance().bus().register(new ACEventHandlerClient());
 		FMLCommonHandler.instance().bus().register(new ACTickHandlerClient());
-		
-		//register block rendering handlers
+
+		// register block rendering handlers
 		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();
 		ACBlockRenderingHandlerWithIcon blockRenderingHandlerWithIcon = new ACBlockRenderingHandlerWithIcon();
 		RenderingRegistry.registerBlockHandler(90, blockRenderingHandlerWithIcon);
@@ -78,7 +86,7 @@ public class ACClientProxy extends ACCommonProxy {
 			}
 		}
 	}
-	
+
 	public void registerItemIcons(IIconRegister iconRegister) {
 		for(int i = 0; i < Age.ages.length; i++) {
 			if(Age.ages[i] != null) {
@@ -91,7 +99,7 @@ public class ACClientProxy extends ACCommonProxy {
 			}
 		}
 	}
-	
+
 	@Override
 	public void postInit() {
 		for(int i = 0; i < Age.ages.length; i++) {
@@ -105,7 +113,7 @@ public class ACClientProxy extends ACCommonProxy {
 			}
 		}
 	}
-	
+
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		return null;

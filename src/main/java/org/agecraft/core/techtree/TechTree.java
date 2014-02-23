@@ -8,12 +8,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import org.agecraft.ACComponent;
-import org.agecraft.ACComponentClient;
 import org.agecraft.AgeCraft;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.elconqore.network.EQMessage;
 
 public class TechTree extends ACComponent {
 	
@@ -35,7 +30,7 @@ public class TechTree extends ACComponent {
 	public static TechTreeComponent expBottle;
 	
 	public TechTree() {
-		super("techtree", true);
+		super("techtree", false);
 	}
 	
 	public static TechTreeComponent getComponent(String pageName, String name) {
@@ -87,16 +82,5 @@ public class TechTree extends ACComponent {
 			size += components.size();
 		}
 		AgeCraft.log.info("[TechTree] Loaded " + size + " components in " + pages.size() + " pages (Average: " + (size / pages.size()) + " components/page)");
-	}
-	
-	@Override
-	public Class<? extends EQMessage>[] getMessages() {
-		return new Class[]{MessageTechTreeComponent.class, MessageTechTreeAllComponents.class};
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ACComponentClient getComponentClient() {
-		return TechTreeClient.instance != null ? TechTreeClient.instance : new TechTreeClient(this);
 	}
 }

@@ -1,6 +1,6 @@
 package org.agecraft;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -9,6 +9,10 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import org.agecraft.core.AgeCraftCore;
 import org.agecraft.core.RankManager;
+import org.agecraft.core.clothing.MessageClothingAllUpdate;
+import org.agecraft.core.clothing.MessageClothingList;
+import org.agecraft.core.clothing.MessageClothingUpdate;
+import org.agecraft.core.clothing.PlayerClothingServer;
 import org.agecraft.core.techtree.MessageTechTreeAllComponents;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -26,21 +30,21 @@ public class ACEventHandler {
 	
 	@SubscribeEvent
 	public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
-		LinkedList<String> playersOnline = new LinkedList<String>();
+		ArrayList<String> playersOnline = new ArrayList<String>();
 		List<EntityPlayerMP> list = FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().playerEntityList;
 		for(EntityPlayerMP p : list) {
 			playersOnline.add(p.getCommandSenderName());
 		}
 		
-		AgeCraftCore.instance.techTree.packetHandler.sendToPlayer(event.player, new MessageTechTreeAllComponents(event.player.getCommandSenderName()));
+		AgeCraftCore.instance.packetHandler.sendToPlayer(event.player, new MessageTechTreeAllComponents(event.player.getCommandSenderName()));
 		AgeCraft.log.info("[TechTree] Send all components to " + event.player.getCommandSenderName());
 		
-		//PacketDispatcher.sendPacketToPlayer(getClothingListPacket(), player);
-		//if(!PlayerClothingServer.players.containsKey(netHandler.playerEntity.getCommandSenderName())) {
-		//	PlayerClothingServer.createDefaultClothing(netHandler.playerEntity.getCommandSenderName());
-		//}
-		//PacketDispatcher.sendPacketToPlayer(getClothingAllUpdatePacket(playersOnline), player);
-		//PacketDispatcher.sendPacketToAllPlayers(getClothingUpdatePacket(PlayerClothingServer.getPlayerClothing(netHandler.playerEntity.getCommandSenderName())));
-		//AgeCraft.log.info("[Clothing] Send all clothing to " + netHandler.playerEntity.getCommandSenderName());
+		AgeCraftCore.instance.packetHandler.sendToPlayer(event.player, new MessageClothingList());
+		if(!PlayerClothingServer.players.containsKey(event.player.getCommandSenderName())) {
+			PlayerClothingServer.createDefaultClothing(event.player.getCommandSenderName());
+		}
+		AgeCraftCore.instance.packetHandler.sendToPlayer(event.player, new MessageClothingAllUpdate(playersOnline));
+		AgeCraftCore.instance.packetHandler.sendToAllPlayers(new MessageClothingUpdate(PlayerClothingServer.getPlayerClothing(event.player.getCommandSenderName())));
+		AgeCraft.log.info("[Clothing] Send all clothing to " + event.player.getCommandSenderName());
 	}
 }

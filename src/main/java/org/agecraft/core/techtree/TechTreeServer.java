@@ -51,7 +51,7 @@ public class TechTreeServer {
 			}
 			components.add(name);
 		}
-		AgeCraftCore.instance.techTree.packetHandler.sendToAllPlayers(new MessageTechTreeComponent(player, pageName, name, true));
+		AgeCraftCore.instance.packetHandler.sendToAllPlayers(new MessageTechTreeComponent(player, pageName, name, true));
 	}
 	
 	public static void lockComponent(String player, String pageName, String name) {
@@ -72,6 +72,6 @@ public class TechTreeServer {
 		if(components.contains(name)) {
 			components.remove(name);
 		}
-		AgeCraftCore.instance.techTree.packetHandler.sendToAllPlayers(new MessageTechTreeComponent(player, pageName, name, false));
+		AgeCraftCore.instance.packetHandler.sendToAllPlayers(new MessageTechTreeComponent(player, pageName, name, false));
 	}
 }

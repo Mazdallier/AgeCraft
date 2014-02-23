@@ -3,19 +3,11 @@ package org.agecraft.core.techtree;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.agecraft.ACComponent;
-import org.agecraft.ACComponentClient;
 import org.agecraft.core.gui.GuiTechTreeComponent;
 
-public class TechTreeClient extends ACComponentClient {
+public class TechTreeClient {
 
-	public static TechTreeClient instance;	
 	public static HashMap<String, ArrayList<String>> pages = new HashMap<String, ArrayList<String>>();
-	
-	public TechTreeClient(ACComponent component) {
-		super(component);
-		instance = this;
-	}
 	
 	public static boolean hasUnlockedComponent(String pageName, String name) {
 		ArrayList<String> components;
