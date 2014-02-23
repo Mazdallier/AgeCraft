@@ -5,6 +5,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import org.agecraft.ACComponent;
 import org.agecraft.ACComponentClient;
 import org.agecraft.core.registry.BiomeRegistry;
+import org.agecraft.core.techtree.TechTree;
 import org.agecraft.core.tileentities.TileEntityDNA;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -15,6 +16,7 @@ public class AgeCraftCore extends ACComponent {
 
 	public static AgeCraftCore instance;
 
+	public TechTree techTree;
 	public Stone stone;
 	public Metals metals;
 	public Trees trees;
@@ -24,6 +26,7 @@ public class AgeCraftCore extends ACComponent {
 	public AgeCraftCore() {
 		super("core", true);
 
+		techTree = new TechTree();
 		stone = new Stone();
 		metals = new Metals();
 		trees = new Trees();
