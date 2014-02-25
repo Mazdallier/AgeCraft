@@ -42,6 +42,7 @@ public abstract class ItemBucket extends ItemFluidContainer {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		//TODO: fix fluids or buckets
 		MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, !hasFluid(stack));
 		if(mop == null) {
 			return stack;

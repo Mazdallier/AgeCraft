@@ -9,9 +9,13 @@ import net.minecraft.world.World;
 import org.agecraft.core.ACBlockRenderingHandler;
 import org.agecraft.core.ACBlockRenderingHandlerWithIcon;
 import org.agecraft.core.clothing.PlayerClothingClient;
+import org.agecraft.core.entity.EntityArrow;
+import org.agecraft.core.entity.EntityBolt;
 import org.agecraft.core.player.ACPlayerClient;
 import org.agecraft.core.player.ACPlayerRender;
 import org.agecraft.core.player.ACPlayerServer;
+import org.agecraft.core.render.entity.RenderArrow;
+import org.agecraft.core.render.entity.RenderBolt;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -72,6 +76,10 @@ public class ACClientProxy extends ACCommonProxy {
 		RenderingRegistry.registerBlockHandler(110, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(111, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(115, blockRenderingHandler);
+
+		// register entity renderers
+		RenderingRegistry.registerEntityRenderingHandler(EntityArrow.class, new RenderArrow());
+		RenderingRegistry.registerEntityRenderingHandler(EntityBolt.class, new RenderBolt());
 	}
 
 	public void registerBlockIcons(IIconRegister iconRegister) {

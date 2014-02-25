@@ -5,6 +5,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import org.agecraft.ACComponent;
+import org.agecraft.AgeCraft;
+import org.agecraft.core.entity.EntityArrow;
+import org.agecraft.core.entity.EntityBolt;
 import org.agecraft.core.items.tools.ItemArrow;
 import org.agecraft.core.items.tools.ItemAxe;
 import org.agecraft.core.items.tools.ItemBattleAxe;
@@ -36,6 +39,7 @@ import org.agecraft.core.registry.ToolRegistry.ToolCreativeEntry;
 import org.agecraft.core.registry.ToolRodMaterialRegistry;
 import org.agecraft.core.registry.ToolRodMaterialRegistry.ToolRodMaterial;
 
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Tools extends ACComponent {
@@ -118,8 +122,8 @@ public class Tools extends ACComponent {
 		GameRegistry.registerItem(fishingRod, "AC_tools_fishingRod");
 		
 		//register entities
-		//EntityRegistry.registerModEntity(EntityArrow.class, "Arrow", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 5, true);
-		//EntityRegistry.registerModEntity(EntityBolt.class, "Bolt", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 5, true);
+		EntityRegistry.registerModEntity(EntityArrow.class, "AC_Arrow", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 1, true);
+		EntityRegistry.registerModEntity(EntityBolt.class, "AC_Bolt", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 1, true);
 		
 		// register tools
 		ToolRegistry.registerTool(new Tool(0, "sword", sword, 2, 1, true, true, true, new Block[]{

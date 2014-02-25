@@ -2,6 +2,8 @@ package org.agecraft.core.items.tools;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumAction;
@@ -13,6 +15,7 @@ import net.minecraft.world.World;
 
 import org.agecraft.core.AgeCraftCoreClient;
 import org.agecraft.core.Tools;
+import org.agecraft.core.entity.EntityArrow;
 import org.agecraft.core.registry.ToolEnhancementMaterialRegistry;
 import org.agecraft.core.registry.ToolRegistry;
 import org.agecraft.core.registry.ToolRegistry.Tool;
@@ -28,7 +31,7 @@ public class ItemBow extends ItemTool {
 	
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int itemInUseCount) {
-		/*int duration = getMaxItemUseDuration(stack) - itemInUseCount;
+		int duration = getMaxItemUseDuration(stack) - itemInUseCount;
 		boolean infiniteArrows = player.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) > 0;
 		if(infiniteArrows || player.inventory.hasItem(Tools.arrow)) {
 			int arrowSlot = findArrow(player.inventory);
@@ -80,8 +83,7 @@ public class ItemBow extends ItemTool {
 			if(!world.isRemote) {
 				world.spawnEntityInWorld(entityArrow);
 			}
-		}*/
-		//TODO: this
+		}
 	}
 	
 	@Override
