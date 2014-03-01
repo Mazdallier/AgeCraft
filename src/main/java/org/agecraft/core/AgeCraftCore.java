@@ -42,6 +42,7 @@ public class AgeCraftCore extends ACComponent {
 	public Trees trees;
 	public Tools tools;
 	public Armor armor;
+	public Crafting crafting;
 
 	public static Block clothingSelectorTest;
 
@@ -54,6 +55,7 @@ public class AgeCraftCore extends ACComponent {
 		trees = new Trees();
 		tools = new Tools();
 		armor = new Armor();
+		crafting = new Crafting();
 
 		instance = this;
 	}
@@ -61,13 +63,13 @@ public class AgeCraftCore extends ACComponent {
 	@Override
 	public void preInit() {
 		// init blocks
-		clothingSelectorTest = new BlockClothingSelectorTest().setBlockName("clothingSelectorTest");
+		clothingSelectorTest = new BlockClothingSelectorTest().setBlockName("AC_clothingSelectorTest");
 
 		// register blocks
 		GameRegistry.registerBlock(clothingSelectorTest, ItemBlockName.class, "AC_clothingSelectorTest");
 
 		// register tile entities
-		GameRegistry.registerTileEntity(TileEntityDNA.class, "TileDNA");
+		GameRegistry.registerTileEntity(TileEntityDNA.class, "AC_TileDNA");
 
 		// remove recipes
 		CraftingManager.getInstance().getRecipeList().clear();
