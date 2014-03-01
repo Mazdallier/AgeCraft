@@ -25,6 +25,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.ACUtil;
 import org.agecraft.core.AgeCraftCoreClient;
 import org.agecraft.core.registry.ToolEnhancementMaterialRegistry;
 import org.agecraft.core.registry.ToolMaterialRegistry;
@@ -65,15 +66,13 @@ public abstract class ItemTool extends Item {
 
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase entityLiving, EntityLivingBase entity) {
-		stack.damageItem(ToolRegistry.instance.get(getToolType(stack)).damageEntity, entity);
-		//ACUtil.damageItem(stack, ToolRegistry.instance.get(getToolType(stack)).damageEntity, entity);
+		ACUtil.damageItem(stack, ToolRegistry.instance.get(getToolType(stack)).damageEntity, entity);
 		return true;
 	}
 
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entity) {
-		stack.damageItem(ToolRegistry.instance.get(getToolType(stack)).damageBlock, entity);
-		//ACUtil.damageItem(stack, ToolRegistry.instance.get(getToolType(stack)).damageBlock, entity);
+		ACUtil.damageItem(stack, ToolRegistry.instance.get(getToolType(stack)).damageBlock, entity);
 		return true;
 	}
 

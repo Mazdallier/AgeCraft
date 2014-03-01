@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import org.agecraft.ACUtil;
 import org.agecraft.core.AgeCraftCoreClient;
 import org.agecraft.core.Tools;
 import org.agecraft.core.entity.EntityArrow;
@@ -69,7 +70,7 @@ public class ItemBow extends ItemTool {
 			if(EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack) > 0) {
 				entityArrow.setFire(100);
 			}
-			stack.damageItem(1, player);
+			ACUtil.damageItem(stack, 1, player);
 			world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + multiplier * 0.5F);
 			if(infiniteArrows) {
 				entityArrow.canBePickedUp = 2;

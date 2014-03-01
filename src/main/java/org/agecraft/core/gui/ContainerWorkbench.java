@@ -8,6 +8,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import org.agecraft.ACUtil;
 import org.agecraft.core.Tools;
 import org.agecraft.core.recipes.Recipe;
 import org.agecraft.core.recipes.RecipeWorkbenchShaped;
@@ -75,15 +76,13 @@ public class ContainerWorkbench extends ContainerBasic {
 	public void damageTools() {
 		if(damageHammer > 0 && workbench.getStackInSlot(0) != null) {
 			ItemStack stack = workbench.getStackInSlot(0);
-			stack.damageItem(damageHammer, player);
-			//ACUtil.damageItem(stack, damageHammer, player);
+			ACUtil.damageItem(stack, damageHammer, player);
 			workbench.setInventorySlotContents(1, stack);
 			damageHammer = -1;
 		}
 		if(damageSaw > 0 && workbench.getStackInSlot(1) != null) {
 			ItemStack stack = workbench.getStackInSlot(1);
-			stack.damageItem(damageSaw, player);
-			//ACUtil.damageItem(stack, damageSaw, player);
+			ACUtil.damageItem(stack, damageSaw, player);
 			workbench.setInventorySlotContents(1, stack);
 			damageSaw = -1;
 		}

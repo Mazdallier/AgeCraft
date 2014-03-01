@@ -5,6 +5,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import org.agecraft.ACUtil;
+
 public class SlotCrafting extends Slot {
 
 	private InventoryCraftMatrix craftMatrix;
@@ -50,8 +52,7 @@ public class SlotCrafting extends Slot {
 			ItemStack stackInSlot = craftMatrix.getStackInSlot(i);
 			if(stackInSlot != null) {
 				if(stackInSlot.getItem().isDamageable()) {
-					stackInSlot.damageItem(1, currentPlayer);
-					//ACUtil.damageItem(stackInSlot, 1, currentPlayer);
+					ACUtil.damageItem(stackInSlot, 1, currentPlayer);
 					if(stackInSlot.getItemDamage() > stackInSlot.getMaxDamage()) {
 						stackInSlot = null;
 					}

@@ -1,5 +1,7 @@
 package org.agecraft.core.items.tools;
 
+import org.agecraft.ACUtil;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -24,7 +26,7 @@ public class ItemHoe extends ItemTool {
 					return true;
 				} else {
 					world.setBlock(x, y, z, block);
-					stack.damageItem(1, player);
+					ACUtil.damageItem(stack, 1, player);
 					return true;
 				}
 			} else {
