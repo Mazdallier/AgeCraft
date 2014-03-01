@@ -18,6 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ItemFluidContainer;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.ACUtil;
 import org.agecraft.core.AgeCraftCoreClient;
 
 import cpw.mods.fml.relauncher.Side;
@@ -42,50 +43,52 @@ public abstract class ItemBucket extends ItemFluidContainer {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		//TODO: fix fluids or buckets
 		MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, !hasFluid(stack));
 		if(mop == null) {
 			return stack;
 		}
 		if(mop.typeOfHit == MovingObjectType.BLOCK) {
+			int x = mop.blockX;
+			int y = mop.blockY;
+			int z = mop.blockZ;
+			if(!world.canMineBlock(player, x, y, z)) {
+				return stack;
+			}
 			if(hasFluid(stack)) {
 				if(mop.sideHit == 0) {
-					mop.blockY--;
+					y--;
 				}
 				if(mop.sideHit == 1) {
-					mop.blockY++;
+					y++;
 				}
 				if(mop.sideHit == 2) {
-					mop.blockZ--;
+					z--;
 				}
 				if(mop.sideHit == 3) {
-					mop.blockZ++;
+					z++;
 				}
 				if(mop.sideHit == 4) {
-					mop.blockX--;
+					x--;
 				}
 				if(mop.sideHit == 5) {
-					mop.blockX++;
+					x++;
 				}
-				if(!player.canPlayerEdit(mop.blockX, mop.blockY, mop.blockZ, mop.sideHit, stack) || !getFluid(stack).getFluid().canBePlacedInWorld()) {
+				if(!player.canPlayerEdit(x, y, z, mop.sideHit, stack) || !getFluid(stack).getFluid().canBePlacedInWorld()) {
 					return stack;
 				}
-				if(tryPlaceContainedFluid(world, mop.blockX, mop.blockY, mop.blockZ, stack) && !player.capabilities.isCreativeMode) {
+				if(tryPlaceContainedFluid(world, x, y, z, stack) && !player.capabilities.isCreativeMode) {
 					drain(stack, FluidContainerRegistry.BUCKET_VOLUME, true);
 					return stack;
 				}
 				return stack;
 			} else {
-				if(!world.canMineBlock(player, mop.blockX, mop.blockY, mop.blockZ)) {
-					return stack;
-				}
-				Fluid fluid = FluidRegistry.lookupFluidForBlock(world.getBlock(mop.blockX, mop.blockY, mop.blockZ));
+				Fluid fluid = ACUtil.getFluidForBlock(world, x, y, z);				
 				if(fluid != null && !getFluidBlacklist(stack).contains(fluid)) {
 					ItemStack newStack = new ItemStack(stack.getItem(), 1, stack.getItemDamage());
 					newStack.stackTagCompound = stack.stackTagCompound;
 					int amount = fill(newStack, new FluidStack(fluid, FluidContainerRegistry.BUCKET_VOLUME), true);
 					if(amount > 0) {
-						world.setBlockToAir(mop.blockX, mop.blockY, mop.blockZ);
+						world.setBlockToAir(x, y, z);
 						if(!player.capabilities.isCreativeMode) {
 							if(--stack.stackSize <= 0) {
 								return newStack;

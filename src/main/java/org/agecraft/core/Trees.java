@@ -135,7 +135,7 @@ public class Trees extends ACComponent {
 		GameRegistry.registerItem(bucket, "AC_trees_bucket");
 
 		// register tileentities
-		GameRegistry.registerTileEntity(TileEntityDNATree.class, "TileDNATree");
+		GameRegistry.registerTileEntity(TileEntityDNATree.class, "AC_TileDNATree");
 
 		// register trees
 		// TODO: colors and world gen

@@ -4,6 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 import org.agecraft.core.player.ACPlayerServer;
+import org.agecraft.prehistory.gui.ContainerSharpener;
+import org.agecraft.prehistory.gui.InventorySharpener;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import elcon.mods.elconqore.player.PlayerAPI;
@@ -26,6 +28,9 @@ public class ACCommonProxy implements IGuiHandler {
 
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+		if(id == 30) {
+			return new ContainerSharpener(player, new InventorySharpener());
+		}
 		return null;
 	}
 

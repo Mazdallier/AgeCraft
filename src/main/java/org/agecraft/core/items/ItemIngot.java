@@ -8,9 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-import org.agecraft.ACClientProxy;
 import org.agecraft.ACCreativeTabs;
-import org.agecraft.AgeCraft;
 import org.agecraft.core.registry.MetalRegistry;
 import org.agecraft.core.registry.MetalRegistry.OreType;
 
@@ -45,7 +43,6 @@ public class ItemIngot extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister) {
-		((ACClientProxy) AgeCraft.proxy).registerItemIcons(iconRegister);
 	}
 	
 	@Override

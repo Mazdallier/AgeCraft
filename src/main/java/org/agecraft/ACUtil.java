@@ -1,11 +1,16 @@
 package org.agecraft;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.oredict.OreDictionary;
+import elcon.mods.elconqore.blocks.BlockFluidMetadata;
 
 public class ACUtil {
 
@@ -134,6 +139,14 @@ public class ACUtil {
 			return stack;
 		}
 		return ACUtil.consumeItem(stack);
+	}
+	
+	public static Fluid getFluidForBlock(World world, int x, int y, int z) {
+		Block block = world.getBlock(x, y, z);
+		if(block instanceof BlockFluidMetadata) {
+			return ((BlockFluidMetadata) block).getQuantaValue(world, x, y, z) > 0 ? ((BlockFluidMetadata) block).getFluid(world, x, y, z) : null;
+		}
+		return FluidRegistry.lookupFluidForBlock(block);
 	}
 	
 	public static int compareFluidStack(FluidStack stack1, FluidStack stack2) {

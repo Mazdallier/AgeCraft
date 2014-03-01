@@ -16,6 +16,8 @@ import org.agecraft.core.player.ACPlayerRender;
 import org.agecraft.core.player.ACPlayerServer;
 import org.agecraft.core.render.entity.RenderArrow;
 import org.agecraft.core.render.entity.RenderBolt;
+import org.agecraft.prehistory.gui.GuiSharpener;
+import org.agecraft.prehistory.gui.InventorySharpener;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -124,6 +126,9 @@ public class ACClientProxy extends ACCommonProxy {
 
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+		if(id == 30) {
+			return new GuiSharpener(new InventorySharpener());
+		}
 		return null;
 	}
 }
