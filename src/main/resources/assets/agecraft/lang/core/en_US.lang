@@ -231,6 +231,18 @@ armor.type.boots=Boots
 crafting.workbench=Workbench
 crafting.smelteryFurnace=Smeltery Furnace
 
+food.raw=Raw
+food.cooked=Cooked
+food.burned=Burned
+
+food.fruit.apple=Apple
+
+food.vegetables.tomato=Tomato
+
+food.meat.pork=Pork
+
+food.fish.salmon=Salmon
+
 fluid.tile.water=Water
 fluid.tile.lava=Lava
 

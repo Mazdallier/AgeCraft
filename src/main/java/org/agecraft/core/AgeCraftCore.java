@@ -43,6 +43,7 @@ public class AgeCraftCore extends ACComponent {
 	public Tools tools;
 	public Armor armor;
 	public Crafting crafting;
+	public Food food;
 
 	public static Block clothingSelectorTest;
 
@@ -56,6 +57,7 @@ public class AgeCraftCore extends ACComponent {
 		tools = new Tools();
 		armor = new Armor();
 		crafting = new Crafting();
+		food = new Food();
 
 		instance = this;
 	}
