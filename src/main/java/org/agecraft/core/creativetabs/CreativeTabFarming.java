@@ -1,26 +1,25 @@
 package org.agecraft.core.creativetabs;
 
-import org.agecraft.core.Farming;
-
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.lang.LanguageManager;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
-public class CreativeTabFood extends CreativeTabs {
+public class CreativeTabFarming extends CreativeTabs {
 
-	public CreativeTabFood(int id, String name) {
+	public CreativeTabFarming(int id, String name) {
 		super(id, name);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getTabIconItem() {
-		return Farming.food;
+		return Items.wheat_seeds;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getTranslatedTabLabel() {
@@ -30,6 +29,6 @@ public class CreativeTabFood extends CreativeTabs {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ItemStack getIconItemStack() {
-		return new ItemStack(Farming.food, 1, 0);
+		return new ItemStack(Items.wheat_seeds, 1, 0);
 	}
 }

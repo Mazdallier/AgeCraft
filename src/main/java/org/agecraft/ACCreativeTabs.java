@@ -7,6 +7,7 @@ import org.agecraft.core.creativetabs.CreativeTabAgeCraft;
 import org.agecraft.core.creativetabs.CreativeTabAgePrehistory;
 import org.agecraft.core.creativetabs.CreativeTabArmor;
 import org.agecraft.core.creativetabs.CreativeTabCrafting;
+import org.agecraft.core.creativetabs.CreativeTabFarming;
 import org.agecraft.core.creativetabs.CreativeTabFood;
 import org.agecraft.core.creativetabs.CreativeTabMetal;
 import org.agecraft.core.creativetabs.CreativeTabStone;
@@ -24,9 +25,10 @@ public class ACCreativeTabs {
 	public static CreativeTabs armor = new CreativeTabArmor(17, "Armor");
 	public static CreativeTabs crafting = new CreativeTabCrafting(18, "Crafting");
 	public static CreativeTabs food = new CreativeTabFood(19, "Food");
+	public static CreativeTabs farming = new CreativeTabFarming(20, "Farming");
 	
-	public static CreativeTabs prehistoryAge = new CreativeTabAgePrehistory(20, "Prehistory");
-	public static CreativeTabs agricultureAge = new CreativeTabAgeAgriculture(21, "Agriculture");
+	public static CreativeTabs prehistoryAge = new CreativeTabAgePrehistory(21, "Prehistory");
+	public static CreativeTabs agricultureAge = new CreativeTabAgeAgriculture(22, "Agriculture");
 	public static CreativeTabs ancientEgyptAge;
 	public static CreativeTabs ancientChinaAge;
 	public static CreativeTabs romanGreekAge;

@@ -18,12 +18,9 @@ import org.agecraft.core.registry.ArmorTypeRegistry;
 import org.agecraft.core.registry.ArmorTypeRegistry.ArmorType;
 import org.agecraft.core.registry.DustRegistry;
 import org.agecraft.core.registry.DustRegistry.Dust;
-import org.agecraft.core.registry.FishRegistry;
-import org.agecraft.core.registry.FishRegistry.Fish;
-import org.agecraft.core.registry.FruitRegistry;
-import org.agecraft.core.registry.FruitRegistry.Fruit;
-import org.agecraft.core.registry.MeatRegistry;
-import org.agecraft.core.registry.MeatRegistry.Meat;
+import org.agecraft.core.registry.FoodRegistry;
+import org.agecraft.core.registry.FoodRegistry.Food;
+import org.agecraft.core.registry.FoodRegistry.FoodProperties;
 import org.agecraft.core.registry.MetalRegistry;
 import org.agecraft.core.registry.MetalRegistry.Metal;
 import org.agecraft.core.registry.MetalRegistry.OreType;
@@ -39,8 +36,6 @@ import org.agecraft.core.registry.ToolRodMaterialRegistry;
 import org.agecraft.core.registry.ToolRodMaterialRegistry.ToolRodMaterial;
 import org.agecraft.core.registry.TreeRegistry;
 import org.agecraft.core.registry.TreeRegistry.Tree;
-import org.agecraft.core.registry.VegetableRegistry;
-import org.agecraft.core.registry.VegetableRegistry.Vegetable;
 
 import elcon.mods.elconqore.EQUtil;
 
@@ -288,39 +283,13 @@ public class AgeCraftCoreClient extends ACComponentClient {
 			}
 		}
 
-		// fruit
-		for(int i = 0; i < FruitRegistry.instance.getAll().length; i++) {
-			Fruit fruit = FruitRegistry.instance.get(i);
-			if(fruit != null) {
-				fruit.icon = iconRegister.registerIcon("agecraft:food/fruit/" + fruit.name);
-			}
-		}
-
-		// vegetables
-		for(int i = 0; i < VegetableRegistry.instance.getAll().length; i++) {
-			Vegetable vegetable = VegetableRegistry.instance.get(i);
-			if(vegetable != null) {
-				vegetable.icon = iconRegister.registerIcon("agecraft:food/vegetables/" + vegetable.name);
-			}
-		}
-
-		// meat
-		for(int i = 0; i < MeatRegistry.instance.getAll().length; i++) {
-			Meat meat = MeatRegistry.instance.get(i);
-			if(meat != null) {
-				meat.iconRaw = iconRegister.registerIcon("agecraft:food/meat/" + meat.name + "Raw");
-				meat.iconCooked = iconRegister.registerIcon("agecraft:food/meat/" + meat.name + "Cooked");
-				meat.iconBurned = iconRegister.registerIcon("agecraft:food/meat/" + meat.name + "Burned");
-			}
-		}
-		
-		// fish
-		for(int i = 0; i < FishRegistry.instance.getAll().length; i++) {
-			Fish fish = FishRegistry.instance.get(i);
-			if(fish != null) {
-				fish.iconRaw = iconRegister.registerIcon("agecraft:food/fish/" + fish.name + "Raw");
-				fish.iconCooked = iconRegister.registerIcon("agecraft:food/fish/" + fish.name + "Cooked");
-				fish.iconBurned = iconRegister.registerIcon("agecraft:food/fish/" + fish.name + "Burned");
+		// food
+		for(int i = 0; i < FoodRegistry.instance.getAll().length; i++) {
+			Food food = FoodRegistry.instance.get(i);
+			if(food != null) {
+				for(FoodProperties foodProperties : food.properties.values()) {
+					foodProperties.icon = iconRegister.registerIcon("agecraft:food/" + food.type.toString().toLowerCase() + "/" + food.name + foodProperties.iconPostfix);
+				}
 			}
 		}
 	}

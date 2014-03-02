@@ -5,6 +5,8 @@ itemGroup.Wood=Wood
 itemGroup.Tools=Tools
 itemGroup.Armor=Armor
 itemGroup.Crafting=Crafting
+itemGroup.Food=Food
+itemGroup.Farming=Farming
 
 itemGroup.Prehistory=Prehistory
 itemGroup.Agriculture=Agriculture
@@ -235,13 +237,21 @@ food.raw=Raw
 food.cooked=Cooked
 food.burned=Burned
 
-food.fruit.apple=Apple
+food.fruit.appleRed=Red Apple
+food.fruit.appleGreen=Green Apple
 
 food.vegetables.tomato=Tomato
+food.vegetables.potato=Potato
+food.vegetables.carrot=Carrot
 
 food.meat.pork=Pork
+food.meat.beef=Beef
+food.meat.chicken=Chicken
 
+food.fish.cod=Cod
 food.fish.salmon=Salmon
+food.fish.clownfish=Clownfish
+food.fish.pufferfish=Pufferfish
 
 fluid.tile.water=Water
 fluid.tile.lava=Lava
