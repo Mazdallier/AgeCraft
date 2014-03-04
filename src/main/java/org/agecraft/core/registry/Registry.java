@@ -24,6 +24,15 @@ public class Registry<T> {
 		return (T) registered[index];
 	}
 	
+	public T get(String name) {
+		for(int i = 0; i < registered.length; i++) {
+			if(registered[i].toString().equals(name)) {
+				return (T) registered[i];
+			}
+		}
+		return null;
+	}
+	
 	public void setAll(T[] registered) {
 		this.registered = registered;
 	}

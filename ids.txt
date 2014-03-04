@@ -14,161 +14,7 @@
 
 
 ======= Biome IDs ======
-30-50	Prehistoric Biomes
-50-100	Normal Biomes
-100+ 	Other biomes
 
-
-======= Block IDs ======
-2500-2999 	Core blocks
-	2500 Stone
-	2501 Stonebrick
-	2502 Stonebrick Pillar	
-	2503 Colored Stone
-	2504 Colored Cracked Stone
-	2505 Colored Mossy Stone
-	2506 Colored Stonebrick
-	2507 Colored Stonebrick Pillar
-	2508 Design blocks
-	
-	2510 Ore
-	2511 Block
-	2512 Block Pillar
-	2513 Fence
-	2514 Fence gate
-	2515 Door
-	2516 Trapdoor
-	2517 Ladders
-	2518 Design blocks
-	2519 Metal fluid
-	
-	2520 Wood
-	2521 Log
-	2522 Planks
-	2523 Leaves
-	2524 Wood wall
-	2525 Fence
-	2526 Fence gate
-	2527 Door
-	2528 Trapdoor
-	2529 Ladders
-	2530 Design planks
-	
-	2540 Leaves DNA
-	2541 Sapling DNA
-	
-	2550 Workbench
-	2551 Smeltery Furnace
-	2552 Smeltery Hatch
-	2553 Smeltery Drain
-	2554 Smeltery Faucet
-	2555 Smeltery Casting Table
-	2556 Smeltery Tank
-	
-	2996 Age Teleporter
-	2997 Age Teleporter Block
-	2998 Age Teleporter Beam
-	2999 Age Teleporter Chest
-3000-3099	Prehistory
-	3000 Campfire
-	3001 Rock
-	3002 Pot
-	3003 Bed
-	3004 Barrel
-	3005 Box
-3100-3199	Agriculture Age
-3200-3299	Ancient Egypt
-3300-3399	Ancient China
-3400-3499	Roman/Greek Age
-3500-3599	Middle Ages
-3600-3699	Early Modern Age
-3700-3799	Industrial Age
-3800-3899	Modern Age
-3900-3999	Future
-
-
-======= Item IDs ======
-12500-12999 	Core items
-	12500 Ingot
-	12501 Gem
-	12502 Stick
-	12503 Nugget
-	12504 Dust
-	12505 Bucket
-	
-	12510 Stick
-	12511 Dust
-	12512 Bucket
-	
-	12520 Sword
-	12521 Pickaxe
-	12522 Axe
-	12523 Shovel
-	12524 Hoe
-	12525 Battleaxe
-	12526 Warhammer
-	12527 Mace
-	12528 Dagger
-	12529 Knife
-	12530 Spear
-	12531 Sickle
-	12532 Pitchfork
-	12533 Hammer
-	12534 Chisel
-	12535 Handsaw
-	12536 Saw
-	12537 Bow
-	12538 Crossbow
-	12539 Arrow
-	12540 Bolt
-	12541 Fishing Rod
-	
-	12600 Helmet
-	12601 Chestplate
-	12602 Leggings
-	12603 Boots
-13000-13099		Prehistory
-	13000 Rock Tool
-	13001 Rock Tanning Tool
-	13002 Rock Pickaxe Head
-	13003 Rock Pickaxe
-13100-13199		Agriculture Age
-13200-13299		Ancient Egypt
-13300-13399		Ancient China
-13400-13499		Roman/Greek Age
-13500-13599		Middle Ages
-13600-13699		Early Modern Age
-13700-13799		Industrial Age
-13800-13899		Modern Age
-13900-13999		Future
-
-
-======= Packet IDs ======
-0-74	Server to client packets
-	0 TechTree Component
-	1 TechTree All Components
-	2 Clothing Update
-	3 Clothing All Update
-	4 Player Trade (to player 2)
-	5 Player Trade Accept Change
-	6 Clothing Selector Open
-	7 Clothing List
-	8 Clothing Unlocks
-75-90	Client to server packets
-	75 Player Trade (from player 1)
-	76 Player Trade Accept
-	77 Open Inventory
-	78 Clothing Selector
-	79 Clothing Unlocks Request
-	80 Smeltery Slot Click
-90+ 	TileEntity packets
-	90 DNA
-	100 Smeltery Furnace
-	200 Campfire
-	201 Pot
-	202 Bed
-	203 Barrel
-	204 Box
 
 ======= Block Render IDs ======
 90-98   Common blocks
@@ -190,6 +36,11 @@
 	111 Ladders	
 	
 	115 Smeltery Furnace
+	116 Smeltery Hatch
+	117 Smeltery Faucet
+	118 Smeltery Tank
+	119 Smeltery Casting Table
+	120 Anvil
 200-299		Prehistory
 	200 Rock
 	201 Campfire
@@ -210,12 +61,12 @@
 ======= GUI IDs ======
 0-9			Core
 	0 Inventory
-	1 Player Trade
-	2 Chat
+	1 Chat
 10-19		Core blocks
 	10 Age Teleporter chest
 	11 Workbench
 	12 Smeltery
+	13 Anvil
 30-29		Prehistory Age
 	30 Rock sharpener
 40-49		Agriculture Age

@@ -130,8 +130,8 @@ public class Tools extends ACComponent {
 			Blocks.web
 		}));
 		ToolRegistry.registerTool(new Tool(1, "pickaxe", pickaxe, 1, 2, true, true, true, new Block[]{
-			Blocks.stone, Blocks.cobblestone, Stone.stone, Stone.stoneBrick, Stone.stoneBrickPillar, Stone.coloredStone, Stone.coloredStoneCracked, Stone.coloredStoneMossy, Stone.coloredStoneBrick, Stone.coloredStoneBrickPillar, 
-			Metals.ore, Metals.block, Metals.fence, Metals.fenceGate, Metals.door, Metals.trapdoor, Metals.ladder
+			Stone.stone, Stone.stoneCracked, Stone.stoneMossy, Stone.stoneBrick, Stone.stoneBrickPillar, Stone.coloredStone, Stone.coloredStoneCracked, Stone.coloredStoneMossy, Stone.coloredStoneBrick, Stone.coloredStoneBrickPillar, 
+			Metals.ore, Metals.block, Metals.fence, Metals.fenceGate, Metals.door, Metals.trapdoor, Metals.ladder, Crafting.anvil
 		}));
 		ToolRegistry.registerTool(new Tool(2, "axe", axe, 1, 2, true, true, true, new Block[]{
 			Trees.wood, Trees.log, Trees.woodWall, Trees.planks, Trees.fence, Trees.fenceGate, Trees.door, Trees.trapdoor, Trees.ladder

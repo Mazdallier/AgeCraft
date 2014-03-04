@@ -81,6 +81,11 @@ public class ACClientProxy extends ACCommonProxy {
 		RenderingRegistry.registerBlockHandler(110, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(111, blockRenderingHandlerWithIcon);
 		RenderingRegistry.registerBlockHandler(115, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(116, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(117, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(118, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(119, blockRenderingHandler);
+		RenderingRegistry.registerBlockHandler(120, blockRenderingHandler);
 
 		// register entity renderers
 		RenderingRegistry.registerEntityRenderingHandler(EntityArrow.class, new RenderArrow());
@@ -131,6 +136,10 @@ public class ACClientProxy extends ACCommonProxy {
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		if(id == 11) {
 			return new GuiWorkbench(new ContainerWorkbench(player, player.inventory, (TileEntityWorkbench) world.getTileEntity(x, y, z), world, x, y, z));
+		} else if(id == 12) {
+			//TODO: smeltery gui
+		} else if(id == 13) {
+			//TODO: anvil gui
 		} else if(id == 30) {
 			return new GuiSharpener(new InventorySharpener());
 		}

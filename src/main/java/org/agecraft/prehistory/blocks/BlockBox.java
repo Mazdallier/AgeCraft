@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,6 +26,7 @@ import org.agecraft.prehistory.tileentities.TileEntityPrehistoryBox;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.elconqore.EQUtilClient;
 import elcon.mods.elconqore.blocks.BlockExtendedContainer;
 import elcon.mods.elconqore.lang.LanguageManager;
 
@@ -168,6 +170,18 @@ public class BlockBox extends BlockExtendedContainer { //implements IWailaBlock 
 		return 205;
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+		return EQUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, ((TileEntityPrehistoryBox) getTileEntity(world, x, y, z)).woodType);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean addHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
+		return EQUtilClient.addBlockHitEffects(world, target, effectRenderer, ((TileEntityPrehistoryBox) getTileEntity(world, target.blockX, target.blockY, target.blockZ)).woodType);
+	}
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {

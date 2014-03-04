@@ -232,6 +232,14 @@ armor.type.boots=Boots
 
 crafting.workbench=Workbench
 crafting.smelteryFurnace=Smeltery Furnace
+crafting.smelteryHatch=Smeltery Hatch
+crafting.smelteryDrain=Smeltery Drain
+crafting.smelteryFaucet=Smeltery Faucet
+crafting.smelteryTank=Smeltery Tank
+crafting.smelteryCastingTable=Casting Table
+crafting.anvil=Anvil
+crafting.anvil.slightlyDamaged=Slightly Damaged
+crafting.anvil.veryDamaged=Very Damaged
 
 food.raw=Raw
 food.cooked=Cooked

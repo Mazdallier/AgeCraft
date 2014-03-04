@@ -64,7 +64,7 @@ public class MetalRegistry extends Registry<Metal> {
 			this.resistance = resistane;
 			this.harvestLevel = harvestLevel;
 			this.blockHardness = blockHardness;
-			this.blockResistance = blockResistane;
+			this.blockResistance = blockResistane * 3.0F;
 			
 			drop.stackSize = 1;
 			this.drop = drop;

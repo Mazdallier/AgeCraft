@@ -23,6 +23,7 @@ import org.agecraft.core.registry.BiomeRegistry;
 import org.agecraft.core.techtree.MessageTechTreeAllComponents;
 import org.agecraft.core.techtree.MessageTechTreeComponent;
 import org.agecraft.core.techtree.TechTree;
+import org.agecraft.core.tileentities.TileEntityAnvil.MessageTileAnvil;
 import org.agecraft.core.tileentities.TileEntityDNA;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -111,7 +112,7 @@ public class AgeCraftCore extends ACComponent {
 
 	@Override
 	public Class<? extends EQMessage>[] getMessages() {
-		return new Class[]{MessageTechTreeComponent.class, MessageTechTreeAllComponents.class, MessageClothingList.class, MessageClothingUpdate.class, MessageClothingAllUpdate.class, MessageClothingSelectorOpen.class, MessageClothingSelector.class, MessageClothingUnlockRequest.class, MessageClothingUnlocks.class};
+		return new Class[]{MessageTechTreeComponent.class, MessageTechTreeAllComponents.class, MessageClothingList.class, MessageClothingUpdate.class, MessageClothingAllUpdate.class, MessageClothingSelectorOpen.class, MessageClothingSelector.class, MessageClothingUnlockRequest.class, MessageClothingUnlocks.class, MessageTileAnvil.class};
 	}
 
 	@Override

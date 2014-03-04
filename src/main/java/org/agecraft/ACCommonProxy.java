@@ -32,6 +32,10 @@ public class ACCommonProxy implements IGuiHandler {
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		if(id == 11) {
 			return new ContainerWorkbench(player, player.inventory, (TileEntityWorkbench) world.getTileEntity(x, y, z), world, x, y, z);
+		} else if(id == 12) {
+			//TODO: smeltery container
+		} else if(id == 13) {
+			//TODO: anvil container
 		} else if(id == 30) {
 			return new ContainerSharpener(player, new InventorySharpener());
 		}
