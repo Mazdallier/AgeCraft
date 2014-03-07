@@ -57,6 +57,8 @@ public class AgeCraftCoreClient extends ACComponentClient {
 
 	public static ResourceLocation guiWorkbench = new ResourceLocation("agecraft", "textures/gui/crafting/workbench.png");
 	public static ResourceLocation guiSmeltery = new ResourceLocation("agecraft", "textures/gui/crafting/smeltery.png");
+	public static ResourceLocation guiAnvil = new ResourceLocation("agecraft", "textures/gui/crafting/anvil.png");
+	public static ResourceLocation guiAnvilRepair = new ResourceLocation("agecraft", "textures/gui/crafting/anvil_repair.png");
 
 	public static ResourceLocation ageTeleporterBeam = new ResourceLocation("agecraft", "textures/misc/beam.png");
 	public static ResourceLocation ageTeleporterChest = new ResourceLocation("agecraft", "textures/tile/teleporter_chest.png");

@@ -1,12 +1,10 @@
 package org.agecraft.core.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 import org.agecraft.ACUtil;
 import org.agecraft.core.Tools;
@@ -18,41 +16,33 @@ import org.agecraft.core.tileentities.TileEntityWorkbench;
 
 import elcon.mods.elconqore.gui.ContainerBasic;
 
-public class ContainerWorkbench extends ContainerBasic {
+public class ContainerWorkbench extends ContainerBasic implements IContainerTools {
 
 	public TileEntityWorkbench workbench;
 	public InventoryCraftMatrix craftMatrix;
 	public InventoryCraftResult craftResult;
 	private EntityPlayer player;
-	private World world;
-	private int x;
-	private int y;
-	private int z;
 	private int damageHammer;
 	private int damageSaw;
 
-	public ContainerWorkbench(EntityPlayer player, InventoryPlayer inventory, TileEntityWorkbench tile, World world, int x, int y, int z) {
+	public ContainerWorkbench(EntityPlayer player, TileEntityWorkbench tile) {
 		this.player = player;
-		this.world = world;
-		this.x = x;
-		this.y = y;
-		this.z = z;
 		workbench = tile;
 		workbench.container = this;
-		craftMatrix = new InventoryCraftMatrix(this, 3, 3);
+		craftMatrix = new InventoryCraftMatrix(this, 3, 3, "container.crafting");
 		craftResult = new InventoryCraftResult();
 
 		addSlotToContainer(new SlotTool(workbench, 0, 15, 17, 13));
 		addSlotToContainer(new SlotTool(workbench, 1, 15, 53, 15));
 
-		addSlotToContainer(new SlotCraftingWorkbench(inventory.player, this, craftMatrix, craftResult, 0, 138, 35));
+		addSlotToContainer(new SlotCraftingTools(player, this, craftMatrix, craftResult, 0, 138, 35));
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
 				addSlotToContainer(new Slot(craftMatrix, i + j * 3, 44 + i * 18, 17 + j * 18));
 			}
 		}
 
-		addInventoryPlayer(inventory, 8, 84);
+		addInventoryPlayer(player.inventory, 8, 84);
 		onCraftMatrixChanged(craftMatrix);
 	}
 
@@ -91,7 +81,7 @@ public class ContainerWorkbench extends ContainerBasic {
 	@Override
 	public void onContainerClosed(EntityPlayer player) {
 		super.onContainerClosed(player);
-		if(!world.isRemote) {
+		if(!workbench.getWorldObj().isRemote) {
 			for(int i = 0; i < craftMatrix.getSizeInventory(); i++) {
 				ItemStack stack = craftMatrix.getStackInSlotOnClosing(i);
 				if(stack != null) {
@@ -161,6 +151,6 @@ public class ContainerWorkbench extends ContainerBasic {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		return player.getDistanceSq(x + 0.5D, y + 0.5D, z + 0.5D) <= 64.0D;
+		return player.getDistanceSq(workbench.xCoord + 0.5D ,workbench.yCoord + 0.5D, workbench.zCoord + 0.5D) <= 64.0D;
 	}
 }

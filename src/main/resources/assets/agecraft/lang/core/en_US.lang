@@ -58,16 +58,19 @@ color.green=Green
 color.red=Red
 color.black=Black
 
+container.result=Result
 container.inventory=Inventory
 container.armor=Armor
 container.trade=Trade
 container.crafting=Crafting
 container.workbench=Workbench
 container.smeltery=Smeltery
+container.anvil=Anvil
 
 recipe.workbench.shaped=Shaped Workbench Recipe
 recipe.workbench.shapeless=Shapeless Workbench Recipe
 recipe.smeltery=Smeltery Recipe
+recipe.anvil=Anvil Recipe
 
 stone.types.stone=Stone
 stone.types.granite=Granite

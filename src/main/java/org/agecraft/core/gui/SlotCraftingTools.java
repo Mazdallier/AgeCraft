@@ -4,11 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
-public class SlotCraftingWorkbench extends SlotCrafting {
+public class SlotCraftingTools extends SlotCrafting {
 
-	public ContainerWorkbench container;
+	public IContainerTools container;
 	
-	public SlotCraftingWorkbench(EntityPlayer player, ContainerWorkbench container, InventoryCraftMatrix craftMatrix, IInventory inventory, int id, int x, int y) {
+	public SlotCraftingTools(EntityPlayer player, IContainerTools container, InventoryCraftMatrix craftMatrix, IInventory inventory, int id, int x, int y) {
 		super(player, craftMatrix, inventory, id, x, y);
 		this.container = container;
 	}

@@ -1,5 +1,6 @@
 package org.agecraft.core.gui;
 
+import elcon.mods.elconqore.lang.LanguageManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -46,7 +47,7 @@ public class InventoryCraftResult implements IInventory {
 
 	@Override
 	public String getInventoryName() {
-		return "Result";
+		return LanguageManager.getLocalization("container.result");
 	}
 	
 	@Override

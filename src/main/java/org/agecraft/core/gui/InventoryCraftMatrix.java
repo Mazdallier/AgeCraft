@@ -4,6 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import elcon.mods.elconqore.lang.LanguageManager;
 
 public class InventoryCraftMatrix implements IInventory {
 
@@ -11,12 +14,14 @@ public class InventoryCraftMatrix implements IInventory {
 	private ItemStack[] stacks;
 	public int width;
 	public int height;
+	public String unlocalizedName;
 	
-	public InventoryCraftMatrix(Container container, int width, int height) {
+	public InventoryCraftMatrix(Container container, int width, int height, String unlocalizedName) {
 		this.container = container;
 		this.stacks = new ItemStack[width * height];
 		this.width = width;
 		this.height = height;
+		this.unlocalizedName = unlocalizedName;
 	}
 	
 	@Override
@@ -75,14 +80,36 @@ public class InventoryCraftMatrix implements IInventory {
 		}
 	}
 
+	public void readFromNBT(NBTTagList list) {
+		for(int i = 0; i < list.tagCount(); i++) {
+			NBTTagCompound tag = (NBTTagCompound) list.getCompoundTagAt(i);
+			int slot = tag.getInteger("Slot");
+			ItemStack stack = ItemStack.loadItemStackFromNBT(tag);
+			if(stack != null && slot >= 0 && slot < getSizeInventory()) {
+				stacks[slot] = stack;
+			}
+		}
+	}
+	
+	public void writeToNBT(NBTTagList list) {
+		for(int i = 0; i < stacks.length; i++) {
+			if(stacks[i] != null) {
+				NBTTagCompound tag = new NBTTagCompound();
+				tag.setInteger("SlotID", i);
+				stacks[i].writeToNBT(tag);
+				list.appendTag(tag);
+			}
+		}
+	}
+	
 	@Override
 	public String getInventoryName() {
-		return "container.crafting";
+		return LanguageManager.getLocalization(unlocalizedName);
 	}
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		return false;
+		return true;
 	}
 
 	@Override

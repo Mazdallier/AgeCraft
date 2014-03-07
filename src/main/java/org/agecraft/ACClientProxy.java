@@ -11,13 +11,17 @@ import org.agecraft.core.ACBlockRenderingHandlerWithIcon;
 import org.agecraft.core.clothing.PlayerClothingClient;
 import org.agecraft.core.entity.EntityArrow;
 import org.agecraft.core.entity.EntityBolt;
+import org.agecraft.core.gui.ContainerAnvil;
 import org.agecraft.core.gui.ContainerWorkbench;
+import org.agecraft.core.gui.GuiAnvil;
+import org.agecraft.core.gui.GuiAnvilRepair;
 import org.agecraft.core.gui.GuiWorkbench;
 import org.agecraft.core.player.ACPlayerClient;
 import org.agecraft.core.player.ACPlayerRender;
 import org.agecraft.core.player.ACPlayerServer;
 import org.agecraft.core.render.entity.RenderArrow;
 import org.agecraft.core.render.entity.RenderBolt;
+import org.agecraft.core.tileentities.TileEntityAnvil;
 import org.agecraft.core.tileentities.TileEntityWorkbench;
 import org.agecraft.prehistory.gui.GuiSharpener;
 import org.agecraft.prehistory.gui.InventorySharpener;
@@ -135,11 +139,13 @@ public class ACClientProxy extends ACCommonProxy {
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		if(id == 11) {
-			return new GuiWorkbench(new ContainerWorkbench(player, player.inventory, (TileEntityWorkbench) world.getTileEntity(x, y, z), world, x, y, z));
+			return new GuiWorkbench(new ContainerWorkbench(player, (TileEntityWorkbench) world.getTileEntity(x, y, z)));
 		} else if(id == 12) {
 			//TODO: smeltery gui
 		} else if(id == 13) {
-			//TODO: anvil gui
+			return new GuiAnvil(new ContainerAnvil(player, (TileEntityAnvil) world.getTileEntity(x, y, z), false));
+		} else if(id == 14) {
+			return new GuiAnvilRepair(new ContainerAnvil(player, (TileEntityAnvil) world.getTileEntity(x, y, z), true));
 		} else if(id == 30) {
 			return new GuiSharpener(new InventorySharpener());
 		}
