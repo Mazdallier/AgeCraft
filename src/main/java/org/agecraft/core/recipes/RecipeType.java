@@ -4,7 +4,8 @@ public enum RecipeType {
 
 	CRAFTING,
 	SMELTING,
+	SMITHING,
 	COOKING,
-	SHARPENING, 
+	SHARPENING,
 	SOAKING;
 }

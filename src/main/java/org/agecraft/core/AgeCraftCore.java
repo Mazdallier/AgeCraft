@@ -7,6 +7,7 @@ import net.minecraft.item.crafting.CraftingManager;
 
 import org.agecraft.ACComponent;
 import org.agecraft.ACComponentClient;
+import org.agecraft.AgeCraft;
 import org.agecraft.core.blocks.BlockClothingSelectorTest;
 import org.agecraft.core.clothing.ClothingCategory;
 import org.agecraft.core.clothing.ClothingRegistry;
@@ -19,6 +20,8 @@ import org.agecraft.core.clothing.MessageClothingSelectorOpen;
 import org.agecraft.core.clothing.MessageClothingUnlockRequest;
 import org.agecraft.core.clothing.MessageClothingUnlocks;
 import org.agecraft.core.clothing.MessageClothingUpdate;
+import org.agecraft.core.entity.EntityFallingBlock;
+import org.agecraft.core.gui.MessageOpenGui;
 import org.agecraft.core.registry.BiomeRegistry;
 import org.agecraft.core.techtree.MessageTechTreeAllComponents;
 import org.agecraft.core.techtree.MessageTechTreeComponent;
@@ -26,6 +29,7 @@ import org.agecraft.core.techtree.TechTree;
 import org.agecraft.core.tileentities.TileEntityAnvil.MessageTileAnvil;
 import org.agecraft.core.tileentities.TileEntityDNA;
 
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -74,6 +78,9 @@ public class AgeCraftCore extends ACComponent {
 		// register tile entities
 		GameRegistry.registerTileEntity(TileEntityDNA.class, "AC_TileDNA");
 
+		//register entities
+		EntityRegistry.registerModEntity(EntityFallingBlock.class, "AC_FallingBlock", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 160, 20, true);
+		
 		// remove recipes
 		CraftingManager.getInstance().getRecipeList().clear();
 	}
@@ -112,7 +119,7 @@ public class AgeCraftCore extends ACComponent {
 
 	@Override
 	public Class<? extends EQMessage>[] getMessages() {
-		return new Class[]{MessageTechTreeComponent.class, MessageTechTreeAllComponents.class, MessageClothingList.class, MessageClothingUpdate.class, MessageClothingAllUpdate.class, MessageClothingSelectorOpen.class, MessageClothingSelector.class, MessageClothingUnlockRequest.class, MessageClothingUnlocks.class, MessageTileAnvil.class};
+		return new Class[]{MessageOpenGui.class, MessageTechTreeComponent.class, MessageTechTreeAllComponents.class, MessageClothingList.class, MessageClothingUpdate.class, MessageClothingAllUpdate.class, MessageClothingSelectorOpen.class, MessageClothingSelector.class, MessageClothingUnlockRequest.class, MessageClothingUnlocks.class, MessageTileAnvil.class};
 	}
 
 	@Override

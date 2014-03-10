@@ -23,6 +23,12 @@ import elcon.mods.elconqore.tileentities.TileEntityMetadata;
 
 public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 
+	public static ACBlockRenderingHandler instance;
+	
+	public ACBlockRenderingHandler() {
+		instance = this;
+	}
+	
 	// private TileEntityAgeTeleporterChest tileChestInstance = new TileEntityAgeTeleporterChest();
 
 	@Override
@@ -668,7 +674,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	 * 255.0F, 255.0F); } return flag; }
 	 */
 
-	private boolean renderBlockAnvil(IBlockAccess blockAccess, int x, int y, int z, BlockAnvil block, int modelID, RenderBlocks renderer) {
+	public boolean renderBlockAnvil(IBlockAccess blockAccess, int x, int y, int z, BlockAnvil block, int modelID, RenderBlocks renderer) {
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, x, y, z));
 		int color = block.colorMultiplier(blockAccess, x, y, z);

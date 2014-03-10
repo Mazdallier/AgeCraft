@@ -9,11 +9,11 @@ import org.agecraft.ACUtil;
 
 public class SlotCrafting extends Slot {
 
-	private InventoryCraftMatrix craftMatrix;
+	private IInventory craftMatrix;
 	private EntityPlayer player;
 	private int amountCrafted;
 
-	public SlotCrafting(EntityPlayer player, InventoryCraftMatrix craftMatrix, IInventory inventory, int id, int x, int y) {
+	public SlotCrafting(EntityPlayer player, IInventory craftMatrix, IInventory inventory, int id, int x, int y) {
 		super(inventory, id, x, y);
 		this.player = player;
 		this.craftMatrix = craftMatrix;

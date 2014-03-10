@@ -122,8 +122,8 @@ public class Tools extends ACComponent {
 		GameRegistry.registerItem(fishingRod, "AC_tools_fishingRod");
 		
 		//register entities
-		EntityRegistry.registerModEntity(EntityArrow.class, "AC_Arrow", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 1, true);
-		EntityRegistry.registerModEntity(EntityBolt.class, "AC_Bolt", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 1, true);
+		EntityRegistry.registerModEntity(EntityArrow.class, "AC_Arrow", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 20, true);
+		EntityRegistry.registerModEntity(EntityBolt.class, "AC_Bolt", EntityRegistry.findGlobalUniqueEntityId(), AgeCraft.instance, 64, 20, true);
 		
 		// register tools
 		ToolRegistry.registerTool(new Tool(0, "sword", sword, 2, 1, true, true, true, new Block[]{

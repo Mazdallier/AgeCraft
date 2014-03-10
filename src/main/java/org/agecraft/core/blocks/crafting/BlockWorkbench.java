@@ -1,5 +1,6 @@
 package org.agecraft.core.blocks.crafting;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -29,7 +30,7 @@ public class BlockWorkbench extends BlockExtendedMetadataOverlay {
 	private IIcon iconFront;
 	private IIcon iconSide;
 	private IIcon iconTop;
-	
+
 	public BlockWorkbench() {
 		super(Material.wood);
 		setHardness(2.0F);
@@ -37,22 +38,22 @@ public class BlockWorkbench extends BlockExtendedMetadataOverlay {
 		setStepSound(Block.soundTypeWood);
 		setCreativeTab(ACCreativeTabs.crafting);
 	}
-	
+
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileEntityWorkbench();
 	}
-	
+
 	@Override
 	public String getLocalizedName(ItemStack stack) {
 		return LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(stack.getItemDamage()).name) + " " + LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}
-	
+
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		return "crafting.workbench";
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(!world.isRemote) {
@@ -62,17 +63,30 @@ public class BlockWorkbench extends BlockExtendedMetadataOverlay {
 	}
 
 	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		ArrayList<ItemStack> list = super.getDrops(world, x, y, z, metadata, fortune);
+		TileEntityWorkbench tile = (TileEntityWorkbench) getTileEntity(world, x, y, z);
+		if(tile.getStackInSlot(0) != null) {
+			list.add(tile.getStackInSlotOnClosing(0));
+		}
+		if(tile.getStackInSlot(1) != null) {
+			list.add(tile.getStackInSlotOnClosing(1));
+		}
+		return list;
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		return TreeRegistry.instance.get(meta).planks;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return getIcon(side, getMetadata(blockAccess, x, y, z));
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getBlockOverlayTexture(int side, int metadata) {
@@ -93,7 +107,7 @@ public class BlockWorkbench extends BlockExtendedMetadataOverlay {
 		iconSide = iconRegister.registerIcon("agecraft:crafting/workbenchSide");
 		iconTop = iconRegister.registerIcon("agecraft:crafting/workbenchTop");
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {

@@ -197,12 +197,13 @@ public class BlockAnvil extends BlockExtendedContainer implements IBlockFalling 
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		TileEntityAnvil tile = (TileEntityAnvil) getTileEntity(world, x, y, z);
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-		int count = quantityDropped(metadata, fortune, world.rand);
-		for(int i = 0; i < count; i++) {
-			Item item = getItemDropped(metadata, world.rand, fortune);
-			if(item != null) {
-				ret.add(new ItemStack(item, 1, tile.damage + (tile.type * 4)));
-			}
+		Item item = getItemDropped(metadata, world.rand, fortune);
+		if(item != null) {
+			ret.add(new ItemStack(item, 1, tile.damage + (tile.type * 4)));
+
+		}
+		if(tile.inventory.getStackInSlot(0) != null) {
+			ret.add(tile.inventory.getStackInSlotOnClosing(0));
 		}
 		return ret;
 	}

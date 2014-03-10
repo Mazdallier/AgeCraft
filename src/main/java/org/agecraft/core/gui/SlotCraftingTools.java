@@ -8,8 +8,8 @@ public class SlotCraftingTools extends SlotCrafting {
 
 	public IContainerTools container;
 	
-	public SlotCraftingTools(EntityPlayer player, IContainerTools container, InventoryCraftMatrix craftMatrix, IInventory inventory, int id, int x, int y) {
-		super(player, craftMatrix, inventory, id, x, y);
+	public SlotCraftingTools(EntityPlayer player, IContainerTools container, IInventory craftMatrix, IInventory result, int id, int x, int y) {
+		super(player, craftMatrix, result, id, x, y);
 		this.container = container;
 	}
 	

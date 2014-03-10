@@ -82,7 +82,7 @@ public class EntityFallingBlock extends Entity {
 
 	@Override
 	public void onUpdate() {
-		if(block.getMaterial() == Material.air) {
+		if(block != null && block.getMaterial() == Material.air) {
 			setDead();
 		} else {
 			prevPosX = posX;

@@ -16,6 +16,12 @@ import elcon.mods.elconqore.tileentities.TileEntityMetadata;
 
 public class ACBlockRenderingHandlerWithIcon implements ISimpleBlockRenderingHandler {
 
+	public static ACBlockRenderingHandlerWithIcon instance;
+	
+	public ACBlockRenderingHandlerWithIcon() {
+		instance = this;
+	}
+	
 	@Override
 	public boolean renderWorldBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
 		switch(modelID) {

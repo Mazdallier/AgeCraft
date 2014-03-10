@@ -11,6 +11,7 @@ import org.agecraft.core.ACBlockRenderingHandlerWithIcon;
 import org.agecraft.core.clothing.PlayerClothingClient;
 import org.agecraft.core.entity.EntityArrow;
 import org.agecraft.core.entity.EntityBolt;
+import org.agecraft.core.entity.EntityFallingBlock;
 import org.agecraft.core.gui.ContainerAnvil;
 import org.agecraft.core.gui.ContainerWorkbench;
 import org.agecraft.core.gui.GuiAnvil;
@@ -21,6 +22,7 @@ import org.agecraft.core.player.ACPlayerRender;
 import org.agecraft.core.player.ACPlayerServer;
 import org.agecraft.core.render.entity.RenderArrow;
 import org.agecraft.core.render.entity.RenderBolt;
+import org.agecraft.core.render.entity.RenderFallingBlock;
 import org.agecraft.core.tileentities.TileEntityAnvil;
 import org.agecraft.core.tileentities.TileEntityWorkbench;
 import org.agecraft.prehistory.gui.GuiSharpener;
@@ -92,6 +94,7 @@ public class ACClientProxy extends ACCommonProxy {
 		RenderingRegistry.registerBlockHandler(120, blockRenderingHandler);
 
 		// register entity renderers
+		RenderingRegistry.registerEntityRenderingHandler(EntityFallingBlock.class, new RenderFallingBlock());
 		RenderingRegistry.registerEntityRenderingHandler(EntityArrow.class, new RenderArrow());
 		RenderingRegistry.registerEntityRenderingHandler(EntityBolt.class, new RenderBolt());
 	}

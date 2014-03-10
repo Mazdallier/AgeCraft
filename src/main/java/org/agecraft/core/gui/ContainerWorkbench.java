@@ -22,8 +22,8 @@ public class ContainerWorkbench extends ContainerBasic implements IContainerTool
 	public InventoryCraftMatrix craftMatrix;
 	public InventoryCraftResult craftResult;
 	private EntityPlayer player;
-	private int damageHammer;
-	private int damageSaw;
+	private int damageHammer = -1;
+	private int damageSaw = -1;
 
 	public ContainerWorkbench(EntityPlayer player, TileEntityWorkbench tile) {
 		this.player = player;
@@ -63,6 +63,7 @@ public class ContainerWorkbench extends ContainerBasic implements IContainerTool
 		}
 	}
 	
+	@Override
 	public void damageTools() {
 		if(damageHammer > 0 && workbench.getStackInSlot(0) != null) {
 			ItemStack stack = workbench.getStackInSlot(0);
@@ -107,11 +108,15 @@ public class ContainerWorkbench extends ContainerBasic implements IContainerTool
 			} else if(slotID >= 12 && slotID < 39) {
 				if(stack.getItem() == Tools.hammer) {
 					if(!mergeItemStack(stack, 0, 1, false)) {
-						return null;
+						if(!mergeItemStack(stack, 39, 48, false)) {
+							return null;
+						}
 					}
 				} else if(stack.getItem() == Tools.saw) {
 					if(!mergeItemStack(stack, 1, 2, false)) {
-						return null;
+						if(!mergeItemStack(stack, 39, 48, false)) {
+							return null;
+						}
 					}
 				} else if(!mergeItemStack(stack, 39, 48, false)) {
 					return null;
@@ -119,11 +124,14 @@ public class ContainerWorkbench extends ContainerBasic implements IContainerTool
 			} else if(slotID >= 39 && slotID < 48) {
 				if(stack.getItem() == Tools.hammer) {
 					if(!mergeItemStack(stack, 0, 1, false)) {
-						return null;
-					}
+						if(!mergeItemStack(stack, 12, 39, false)) {
+							return null;
+						}					}
 				} else if(stack.getItem() == Tools.handsaw) {
 					if(!mergeItemStack(stack, 1, 2, false)) {
-						return null;
+						if(!mergeItemStack(stack, 12, 39, false)) {
+							return null;
+						}
 					}
 				} else if(!mergeItemStack(stack, 12, 39, false)) {
 					return null;
@@ -151,6 +159,6 @@ public class ContainerWorkbench extends ContainerBasic implements IContainerTool
 
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		return player.getDistanceSq(workbench.xCoord + 0.5D ,workbench.yCoord + 0.5D, workbench.zCoord + 0.5D) <= 64.0D;
+		return player.getDistanceSq(workbench.xCoord + 0.5D, workbench.yCoord + 0.5D, workbench.zCoord + 0.5D) <= 64.0D;
 	}
 }
