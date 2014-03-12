@@ -80,7 +80,6 @@ public class AgeCraft {
 		
 		//register event handlers
 		FMLCommonHandler.instance().bus().register(new ACEventHandler());
-		FMLCommonHandler.instance().bus().register(new ACKeyHandler());
 		
 		//register gui handler
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);

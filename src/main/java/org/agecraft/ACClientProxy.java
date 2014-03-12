@@ -67,6 +67,7 @@ public class ACClientProxy extends ACCommonProxy {
 		// register event handlers
 		FMLCommonHandler.instance().bus().register(new ACEventHandlerClient());
 		FMLCommonHandler.instance().bus().register(new ACTickHandlerClient());
+		FMLCommonHandler.instance().bus().register(new ACKeyHandler());
 
 		// register block rendering handlers
 		ACBlockRenderingHandler blockRenderingHandler = new ACBlockRenderingHandler();

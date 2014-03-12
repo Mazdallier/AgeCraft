@@ -674,7 +674,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	 * 255.0F, 255.0F); } return flag; }
 	 */
 
-	public boolean renderBlockAnvil(IBlockAccess blockAccess, int x, int y, int z, BlockAnvil block, int modelID, RenderBlocks renderer) {
+	private boolean renderBlockAnvil(IBlockAccess blockAccess, int x, int y, int z, BlockAnvil block, int modelID, RenderBlocks renderer) {
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, x, y, z));
 		int color = block.colorMultiplier(blockAccess, x, y, z);
@@ -695,6 +695,25 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			tile = new TileEntityAnvil();
 		}
 		return renderBlockAnvilOrient(block, x, y, z, tile.getMeta(), tile.direction, false, renderer);
+	}
+	
+	public boolean renderBlockAnvil(IBlockAccess blockAccess, int x, int y, int z, BlockAnvil block, int meta, int direction, RenderBlocks renderer) {
+		Tessellator tessellator = Tessellator.instance;
+		tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, x, y, z));
+		int color = block.colorMultiplier(blockAccess, x, y, z);
+		float r = (float) (color >> 16 & 255) / 255.0F;
+		float g = (float) (color >> 8 & 255) / 255.0F;
+		float b = (float) (color & 255) / 255.0F;
+		if(EntityRenderer.anaglyphEnable) {
+			float rr = (r * 30.0F + g * 59.0F + b * 11.0F) / 100.0F;
+			float gg = (r * 30.0F + g * 70.0F) / 100.0F;
+			float bb = (r * 30.0F + b * 70.0F) / 100.0F;
+			r = rr;
+			g = gg;
+			b = bb;
+		}
+		tessellator.setColorOpaque_F(r, g, b);
+		return renderBlockAnvilOrient(block, x, y, z, meta, direction, false, renderer);
 	}
 
 	public boolean renderBlockAnvilOrient(BlockAnvil block, int x, int y, int z, int meta, int direction, boolean renderItem, RenderBlocks renderer) {

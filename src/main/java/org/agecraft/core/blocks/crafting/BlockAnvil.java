@@ -39,6 +39,8 @@ public class BlockAnvil extends BlockExtendedContainer implements IBlockFalling 
 
 	public static String[] typeNames = new String[]{"stone", "bronze", "iron", "steel", "cobalt", "mithril", "adamantite"};
 	public static String[] damageNames = new String[]{"intact", "slightlyDamaged", "veryDamaged"};
+	
+	public static int renderMeta = -1;
 
 	public BlockAnvil() {
 		super(Material.anvil);
@@ -117,7 +119,7 @@ public class BlockAnvil extends BlockExtendedContainer implements IBlockFalling 
 		TileEntityAnvil tile = (TileEntityAnvil) getTileEntity(world, x, y, z);
 		NBTTagCompound nbt = new NBTTagCompound();
 		tile.writeToNBT(nbt);
-		entity.tileEntityData = nbt;
+		entity.setNBT(nbt);
 	}
 
 	@Override
@@ -141,12 +143,12 @@ public class BlockAnvil extends BlockExtendedContainer implements IBlockFalling 
 	@Override
 	public void onFallDamage(EntityFallingBlock entity, float fallingDamage, int damagePercentage) {
 		if((double) entity.getRandom().nextFloat() < 0.05000000074505806D + (double) damagePercentage * 0.05D) {
-			int damage = entity.tileEntityData.getInteger("Damage");
+			int damage = entity.getNBT().getInteger("Damage");
 			damage++;
 			if(damage > 2) {
 				entity.broken = true;
 			}
-			entity.tileEntityData.setInteger("Damage", damage);
+			entity.getNBT().setInteger("Damage", damage);
 		}
 	}
 
@@ -177,7 +179,7 @@ public class BlockAnvil extends BlockExtendedContainer implements IBlockFalling 
 
 	public String getLocalizedName(ItemStack stack) {
 		int damage = stack.getItemDamage() & 3;
-		return damage == 0 ? "" : (LanguageManager.getLocalization("crafting.anvil." + damageNames[damage]) + " ") + LanguageManager.getLocalization(getUnlocalizedName(stack)) + " " + LanguageManager.getLocalization(getUnlocalizedName());
+		return (damage == 0 ? "" : (LanguageManager.getLocalization("crafting.anvil." + damageNames[damage]) + " ")) + LanguageManager.getLocalization(getUnlocalizedName(stack)) + " " + LanguageManager.getLocalization(getUnlocalizedName());
 	}
 
 	public String getUnlocalizedName(ItemStack stack) {
@@ -206,6 +208,12 @@ public class BlockAnvil extends BlockExtendedContainer implements IBlockFalling 
 			ret.add(tile.inventory.getStackInSlotOnClosing(0));
 		}
 		return ret;
+	}
+	
+	@Override
+	public int getDamageValue(World world, int x, int y, int z) {
+		TileEntityAnvil tile = (TileEntityAnvil) getTileEntity(world, x, y, z);
+		return tile.damage + (tile.type * 4);
 	}
 
 	@Override
@@ -243,6 +251,9 @@ public class BlockAnvil extends BlockExtendedContainer implements IBlockFalling 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
+		if(renderMeta >= 0) {
+			return getIcon(side, renderMeta);
+		}
 		int type = ((TileEntityAnvil) getTileEntity(blockAccess, x, y, z)).type;
 		if(type == 0) {
 			return Stone.stone.getIcon(side, 0);

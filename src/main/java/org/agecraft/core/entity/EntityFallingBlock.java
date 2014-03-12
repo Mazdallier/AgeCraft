@@ -26,15 +26,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityFallingBlock extends Entity {
 
-	public Block block;
-	public int meta;
+	private Block block;
+	private int meta = 0;
 	public int time;
 	public boolean dropItem;
 	public boolean broken;
 	public boolean hurtEntities;
 	public int fallHurtMax;
 	public float fallHurtAmount;
-	public NBTTagCompound tileEntityData;
+	private NBTTagCompound tileEntityData = null;
 
 	public EntityFallingBlock(World world) {
 		super(world);
@@ -64,6 +64,11 @@ public class EntityFallingBlock extends Entity {
 		this.prevPosX = x;
 		this.prevPosY = y;
 		this.prevPosZ = z;
+		ItemStack stack = new ItemStack(block, 1, meta);
+		if(tileEntityData != null) {
+			stack.setTagCompound(tileEntityData);
+		}
+		dataWatcher.updateObject(5, stack);
 	}
 
 	@Override
@@ -73,8 +78,16 @@ public class EntityFallingBlock extends Entity {
 
 	@Override
 	protected void entityInit() {
+		dataWatcher.addObjectByDataType(5, 5);
 	}
 
+	public void setNBT(NBTTagCompound nbt) {
+		tileEntityData = nbt;
+		ItemStack stack = dataWatcher.getWatchableObjectItemStack(5);
+		stack.setTagCompound(nbt);
+		dataWatcher.updateObject(5, stack);
+	}
+	
 	@Override
 	public boolean canBeCollidedWith() {
 		return !isDead;
@@ -248,5 +261,32 @@ public class EntityFallingBlock extends Entity {
 	
 	public Random getRandom() {
 		return rand;
+	}
+	
+	public Block getBlock() {
+		return block;
+	}
+	
+	public int getMeta() {
+		return meta;
+	}
+	
+	public NBTTagCompound getNBT() {
+		return tileEntityData;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public Block getBlockClient() {
+		return Block.getBlockFromItem(dataWatcher.getWatchableObjectItemStack(5).getItem());
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public int getMetaClient() {
+		return dataWatcher.getWatchableObjectItemStack(5).getItemDamage();
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public NBTTagCompound getNBTClient() {
+		return dataWatcher.getWatchableObjectItemStack(5).getTagCompound();
 	}
 }

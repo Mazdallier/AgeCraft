@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -23,6 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class RenderFallingBlock extends Render {
 
 	private final RenderBlocks renderBlocks = new RenderBlocks();
+	public static boolean rendering = false;
 
 	public RenderFallingBlock() {
 		shadowSize = 0.5F;
@@ -30,7 +32,12 @@ public class RenderFallingBlock extends Render {
 
 	public void renderEntityFallingBlock(EntityFallingBlock entity, double x, double y, double z, float f1, float f2) {
 		World world = entity.worldObj;
-		Block block = entity.block;
+		Block block = entity.getBlockClient();
+		int meta = entity.getMetaClient();
+		NBTTagCompound nbt = entity.getNBTClient();
+		if(nbt == null) {
+			nbt = new NBTTagCompound();
+		}
 		int i = MathHelper.floor_double(entity.posX);
 		int j = MathHelper.floor_double(entity.posY);
 		int k = MathHelper.floor_double(entity.posZ);
@@ -45,7 +52,9 @@ public class RenderFallingBlock extends Render {
 				tessellator = Tessellator.instance;
 				tessellator.startDrawingQuads();
 				tessellator.setTranslation((double) ((float) (-i) - 0.5F), (double) ((float) (-j) - 0.5F), (double) ((float) (-k) - 0.5F));
-				ACBlockRenderingHandler.instance.renderBlockAnvil(world, i, j, k, (BlockAnvil) block, ((BlockAnvil) block).getRenderType(), renderBlocks);
+				BlockAnvil.renderMeta = nbt.getByte("Damage") + (nbt.getByte("Type") * 4);
+				ACBlockRenderingHandler.instance.renderBlockAnvil(world, i, j, k, (BlockAnvil) block, nbt.getByte("Damage") + (nbt.getByte("Type") * 4), nbt.getByte("Direction"), renderBlocks);
+				BlockAnvil.renderMeta = -1;
 				tessellator.setTranslation(0.0D, 0.0D, 0.0D);
 				tessellator.draw();
 			} else if(block instanceof net.minecraft.block.BlockAnvil) {
@@ -53,7 +62,7 @@ public class RenderFallingBlock extends Render {
 				tessellator = Tessellator.instance;
 				tessellator.startDrawingQuads();
 				tessellator.setTranslation((double) ((float) (-i) - 0.5F), (double) ((float) (-j) - 0.5F), (double) ((float) (-k) - 0.5F));
-				renderBlocks.renderBlockAnvilMetadata((net.minecraft.block.BlockAnvil) block, i, j, k, entity.meta);
+				renderBlocks.renderBlockAnvilMetadata((net.minecraft.block.BlockAnvil) block, i, j, k, meta);
 				tessellator.setTranslation(0.0D, 0.0D, 0.0D);
 				tessellator.draw();
 			} else if(block instanceof BlockDragonEgg) {
@@ -66,7 +75,7 @@ public class RenderFallingBlock extends Render {
 				tessellator.draw();
 			} else {
 				renderBlocks.setRenderBoundsFromBlock(block);
-				renderBlocks.renderBlockSandFalling(block, world, i, j, k, entity.meta);
+				renderBlocks.renderBlockSandFalling(block, world, i, j, k, meta);
 			}
 			GL11.glEnable(GL11.GL_LIGHTING);
 			GL11.glPopMatrix();
@@ -75,7 +84,9 @@ public class RenderFallingBlock extends Render {
 
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float f1, float f2) {
+		rendering = true;
 		renderEntityFallingBlock((EntityFallingBlock) entity, x, y, z, f1, f2);
+		rendering = false;
 	}
 
 	@Override
