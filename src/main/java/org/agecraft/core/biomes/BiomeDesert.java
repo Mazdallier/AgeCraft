@@ -14,9 +14,4 @@ public class BiomeDesert extends AgeBiome {
 		setTemperatureRainfall(2.0F, 0.0F);
 		setHeight(BiomeGenBase.height_LowPlains);
 	}
-
-	@Override
-	public BiomeGenBase getMutation() {
-		return null;
-	}
 }

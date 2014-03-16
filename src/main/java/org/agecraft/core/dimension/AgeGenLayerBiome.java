@@ -5,6 +5,8 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
+import org.agecraft.core.biomes.Biomes;
+
 public class AgeGenLayerBiome extends GenLayer {
 
 	public AgeChunkManager chunkManager;
@@ -36,7 +38,7 @@ public class AgeGenLayerBiome extends GenLayer {
 	}
 
 	public static boolean isBiomeOceanic(int biomeID) {
-		return biomeID == BiomeGenBase.ocean.biomeID || biomeID == BiomeGenBase.deepOcean.biomeID || biomeID == BiomeGenBase.frozenOcean.biomeID;
+		return biomeID == Biomes.ocean.biomeID || biomeID == Biomes.deepOcean.biomeID || biomeID == Biomes.frozenOcean.biomeID;
 	}
 
 	@Override

@@ -14,9 +14,4 @@ public class BiomeOcean extends AgeBiome {
 	public TempCategory getTempCategory() {
 		return TempCategory.OCEAN;
 	}
-
-	@Override
-	public BiomeGenBase getMutation() {
-		return null;
-	}
 }

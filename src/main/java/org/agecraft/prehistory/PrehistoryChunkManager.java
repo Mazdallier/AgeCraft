@@ -6,7 +6,6 @@ import java.util.List;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenJungle;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.GenLayerAddIsland;
 import net.minecraft.world.gen.layer.GenLayerAddSnow;
@@ -20,6 +19,9 @@ import net.minecraft.world.gen.layer.GenLayerVoronoiZoom;
 import net.minecraft.world.gen.layer.GenLayerZoom;
 
 import org.agecraft.Age;
+import org.agecraft.core.biomes.AgeBiome;
+import org.agecraft.core.biomes.BiomeJungle;
+import org.agecraft.core.biomes.Biomes;
 import org.agecraft.core.dimension.AgeChunkManager;
 import org.agecraft.core.dimension.AgeGenLayerAddSpecialIsland;
 import org.agecraft.core.dimension.AgeGenLayerBiome;
@@ -43,7 +45,7 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 
 	@Override
 	public List<BiomeGenBase> getSpawnBiomes() {
-		return Arrays.asList(BiomeGenBase.plains);
+		return Arrays.asList(Biomes.plains);
 	}
 
 	@Override
@@ -65,8 +67,8 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 		genLayerZoom = new GenLayerZoom(2002L, genLayerEdge);
 		genLayerZoom = new GenLayerZoom(2003L, genLayerZoom);
 		genLayerAddIsland = new GenLayerAddIsland(4L, genLayerZoom);
-		AgeGenLayerAddSpecialIsland genLayerAddSpecialIsland = new AgeGenLayerAddSpecialIsland(5L, genLayerAddIsland, BiomeGenBase.mushroomIsland);
-		AgeGenLayerDeepOcean genLayerDeepOcean = new AgeGenLayerDeepOcean(4L, genLayerAddSpecialIsland, BiomeGenBase.deepOcean);
+		AgeGenLayerAddSpecialIsland genLayerAddSpecialIsland = new AgeGenLayerAddSpecialIsland(5L, genLayerAddIsland, Biomes.timelessIsland);
+		AgeGenLayerDeepOcean genLayerDeepOcean = new AgeGenLayerDeepOcean(4L, genLayerAddSpecialIsland, Biomes.deepOcean);
 		GenLayer genLayer1 = GenLayerZoom.magnify(1000L, genLayerDeepOcean, 0);
 		byte biomeSize = 4;
 		if(worldType == WorldType.LARGE_BIOMES) {
@@ -88,10 +90,10 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 		AgeGenLayerHills genLayerHills = new AgeGenLayerHills(this, 1000L, genLayerBiome, genLayer2);
 		genLayerPreRiverInit = GenLayerZoom.magnify(1000L, genLayerRiverInit, 2);
 		genLayerPreRiverInit = GenLayerZoom.magnify(1000L, genLayerPreRiverInit, biomeSize);
-		AgeGenLayerRiver genLayerRiver = new AgeGenLayerRiver(1L, genLayerPreRiverInit, BiomeGenBase.river);
+		AgeGenLayerRiver genLayerRiver = new AgeGenLayerRiver(1L, genLayerPreRiverInit, Biomes.river);
 		GenLayerSmooth genLayerSmooth1 = new GenLayerSmooth(1000L, genLayerRiver);
 
-		genLayerBiome = new AgeGenLayerRareBiome(1001L, genLayerHills, BiomeGenBase.plains, BiomeGenBase.getBiome(BiomeGenBase.plains.biomeID + 128));
+		genLayerBiome = new AgeGenLayerRareBiome(1001L, genLayerHills, Biomes.plains, ((AgeBiome) Biomes.plains).getMutation());
 		for(int i = 0; i < biomeSize; ++i) {
 			genLayerBiome = new GenLayerZoom((long) (1000 + i), genLayerBiome);
 			if(i == 0) {
@@ -112,10 +114,10 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 	@Override
 	public BiomeGenBase[][] getBiomeGroups() {
 		return new BiomeGenBase[][]{
-			new BiomeGenBase[]{BiomeGenBase.desert, BiomeGenBase.desert, BiomeGenBase.desert, BiomeGenBase.savanna, BiomeGenBase.savanna, BiomeGenBase.plains}, 
-			new BiomeGenBase[]{BiomeGenBase.forest, BiomeGenBase.roofedForest, BiomeGenBase.extremeHills, BiomeGenBase.plains, BiomeGenBase.birchForest, BiomeGenBase.swampland}, 
-			new BiomeGenBase[]{BiomeGenBase.forest, BiomeGenBase.extremeHills, BiomeGenBase.taiga, BiomeGenBase.plains},
-			new BiomeGenBase[]{BiomeGenBase.icePlains, BiomeGenBase.icePlains, BiomeGenBase.icePlains, BiomeGenBase.coldTaiga}
+			new BiomeGenBase[]{Biomes.desert, Biomes.desert, Biomes.desert, Biomes.savanna, Biomes.savanna, Biomes.plains}, 
+			new BiomeGenBase[]{Biomes.forest1, Biomes.roofedForest, Biomes.extremeHills, Biomes.plains, Biomes.forest2, Biomes.swamp}, 
+			new BiomeGenBase[]{Biomes.forest1, Biomes.extremeHills, Biomes.taiga, Biomes.plains},
+			new BiomeGenBase[]{Biomes.icePlains, Biomes.icePlains, Biomes.icePlains, Biomes.alpine, Biomes.snowForest}
 		};
 	}
 
@@ -123,61 +125,61 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 	public int getBiomeInt(AgeGenLayerBiome genLayer, int oldValue1, int oldValue2, BiomeGenBase[][] biomeGroups) {
 		if(AgeGenLayerBiome.isBiomeOceanic(oldValue1)) {
 			return oldValue1;
-		} else if(oldValue1 == BiomeGenBase.mushroomIsland.biomeID) {
+		} else if(oldValue1 == Biomes.timelessIsland.biomeID) {
 			return oldValue1;
 		} else if(oldValue1 == 1) {
 			if(oldValue2 > 0) {
 				if(genLayer.nextInt(3) == 0) {
-					return BiomeGenBase.mesaPlateau.biomeID;
+					return Biomes.mesaPlateau.biomeID;
 				} else {
-					return BiomeGenBase.mesaPlateau_F.biomeID;
+					return Biomes.mesaPlateauF.biomeID;
 				}
 			} else {
 				return biomeGroups[0][genLayer.nextInt(biomeGroups[0].length)].biomeID;
 			}
 		} else if(oldValue1 == 2) {
 			if(oldValue2 > 0) {
-				return BiomeGenBase.jungle.biomeID;
+				return Biomes.jungle.biomeID;
 			} else {
 				return biomeGroups[1][genLayer.nextInt(biomeGroups[1].length)].biomeID;
 			}
 		} else if(oldValue1 == 3) {
 			if(oldValue2 > 0) {
-				return BiomeGenBase.megaTaiga.biomeID;
+				return Biomes.tundra.biomeID;
 			} else {
 				return biomeGroups[2][genLayer.nextInt(biomeGroups[2].length)].biomeID;
 			}
 		} else if(oldValue1 == 4) {
 			return biomeGroups[3][genLayer.nextInt(biomeGroups[3].length)].biomeID;
 		} else {
-			return BiomeGenBase.mushroomIsland.biomeID;
+			return Biomes.timelessIsland.biomeID;
 		}
 	}
 
 	@Override
 	public int getBiomeEdgeInt(AgeGenLayerBiomeEdge genLayer, int[] oldList, int[] list, int j, int i, int width, int oldValue) {
-		if(!genLayer.isBiomeSuitable1(oldList, list, j, i, width, oldValue, BiomeGenBase.extremeHills.biomeID, BiomeGenBase.extremeHillsEdge.biomeID) && !genLayer.isBiomeSuitable2(oldList, list, j, i, width, oldValue, BiomeGenBase.mesaPlateau_F.biomeID, BiomeGenBase.mesa.biomeID) && !genLayer.isBiomeSuitable2(oldList, list, j, i, width, oldValue, BiomeGenBase.mesaPlateau.biomeID, BiomeGenBase.mesa.biomeID)
-				&& !genLayer.isBiomeSuitable2(oldList, list, j, i, width, oldValue, BiomeGenBase.megaTaiga.biomeID, BiomeGenBase.taiga.biomeID)) {
+		if(!genLayer.isBiomeSuitable1(oldList, list, j, i, width, oldValue, Biomes.extremeHills.biomeID, Biomes.extremeHillsEdge.biomeID) && !genLayer.isBiomeSuitable2(oldList, list, j, i, width, oldValue, Biomes.mesaPlateauF.biomeID, Biomes.mesa.biomeID) && !genLayer.isBiomeSuitable2(oldList, list, j, i, width, oldValue, Biomes.mesaPlateau.biomeID, Biomes.mesa.biomeID)
+				&& !genLayer.isBiomeSuitable2(oldList, list, j, i, width, oldValue, Biomes.alpine.biomeID, Biomes.taiga.biomeID)) {
 			int side1 = oldList[j + 1 + (i + 1 - 1) * (width + 2)];
 			int side2 = oldList[j + 1 + 1 + (i + 1) * (width + 2)];
 			int side3 = oldList[j + 1 - 1 + (i + 1) * (width + 2)];
 			int side4 = oldList[j + 1 + (i + 1 + 1) * (width + 2)];
-			if(oldValue == BiomeGenBase.desert.biomeID) {
-				if(side1 != BiomeGenBase.icePlains.biomeID && side2 != BiomeGenBase.icePlains.biomeID && side3 != BiomeGenBase.icePlains.biomeID && side4 != BiomeGenBase.icePlains.biomeID) {
+			if(oldValue == Biomes.desert.biomeID) {
+				if(side1 != Biomes.icePlains.biomeID && side2 != Biomes.icePlains.biomeID && side3 != Biomes.icePlains.biomeID && side4 != Biomes.icePlains.biomeID) {
 					return oldValue;
 				} else {
-					return BiomeGenBase.extremeHillsPlus.biomeID;
+					return Biomes.extremeHillsPlus.biomeID;
 				}
-			} else if(oldValue == BiomeGenBase.swampland.biomeID) {
-				if(side1 != BiomeGenBase.desert.biomeID && side2 != BiomeGenBase.desert.biomeID && side3 != BiomeGenBase.desert.biomeID && side4 != BiomeGenBase.desert.biomeID && side1 != BiomeGenBase.coldTaiga.biomeID && side2 != BiomeGenBase.coldTaiga.biomeID && side3 != BiomeGenBase.coldTaiga.biomeID && side4 != BiomeGenBase.coldTaiga.biomeID && side1 != BiomeGenBase.icePlains.biomeID && side2 != BiomeGenBase.icePlains.biomeID && side3 != BiomeGenBase.icePlains.biomeID
-						&& side4 != BiomeGenBase.icePlains.biomeID) {
-					if(side1 != BiomeGenBase.jungle.biomeID && side4 != BiomeGenBase.jungle.biomeID && side2 != BiomeGenBase.jungle.biomeID && side3 != BiomeGenBase.jungle.biomeID) {
+			} else if(oldValue == Biomes.swamp.biomeID) {
+				if(side1 != Biomes.desert.biomeID && side2 != Biomes.desert.biomeID && side3 != Biomes.desert.biomeID && side4 != Biomes.desert.biomeID && side1 != Biomes.tundra.biomeID && side2 != Biomes.tundra.biomeID && side3 != Biomes.tundra.biomeID && side4 != Biomes.tundra.biomeID && side1 != Biomes.icePlains.biomeID && side2 != Biomes.icePlains.biomeID && side3 != Biomes.icePlains.biomeID
+						&& side4 != Biomes.icePlains.biomeID) {
+					if(side1 != Biomes.jungle.biomeID && side4 != Biomes.jungle.biomeID && side2 != Biomes.jungle.biomeID && side3 != Biomes.jungle.biomeID) {
 						return oldValue;
 					} else {
-						return BiomeGenBase.jungleEdge.biomeID;
+						return Biomes.jungleEdge.biomeID;
 					}
 				} else {
-					return BiomeGenBase.plains.biomeID;
+					return Biomes.plains.biomeID;
 				}
 			} else {
 				return oldValue;
@@ -188,43 +190,43 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 
 	@Override
 	public int getHillsInt(AgeGenLayerHills genLayer, int oldValue) {
-		if(oldValue == BiomeGenBase.desert.biomeID) {
-			return BiomeGenBase.desertHills.biomeID;
-		} else if(oldValue == BiomeGenBase.forest.biomeID) {
-			return BiomeGenBase.forestHills.biomeID;
-		} else if(oldValue == BiomeGenBase.birchForest.biomeID) {
-			return BiomeGenBase.birchForestHills.biomeID;
-		} else if(oldValue == BiomeGenBase.roofedForest.biomeID) {
-			return BiomeGenBase.plains.biomeID;
-		} else if(oldValue == BiomeGenBase.taiga.biomeID) {
-			return BiomeGenBase.taigaHills.biomeID;
-		} else if(oldValue == BiomeGenBase.megaTaiga.biomeID) {
-			return BiomeGenBase.megaTaigaHills.biomeID;
-		} else if(oldValue == BiomeGenBase.coldTaiga.biomeID) {
-			return BiomeGenBase.coldTaigaHills.biomeID;
-		} else if(oldValue == BiomeGenBase.plains.biomeID) {
+		if(oldValue == Biomes.desert.biomeID) {
+			return Biomes.desertHills.biomeID;
+		} else if(oldValue == Biomes.forest1.biomeID) {
+			return Biomes.forestHills1.biomeID;
+		} else if(oldValue == Biomes.forest2.biomeID) {
+			return Biomes.forestHills2.biomeID;
+		} else if(oldValue == Biomes.roofedForest.biomeID) {
+			return Biomes.plains.biomeID;
+		} else if(oldValue == Biomes.taiga.biomeID) {
+			return Biomes.taigaHills.biomeID;
+		} else if(oldValue == Biomes.alpine.biomeID) {
+			return Biomes.glacier.biomeID;
+		} else if(oldValue == Biomes.tundra.biomeID) {
+			return Biomes.alpine.biomeID;
+		} else if(oldValue == Biomes.plains.biomeID) {
 			if(genLayer.nextInt(3) == 0) {
-				return BiomeGenBase.forestHills.biomeID;
+				return Biomes.forestHills1.biomeID;
 			} else {
-				return BiomeGenBase.forest.biomeID;
+				return Biomes.forest1.biomeID;
 			}
-		} else if(oldValue == BiomeGenBase.icePlains.biomeID) {
-			return BiomeGenBase.iceMountains.biomeID;
-		} else if(oldValue == BiomeGenBase.jungle.biomeID) {
-			return BiomeGenBase.jungleHills.biomeID;
-		} else if(oldValue == BiomeGenBase.ocean.biomeID) {
-			return BiomeGenBase.deepOcean.biomeID;
-		} else if(oldValue == BiomeGenBase.extremeHills.biomeID) {
-			return BiomeGenBase.extremeHillsPlus.biomeID;
-		} else if(oldValue == BiomeGenBase.savanna.biomeID) {
-			return BiomeGenBase.savannaPlateau.biomeID;
-		} else if(AgeGenLayerHills.compareBiomesById(oldValue, BiomeGenBase.mesaPlateau_F.biomeID)) {
-			return BiomeGenBase.mesa.biomeID;
-		} else if(oldValue == BiomeGenBase.deepOcean.biomeID && genLayer.nextInt(3) == 0) {
+		} else if(oldValue == Biomes.icePlains.biomeID) {
+			return Biomes.alpine.biomeID;
+		} else if(oldValue == Biomes.jungle.biomeID) {
+			return Biomes.jungleHills.biomeID;
+		} else if(oldValue == Biomes.ocean.biomeID) {
+			return Biomes.deepOcean.biomeID;
+		} else if(oldValue == Biomes.extremeHills.biomeID) {
+			return Biomes.extremeHillsPlus.biomeID;
+		} else if(oldValue == Biomes.savanna.biomeID) {
+			return Biomes.savannaPlateau.biomeID;
+		} else if(AgeGenLayerHills.compareBiomesById(oldValue, Biomes.mesaPlateauF.biomeID)) {
+			return Biomes.mesa.biomeID;
+		} else if(oldValue == Biomes.deepOcean.biomeID && genLayer.nextInt(3) == 0) {
 			if(genLayer.nextInt(2) == 0) {
-				return BiomeGenBase.plains.biomeID;
+				return Biomes.plains.biomeID;
 			} else {
-				return BiomeGenBase.forest.biomeID;
+				return Biomes.forest1.biomeID;
 			}
 		}
 		return oldValue;
@@ -232,14 +234,14 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 
 	@Override
 	public int getRiverMixInt(AgeGenLayerRiverMix genLayer, int biome, int river) {
-		if(biome != BiomeGenBase.ocean.biomeID && biome != BiomeGenBase.deepOcean.biomeID) {
-			if(river == BiomeGenBase.river.biomeID) {
-				if(biome == BiomeGenBase.icePlains.biomeID) {
-					return BiomeGenBase.frozenRiver.biomeID;
-				} else if(biome != BiomeGenBase.mushroomIsland.biomeID && biome != BiomeGenBase.mushroomIslandShore.biomeID) {
+		if(biome != Biomes.ocean.biomeID && biome != Biomes.deepOcean.biomeID) {
+			if(river == Biomes.river.biomeID) {
+				if(biome == Biomes.icePlains.biomeID) {
+					return Biomes.frozenRiver.biomeID;
+				} else if(biome != Biomes.timelessIsland.biomeID && biome != Biomes.timelessIslandShore.biomeID) {
 					return river & 255;
 				} else {
-					return BiomeGenBase.mushroomIslandShore.biomeID;
+					return Biomes.timelessIslandShore.biomeID;
 				}
 			} else {
 				return biome;
@@ -255,31 +257,31 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 		int side2 = oldList[j + 1 + 1 + (i + 1) * (width + 2)];
 		int side3 = oldList[j + 1 - 1 + (i + 1) * (width + 2)];
 		int side4 = oldList[j + 1 + (i + 1 + 1) * (width + 2)];
-		if(oldValue == BiomeGenBase.mushroomIsland.biomeID) {
-			if(side1 != BiomeGenBase.ocean.biomeID && side2 != BiomeGenBase.ocean.biomeID && side3 != BiomeGenBase.ocean.biomeID && side4 != BiomeGenBase.ocean.biomeID) {
+		if(oldValue == Biomes.timelessIsland.biomeID) {
+			if(side1 != Biomes.ocean.biomeID && side2 != Biomes.ocean.biomeID && side3 != Biomes.ocean.biomeID && side4 != Biomes.ocean.biomeID) {
 				list[j + i * width] = oldValue;
 			} else {
-				list[j + i * width] = BiomeGenBase.mushroomIslandShore.biomeID;
+				list[j + i * width] = Biomes.timelessIslandShore.biomeID;
 			}
-		} else if(oldBiome != null && oldBiome.getBiomeClass() == BiomeGenJungle.class) {
+		} else if(oldBiome != null && oldBiome.getBiomeClass() == BiomeJungle.class) {
 			if(genLayer.isJunleOrForestOrTaigaOrOcean(side1) && genLayer.isJunleOrForestOrTaigaOrOcean(side2) && genLayer.isJunleOrForestOrTaigaOrOcean(side3) && genLayer.isJunleOrForestOrTaigaOrOcean(side4)) {
 				if(!AgeGenLayerBiome.isBiomeOceanic(side1) && !AgeGenLayerBiome.isBiomeOceanic(side2) && !AgeGenLayerBiome.isBiomeOceanic(side3) && !AgeGenLayerBiome.isBiomeOceanic(side4)) {
 					list[j + i * width] = oldValue;
 				} else {
-					list[j + i * width] = BiomeGenBase.beach.biomeID;
+					list[j + i * width] = Biomes.beach.biomeID;
 				}
 			} else {
-				list[j + i * width] = BiomeGenBase.jungleEdge.biomeID;
+				list[j + i * width] = Biomes.jungleEdge.biomeID;
 			}
-		} else if(oldValue != BiomeGenBase.extremeHills.biomeID && oldValue != BiomeGenBase.extremeHillsPlus.biomeID && oldValue != BiomeGenBase.extremeHillsEdge.biomeID) {
+		} else if(oldValue != Biomes.extremeHills.biomeID && oldValue != Biomes.extremeHillsPlus.biomeID && oldValue != Biomes.extremeHillsEdge.biomeID) {
 			if(oldBiome != null && oldBiome.func_150559_j()) {
-				genLayer.createBeachIfSuitable(oldList, list, j, i, width, oldValue, BiomeGenBase.coldBeach.biomeID);
-			} else if(oldValue != BiomeGenBase.mesa.biomeID && oldValue != BiomeGenBase.mesaPlateau_F.biomeID) {
-				if(oldValue != BiomeGenBase.ocean.biomeID && oldValue != BiomeGenBase.deepOcean.biomeID && oldValue != BiomeGenBase.river.biomeID && oldValue != BiomeGenBase.swampland.biomeID) {
+				genLayer.createBeachIfSuitable(oldList, list, j, i, width, oldValue, Biomes.snowBeach.biomeID);
+			} else if(oldValue != Biomes.mesa.biomeID && oldValue != Biomes.mesaPlateauF.biomeID) {
+				if(oldValue != Biomes.ocean.biomeID && oldValue != Biomes.deepOcean.biomeID && oldValue != Biomes.river.biomeID && oldValue != Biomes.swamp.biomeID) {
 					if(!AgeGenLayerBiome.isBiomeOceanic(side1) && !AgeGenLayerBiome.isBiomeOceanic(side2) && !AgeGenLayerBiome.isBiomeOceanic(side3) && !AgeGenLayerBiome.isBiomeOceanic(side4)) {
 						list[j + i * width] = oldValue;
 					} else {
-						list[j + i * width] = BiomeGenBase.beach.biomeID;
+						list[j + i * width] = Biomes.beach.biomeID;
 					}
 				} else {
 					list[j + i * width] = oldValue;
@@ -289,14 +291,14 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 					if(genLayer.isMesaBiome(side1) && genLayer.isMesaBiome(side2) && genLayer.isMesaBiome(side3) && genLayer.isMesaBiome(side4)) {
 						list[j + i * width] = oldValue;
 					} else {
-						list[j + i * width] = BiomeGenBase.desert.biomeID;
+						list[j + i * width] = Biomes.desert.biomeID;
 					}
 				} else {
 					list[j + i * width] = oldValue;
 				}
 			}
 		} else {
-			genLayer.createBeachIfSuitable(oldList, list, j, i, width, oldValue, BiomeGenBase.stoneBeach.biomeID);
+			genLayer.createBeachIfSuitable(oldList, list, j, i, width, oldValue, Biomes.stoneBeach.biomeID);
 		}
 		return oldValue;
 	}

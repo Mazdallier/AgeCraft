@@ -8,13 +8,18 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
+import org.agecraft.Age;
 import org.agecraft.AgeCraft;
 import org.agecraft.core.dimension.AgeChunkProvider;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class AgeBiome extends BiomeGenBase {
 
 	public AgeChunkProvider chunkProvider;
-
+	private AgeBiome mutation;
+	
 	public AgeBiome(int id) {
 		this(id, true);
 	}
@@ -27,7 +32,35 @@ public abstract class AgeBiome extends BiomeGenBase {
 		spawnableCaveCreatureList.clear();
 	}
 
-	public abstract BiomeGenBase getMutation();
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getSkyColorByTemp(float f) {
+		if(chunkProvider.age.ageID == Age.prehistory.ageID) {
+			return 0x336666;
+		}
+		return super.getSkyColorByTemp(f);
+	}
+	
+	@Override
+	public int getWaterColorMultiplier() {
+		if(chunkProvider.age.ageID == Age.prehistory.ageID) {
+			return 0x009933;
+		}
+		return super.getWaterColorMultiplier();
+	}
+	
+	public AgeBiome getMutation() {
+		return mutation;
+	}
+	
+	public void setMutation(AgeBiome biome) {
+		mutation = biome;
+	}
+	
+	public AgeBiome setMutation() {
+		mutation = new BiomeMutation(getBiomeID(), this);
+		return this;
+	}
 
 	@Override
 	public void decorate(World world, Random random, int chunkX, int chunkZ) {
@@ -103,5 +136,14 @@ public abstract class AgeBiome extends BiomeGenBase {
 				}
 			}
 		}
+	}
+	
+	public static int getBiomeID() {
+		for(int i = 0; i < getBiomeGenArray().length; i++) {
+			if(getBiome(i) == null) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }
