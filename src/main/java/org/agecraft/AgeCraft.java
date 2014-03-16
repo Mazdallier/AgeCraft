@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import net.minecraftforge.common.DimensionManager;
 
 import org.agecraft.core.AgeCraftCore;
+import org.agecraft.core.commands.CommandTechTree;
 import org.agecraft.core.dimension.AgeProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import elcon.mods.elconqore.EQMod;
 
@@ -99,5 +101,10 @@ public class AgeCraft {
 			component.postInit();
 		}
 		proxy.postInit();
+	}
+	
+	@EventHandler
+	public void serverStarting(FMLServerStartingEvent event) {
+		event.registerServerCommand(new CommandTechTree());
 	}
 }

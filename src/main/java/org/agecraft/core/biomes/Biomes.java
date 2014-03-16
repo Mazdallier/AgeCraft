@@ -79,7 +79,7 @@ public class Biomes extends ACComponent {
 	public static BiomeGenBase mesaPlateauF;
 	public static BiomeGenBase steppe;
 	
-	public static BiomeGenBase timelessIsland;
+	public static BiomeGenBase timelessIsland; //64
 	public static BiomeGenBase timelessIslandShore;
 
 	public Biomes() {
@@ -102,6 +102,8 @@ public class Biomes extends ACComponent {
 		glacier = new BiomeGlacier(12).setMutation().setBiomeName("Glacier");
 		taiga = new BiomeTaiga(13).setMutation().setBiomeName("Taiga");
 
+		plains = new BiomePlains(29).setMutation().setBiomeName("Plains");
+		
 		jungle = new BiomeJungle(43).setMutation().setBiomeName("Jungle");
 
 		desert = new BiomeDesert(52).setMutation().setBiomeName("Desert");

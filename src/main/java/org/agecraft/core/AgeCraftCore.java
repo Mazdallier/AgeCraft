@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import org.agecraft.ACComponent;
 import org.agecraft.ACComponentClient;
 import org.agecraft.AgeCraft;
+import org.agecraft.core.biomes.Biomes;
 import org.agecraft.core.blocks.BlockClothingSelectorTest;
 import org.agecraft.core.clothing.ClothingCategory;
 import org.agecraft.core.clothing.ClothingRegistry;
@@ -42,6 +43,7 @@ public class AgeCraftCore extends ACComponent {
 	public static AgeCraftCore instance;
 
 	public TechTree techTree;
+	public Biomes biomes;
 	public Stone stone;
 	public Metals metals;
 	public Trees trees;
@@ -56,6 +58,7 @@ public class AgeCraftCore extends ACComponent {
 		super("core", true);
 
 		techTree = new TechTree();
+		biomes = new Biomes();
 		stone = new Stone();
 		metals = new Metals();
 		trees = new Trees();
