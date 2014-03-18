@@ -196,6 +196,8 @@ public class PrehistoryChunkManager extends AgeChunkManager {
 			return Biomes.forestHills1.biomeID;
 		} else if(oldValue == Biomes.forest2.biomeID) {
 			return Biomes.forestHills2.biomeID;
+		} else if(oldValue == Biomes.forest3.biomeID) {
+			return Biomes.forestHills3.biomeID;
 		} else if(oldValue == Biomes.roofedForest.biomeID) {
 			return Biomes.plains.biomeID;
 		} else if(oldValue == Biomes.taiga.biomeID) {

@@ -8,7 +8,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
-import org.agecraft.Age;
 import org.agecraft.AgeCraft;
 import org.agecraft.core.dimension.AgeChunkProvider;
 
@@ -35,17 +34,17 @@ public abstract class AgeBiome extends BiomeGenBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getSkyColorByTemp(float f) {
-		if(chunkProvider.age.ageID == Age.prehistory.ageID) {
+		/*if(chunkProvider != null && chunkProvider.age != null && chunkProvider.age.ageID == Age.prehistory.ageID) {
 			return 0x336666;
-		}
+		}*/
 		return super.getSkyColorByTemp(f);
 	}
 	
 	@Override
 	public int getWaterColorMultiplier() {
-		if(chunkProvider.age.ageID == Age.prehistory.ageID) {
+		/*if(chunkProvider != null && chunkProvider.age != null && chunkProvider.age.ageID == Age.prehistory.ageID) {
 			return 0x009933;
-		}
+		}*/
 		return super.getWaterColorMultiplier();
 	}
 	
@@ -91,12 +90,12 @@ public abstract class AgeBiome extends BiomeGenBase {
 			} else {
 				Block block2 = blocks[index];
 				if(block2 != null && block2.getMaterial() != Material.air) {
-					if(block2 == chunkProvider.getDefaultBlock()) {
+					if(block2 == (chunkProvider != null ? chunkProvider.getDefaultBlock() : Blocks.stone)) {
 						if(k == -1) {
 							if(l <= 0) {
 								blockTop = null;
 								b0 = 0;
-								blockFiller = chunkProvider.getDefaultBlock();
+								blockFiller = (chunkProvider != null ? chunkProvider.getDefaultBlock() : Blocks.stone);
 							} else if(height >= 59 && height <= 64) {
 								blockTop = topBlock;
 								b0 = (byte) (field_150604_aj & 255);
