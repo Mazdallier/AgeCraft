@@ -33,7 +33,7 @@ public class Biomes extends ACComponent {
 	public static BiomeGenBase volcano;
 
 	public static BiomeGenBase swamp; // 23
-	public static BiomeGenBase greenSwamplands;
+	public static BiomeGenBase greenSwamp;
 	public static BiomeGenBase marsh;
 	public static BiomeGenBase bayou;
 	public static BiomeGenBase bog;
@@ -97,15 +97,76 @@ public class Biomes extends ACComponent {
 		ocean = new BiomeOcean(0).setBiomeName("Ocean");
 		deepOcean = new BiomeDeepOcean(1).setBiomeName("Deep Ocean");
 		river = new BiomeRiver(2).setBiomeName("River");
+		island = new BiomeIsland(3).setBiomeName("Island");
+		archipelago = new BiomeArchipelago(4).setBiomeName("Archipelago");
+		beach = new BiomeBeach(5).setBiomeName("Beach");
+		stoneBeach = new BiomeStoneBeach(6).setBiomeName("Stone Beach");
+		snowBeach = new BiomeSnowBeach(7).setBiomeName("Snow Beach");
 
-		alpine = new BiomeAlpine(11).setMutation().setBiomeName("Alpine");
-		glacier = new BiomeGlacier(12).setMutation().setBiomeName("Glacier");
-		taiga = new BiomeTaiga(13).setMutation().setBiomeName("Taiga");
+		frozenOcean = new BiomeFrozenOcean(8).setBiomeName("Frozen Ocean");
+		frozenRiver = new BiomeFrozenRiver(9).setBiomeName("Frozen River");
+		alpine = new BiomeAlpine(10).setMutation().setBiomeName("Alpine");
+		glacier = new BiomeGlacier(11).setMutation().setBiomeName("Glacier");
+		taiga = new BiomeTaiga(12).setMutation().setBiomeName("Taiga");
+		taigaHills = new BiomeTaigaHills(13).setBiomeName("Taiga Hills");
+		snowForest = new BiomeSnowForest(14).setMutation().setBiomeName("Snow Forest");
+		tundra = new BiomeTundra(15).setMutation().setBiomeName("Tundra");
 
-		plains = new BiomePlains(29).setMutation().setBiomeName("Plains");
-		
-		jungle = new BiomeJungle(43).setMutation().setBiomeName("Jungle");
+		mountains = new BiomeMountains(16).setMutation().setBiomeName("Mountians");
+		extremeHills = new BiomeExtremeHills(17).setMutation().setBiomeName("Extreme Hills");
+		extremeHillsEdge = new BiomeExtremeHillsEdge(18).setBiomeName("Extreme Hills Edge");
+		extremeHillsPlus = new BiomeExtremeHillsPlus(19).setBiomeName("Extreme Hills Plus");
+		stoneHills = new BiomeStoneHills(20).setMutation().setBiomeName("Stone Hills");
+		volcano = new BiomeVolcano(21).setMutation().setBiomeName("Volcano");
 
-		desert = new BiomeDesert(52).setMutation().setBiomeName("Desert");
+		swamp = new BiomeSwamp(22).setMutation().setBiomeName("Swamp");
+		greenSwamp = new BiomeGreenSwamp(23).setMutation().setBiomeName("Green Swamp");
+		marsh = new BiomeMarsh(24).setMutation().setBiomeName("Marsh");
+		bayou = new BiomeBayou(25).setMutation().setBiomeName("Bayou");
+		bog = new BiomeBog(26).setMutation().setBiomeName("Bog");
+		mangrove = new BiomeMangrove(27).setMutation().setBiomeName("Mangrove");
+
+		plains = new BiomePlains(28).setMutation().setBiomeName("Plains");
+		highland = new BiomeHighland(29).setMutation().setBiomeName("Highland");
+		chaparral = new BiomeChaparral(30).setMutation().setBiomeName("Chaparral");
+		heathland = new BiomeHeathland(31).setMutation().setBiomeName("Heathland");
+		pasture = new BiomePasture(32).setMutation().setBiomeName("Pasture");
+		prairie = new BiomePrairie(33).setMutation().setBiomeName("Prairie");
+
+		forest1 = new BiomeForest1(34).setMutation().setBiomeName("Forest 1");
+		forestHills1 = new BiomeForestHills1(35).setBiomeName("Forest Hills 1");
+		forest2 = new BiomeForest2(36).setMutation().setBiomeName("Forest 2");
+		forestHills2 = new BiomeForestHills2(37).setBiomeName("Forest Hills 2");
+		forest3 = new BiomeForest3(38).setMutation().setBiomeName("Forest 3");
+		forestHills3 = new BiomeForestHills3(39).setBiomeName("Forest Hills 3");
+		meadow = new BiomeMeadow(40).setMutation().setBiomeName("Meadow");
+		roofedForest = new BiomeRoofedForest(41).setMutation().setBiomeName("Roofed Forest");
+
+		jungle = new BiomeJungle(42).setMutation().setBiomeName("Jungle");
+		jungleHills = new BiomeJungleHills(43).setBiomeName("Jungle Hills");
+		jungleEdge = new BiomeJungleEdge(44).setBiomeName("Jungle Edge");
+		rainforest = new BiomeRainforest(45).setMutation().setBiomeName("Rainforest");
+		rainforestHills = new BiomeRainforestHills(46).setBiomeName("Rainforest Hills");
+
+		wasteland = new BiomeWasteland(47).setMutation().setBiomeName("Wasteland");
+		deadForest = new BiomeDeadForest(48).setMutation().setBiomeName("Dead Forest");
+		deadlands = new BiomeDeadlands(49).setMutation().setBiomeName("Deadlands");
+		scrubland = new BiomeScrubland(50).setMutation().setBiomeName("Scrubland");
+
+		desert = new BiomeDesert(51).setMutation().setBiomeName("Desert");
+		desertHills = new BiomeDesertHills(52).setBiomeName("Desert Hills");
+		redBadlands = new BiomeRedBadlands(53).setBiomeName("Red Badlands");
+		droughtPlains = new BiomeDroughtPlains(54).setMutation().setBiomeName("Drought Plains");
+		savanna = new BiomeSavanna(55).setMutation().setBiomeName("Savanna");
+		savannaPlateau = new BiomeSavannaPlateau(56).setBiomeName("Savanna Plateau");
+		dunes = new BiomeDunes(57).setMutation().setBiomeName("Dunes");
+		lushDesert = new BiomeLushDesert(58).setMutation().setBiomeName("Lush Desert");
+		mesa = new BiomeMesa(59).setMutation().setBiomeName("Mesa");
+		mesaPlateau = new BiomeMesaPlateau(60).setBiomeName("Mesa Plateau");
+		mesaPlateauF = new BiomeMesaPlateauF(61).setBiomeName("Mesa Plateau F");
+		steppe = new BiomeSteppe(62).setMutation().setBiomeName("Steppe");
+
+		timelessIsland = new BiomeTimelessIsland(63).setBiomeName("Timeless Island");
+		timelessIslandShore = new BiomeTimelessIslandShore(64).setBiomeName("Timeless Island Shore");
 	}
 }
