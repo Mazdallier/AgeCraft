@@ -16,6 +16,7 @@ import org.agecraft.ACCreativeTabs;
 import org.agecraft.core.Farming;
 import org.agecraft.core.registry.FoodRegistry;
 import org.agecraft.core.registry.FoodRegistry.Food;
+import org.agecraft.core.registry.FoodRegistry.FoodPotion;
 import org.agecraft.core.registry.FoodRegistry.FoodProperties;
 import org.agecraft.core.registry.FoodRegistry.FoodStage;
 
@@ -45,8 +46,12 @@ public class ItemFood extends Item {
 		FoodProperties foodProperties = getFoodProperties(stack.getItemDamage());
 		player.getFoodStats().addStats(foodProperties.health, foodProperties.saturation);
 		world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-		if(!world.isRemote && foodProperties.potionID > 0 && world.rand.nextFloat() < foodProperties.potionChance) {
-			player.addPotionEffect(new PotionEffect(foodProperties.potionID, foodProperties.potionDuration * 20, foodProperties.potionAmplifier));
+		if(!world.isRemote && !foodProperties.potions.isEmpty()) {
+			for(FoodPotion potion : foodProperties.potions) {
+				if(world.rand.nextFloat() < potion.potionChance) {
+					player.addPotionEffect(new PotionEffect(potion.potionID, potion.potionDuration * 20, potion.potionAmplifier));
+				}
+			}
 		}
 		return stack;
 	}
@@ -65,11 +70,11 @@ public class ItemFood extends Item {
 	public String getItemStackDisplayName(ItemStack stack) {
 		FoodProperties foodProperties = getFoodProperties(stack.getItemDamage());
 		String name = LanguageManager.getLocalization(foodProperties.prefix);
-		if(!foodProperties.prefix.isEmpty()) {
+		if(foodProperties.prefix != null && !foodProperties.prefix.isEmpty()) {
 			name += " ";
 		}
 		name += LanguageManager.getLocalization(getUnlocalizedName(stack));
-		if(!foodProperties.postfix.isEmpty()) {
+		if(foodProperties.postfix != null && !foodProperties.postfix.isEmpty()) {
 			name += " ";
 		}
 		name += LanguageManager.getLocalization(foodProperties.postfix);

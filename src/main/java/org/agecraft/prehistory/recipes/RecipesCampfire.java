@@ -1,18 +1,23 @@
 package org.agecraft.prehistory.recipes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import org.agecraft.ACUtil;
 import org.agecraft.core.Trees;
+import org.agecraft.core.items.farming.ItemFood;
 import org.agecraft.core.recipes.RecipeSimple;
 import org.agecraft.core.recipes.RecipeType;
 import org.agecraft.core.recipes.WrappedStack;
+import org.agecraft.core.registry.FoodRegistry;
+import org.agecraft.core.registry.FoodRegistry.Food;
+import org.agecraft.core.registry.FoodRegistry.FoodStage;
+import org.agecraft.core.registry.FoodRegistry.FoodType;
 import org.agecraft.core.registry.TreeRegistry;
 
 public class RecipesCampfire {
@@ -108,6 +113,13 @@ public class RecipesCampfire {
 				addFuel(new ItemStack(Trees.log, 1, i), 100);
 			}
 		}
-		addRecipe(new ItemStack(Items.beef), new ItemStack(Items.cooked_beef), new ItemStack(Items.gunpowder));
+		ArrayList<Food> foods = new ArrayList<Food>();
+		foods.addAll(FoodRegistry.getAll(FoodType.MEAT));
+		foods.addAll(FoodRegistry.getAll(FoodType.FISH));
+		for(Food food : foods) {
+			if(food.properties.containsKey(FoodStage.RAW) && food.properties.containsKey(FoodStage.COOKED) && food.properties.containsKey(FoodStage.BURNED)) {
+				addRecipe(ItemFood.createFood(food.name, FoodStage.RAW), ItemFood.createFood(food.name, FoodStage.COOKED), ItemFood.createFood(food.name, FoodStage.BURNED));
+			}
+		}
 	}
 }

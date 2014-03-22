@@ -1,10 +1,14 @@
 package org.agecraft.core.registry;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import net.minecraft.util.IIcon;
 
 import org.agecraft.core.registry.FoodRegistry.Food;
+
+import com.google.common.collect.ArrayListMultimap;
 
 import elcon.mods.elconqore.EQUtil;
 
@@ -37,10 +41,7 @@ public class FoodRegistry extends Registry<Food> {
 		
 		public int itemUseDuration;
 		
-		public int potionID;
-		public int potionDuration;
-		public int potionAmplifier;
-		public float potionChance;
+		public ArrayList<FoodPotion> potions = new ArrayList<FoodPotion>();
 		
 		public IIcon icon;
 		
@@ -53,6 +54,7 @@ public class FoodRegistry extends Registry<Food> {
 			this.foodStage = foodStage;
 			
 			this.prefix = "food." + foodStage.toString().toLowerCase();
+			this.postfix = "";
 			this.iconPostfix = EQUtil.firstUpperCase(foodStage.toString().toLowerCase());
 			
 			this.health = health;
@@ -89,12 +91,24 @@ public class FoodRegistry extends Registry<Food> {
 			return this;
 		}
 		
-		public FoodProperties setPotionEffect(int potionID, int potionDuration, int potionAmplifier, float potionChance) {
+		public FoodProperties addPotionEffect(FoodPotion potion) {
+			potions.add(potion);
+			return this;
+		}
+	}
+	
+	public static class FoodPotion {
+		
+		public int potionID;
+		public int potionDuration;
+		public int potionAmplifier;
+		public float potionChance;
+		
+		public FoodPotion(int potionID, int potionDuration, int potionAmplifier, float potionChance) {
 			this.potionID = potionID;
 			this.potionDuration = potionDuration;
 			this.potionAmplifier = potionAmplifier;
 			this.potionChance = potionChance;
-			return this;
 		}
 	}
 	
@@ -125,8 +139,31 @@ public class FoodRegistry extends Registry<Food> {
 	
 	public static FoodRegistry instance = new FoodRegistry();
 
+	public ArrayListMultimap<FoodType, Food> typeToObject = ArrayListMultimap.create();
+	
 	public FoodRegistry() {
 		super(8192);
+	}
+	
+	@Override
+	public void set(int index, Food value) {
+		super.set(index, value);
+		typeToObject.put(value.type, value);
+	}
+	
+	@Override
+	public void setAll(Food[] registered) {
+		super.setAll(registered);
+		typeToObject.clear();
+		for(int i = 0; i < registered.length; i++) {
+			if(registered[i] != null) {
+				typeToObject.put(registered[i].type, registered[i]);
+			}
+		}
+	}
+	
+	public static List<Food> getAll(FoodType type) {
+		return instance.typeToObject.get(type);
 	}
 	
 	public static void registerFood(Food food) {
