@@ -1,6 +1,6 @@
 package org.agecraft.core.entity;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -17,14 +17,14 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public abstract class EntityDNA extends EntityLiving implements IDNAOwner {
+public abstract class EntityDNA extends EntityCreature implements IDNAOwner {
 	
 	private DNAStorage dna;
 	private DNAStorage dnaCache;
 	
 	public EntityDNA(World world) {
 		super(world);
-		dna = new DNAStorage(getDNAObject());
+		createDNA(getDNAObject());
 	}
 	
 	@Override
@@ -33,13 +33,13 @@ public abstract class EntityDNA extends EntityLiving implements IDNAOwner {
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		dataWatcher.addObjectByDataType(10, 5);
+		dataWatcher.addObjectByDataType(15, 5);
 	}
 	
 	@Override
 	public void func_145781_i(int dataID) {
 		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
-			if(dataID == 10) {
+			if(dataID == 15) {
 				dnaCache = null;
 			}
 		}
@@ -63,7 +63,7 @@ public abstract class EntityDNA extends EntityLiving implements IDNAOwner {
 		NBTTagCompound tag = new NBTTagCompound();
 		dna.writeToNBT(tag);
 		stack.setTagCompound(tag);
-		dataWatcher.updateObject(10, stack);
+		dataWatcher.updateObject(15, stack);
 	}
 	
 	public DNAStorageChromosome getChromosome(int chromosomeID) {
@@ -94,7 +94,7 @@ public abstract class EntityDNA extends EntityLiving implements IDNAOwner {
 			return dnaCache;
 		}
 		DNAStorage dna = new DNAStorage(getDNAObject());
-		dna.readFromNBT(dataWatcher.getWatchableObjectItemStack(10).getTagCompound());
+		dna.readFromNBT(dataWatcher.getWatchableObjectItemStack(15).getTagCompound());
 		dnaCache = dna;
 		return dna;
 	}

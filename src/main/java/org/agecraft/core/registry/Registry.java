@@ -8,39 +8,43 @@ public class Registry<T> {
 	
 	public static HashMap<String, Registry> registries = new HashMap<String, Registry>();
 	
-	private Object[] registered;
+	private Object[] idToObject;
+	private HashMap<String, T> nameToObject;
 	
 	public Registry(int maxSize) {
-		this.registered = (T[]) new Object[maxSize];
+		idToObject = new Object[maxSize];
+		nameToObject = new HashMap<String, T>();
 		
 		registries.put(getClass().getSimpleName().replaceAll("Registry", "").toLowerCase(), this);
 	}
 	
 	public Object[] getAll() {
-		return registered;
+		return idToObject;
 	}
 	
 	public T get(int index) {
-		return (T) registered[index];
+		return (T) idToObject[index];
 	}
 	
 	public T get(String name) {
-		for(int i = 0; i < registered.length; i++) {
-			if(registered[i].toString().equals(name)) {
-				return (T) registered[i];
-			}
-		}
-		return null;
+		return nameToObject.get(name);
 	}
 	
 	public void setAll(T[] registered) {
-		this.registered = registered;
+		idToObject = registered;
+		nameToObject.clear();
+		for(int i = 0; i < registered.length; i++) {
+			if(registered[i] != null) {
+				nameToObject.put(registered[i].toString(), registered[i]);
+			}
+		}
 	}
 	
 	public void set(int index, T value) {
-		if(registered[index] != null) {
-			AgeCraft.log.warn("[" + getClass().getSimpleName() + "] Overriding " + registered[index].toString() + " with " + value.toString() + " at " + index);
+		if(idToObject[index] != null) {
+			AgeCraft.log.warn("[" + getClass().getSimpleName() + "] Overriding " + idToObject[index].toString() + " with " + value.toString() + " at " + index);
 		}
-		registered[index] = value;
+		idToObject[index] = value;
+		nameToObject.put(value.toString(), value);
 	}
 }

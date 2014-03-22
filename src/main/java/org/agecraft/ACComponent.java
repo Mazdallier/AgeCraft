@@ -15,11 +15,13 @@ public abstract class ACComponent {
 	public static ArrayList<ACComponent> components = new ArrayList<ACComponent>();
 	
 	public String name;
+	public boolean hasPacketHandler;
 	
 	public EQPacketHandler<EQMessage> packetHandler;
 	
 	public ACComponent(String name, boolean hasPacketHandler) {
 		this.name = name;
+		this.hasPacketHandler = hasPacketHandler;
 		
 		if(hasPacketHandler) {
 			packetHandler = new EQPacketHandler<EQMessage>("AgeCraft-" + EQUtil.firstUpperCase(name), new EQCodec(getMessages()));

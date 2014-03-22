@@ -32,6 +32,8 @@ public class Farming extends ACComponent {
 		FoodRegistry.registerFood(new Food(0, "appleRed", FoodType.FRUIT).setProperties(FoodStage.RAW, new FoodProperties(4, 0.3F)));
 		FoodRegistry.registerFood(new Food(1, "appleGreen", FoodType.FRUIT).setProperties(FoodStage.RAW, new FoodProperties(4, 0.3F)));
 
+		FoodRegistry.registerFood(new Food(1024, "carrot", FoodType.VEGETABLES).setProperties(FoodStage.RAW, new FoodProperties(4, 0.6F)));
+		
 		/*// register vegetables
 		VegetableRegistry.registerVegetable(new Vegetable(0, "tomato", 4, 0.3F));
 		VegetableRegistry.registerVegetable(new Vegetable(1, "potato", 1, 0.3F));

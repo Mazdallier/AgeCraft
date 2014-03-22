@@ -9,7 +9,9 @@ import elcon.mods.elconqore.network.EQPacketHandlerClient;
 public abstract class ACComponentClient {
 
 	public ACComponentClient(ACComponent component) {
-		component.packetHandler.setClientHandler(new EQPacketHandlerClient());
+		if(component.hasPacketHandler) {
+			component.packetHandler.setClientHandler(new EQPacketHandlerClient());
+		}
 	}
 	
 	public void registerRenderingInformation() {

@@ -13,6 +13,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.Farming;
 import org.agecraft.core.registry.FoodRegistry;
 import org.agecraft.core.registry.FoodRegistry.Food;
 import org.agecraft.core.registry.FoodRegistry.FoodProperties;
@@ -83,7 +84,6 @@ public class ItemFood extends Item {
 	public Food getFood(int meta) {
 		return FoodRegistry.instance.get((meta - (meta & 7)) / 8);
 	}
-
 	
 	public FoodStage getFoodStage(int meta) {
 		return FoodStage.values()[meta & 7];
@@ -91,6 +91,14 @@ public class ItemFood extends Item {
 	
 	public FoodProperties getFoodProperties(int meta) {
 		return getFood(meta).properties.get(getFoodStage(meta));
+	}
+	
+	public static boolean isFood(ItemStack stack, String food) {
+		return stack != null && stack.getItem() == Farming.food && ((ItemFood) Farming.food).getFood(stack.getItemDamage()).name.equals(food);
+	}
+	
+	public static ItemStack createFood(String food, FoodStage foodStage) {
+		return new ItemStack(Farming.food, 1, foodStage.ordinal() + FoodRegistry.instance.get(food).id * 8);
 	}
 	
 	@Override
