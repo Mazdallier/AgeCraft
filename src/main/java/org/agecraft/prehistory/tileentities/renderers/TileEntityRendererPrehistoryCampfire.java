@@ -7,19 +7,19 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.tileentity.TileEntity;
 
 import org.agecraft.prehistory.PrehistoryAgeClient;
-import org.agecraft.prehistory.models.ModelCampfire;
+import org.agecraft.prehistory.models.ModelPrehistoryCampfire;
 import org.agecraft.prehistory.tileentities.TileEntityPrehistoryCampfire;
 import org.lwjgl.opengl.GL11;
 
-public class TileEntityRendererCampfire extends TileEntitySpecialRenderer {
+public class TileEntityRendererPrehistoryCampfire extends TileEntitySpecialRenderer {
 
-	public ModelCampfire model;
+	public ModelPrehistoryCampfire model;
 
 	private final EntityItem entityItem;
 	private final RenderItem customRenderItem;
 
-	public TileEntityRendererCampfire() {
-		model = new ModelCampfire();
+	public TileEntityRendererPrehistoryCampfire() {
+		model = new ModelPrehistoryCampfire();
 		entityItem = new EntityItem(null);
 		customRenderItem = new RenderItem();
 		customRenderItem.setRenderManager(RenderManager.instance);

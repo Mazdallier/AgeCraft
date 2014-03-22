@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import net.minecraftforge.common.DimensionManager;
 
 import org.agecraft.core.AgeCraftCore;
+import org.agecraft.core.commands.CommandPreview;
 import org.agecraft.core.commands.CommandTechTree;
 import org.agecraft.core.dimension.AgeProvider;
 import org.apache.logging.log4j.LogManager;
@@ -106,5 +107,6 @@ public class AgeCraft {
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandTechTree());
+		event.registerServerCommand(new CommandPreview());
 	}
 }

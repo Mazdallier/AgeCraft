@@ -104,6 +104,7 @@ public class GuiTechTreeComponent extends Gui {
 				GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 				GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 				GL11.glEnable(GL11.GL_LIGHTING);
+				GL11.glEnable(GL11.GL_CULL_FACE);
 				if(TechTree.getComponent(pageName, name).stack != null) {
 					itemRender.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.getTextureManager(), TechTree.getComponent(pageName, name).stack, i + 8, j + 8);
 				} else {
@@ -111,6 +112,7 @@ public class GuiTechTreeComponent extends Gui {
 					drawTexturedModalRect(i + 8, i + 8, TechTree.getComponent(pageName, name).iconIndex % 16 * 16, TechTree.getComponent(pageName, name).iconIndex / 16 * 16, 16, 16);
 					mc.getTextureManager().bindTexture(backgroundTexture);
 				}
+				GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDepthMask(true);
 				GL11.glEnable(GL11.GL_DEPTH_TEST);

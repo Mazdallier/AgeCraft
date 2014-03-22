@@ -15,15 +15,22 @@ age.name=Age
 age.enter=Entering the %s Age
 age.leave=Leaving the %s Age
 
-commands.techtree.usage=/techtree <unlock|lock>
+commands.techtree.usage=/techtree <pages|components|unlock|lock>
+commands.techtree.pages=Pages:
+commands.techtree.components=Components:
+commands.techtree.components.usage=/techtree componenets <page_name>
 commands.techtree.unlock.usage=/techtree unlock <page_name> <component_name> [player]
 commands.techtree.lock.usage=/techtree lock <page_name> <component_name> [player]
-commands.techtree.unknownPage=Unknown technology tree page '%s'
-commands.techtree.unknownComponent=Unknown technology tree component '%s'
+commands.techtree.unknownPage=Unknown technology tree page '%s'. Use /techtree pages for a list of pages
+commands.techtree.unknownComponent=Unknown technology tree component '%s'. Use /techtree components <page_name> for a list of pages
 commands.techtree.unlock.success.all=Successfully unlocked all components of %s for %s
 commands.techtree.unlock.success.one=Successfully unlocked component %s for %s
 commands.techtree.lock.success.all=Successfully locked all components 0f %s for %s
 commands.techtree.lock.success.one=Successfully locked component %s for %s
+commands.preview.usage=/preview <list|topic_name>
+commands.preview.topics=Topics:
+commands.preview.success=Successfully gave preview %s to %s
+commands.preview.unknown=Unknown preview topic '%s'. Use /preview list for a list of topics
 
 gui.done=Done
 gui.cancel=Cancel

@@ -9,6 +9,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
 
 import org.agecraft.core.techtree.TechTree;
 import org.agecraft.core.techtree.TechTreeComponent;
@@ -35,8 +36,30 @@ public class CommandTechTree extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
-		if(args.length == 1) {
-			if(args[0].equalsIgnoreCase("unlock")) {
+		if(args.length == 1 || args.length == 2) {
+			if(args[0].equalsIgnoreCase("pages")) {
+				StringBuilder sb = new StringBuilder();
+				for(String page : TechTree.pages.keySet()) {
+					sb.append(page);
+					sb.append(", ");
+				}
+				sender.addChatMessage(new ChatComponentText(LanguageManager.getLocalization("commands.techtree.pages") + " " + sb.toString().substring(0, sb.length() - 2)));
+			} else if(args[0].equalsIgnoreCase("components")) {
+				if(args.length == 2) {
+					if(TechTree.pages.containsKey(args[1])) {
+						StringBuilder sb = new StringBuilder();
+						for(TechTreeComponent component : TechTree.pages.get(args[1])) {
+							sb.append(component.name);
+							sb.append(", ");
+						}
+						sender.addChatMessage(new ChatComponentText(LanguageManager.getLocalization("commands.techtree.components") + " " + sb.toString().substring(0, sb.length() - 2)));
+					} else {
+						throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.unknownPage"));
+					}
+				} else {
+					throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.components.usage"));
+				}
+			} else if(args[0].equalsIgnoreCase("unlock")) {
 				throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.unlock.usage"));
 			} else if(args[0].equalsIgnoreCase("lock")) {
 				throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.lock.usage"));
@@ -63,7 +86,7 @@ public class CommandTechTree extends CommandBase {
 						for(TechTreeComponent c : page) {
 							TechTreeServer.unlockComponent(player.getCommandSenderName(), c.pageName, c.name);
 						}
-						notifyAdmins(sender, "commands.techtree.unlock.success.all", pageName, player.getCommandSenderName());
+						notifyAdmins(sender, LanguageManager.getLocalization("commands.techtree.unlock.success.all"), pageName, player.getCommandSenderName());
 					}					
 				} else {
 					if(args[2].equals("*")) {
@@ -71,17 +94,16 @@ public class CommandTechTree extends CommandBase {
 						for(TechTreeComponent c : page) {
 							TechTreeServer.unlockComponent(player.getCommandSenderName(), c.pageName, c.name);
 						}
-						notifyAdmins(sender, "commands.techtree.unlock.success.all", args[1], player.getCommandSenderName());
+						notifyAdmins(sender, LanguageManager.getLocalization("commands.techtree.unlock.success.all"), args[1], player.getCommandSenderName());
 					} else {
 						ArrayList<TechTreeComponent> parents = TechTree.getComponent(args[1], args[2]).parents;
 						for(TechTreeComponent c : parents) {
 							TechTreeServer.unlockComponent(player.getCommandSenderName(), c.pageName, c.name);
 						}
 						TechTreeServer.unlockComponent(player.getCommandSenderName(), args[1], args[2]);
-						notifyAdmins(sender, "commands.techtree.unlock.success.one", args[2], player.getCommandSenderName());
+						notifyAdmins(sender, LanguageManager.getLocalization("commands.techtree.unlock.success.one"), args[2], player.getCommandSenderName());
 					}
 				}
-				throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.unlock.usage"));
 			} else if(args[0].equalsIgnoreCase("lock")) {
 				if(args[1].equals("*")) {
 					for(String pageName : TechTree.pages.keySet()) {
@@ -89,7 +111,7 @@ public class CommandTechTree extends CommandBase {
 						for(TechTreeComponent c : page) {
 							TechTreeServer.lockComponent(player.getCommandSenderName(), c.pageName, c.name);
 						}
-						notifyAdmins(sender, "commands.techtree.lock.success.all", pageName, player.getCommandSenderName());
+						notifyAdmins(sender, LanguageManager.getLocalization("commands.techtree.lock.success.all"), pageName, player.getCommandSenderName());
 					}					
 				} else {
 					if(args[2].equals("*")) {
@@ -97,29 +119,32 @@ public class CommandTechTree extends CommandBase {
 						for(TechTreeComponent c : page) {
 							TechTreeServer.lockComponent(player.getCommandSenderName(), c.pageName, c.name);
 						}
-						notifyAdmins(sender, "commands.techtree.lock.success.all", args[1], player.getCommandSenderName());
+						notifyAdmins(sender, LanguageManager.getLocalization("commands.techtree.lock.success.all"), args[1], player.getCommandSenderName());
 					} else {
 						TechTreeServer.lockComponent(player.getCommandSenderName(), args[1], args[2]);
-						notifyAdmins(sender, "commands.techtree.lock.success.one", args[2], player.getCommandSenderName());
+						notifyAdmins(sender, LanguageManager.getLocalization("commands.techtree.lock.success.one"), args[2], player.getCommandSenderName());
 					}
 				}
-				throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.lock.usage"));
 			} else {
-				new WrongUsageException(getCommandUsage(sender));
+				throw new WrongUsageException(getCommandUsage(sender));
 			}
+		} else {
+			throw new WrongUsageException(getCommandUsage(sender));
 		}
-		throw new WrongUsageException(getCommandUsage(sender));
 	}
 	
 	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
 		if(args.length == 1) {
-			 return getListOfStringsMatchingLastWord(args, new String[]{"unlock", "lock"});
+			 return getListOfStringsMatchingLastWord(args, new String[]{"pages", "components", "unlock", "lock"});
 		} else if(args.length == 2) {
+			if(args[0].equalsIgnoreCase("pages")) {
+				return null;
+			}
 			return getListOfStringsFromIterableMatchingLastWord(args, TechTree.pages.keySet());
 		} else if(args.length == 3) {
 			if(args[1].equals("*")) {
-				return Arrays.asList("*");
+				return Arrays.asList(" *");
 			}
 			return getListOfStringsFromIterableMatchingLastWord(args, TechTree.pages.get(args[1]));
 		} else if(args.length == 4) {

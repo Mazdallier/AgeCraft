@@ -9,7 +9,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import org.agecraft.prehistory.PrehistoryAge;
-import org.agecraft.prehistory.blocks.BlockBed;
+import org.agecraft.prehistory.blocks.BlockPrehistoryBed;
 import org.agecraft.prehistory.tileentities.TileEntityPrehistoryBed;
 
 import cpw.mods.fml.relauncher.Side;
@@ -37,7 +37,7 @@ public class ItemPrehistoryBed extends ItemBlockName {
 			if(stack.hasTagCompound() && stack.getTagCompound().hasKey("Color")) {
 				color = stack.getTagCompound().getInteger("Color");
 			}
-			BlockBed bed = (BlockBed) PrehistoryAge.bed;
+			BlockPrehistoryBed bed = (BlockPrehistoryBed) PrehistoryAge.bed;
 			int direction = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 			byte dirX = 0;
 			byte dirZ = 0;

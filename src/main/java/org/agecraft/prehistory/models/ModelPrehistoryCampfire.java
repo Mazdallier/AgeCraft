@@ -3,7 +3,7 @@ package org.agecraft.prehistory.models;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelCampfire extends ModelBase {
+public class ModelPrehistoryCampfire extends ModelBase {
 	
 	public ModelRenderer logCenter;
 	public ModelRenderer log1;
@@ -17,7 +17,7 @@ public class ModelCampfire extends ModelBase {
 	
 	public ModelRenderer spit;
 
-	public ModelCampfire() {
+	public ModelPrehistoryCampfire() {
 		logCenter = new ModelRenderer(this, 0, 0);
 		logCenter.addBox(-1.0F, 9.2F, -1.0F, 2, 2, 2);
 		logCenter.setRotationPoint(0.0F, 0.0F, 0.0F);

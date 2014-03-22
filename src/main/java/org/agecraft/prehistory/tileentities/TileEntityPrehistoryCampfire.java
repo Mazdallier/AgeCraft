@@ -3,6 +3,7 @@ package org.agecraft.prehistory.tileentities;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import org.agecraft.ACUtil;
 import org.agecraft.core.Trees;
 import org.agecraft.core.registry.TreeRegistry;
 import org.agecraft.prehistory.PrehistoryAge;
@@ -243,7 +245,7 @@ public class TileEntityPrehistoryCampfire extends TileEntityExtended {
 		return false;
 	}
 
-	public boolean onBlockActivated(float rotationYaw, boolean isCreativeMode, ItemStack stack) {
+	public boolean onBlockActivated(EntityPlayer player, float rotationYaw, boolean isCreativeMode, ItemStack stack) {
 		if(stack != null) {
 			if(RecipesCampfire.getFuelValue(stack) != 0) {
 				if(Item.getIdFromItem(stack.getItem()) == Block.getIdFromBlock(Trees.log)) {
@@ -306,9 +308,10 @@ public class TileEntityPrehistoryCampfire extends TileEntityExtended {
 					worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 					return true;
 				}				
-			} else if(stack.getItem() == Items.flint_and_steel) {
+			} else if(stack.getItem() == Items.flint_and_steel || stack.getItem() == PrehistoryAge.flintAndRock) {
 				if(canBurn()) {
 					hasFire = true;
+					ACUtil.damageItem(stack, 1, player);
 				}
 				worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 				return true;

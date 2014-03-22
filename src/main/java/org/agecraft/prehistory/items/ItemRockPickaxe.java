@@ -44,7 +44,6 @@ public class ItemRockPickaxe extends Item {
 		return "item.rockPickaxe.name";
 	}
 
-
 	@Override
 	public boolean canHarvestBlock(Block block, ItemStack stack) {
 		return block != null && (block == Stone.stone || block == Stone.stoneCracked);

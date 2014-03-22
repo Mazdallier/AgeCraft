@@ -10,14 +10,14 @@ import org.agecraft.prehistory.tileentities.TileEntityPrehistoryBox;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-public class TileEntityRendererBox extends TileEntitySpecialRenderer {
+public class TileEntityRendererPrehistoryBox extends TileEntitySpecialRenderer {
 	
 	private final EntityItem entityItem[];
 	private final RenderItem customRenderItem;
 	
 	private double[][] translations = new double[][]{new double[]{0.5D, 0.3D, 0.5D}, new double[]{0.5D, 0.3D, 0.5D}, new double[]{0.5D, 0.3D, 0.5D}, new double[]{0.5D, 0.3D, 0.5D}};
 
-	public TileEntityRendererBox() {
+	public TileEntityRendererPrehistoryBox() {
 		entityItem = new EntityItem[]{new EntityItem(null), new EntityItem(null), new EntityItem(null), new EntityItem(null)};
 		customRenderItem = new RenderItem();
 		customRenderItem.setRenderManager(RenderManager.instance);

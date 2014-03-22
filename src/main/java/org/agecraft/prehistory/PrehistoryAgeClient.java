@@ -10,10 +10,10 @@ import org.agecraft.prehistory.tileentities.TileEntityPrehistoryBarrel;
 import org.agecraft.prehistory.tileentities.TileEntityPrehistoryBox;
 import org.agecraft.prehistory.tileentities.TileEntityPrehistoryCampfire;
 import org.agecraft.prehistory.tileentities.TileEntityPrehistoryPot;
-import org.agecraft.prehistory.tileentities.renderers.TileEntityRendererBarrel;
-import org.agecraft.prehistory.tileentities.renderers.TileEntityRendererBox;
-import org.agecraft.prehistory.tileentities.renderers.TileEntityRendererCampfire;
-import org.agecraft.prehistory.tileentities.renderers.TileEntityRendererPot;
+import org.agecraft.prehistory.tileentities.renderers.TileEntityRendererPrehistoryBarrel;
+import org.agecraft.prehistory.tileentities.renderers.TileEntityRendererPrehistoryBox;
+import org.agecraft.prehistory.tileentities.renderers.TileEntityRendererPrehistoryCampfire;
+import org.agecraft.prehistory.tileentities.renderers.TileEntityRendererPrehistoryPot;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -46,10 +46,10 @@ public class PrehistoryAgeClient extends AgeClient {
 		RenderingRegistry.registerBlockHandler(205, blockRenderingHandlerWithIcon);
 		
 		//register tile entity renderers
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrehistoryCampfire.class, new TileEntityRendererCampfire());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrehistoryPot.class, new TileEntityRendererPot());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrehistoryBarrel.class, new TileEntityRendererBarrel());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrehistoryBox.class, new TileEntityRendererBox());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrehistoryCampfire.class, new TileEntityRendererPrehistoryCampfire());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrehistoryPot.class, new TileEntityRendererPrehistoryPot());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrehistoryBarrel.class, new TileEntityRendererPrehistoryBarrel());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPrehistoryBox.class, new TileEntityRendererPrehistoryBox());
 	}
 	
 	@Override

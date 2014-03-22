@@ -13,7 +13,7 @@ import net.minecraft.util.IIcon;
 
 import org.agecraft.core.registry.TreeRegistry;
 import org.agecraft.prehistory.PrehistoryAge;
-import org.agecraft.prehistory.blocks.BlockBox;
+import org.agecraft.prehistory.blocks.BlockPrehistoryBox;
 import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.relauncher.Side;
@@ -32,7 +32,7 @@ public class ItemPrehistoryBox extends ItemBlockName {
 	
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		return ((BlockBox) PrehistoryAge.box).getLocalizedName(stack);
+		return ((BlockPrehistoryBox) PrehistoryAge.box).getLocalizedName(stack);
 	}
 	
 	@Override

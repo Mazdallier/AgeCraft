@@ -7,11 +7,11 @@ import net.minecraft.world.IBlockAccess;
 import org.agecraft.core.Trees;
 import org.agecraft.core.registry.DustRegistry;
 import org.agecraft.core.registry.TreeRegistry;
-import org.agecraft.prehistory.blocks.BlockBarrel;
-import org.agecraft.prehistory.blocks.BlockBox;
-import org.agecraft.prehistory.blocks.BlockPot;
-import org.agecraft.prehistory.blocks.BlockRock;
-import org.agecraft.prehistory.blocks.BlockRock.RockShape;
+import org.agecraft.prehistory.blocks.BlockPrehistoryBarrel;
+import org.agecraft.prehistory.blocks.BlockPrehistoryBox;
+import org.agecraft.prehistory.blocks.BlockPrehistoryPot;
+import org.agecraft.prehistory.blocks.BlockPrehistoryRock;
+import org.agecraft.prehistory.blocks.BlockPrehistoryRock.RockShape;
 import org.agecraft.prehistory.tileentities.TileEntityPrehistoryBarrel;
 import org.agecraft.prehistory.tileentities.TileEntityPrehistoryBed;
 import org.agecraft.prehistory.tileentities.TileEntityPrehistoryBox;
@@ -36,19 +36,19 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 		case 201:
 			return renderBlockCampfire(blockAccess, x, y, z, block, modelID, renderer);
 		case 202:
-			return renderBlockPot(blockAccess, x, y, z, (BlockPot) block, modelID, renderer);
+			return renderBlockPot(blockAccess, x, y, z, (BlockPrehistoryPot) block, modelID, renderer);
 		case 203:
 			return renderBlockBed(blockAccess, x, y, z, block, modelID, renderer);
 		case 204:
-			return renderBlockBarrel(blockAccess, x, y, z, (BlockBarrel) block, modelID, renderer);
+			return renderBlockBarrel(blockAccess, x, y, z, (BlockPrehistoryBarrel) block, modelID, renderer);
 		case 205:
-			return renderBlockBox(blockAccess, x, y, z, (BlockBox) block, modelID, renderer);
+			return renderBlockBox(blockAccess, x, y, z, (BlockPrehistoryBox) block, modelID, renderer);
 		}
 		return false;
 	}
 
 	private boolean renderBlockRock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelID, RenderBlocks renderer) {
-		RockShape shape = BlockRock.shapes[blockAccess.getBlockMetadata(x, y, z)];
+		RockShape shape = BlockPrehistoryRock.shapes[blockAccess.getBlockMetadata(x, y, z)];
 		renderer.setRenderBounds(shape.minX, shape.minY, shape.minZ, shape.maxX, shape.maxY, shape.maxZ);
 		renderer.renderStandardBlock(block, x, y, z);
 		return true;
@@ -95,7 +95,7 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 		return true;
 	}
 
-	private boolean renderBlockPot(IBlockAccess blockAccess, int x, int y, int z, BlockPot block, int modelID, RenderBlocks renderer) {
+	private boolean renderBlockPot(IBlockAccess blockAccess, int x, int y, int z, BlockPrehistoryPot block, int modelID, RenderBlocks renderer) {
 		TileEntityPrehistoryPot tile = (TileEntityPrehistoryPot) blockAccess.getTileEntity(x, y, z);
 		if(tile == null) {
 			tile = new TileEntityPrehistoryPot();
@@ -155,7 +155,7 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 		return true;
 	}
 	
-	private boolean renderBlockBarrel(IBlockAccess blockAccess, int x, int y, int z, BlockBarrel block, int modelID, RenderBlocks renderer) {
+	private boolean renderBlockBarrel(IBlockAccess blockAccess, int x, int y, int z, BlockPrehistoryBarrel block, int modelID, RenderBlocks renderer) {
 		TileEntityPrehistoryBarrel tile = (TileEntityPrehistoryBarrel) blockAccess.getTileEntity(x, y, z);
 		if(tile == null) {
 			tile = new TileEntityPrehistoryBarrel();
@@ -189,7 +189,7 @@ public class PrehistoryBlockRenderingHandlerWithIcon implements ISimpleBlockRend
 		return true;
 	}
 	
-	private boolean renderBlockBox(IBlockAccess blockAccess, int x, int y, int z, BlockBox block, int modelID, RenderBlocks renderer) {
+	private boolean renderBlockBox(IBlockAccess blockAccess, int x, int y, int z, BlockPrehistoryBox block, int modelID, RenderBlocks renderer) {
 		TileEntityPrehistoryBox tile = (TileEntityPrehistoryBox) blockAccess.getTileEntity(x, y, z);
 		if(tile == null) {
 			tile = new TileEntityPrehistoryBox();

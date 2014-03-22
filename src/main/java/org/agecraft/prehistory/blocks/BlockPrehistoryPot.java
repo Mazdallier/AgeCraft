@@ -1,74 +1,66 @@
 package org.agecraft.prehistory.blocks;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.agecraft.ACCreativeTabs;
 import org.agecraft.ACUtil;
-import org.agecraft.core.Trees;
-import org.agecraft.core.registry.TreeRegistry;
-import org.agecraft.prehistory.recipes.RecipesBarrel;
-import org.agecraft.prehistory.recipes.RecipesBarrel.RecipeBarrel;
-import org.agecraft.prehistory.tileentities.TileEntityPrehistoryBarrel;
+import org.agecraft.core.registry.DustRegistry;
+import org.agecraft.core.registry.DustRegistry.Dust;
+import org.agecraft.prehistory.tileentities.TileEntityPrehistoryPot;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import elcon.mods.elconqore.EQUtilClient;
 import elcon.mods.elconqore.blocks.BlockExtendedContainer;
 import elcon.mods.elconqore.lang.LanguageManager;
 
-public class BlockBarrel extends BlockExtendedContainer { //implements IWailaBlock {
+public class BlockPrehistoryPot extends BlockExtendedContainer {//implements IWailaBlock {
 
-	public BlockBarrel() {
-		super(Material.wood);
-		setHardness(2.0F);
-		setResistance(5.0F);
-		setStepSound(Block.soundTypeWood);
-		setBlockBounds(0.125F, 0F, 0.125F, 0.875F, 1.0F, 0.875F);
+	public boolean renderSolid = false;
+	private IIcon iconsSide[] = new IIcon[2];
+	private IIcon iconsTop[] = new IIcon[2];
+
+	public BlockPrehistoryPot() {
+		super(Material.clay);
+		setHardness(0.6F);
+		setStepSound(Block.soundTypeStone);
+		setBlockBounds(0.125F, 0F, 0.125F, 0.875F, 0.625F, 0.875F);
 		setCreativeTab(ACCreativeTabs.prehistoryAge);
 	}
 	
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
-		TileEntityPrehistoryBarrel tile = (TileEntityPrehistoryBarrel) getTileEntity(world, x, y, z);
+		TileEntityPrehistoryPot tile = (TileEntityPrehistoryPot) getTileEntity(world, x, y, z);
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		ItemStack stack = new ItemStack(getItemDropped(metadata, world.rand, fortune), quantityDropped(metadata, fortune, world.rand), damageDropped(metadata));
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setInteger("WoodType", tile.woodType);
-		nbt.setInteger("StickType", tile.stickType);
 		nbt.setBoolean("HasLid", tile.hasLid);
 		if(tile.hasLid) {
 			if(tile.hasFluid()) {
 				NBTTagCompound tag = new NBTTagCompound();
 				tile.fluid.writeToNBT(tag);
 				nbt.setTag("Fluid", tag);
-			}
-			if(tile.stickType >= 0) {
-				if(tile.hasStack()) {
-					NBTTagCompound tag = new NBTTagCompound();
-					tile.stack.writeToNBT(tag);
-					nbt.setTag("Stack", tag);
-				}
+			} else if(tile.hasDust()) {
+				NBTTagCompound tag = new NBTTagCompound();
+				tile.dust.writeToNBT(tag);
+				nbt.setTag("Dust", tag);
 			}
 		}
 		stack.setTagCompound(nbt);
@@ -78,76 +70,56 @@ public class BlockBarrel extends BlockExtendedContainer { //implements IWailaBlo
 	
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		TileEntityPrehistoryBarrel tile = (TileEntityPrehistoryBarrel) getTileEntity(world, x, y, z);
+		TileEntityPrehistoryPot tile = (TileEntityPrehistoryPot) getTileEntity(world, x, y, z);
 		if(stack.hasTagCompound()) {
 			NBTTagCompound nbt = stack.getTagCompound();
-			tile.woodType = nbt.getInteger("WoodType");
-			tile.stickType = nbt.getInteger("StickType");
 			tile.hasLid = nbt.getBoolean("HasLid");
 			if(nbt.hasKey("Fluid")) {
-				NBTTagCompound tag = nbt.getCompoundTag("Fluid").getCompoundTag("barrel");
+				NBTTagCompound tag = nbt.getCompoundTag("Fluid").getCompoundTag("pot");
 				FluidStack fluidStack = new FluidStack(FluidRegistry.getFluid(tag.getString("FluidName")), tag.getInteger("Amount"));
 				if(tag.hasKey("Tag")) {
 					fluidStack.tag = tag.getCompoundTag("Tag");
 				}
 				tile.fluid.setFluid(fluidStack);
-			} else if(nbt.hasKey("Stack")) {
-				NBTTagCompound tag = nbt.getCompoundTag("Stack");
-				ItemStack soakStack = ItemStack.loadItemStackFromNBT(tag);
-				tile.stack = soakStack;
-				tile.ticksLeft = RecipesBarrel.getRecipe(soakStack).ticks;
+			} else if(nbt.hasKey("Dust")) {
+				NBTTagCompound tag = nbt.getCompoundTag("Dust");
+				ItemStack dustStack = ItemStack.loadItemStackFromNBT(tag);
+				tile.dust = dustStack;
 			}
 		}
 		world.markBlockForUpdate(x, y, z);
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		TileEntityPrehistoryBarrel tile = (TileEntityPrehistoryBarrel) getTileEntity(world, x, y, z);
+		TileEntityPrehistoryPot tile = (TileEntityPrehistoryPot) getTileEntity(world, x, y, z);
 		ItemStack stack = player.inventory.getCurrentItem();
 		if(!player.isSneaking() && !tile.hasLid) {
-			if(tile.hasStack()) {
+			if(tile.hasDust()) {
 				if(!player.capabilities.isCreativeMode) {
-					if(!player.inventory.addItemStackToInventory(tile.stack.copy())) {
+					if(!player.inventory.addItemStackToInventory(tile.dust.copy())) {
 						return false;
 					}
 				}
-				tile.stack = null;
+				tile.dust = null;
 				world.markBlockForUpdate(x, y, z);
 				return true;
 			} else if(stack != null) {
-				if(stack.getItem() == Trees.stick) {
-					if(tile.stickType == -1) {
-						tile.stickType = stack.getItemDamage();
-						if(!player.capabilities.isCreativeMode) {
-							player.inventory.setInventorySlotContents(player.inventory.currentItem, ACUtil.consumeItem(stack));
-						}
-					} else {
-						if(!player.capabilities.isCreativeMode) {
-							if(!player.inventory.addItemStackToInventory(new ItemStack(Trees.stick, 1, tile.stickType))) {
-								return false;
-							}
-						}
-						tile.stickType = -1;
-					}
-					world.markBlockForUpdate(x, y, z);
-					return true;
-				}
-				if(tile.hasFluid() && tile.stickType >= 0) {
-					RecipeBarrel recipe = RecipesBarrel.getRecipe(stack);
-					if(recipe != null && tile.fluid.getFluid().getFluid().getName().equals(recipe.fluid)) {
-						tile.stack = stack.copy();
-						tile.stack.stackSize = 1;
-						tile.ticksLeft = RecipesBarrel.getRecipe(tile.stack).ticks;
+				if(!tile.hasFluid()) {
+					Dust dust = DustRegistry.getDust(stack);
+					if(dust != null) {
+						tile.dust = stack.copy();
+						tile.dust.stackSize = 1;
 						if(!player.capabilities.isCreativeMode) {
 							player.inventory.setInventorySlotContents(player.inventory.currentItem, ACUtil.consumeItem(stack));
 						}
 						world.markBlockForUpdate(x, y, z);
 						return true;
 					}
-				} else {
+				} 
+				if(!tile.hasDust()) {
 					FluidStack fluidStack = ACUtil.getFluidContainerStack(stack);
-					if(fluidStack != null && !getFluidBlacklist().contains(fluidStack.getFluid())) {
+					if(fluidStack != null) {
 						int amount = tile.fluid.fill(fluidStack, true);
 						if(amount > 0) {
 							if(!player.capabilities.isCreativeMode) {
@@ -193,35 +165,39 @@ public class BlockBarrel extends BlockExtendedContainer { //implements IWailaBlo
 			return true;
 		}
 	}
-	
-	public List<Fluid> getFluidBlacklist() {
-		return Arrays.asList(FluidRegistry.LAVA);
+
+	@Override
+	public void setBlockBoundsBasedOnState(IBlockAccess blockAccess, int x, int y, int z) {
+		TileEntityPrehistoryPot tile = (TileEntityPrehistoryPot) getTileEntity(blockAccess, x, y, z);
+		setBlockBounds(0.125F, 0F, 0.125F, 0.875F, tile.hasLid ? 0.6875F : 0.625F, 0.875F);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileEntityPrehistoryBarrel();
+	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axisAlignedBB, List list, Entity entity) {
+		setBlockBoundsBasedOnState(world, x, y, z);
+		super.addCollisionBoxesToList(world, x, y, z, axisAlignedBB, list, entity);
 	}
-	
-	@Override
-	public Class<? extends TileEntity> getTileEntityClass() {
-		return TileEntityPrehistoryBarrel.class;
-	}
-	
+
 	@Override
 	public String getLocalizedName() {
 		return LanguageManager.getLocalization(getUnlocalizedName());
 	}
 
-	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(stack.getTagCompound().getInteger("WoodType")).name) + " " + LanguageManager.getLocalization(getUnlocalizedName());
+	@Override
+	public String getUnlocalizedName() {
+		return "tile.pot.name";
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World world, int meta) {
+		return new TileEntityPrehistoryPot();
 	}
 	
 	@Override
-	public String getUnlocalizedName() {
-		return "tile.barrel.name";
+	public Class<? extends TileEntity> getTileEntityClass() {
+		return TileEntityPrehistoryPot.class;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube() {
 		return false;
@@ -234,21 +210,9 @@ public class BlockBarrel extends BlockExtendedContainer { //implements IWailaBlo
 
 	@Override
 	public int getRenderType() {
-		return 204;
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
-		return EQUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, ((TileEntityPrehistoryBarrel) getTileEntity(world, x, y, z)).woodType);
+		return 202;
 	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean addHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
-		return EQUtilClient.addBlockHitEffects(world, target, effectRenderer, ((TileEntityPrehistoryBarrel) getTileEntity(world, target.blockX, target.blockY, target.blockZ)).woodType);
-	}
-	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
@@ -258,41 +222,38 @@ public class BlockBarrel extends BlockExtendedContainer { //implements IWailaBlo
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return TreeRegistry.instance.get(0).planks;
+		return iconsTop[1];
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side) {
-		TileEntityPrehistoryBarrel tile = (TileEntityPrehistoryBarrel) getTileEntity(blockAccess, x, y, z);
-		return TreeRegistry.instance.get(tile.woodType).planks;
+		if((side == 0 || side == 1) && renderSolid) {
+			return iconsTop[1];
+		}
+		TileEntityPrehistoryPot tile = (TileEntityPrehistoryPot) getTileEntity(blockAccess, x, y, z);
+		if(side == 0) {
+			return iconsTop[1];
+		} else if(side == 1) {
+			return iconsTop[tile.hasLid ? 1 : 0];
+		}
+		return iconsSide[tile.hasLid ? 1 : 0];
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegister) {
+		iconsSide[0] = iconRegister.registerIcon("agecraft:ages/prehistory/potSide");
+		iconsTop[0] = iconRegister.registerIcon("agecraft:ages/prehistory/potTop");
+		iconsSide[1] = iconRegister.registerIcon("agecraft:ages/prehistory/potLidSide");
+		iconsTop[1] = iconRegister.registerIcon("agecraft:ages/prehistory/potLidTop");
 	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
-		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
-			if(TreeRegistry.instance.get(i) != null) {
-				ItemStack stack = new ItemStack(item, 1, 0);
-				NBTTagCompound nbt = new NBTTagCompound();
-				nbt.setInteger("WoodType", i);
-				nbt.setInteger("StickType", -1);
-				stack.setTagCompound(nbt);
-				list.add(stack);
-			}
-		}
-	}
-	
+
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 		return getDrops(world, x, y, z, world.getBlockMetadata(x, y, z), 0).get(0);
 	}
-
+	
 	/*@Override
 	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
 		return null;
@@ -305,17 +266,11 @@ public class BlockBarrel extends BlockExtendedContainer { //implements IWailaBlo
 
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		TileEntityBarrel tile = (TileEntityBarrel) accessor.getTileEntity();
-		StringBuilder sb = new StringBuilder();
+		TileEntityPrehistoryPot tile = (TileEntityPrehistoryPot) accessor.getTileEntity();
 		if(tile.hasFluid()) {
-			sb.append(LanguageManager.getLocalization(tile.fluid.getFluidType().getUnlocalizedName()));
-			if(tile.hasStack()) {
-				sb.append(" / ");
-				sb.append(tile.stack.getDisplayName());
-			}
-		}
-		if(sb.length() > 0) {
-			currenttip.add(sb.toString());
+			currenttip.add(LanguageManager.getLocalization(tile.fluid.getFluidType().getUnlocalizedName()));
+		} else if(tile.hasDust()) {
+			currenttip.add(tile.dust.getDisplayName());
 		}
 		return currenttip;
 	}*/

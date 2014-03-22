@@ -25,12 +25,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.blocks.BlockExtendedContainer;
 import elcon.mods.elconqore.lang.LanguageManager;
 
-public class BlockCampfire extends BlockExtendedContainer { //implements IWailaBlock {
+public class BlockPrehistoryCampfire extends BlockExtendedContainer { //implements IWailaBlock {
 
 	@SideOnly(Side.CLIENT)
 	private IIcon icon;
 
-	public BlockCampfire() {
+	public BlockPrehistoryCampfire() {
 		super(Material.wood);
 		setStepSound(Block.soundTypeWood);
 		setCreativeTab(ACCreativeTabs.prehistoryAge);
@@ -129,7 +129,7 @@ public class BlockCampfire extends BlockExtendedContainer { //implements IWailaB
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(!world.isRemote) {
 			TileEntityPrehistoryCampfire tile = (TileEntityPrehistoryCampfire) getTileEntity(world, x, y, z);
-			return tile.onBlockActivated(player.rotationYaw, player.capabilities.isCreativeMode, player.getCurrentEquippedItem());
+			return tile.onBlockActivated(player, player.rotationYaw, player.capabilities.isCreativeMode, player.getCurrentEquippedItem());
 		}
 		return true;
 	}

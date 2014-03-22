@@ -25,14 +25,14 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.blocks.BlockContainerOverlay;
 
-public class BlockBed extends BlockContainerOverlay {
+public class BlockPrehistoryBed extends BlockContainerOverlay {
 
 	public static final int[][] bedBlockMap = new int[][]{{0, 1}, {-1, 0}, {0, -1}, {1, 0}};
 
 	public IIcon[][] iconsOverlay = new IIcon[2][4];
 	public IIcon[] icons = new IIcon[4];
 
-	public BlockBed() {
+	public BlockPrehistoryBed() {
 		super(Material.cloth);
 		setHardness(0.2F);
 		setStepSound(Block.soundTypeCloth);

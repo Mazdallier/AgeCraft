@@ -30,9 +30,9 @@ import elcon.mods.elconqore.EQUtilClient;
 import elcon.mods.elconqore.blocks.BlockExtendedContainer;
 import elcon.mods.elconqore.lang.LanguageManager;
 
-public class BlockBox extends BlockExtendedContainer { //implements IWailaBlock {
+public class BlockPrehistoryBox extends BlockExtendedContainer { //implements IWailaBlock {
 
-	public BlockBox() {
+	public BlockPrehistoryBox() {
 		super(Material.wood);
 		setHardness(2.0F);
 		setResistance(5.0F);

@@ -1,6 +1,7 @@
 package org.agecraft.prehistory;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -12,13 +13,14 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.agecraft.Age;
 import org.agecraft.AgeClient;
 import org.agecraft.core.Trees;
-import org.agecraft.prehistory.blocks.BlockBarrel;
-import org.agecraft.prehistory.blocks.BlockBed;
-import org.agecraft.prehistory.blocks.BlockBox;
-import org.agecraft.prehistory.blocks.BlockCampfire;
-import org.agecraft.prehistory.blocks.BlockPot;
-import org.agecraft.prehistory.blocks.BlockRock;
+import org.agecraft.prehistory.blocks.BlockPrehistoryBarrel;
+import org.agecraft.prehistory.blocks.BlockPrehistoryBed;
+import org.agecraft.prehistory.blocks.BlockPrehistoryBox;
+import org.agecraft.prehistory.blocks.BlockPrehistoryCampfire;
+import org.agecraft.prehistory.blocks.BlockPrehistoryPot;
+import org.agecraft.prehistory.blocks.BlockPrehistoryRock;
 import org.agecraft.prehistory.items.ItemFakeStone;
+import org.agecraft.prehistory.items.ItemFlintAndRock;
 import org.agecraft.prehistory.items.ItemPrehistoryBarrel;
 import org.agecraft.prehistory.items.ItemPrehistoryBed;
 import org.agecraft.prehistory.items.ItemPrehistoryBox;
@@ -65,6 +67,7 @@ public class PrehistoryAge extends Age {
 	public static Item rockSkinningTool;
 	public static Item rockPickaxeHead;
 	public static Item rockPickaxe;
+	public static Item flintAndRock;
 
 	public PrehistoryAge(int id) {
 		super(id, "prehistory");
@@ -74,12 +77,12 @@ public class PrehistoryAge extends Age {
 	@Override
 	public void preInit() {
 		// init blocks
-		campfire = new BlockCampfire().setBlockName("AC_prehistory_campfire");
-		rock = new BlockRock().setBlockName("AC_prehistory_rock");
-		pot = new BlockPot().setBlockName("AC_prehistory_pot");
-		bed = new BlockBed().setBlockName("AC_prehistory_bed");
-		barrel = new BlockBarrel().setBlockName("AC_prehistory_barrel");
-		box = new BlockBox().setBlockName("AC_prehistroy_box");
+		campfire = new BlockPrehistoryCampfire().setBlockName("AC_prehistory_campfire");
+		rock = new BlockPrehistoryRock().setBlockName("AC_prehistory_rock");
+		pot = new BlockPrehistoryPot().setBlockName("AC_prehistory_pot");
+		bed = new BlockPrehistoryBed().setBlockName("AC_prehistory_bed");
+		barrel = new BlockPrehistoryBarrel().setBlockName("AC_prehistory_barrel");
+		box = new BlockPrehistoryBox().setBlockName("AC_prehistroy_box");
 
 		// register blocks
 		GameRegistry.registerBlock(campfire, ItemPrehistoryCampfire.class, "AC_prehistory_campfire");
@@ -95,6 +98,7 @@ public class PrehistoryAge extends Age {
 		rockSkinningTool = new ItemRockTanningTool().setUnlocalizedName("AC_prehistory_rockSkinningTool");
 		rockPickaxeHead = new ItemRockPickaxeHead().setUnlocalizedName("AC_prehistory_rockPickaxeAxe");
 		rockPickaxe = new ItemRockPickaxe().setUnlocalizedName("AC_prehistory_rockPickaxe");
+		flintAndRock = new ItemFlintAndRock().setUnlocalizedName("AC_prehistory_flintAndRock");
 
 		// register items
 		GameRegistry.registerItem(fakeStone, "AC_prehistory_fakeStone");
@@ -102,6 +106,7 @@ public class PrehistoryAge extends Age {
 		GameRegistry.registerItem(rockSkinningTool, "AC_prehistory_rockSkinningTool");
 		GameRegistry.registerItem(rockPickaxeHead, "AC_prehistory_rockPickaxeHea");
 		GameRegistry.registerItem(rockPickaxe, "AC_prehistory_rockPickaxe");
+		GameRegistry.registerItem(flintAndRock, "AC_prehistory_flintAndRock");
 
 		// register tile entities
 		GameRegistry.registerTileEntity(TileEntityPrehistoryCampfire.class, "AC_TilePrehistoryCampfire");
@@ -114,7 +119,8 @@ public class PrehistoryAge extends Age {
 	@Override
 	public void postInit() {
 		// add recipes
-		GameRegistry.addRecipe(new ItemStack(rockPickaxe, 1, 0), "#", "I", '#', rockPickaxeHead, 'I', new ItemStack(Trees.stick, 1, OreDictionary.WILDCARD_VALUE));
+		GameRegistry.addRecipe(new ItemStack(rockPickaxe), "#", "I", '#', rockPickaxeHead, 'I', new ItemStack(Trees.stick, 1, OreDictionary.WILDCARD_VALUE));
+		GameRegistry.addShapelessRecipe(new ItemStack(flintAndRock), new ItemStack(rock), new ItemStack(Items.flint));
 		CraftingManager.getInstance().getRecipeList().add(new RecipesCampfireLogs());
 		RecipesCampfire.addRecipes();
 		RecipesSharpener.addRecipes();

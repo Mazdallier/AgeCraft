@@ -15,12 +15,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.render.FluidRenderer;
 
 @SideOnly(Side.CLIENT)
-public class TileEntityRendererBarrel extends TileEntitySpecialRenderer {
+public class TileEntityRendererPrehistoryBarrel extends TileEntitySpecialRenderer {
 
 	private final EntityItem entityItem;
 	private final RenderItem customRenderItem;
 	
-	public TileEntityRendererBarrel() {
+	public TileEntityRendererPrehistoryBarrel() {
 		entityItem = new EntityItem(null);
 		customRenderItem = new RenderItem();
 		customRenderItem.setRenderManager(RenderManager.instance);

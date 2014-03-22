@@ -12,7 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.render.FluidRenderer;
 
 @SideOnly(Side.CLIENT)
-public class TileEntityRendererPot extends TileEntitySpecialRenderer {
+public class TileEntityRendererPrehistoryPot extends TileEntitySpecialRenderer {
 
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {

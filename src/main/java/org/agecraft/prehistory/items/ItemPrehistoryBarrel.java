@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.agecraft.core.registry.TreeRegistry;
 import org.agecraft.prehistory.PrehistoryAge;
-import org.agecraft.prehistory.blocks.BlockBarrel;
+import org.agecraft.prehistory.blocks.BlockPrehistoryBarrel;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -31,7 +31,7 @@ public class ItemPrehistoryBarrel extends ItemBlockName {
 	
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		return ((BlockBarrel) PrehistoryAge.barrel).getLocalizedName(stack);
+		return ((BlockPrehistoryBarrel) PrehistoryAge.barrel).getLocalizedName(stack);
 	}
 	
 	@Override

@@ -20,7 +20,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.lang.LanguageManager;
 
-public class BlockRock extends Block {
+public class BlockPrehistoryRock extends Block {
 
 	public static class RockShape {
 		
@@ -62,7 +62,7 @@ public class BlockRock extends Block {
 	
 	private IIcon icon;
 	
-	public BlockRock() {
+	public BlockPrehistoryRock() {
 		super(Material.rock);
 		setHardness(0.4F);
 		setStepSound(Block.soundTypeStone);
