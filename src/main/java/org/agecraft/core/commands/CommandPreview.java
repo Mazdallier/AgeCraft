@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 
 import org.agecraft.core.Crafting;
+import org.agecraft.core.techtree.TechTree;
+import org.agecraft.core.techtree.TechTreeServer;
 
 import elcon.mods.elconqore.lang.LanguageManager;
 
@@ -48,7 +50,7 @@ public class CommandPreview extends CommandBase {
 	
 	@Override
 	public int getRequiredPermissionLevel() {
-		return 2;
+		return 0;
 	}
 
 	@Override
@@ -63,6 +65,9 @@ public class CommandPreview extends CommandBase {
 				sender.addChatMessage(new ChatComponentText(LanguageManager.getLocalization("commands.preview.topics") + " " + sb.toString().substring(0, sb.length() - 2)));
 			} else if(previews.containsKey(args[0].toLowerCase())) {
 				EntityPlayer player = getCommandSenderAsPlayer(sender);
+				if(!TechTreeServer.hasUnlockedComponent(player.getCommandSenderName(), TechTree.PAGE_GENERAL, TechTree.enchantedBook.name)) {
+					throw new WrongUsageException(LanguageManager.getLocalization("commands.preview.completeTechTree"));
+				}
 				List<ItemStack> topic = previews.get(args[0]).get(random.nextInt(previews.get(args[0]).size()));
 				for(ItemStack stack : topic) {
 					player.dropPlayerItemWithRandomChoice(stack.copy(), false);

@@ -18,7 +18,7 @@ age.leave=Leaving the %s Age
 commands.techtree.usage=/techtree <pages|components|unlock|lock>
 commands.techtree.pages=Pages:
 commands.techtree.components=Components:
-commands.techtree.components.usage=/techtree componenets <page_name>
+commands.techtree.components.usage=/techtree components <page_name>
 commands.techtree.unlock.usage=/techtree unlock <page_name> <component_name> [player]
 commands.techtree.lock.usage=/techtree lock <page_name> <component_name> [player]
 commands.techtree.unknownPage=Unknown technology tree page '%s'. Use /techtree pages for a list of pages
@@ -31,6 +31,7 @@ commands.preview.usage=/preview <list|topic_name>
 commands.preview.topics=Topics:
 commands.preview.success=Successfully gave preview %s to %s
 commands.preview.unknown=Unknown preview topic '%s'. Use /preview list for a list of topics
+commands.preview.completeTechTree=You need to complete the Tech Tree before being able to use this command
 
 gui.done=Done
 gui.cancel=Cancel

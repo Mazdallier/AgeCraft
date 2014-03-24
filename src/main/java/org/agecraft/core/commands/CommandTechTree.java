@@ -68,10 +68,10 @@ public class CommandTechTree extends CommandBase {
 			}
 		} else if(args.length >= 3) {
 			if(!TechTree.pages.containsKey(args[1]) && !args[1].equals("*")) {
-				throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.unknownPage"));
+				throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.unknownPage"), args[1]);
 			}
 			if(TechTree.getComponent(args[1], args[2]) == null && !args[2].equals("*")) {
-				throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.unknownComponent"));
+				throw new WrongUsageException(LanguageManager.getLocalization("commands.techtree.unknownComponent"), args[2]);
 			}
 			EntityPlayerMP player;
 			if(args.length >= 4) {
@@ -87,7 +87,7 @@ public class CommandTechTree extends CommandBase {
 							TechTreeServer.unlockComponent(player.getCommandSenderName(), c.pageName, c.name);
 						}
 						notifyAdmins(sender, LanguageManager.getLocalization("commands.techtree.unlock.success.all"), pageName, player.getCommandSenderName());
-					}					
+					}
 				} else {
 					if(args[2].equals("*")) {
 						ArrayList<TechTreeComponent> page = TechTree.pages.get(args[1]);
@@ -112,7 +112,7 @@ public class CommandTechTree extends CommandBase {
 							TechTreeServer.lockComponent(player.getCommandSenderName(), c.pageName, c.name);
 						}
 						notifyAdmins(sender, LanguageManager.getLocalization("commands.techtree.lock.success.all"), pageName, player.getCommandSenderName());
-					}					
+					}
 				} else {
 					if(args[2].equals("*")) {
 						ArrayList<TechTreeComponent> page = TechTree.pages.get(args[1]);
@@ -132,11 +132,11 @@ public class CommandTechTree extends CommandBase {
 			throw new WrongUsageException(getCommandUsage(sender));
 		}
 	}
-	
+
 	@Override
 	public List addTabCompletionOptions(ICommandSender sender, String[] args) {
 		if(args.length == 1) {
-			 return getListOfStringsMatchingLastWord(args, new String[]{"pages", "components", "unlock", "lock"});
+			return getListOfStringsMatchingLastWord(args, new String[]{"pages", "components", "unlock", "lock"});
 		} else if(args.length == 2) {
 			if(args[0].equalsIgnoreCase("pages")) {
 				return null;
@@ -146,13 +146,21 @@ public class CommandTechTree extends CommandBase {
 			if(args[1].equals("*")) {
 				return Arrays.asList(" *");
 			}
-			return getListOfStringsFromIterableMatchingLastWord(args, TechTree.pages.get(args[1]));
+			return getListOfStringsFromIterableMatchingLastWord(args, getComponentNameList(TechTree.pages.get(args[1])));
 		} else if(args.length == 4) {
 			return getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
 		}
 		return null;
 	}
-	
+
+	public List<String> getComponentNameList(List<TechTreeComponent> list) {
+		ArrayList<String> nameList = new ArrayList<String>();
+		for(TechTreeComponent component : list) {
+			nameList.add(component.name);
+		}
+		return nameList;
+	}
+
 	@Override
 	public boolean isUsernameIndex(String[] args, int index) {
 		return index == 3;
