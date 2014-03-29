@@ -8,4 +8,9 @@ public class BiomePlains extends AgeBiome {
 		setTemperatureRainfall(0.8F, 0.4F);
 		setHeight(height_LowPlains);
 	}
+	
+	@Override
+	public void setDecoratorOptions(AgeDecorator decorator) {
+		decorator.grassPerChunk = 10;
+	}
 }

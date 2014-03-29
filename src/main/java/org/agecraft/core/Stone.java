@@ -3,6 +3,7 @@ package org.agecraft.core;
 import net.minecraft.block.Block;
 
 import org.agecraft.ACComponent;
+import org.agecraft.core.blocks.metal.BlockStoneLayered;
 import org.agecraft.core.blocks.stone.BlockColoredStone;
 import org.agecraft.core.blocks.stone.BlockColoredStoneBrick;
 import org.agecraft.core.blocks.stone.BlockColoredStoneBrickPillar;
@@ -22,6 +23,8 @@ import elcon.mods.elconqore.items.ItemBlockMetadata;
 
 public class Stone extends ACComponent {
 
+	public static Block layeredStone;
+	
 	public static Block stone;
 	public static Block stoneCracked;
 	public static Block stoneMossy;
@@ -41,6 +44,8 @@ public class Stone extends ACComponent {
 	@Override
 	public void preInit() {
 		//init blocks
+		layeredStone = new BlockStoneLayered().setBlockName("AC_stone_stoneLayered");
+		
 		stone = new BlockStone().setBlockName("AC_stone_stone");
 		stoneCracked = new BlockStoneCracked().setBlockName("AC_stone_stoneCracked");
 		stoneMossy = new BlockStoneMossy().setBlockName("AC_stone_stoneMossy");
@@ -54,6 +59,8 @@ public class Stone extends ACComponent {
 		coloredStoneBrickPillar = new BlockColoredStoneBrickPillar().setBlockName("AC_stone_coloredStoneBrickPillar");
 		
 		//register blocks
+		GameRegistry.registerBlock(layeredStone, ItemBlockMetadata.class, "AC_stone_layeredStone");
+
 		GameRegistry.registerBlock(stone, ItemBlockMetadata.class, "AC_stone_stone");
 		GameRegistry.registerBlock(stoneCracked, ItemBlockMetadata.class, "AC_stone_stoneCracked");
 		GameRegistry.registerBlock(stoneMossy, ItemBlockMetadata.class, "AC_stone_stoneMossy");

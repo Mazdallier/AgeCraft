@@ -44,12 +44,10 @@ public class ItemPrehistoryCampfire extends ItemBlockName {
 						sb.append(logs[i]);
 						sb.append("x");
 						sb.append(LanguageManager.getLocalization("trees." + TreeRegistry.instance.get(i).name));
-						if(i < (nbtList.tagCount() - 1)) {
-							sb.append(", ");
-						}
+						sb.append(", ");
 					}
 				}
-				list.add(sb.toString());
+				list.add(sb.toString().substring(0, sb.length() - 2));
 			}
 		}
 	}

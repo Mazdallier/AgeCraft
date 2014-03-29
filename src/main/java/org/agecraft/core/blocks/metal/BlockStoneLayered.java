@@ -40,8 +40,7 @@ public class BlockStoneLayered extends BlockStone {
 			world.setBlockMetadataWithNotify(x, y, z, 1, 0);
 		} else {
 			int i;
-			for(i = 0; y > ((i * LAYER_SIZE) + (-2 + random.nextInt(5))); i++) {
-			}
+			for(i = 0; y > ((i * LAYER_SIZE) + (-2 + random.nextInt(5))); i++) {}
 			world.setBlockMetadataWithNotify(x, y, z, i, 0);
 		}
 	}

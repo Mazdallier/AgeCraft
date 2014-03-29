@@ -8,6 +8,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
+import org.agecraft.Age;
 import org.agecraft.AgeCraft;
 import org.agecraft.core.dimension.AgeChunkProvider;
 
@@ -17,6 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public abstract class AgeBiome extends BiomeGenBase {
 
 	public AgeChunkProvider chunkProvider;
+	public AgeChunkProvider currentChunkProvider;
 	private AgeBiome mutation;
 	
 	public AgeBiome(int id) {
@@ -34,17 +36,17 @@ public abstract class AgeBiome extends BiomeGenBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getSkyColorByTemp(float f) {
-		/*if(chunkProvider != null && chunkProvider.age != null && chunkProvider.age.ageID == Age.prehistory.ageID) {
+		if(currentChunkProvider != null && currentChunkProvider.age.ageID == Age.prehistory.ageID) {
 			return 0x336666;
-		}*/
+		}
 		return super.getSkyColorByTemp(f);
 	}
 	
 	@Override
 	public int getWaterColorMultiplier() {
-		/*if(chunkProvider != null && chunkProvider.age != null && chunkProvider.age.ageID == Age.prehistory.ageID) {
+		if(currentChunkProvider != null && currentChunkProvider.age.ageID == Age.prehistory.ageID) {
 			return 0x009933;
-		}*/
+		}
 		return super.getWaterColorMultiplier();
 	}
 	
@@ -67,6 +69,13 @@ public abstract class AgeBiome extends BiomeGenBase {
 			AgeCraft.log.error("AgeBiome can't decorate without AgeChunkProvider!");
 			return;
 		}
+		chunkProvider.getDecorator().resetOptions();
+		setDecoratorOptions(chunkProvider.getDecorator());
+		chunkProvider.getDecorator().decorate(world, random, chunkX, chunkZ, this);
+	}
+	
+	public void setDecoratorOptions(AgeDecorator decorator) {
+		
 	}
 
 	@Override

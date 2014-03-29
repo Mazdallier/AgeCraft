@@ -36,6 +36,8 @@ import org.agecraft.core.registry.DustRegistry.Dust;
 import org.agecraft.core.registry.TreeRegistry;
 import org.agecraft.core.registry.TreeRegistry.Tree;
 import org.agecraft.core.tileentities.TileEntityDNATree;
+import org.agecraft.prehistory.items.ItemRockTool;
+import org.apache.commons.lang3.ArrayUtils;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.elconqore.EQUtil;
@@ -173,6 +175,8 @@ public class Trees extends ACComponent {
 
 	@Override
 	public void postInit() {
+		ItemRockTool.blocksEffectiveAgainst = ArrayUtils.addAll(ItemRockTool.blocksEffectiveAgainst, log, leaves);
+		
 		for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
 			for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
 				if(TreeRegistry.instance.get(i) != null) {

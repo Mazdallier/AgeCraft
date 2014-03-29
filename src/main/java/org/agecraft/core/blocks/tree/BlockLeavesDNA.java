@@ -292,7 +292,7 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 		if(tile != null) {
 			meta = tile.getLeafType();
 		}
-		return EQUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, meta);
+		return EQUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, meta, 2);
 	}
 
 	@Override
@@ -306,7 +306,7 @@ public class BlockLeavesDNA extends BlockExtendedContainer {
 		if(tile != null) {
 			meta = tile.getLeafType();
 		}
-		return EQUtilClient.addBlockHitEffects(world, target, effectRenderer, meta);
+		return EQUtilClient.addBlockHitEffects(world, target, effectRenderer, meta, 2);
 	}
 	
 	@Override

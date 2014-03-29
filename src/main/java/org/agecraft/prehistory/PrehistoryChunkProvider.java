@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
 import org.agecraft.Age;
+import org.agecraft.core.biomes.AgeDecorator;
 import org.agecraft.core.dimension.AgeChunkProvider;
 
 public class PrehistoryChunkProvider extends AgeChunkProvider {
@@ -22,6 +23,11 @@ public class PrehistoryChunkProvider extends AgeChunkProvider {
 	@Override
 	public Block getDefaultFluid() {
 		return Blocks.water;
+	}
+	
+	@Override
+	public AgeDecorator createDecorator() {
+		return new PrehistoryDecorator();
 	}
 	
 	@Override

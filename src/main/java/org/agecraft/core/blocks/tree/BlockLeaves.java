@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import org.agecraft.ACCreativeTabs;
 import org.agecraft.core.Trees;
 import org.agecraft.core.registry.TreeRegistry;
+import org.agecraft.prehistory.items.ItemRockTool;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -196,8 +197,13 @@ public class BlockLeaves extends BlockExtendedMetadata {
 	}
 	
 	@Override
+	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
+		return stack != null && stack.getItem() instanceof ItemRockTool;
+	}
+	
+	@Override
 	public Item getItemDropped(int meta, Random random, int fortune) {
-		return null;
+		return random.nextInt(4) == 0 ? Trees.stick : null;
 	}
 
 	@Override
@@ -207,7 +213,7 @@ public class BlockLeaves extends BlockExtendedMetadata {
 	
 	@Override
 	public int getDroppedMetadata(World world, int x, int y, int z, int meta, int fortune) {
-		return meta;
+		return (meta - (meta & 3)) / 4;
 	}
 	
 	@Override

@@ -1,8 +1,8 @@
 package org.agecraft.core.biomes;
 
-import org.agecraft.ACComponent;
-
 import net.minecraft.world.biome.BiomeGenBase;
+
+import org.agecraft.ACComponent;
 
 public class Biomes extends ACComponent {
 

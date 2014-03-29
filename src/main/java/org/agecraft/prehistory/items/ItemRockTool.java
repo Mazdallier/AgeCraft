@@ -40,6 +40,13 @@ public class ItemRockTool extends Item {
 	}
 	
 	@Override
+	public ItemStack getContainerItem(ItemStack stack) {
+		ItemStack container = stack.copy();
+		container.setItemDamage(container.getItemDamage() - 1);
+		return container;
+	}
+	
+	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
 		return LanguageManager.getLocalization(getUnlocalizedName(stack));
 	}

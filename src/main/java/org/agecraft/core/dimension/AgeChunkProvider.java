@@ -38,6 +38,7 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import org.agecraft.Age;
 import org.agecraft.core.biomes.AgeBiome;
+import org.agecraft.core.biomes.AgeDecorator;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import elcon.mods.elconqore.EQUtil;
@@ -45,6 +46,7 @@ import elcon.mods.elconqore.EQUtil;
 public abstract class AgeChunkProvider implements IChunkProvider {
 
 	public Age age;
+	public AgeDecorator decorator;
 	public World world;
 	public boolean mapFeaturesEnabled;
 	public WorldType worldType;
@@ -111,6 +113,15 @@ public abstract class AgeChunkProvider implements IChunkProvider {
 		caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, CAVE);
 		ravineGenerator = TerrainGen.getModdedMapGen(ravineGenerator, RAVINE);
 	}
+
+	public AgeDecorator getDecorator() {
+		if(decorator == null) {
+			decorator = createDecorator();
+		}
+		return decorator;
+	}
+	
+	public abstract AgeDecorator createDecorator();
 
 	@Override
 	public int getLoadedChunkCount() {

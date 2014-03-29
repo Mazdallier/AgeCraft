@@ -173,13 +173,13 @@ public class BlockPrehistoryBox extends BlockExtendedContainer { //implements IW
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
-		return EQUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, ((TileEntityPrehistoryBox) getTileEntity(world, x, y, z)).woodType);
+		return EQUtilClient.addBlockDestroyEffects(world, x, y, z, meta, effectRenderer, this, ((TileEntityPrehistoryBox) getTileEntity(world, x, y, z)).woodType, 2);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean addHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
-		return EQUtilClient.addBlockHitEffects(world, target, effectRenderer, ((TileEntityPrehistoryBox) getTileEntity(world, target.blockX, target.blockY, target.blockZ)).woodType);
+		return EQUtilClient.addBlockHitEffects(world, target, effectRenderer, ((TileEntityPrehistoryBox) getTileEntity(world, target.blockX, target.blockY, target.blockZ)).woodType, 2);
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package org.agecraft.prehistory.blocks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -7,6 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
@@ -133,6 +135,15 @@ public class BlockPrehistoryRock extends Block {
 			return world.rand.nextInt(16);
 		}
 		return 0;
+	}
+	
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		ArrayList<ItemStack> list = super.getDrops(world, x, y, z, metadata, fortune);
+		if(world.rand.nextFloat() < 0.1F) {
+			list.add(new ItemStack(Items.flint, 1, 0));
+		}
+		return list;
 	}
 	
 	@Override
