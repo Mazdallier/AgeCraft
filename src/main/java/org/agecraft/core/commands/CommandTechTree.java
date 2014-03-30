@@ -169,11 +169,11 @@ public class CommandTechTree extends CommandBase {
 	
 	@Override
 	public int compareTo(Object obj) {
-		return super.compareTo(obj);
+		return compareTo((ICommand) obj);
 	}
 	
 	@Override
 	public int compareTo(ICommand command) {
-		return super.compareTo(command);
+		return getCommandName().compareTo(command.getCommandName());
 	}
 }
