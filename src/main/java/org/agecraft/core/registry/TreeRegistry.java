@@ -3,7 +3,7 @@ package org.agecraft.core.registry;
 import net.minecraft.util.IIcon;
 
 import org.agecraft.core.registry.TreeRegistry.Tree;
-import org.agecraft.core.worldgen.WorldGenTree;
+import org.agecraft.core.world.WorldGenTree;
 
 public class TreeRegistry extends Registry<Tree> {
 

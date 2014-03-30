@@ -1,9 +1,11 @@
 package org.agecraft.core.blocks.metal;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockStone;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
+import org.agecraft.ACCreativeTabs;
 import org.agecraft.core.Stone;
 import org.agecraft.core.items.tools.ItemTool;
 import org.agecraft.prehistory.PrehistoryAge;
@@ -22,17 +25,18 @@ import org.agecraft.prehistory.items.ItemRockPickaxe;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import elcon.mods.elconqore.blocks.BlockMetadata;
 
-public class BlockStoneLayered extends BlockStone {
+public class BlockStoneLayered extends BlockMetadata {
 
 	public static final int LAYER_SIZE = 16;
 
 	public BlockStoneLayered() {
-		super();
+		super(Material.rock);
 		setHardness(1.5F);
 		setResistance(10.0F);
 		setStepSound(Block.soundTypeStone);
-		setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(ACCreativeTabs.stone);
 	}
 
 	public void updateHeight(World world, int x, int y, int z, Random random) {
@@ -93,6 +97,11 @@ public class BlockStoneLayered extends BlockStone {
 			}
 		}
 	}
+	
+	@Override
+	public String getUnlocalizedName() {
+		return "stone.layeredStone";
+	}
 
 	@Override
 	public Item getItemDropped(int i, Random random, int j) {
@@ -103,6 +112,11 @@ public class BlockStoneLayered extends BlockStone {
 	public int damageDropped(int meta) {
 		return 1;
 	}
+	
+	@Override
+	protected ItemStack createStackedBlock(int meta) {
+		return new ItemStack(this, 1, 0);
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -110,6 +124,11 @@ public class BlockStoneLayered extends BlockStone {
 		return Stone.stone.getIcon(side, 0);
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister iconRegister) {
+	}
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
@@ -126,5 +145,11 @@ public class BlockStoneLayered extends BlockStone {
 		default:
 			return 0xFFFFFF;
 		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {
+		list.add(new ItemStack(item, 1, 0));
 	}
 }

@@ -95,6 +95,7 @@ stone.types.granite=Granite
 stone.types.diorite=Diorite
 stone.types.andesite=Andesite
 
+stone.layeredStone=Stone
 stone.stone=%s
 stone.stoneCracked=Cracked %s
 stone.stoneMossy=Mossy %s

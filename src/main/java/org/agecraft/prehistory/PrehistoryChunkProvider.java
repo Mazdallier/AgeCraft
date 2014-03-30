@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
 import org.agecraft.Age;
+import org.agecraft.core.Stone;
 import org.agecraft.core.biomes.AgeDecorator;
 import org.agecraft.core.dimension.AgeChunkProvider;
 
@@ -17,7 +18,7 @@ public class PrehistoryChunkProvider extends AgeChunkProvider {
 
 	@Override
 	public Block getDefaultBlock() {
-		return Blocks.stone;
+		return Stone.stone;
 	}
 	
 	@Override

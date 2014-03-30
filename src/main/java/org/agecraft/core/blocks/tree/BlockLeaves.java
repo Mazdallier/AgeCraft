@@ -198,17 +198,18 @@ public class BlockLeaves extends BlockExtendedMetadata {
 	
 	@Override
 	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
+		System.out.println(stack != null && stack.getItem() instanceof ItemRockTool);
 		return stack != null && stack.getItem() instanceof ItemRockTool;
 	}
 	
 	@Override
 	public Item getItemDropped(int meta, Random random, int fortune) {
-		return random.nextInt(4) == 0 ? Trees.stick : null;
+		return Trees.stick;
 	}
 
 	@Override
 	public int quantityDropped(Random random) {
-		return 0;
+		return random.nextInt(4) == 0 ? 1 : 0;
 	}
 	
 	@Override

@@ -10,7 +10,10 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 import org.agecraft.Age;
 import org.agecraft.AgeCraft;
+import org.agecraft.core.Stone;
+import org.agecraft.core.blocks.metal.BlockStoneLayered;
 import org.agecraft.core.dimension.AgeChunkProvider;
+import org.agecraft.core.entity.animals.EntityPig;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -31,6 +34,8 @@ public abstract class AgeBiome extends BiomeGenBase {
 		spawnableMonsterList.clear();
 		spawnableWaterCreatureList.clear();
 		spawnableCaveCreatureList.clear();
+		
+		spawnableCreatureList.add(new SpawnListEntry(EntityPig.class, 10, 4, 4));
 	}
 
 	@Override
@@ -69,6 +74,16 @@ public abstract class AgeBiome extends BiomeGenBase {
 			AgeCraft.log.error("AgeBiome can't decorate without AgeChunkProvider!");
 			return;
 		}
+		for(int i = 0; i < 16; i++) {
+			for(int k = 0; k < 16; k++) {
+				for(int j = 0; j < 256; j++) {
+					if(world.getBlock(chunkX + i, j, chunkZ + k) == Stone.stone) {
+						world.setBlock(chunkX + i, j, chunkZ + k, Stone.layeredStone, 0, 0);
+						((BlockStoneLayered) Stone.layeredStone).updateHeight(world, chunkX + i, j, chunkZ + k, random);
+					}
+				}
+			}
+		}
 		chunkProvider.getDecorator().resetOptions();
 		setDecoratorOptions(chunkProvider.getDecorator());
 		chunkProvider.getDecorator().decorate(world, random, chunkX, chunkZ, this);
@@ -99,12 +114,12 @@ public abstract class AgeBiome extends BiomeGenBase {
 			} else {
 				Block block2 = blocks[index];
 				if(block2 != null && block2.getMaterial() != Material.air) {
-					if(block2 == (chunkProvider != null ? chunkProvider.getDefaultBlock() : Blocks.stone)) {
+					if(block2 == Stone.stone) {
 						if(k == -1) {
 							if(l <= 0) {
 								blockTop = null;
 								b0 = 0;
-								blockFiller = (chunkProvider != null ? chunkProvider.getDefaultBlock() : Blocks.stone);
+								blockFiller = Stone.stone;
 							} else if(height >= 59 && height <= 64) {
 								blockTop = topBlock;
 								b0 = (byte) (field_150604_aj & 255);
@@ -125,7 +140,7 @@ public abstract class AgeBiome extends BiomeGenBase {
 								meta[index] = b0;
 							} else if(height < 56 - l) {
 								blockTop = null;
-								blockFiller = Blocks.stone;
+								blockFiller = Stone.stone;
 								blocks[index] = Blocks.gravel;
 							} else {
 								blocks[index] = blockFiller;

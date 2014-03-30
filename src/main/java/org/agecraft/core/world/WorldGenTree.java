@@ -1,4 +1,4 @@
-package org.agecraft.core.worldgen;
+package org.agecraft.core.world;
 
 import java.util.Random;
 

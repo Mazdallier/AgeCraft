@@ -24,8 +24,6 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.MapGenBase;
-import net.minecraft.world.gen.MapGenCaves;
-import net.minecraft.world.gen.MapGenRavine;
 import net.minecraft.world.gen.NoiseGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
@@ -39,6 +37,8 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import org.agecraft.Age;
 import org.agecraft.core.biomes.AgeBiome;
 import org.agecraft.core.biomes.AgeDecorator;
+import org.agecraft.core.world.MapGenCave;
+import org.agecraft.core.world.MapGenRavine;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import elcon.mods.elconqore.EQUtil;
@@ -72,7 +72,7 @@ public abstract class AgeChunkProvider implements IChunkProvider {
 
 	public BiomeGenBase[] biomesForGeneration;
 
-	public MapGenBase caveGenerator = new MapGenCaves();
+	public MapGenBase caveGenerator = new MapGenCave();
 	public MapGenBase ravineGenerator = new MapGenRavine();
 
 	public AgeChunkProvider(Age age, World world, long seed, boolean mapFeaturesEnabled) {

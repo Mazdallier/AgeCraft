@@ -10,7 +10,7 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import org.agecraft.core.Metals;
 import org.agecraft.core.registry.MetalRegistry;
-import org.agecraft.core.worldgen.WorldGenOre;
+import org.agecraft.core.world.WorldGenOre;
 import org.agecraft.prehistory.world.WorldGenTempSmallTree;
 
 import elcon.mods.elconqore.EQUtil;
