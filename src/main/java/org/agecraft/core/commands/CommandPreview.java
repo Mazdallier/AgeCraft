@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
@@ -87,5 +88,15 @@ public class CommandPreview extends CommandBase {
 		list.addAll(previews.keySet());
 		list.add("list");
 		return getListOfStringsFromIterableMatchingLastWord(args, list);
+	}
+	
+	@Override
+	public int compareTo(Object obj) {
+		return super.compareTo(obj);
+	}
+	
+	@Override
+	public int compareTo(ICommand command) {
+		return super.compareTo(command);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -164,5 +165,15 @@ public class CommandTechTree extends CommandBase {
 	@Override
 	public boolean isUsernameIndex(String[] args, int index) {
 		return index == 3;
+	}
+	
+	@Override
+	public int compareTo(Object obj) {
+		return super.compareTo(obj);
+	}
+	
+	@Override
+	public int compareTo(ICommand command) {
+		return super.compareTo(command);
 	}
 }
