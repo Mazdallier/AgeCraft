@@ -145,7 +145,7 @@ public class Trees extends ACComponent {
 		TreeRegistry.registerTree(new Tree(1, "alder", 0xFFFFFF, true, 0xFFFFFF, null));
 		TreeRegistry.registerTree(new Tree(2, "beech", 0xFFFFFF, true, 0xFFFFFF, null));
 		TreeRegistry.registerTree(new Tree(3, "birch", 0x80A755, false, 0xD7C185, null));
-		TreeRegistry.registerTree(new Tree(4, "buckeye", 0xFFFFFF, true, 0xFFFFFF, null));
+		TreeRegistry.registerTree(new Tree(4, "buckeye", 0xFFFFFF, true, 0x70A324, null));
 		TreeRegistry.registerTree(new Tree(5, "cherryBlossom", 0xFFFFFF, true, 0xFFFFFF, null));
 		TreeRegistry.registerTree(new Tree(6, "coniferous", 0xFFFFFF, true, 0xFFFFFF, null));
 		TreeRegistry.registerTree(new Tree(7, "darkOak", 0xFFFFFF, true, 0xFFFFFF, null));
