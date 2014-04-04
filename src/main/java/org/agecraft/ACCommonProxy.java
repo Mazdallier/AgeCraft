@@ -5,22 +5,14 @@ import net.minecraft.world.World;
 
 import org.agecraft.core.gui.ContainerAnvil;
 import org.agecraft.core.gui.ContainerWorkbench;
-import org.agecraft.core.player.ACPlayerServer;
 import org.agecraft.core.tileentities.TileEntityAnvil;
 import org.agecraft.core.tileentities.TileEntityWorkbench;
 import org.agecraft.prehistory.gui.ContainerSharpener;
 import org.agecraft.prehistory.gui.InventorySharpener;
 
 import cpw.mods.fml.common.network.IGuiHandler;
-import elcon.mods.elconqore.player.PlayerAPI;
-import elcon.mods.elconqore.player.PlayerAPI.PlayerCoreType;
 
 public class ACCommonProxy implements IGuiHandler {
-	
-	public void registerPlayerAPI() {
-		PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
-		AgeCraft.log.info("Registered PlayerAPI classes");
-	}
 
 	public void registerRenderingInformation() {
 

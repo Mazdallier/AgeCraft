@@ -52,7 +52,6 @@ public class AgeCraft {
 		for(ACComponent component : ACComponent.components) {
 			component.preInit();
 		}
-		proxy.registerPlayerAPI();
 	}
 
 	@EventHandler

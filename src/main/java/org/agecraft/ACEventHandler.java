@@ -3,6 +3,7 @@ package org.agecraft;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -18,9 +19,16 @@ import org.agecraft.core.techtree.MessageTechTreeAllComponents;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 public class ACEventHandler {
 
+	@SubscribeEvent
+	public void onPlayerRespan(PlayerRespawnEvent event) {
+		event.player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
+		event.player.setHealth(100.0F);
+	}
+	
 	@SubscribeEvent
 	public void onPlayerNameFormat(PlayerEvent.NameFormat event) {
 		if(RankManager.hasRank(event.username)) {

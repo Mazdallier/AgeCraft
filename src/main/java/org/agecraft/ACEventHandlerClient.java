@@ -6,6 +6,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 
 import org.agecraft.core.Tools;
@@ -17,6 +18,20 @@ public class ACEventHandlerClient {
 
 	public ModelBiped modelBipedMain;
 
+	@SubscribeEvent
+	public void onFOVUpdate(FOVUpdateEvent event) {
+		if(event.entity.isUsingItem() && (event.entity.getItemInUse().getItem() == Tools.bow || event.entity.getItemInUse().getItem() == Tools.crossbow)) {
+			int duration = event.entity.getItemInUseDuration();
+			float multiplier = (float) duration / 20.0F;
+			if(multiplier > 1.0F) {
+				multiplier = 1.0F;
+			} else {
+				multiplier *= multiplier;
+			}
+			event.newfov *= 1.0F - multiplier * 0.15F;
+		}
+	}
+	
 	@SubscribeEvent
 	public void onRenderPlayerSpecialsPre(RenderPlayerEvent.Specials.Pre event) {
 		ItemStack stack = event.entityPlayer.inventory.getCurrentItem();

@@ -135,7 +135,9 @@ public class PlayerClothing implements Serializable {
 			}
 			outputFile.createNewFile();
 			ImageIO.write(outputImage, "PNG", outputFile);
-			AgeCraft.log.info("[Clothing] Created clothing file for " + player);
+			if(!player.endsWith("-Temp") && !player.endsWith("-TempPiece")) {
+				AgeCraft.log.info("[Clothing] Created clothing file for " + player);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

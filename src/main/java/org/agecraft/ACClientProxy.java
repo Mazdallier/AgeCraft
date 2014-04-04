@@ -17,9 +17,7 @@ import org.agecraft.core.gui.ContainerWorkbench;
 import org.agecraft.core.gui.GuiAnvil;
 import org.agecraft.core.gui.GuiAnvilRepair;
 import org.agecraft.core.gui.GuiWorkbench;
-import org.agecraft.core.player.ACPlayerClient;
-import org.agecraft.core.player.ACPlayerRender;
-import org.agecraft.core.player.ACPlayerServer;
+import org.agecraft.core.player.ACRenderPlayer;
 import org.agecraft.core.render.entity.RenderArrow;
 import org.agecraft.core.render.entity.RenderBolt;
 import org.agecraft.core.render.entity.RenderFallingBlock;
@@ -33,19 +31,9 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.ElConQore;
-import elcon.mods.elconqore.player.PlayerAPI;
-import elcon.mods.elconqore.player.PlayerAPI.PlayerCoreType;
 
 @SideOnly(Side.CLIENT)
 public class ACClientProxy extends ACCommonProxy {
-
-	@Override
-	public void registerPlayerAPI() {
-		PlayerAPI.register(PlayerCoreType.CLIENT, ACPlayerClient.class);
-		PlayerAPI.register(PlayerCoreType.SERVER, ACPlayerServer.class);
-		PlayerAPI.register(PlayerCoreType.RENDER, ACPlayerRender.class);
-		AgeCraft.log.info("Registered PlayerAPI classes");
-	}
 
 	@Override
 	public void registerRenderingInformation() {
@@ -95,6 +83,7 @@ public class ACClientProxy extends ACCommonProxy {
 		RenderingRegistry.registerBlockHandler(120, blockRenderingHandler);
 
 		// register entity renderers
+		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new ACRenderPlayer());
 		RenderingRegistry.registerEntityRenderingHandler(EntityFallingBlock.class, new RenderFallingBlock());
 		RenderingRegistry.registerEntityRenderingHandler(EntityArrow.class, new RenderArrow());
 		RenderingRegistry.registerEntityRenderingHandler(EntityBolt.class, new RenderBolt());

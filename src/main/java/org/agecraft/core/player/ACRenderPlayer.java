@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,23 +20,17 @@ import org.agecraft.core.clothing.PlayerClothing;
 import org.agecraft.core.clothing.PlayerClothingClient;
 import org.lwjgl.opengl.GL11;
 
-import elcon.mods.elconqore.player.PlayerCoreRender;
-
-public class ACPlayerRender extends PlayerCoreRender {
-
-	public ACPlayerRender(int playerCoreIndex, PlayerCoreRender renderPlayer) {
-		super(playerCoreIndex, renderPlayer);
-	}
-
+public class ACRenderPlayer extends RenderPlayer {
+	
 	@Override
 	protected void passSpecialRender(EntityLivingBase entity, double x, double y, double z) {
-		if(MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Specials.Pre(entity, player, x, y, z))) {
+		if(MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Specials.Pre(entity, this, x, y, z))) {
 			return;
 		}
 		if(func_110813_b(entity)) {
 			float f = 1.6F;
 			float scale = 0.016666668F * f;
-			double distance = entity.getDistanceSqToEntity(player.getRenderManager().livingPlayer);
+			double distance = entity.getDistanceSqToEntity(renderManager.livingPlayer);
 			float range = entity.isSneaking() ? NAME_TAG_RANGE_SNEAK : NAME_TAG_RANGE;
 			if(distance < (double) (range * range)) {
 				String label = entity.func_145748_c_().getFormattedText();
@@ -44,8 +39,8 @@ public class ACPlayerRender extends PlayerCoreRender {
 					GL11.glPushMatrix();
 					GL11.glTranslatef((float) x + 0.0F, (float) y + entity.height + 0.5F, (float) z);
 					GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-					GL11.glRotatef(-player.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-					GL11.glRotatef(player.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+					GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+					GL11.glRotatef(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
 					GL11.glScalef(-scale, -scale, scale);
 					GL11.glDisable(GL11.GL_LIGHTING);
 					GL11.glTranslatef(0.0F, 0.25F / scale, 0.0F);
@@ -87,12 +82,12 @@ public class ACPlayerRender extends PlayerCoreRender {
 				}
 			}
 		}
-		MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Specials.Post(entity, player, x, y, z));
+		MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Specials.Post(entity, this, x, y, z));
 	}
 
 	@Override
 	protected boolean func_110813_b(EntityLivingBase entity) {
-		return Minecraft.isGuiEnabled() && entity != player.getRenderManager().livingPlayer && !entity.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) && entity.riddenByEntity == null;
+		return Minecraft.isGuiEnabled() && entity != renderManager.livingPlayer && !entity.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer) && entity.riddenByEntity == null;
 	}
 
 	@Override
@@ -124,7 +119,7 @@ public class ACPlayerRender extends PlayerCoreRender {
 
 	@Override
 	protected void func_147906_a(Entity entity, String label, double x, double y, double z, int maxDistance) {
-		double distance = entity.getDistanceSqToEntity(player.getRenderManager().livingPlayer);
+		double distance = entity.getDistanceSqToEntity(renderManager.livingPlayer);
 		if(distance <= (double) (maxDistance * maxDistance)) {
 			FontRenderer fontRenderer = getFontRendererFromRenderManager();
 			float f = 1.6F;
@@ -132,8 +127,8 @@ public class ACPlayerRender extends PlayerCoreRender {
 			GL11.glPushMatrix();
 			GL11.glTranslatef((float) x + 0.0F, (float) y + entity.height + 0.5F, (float) z);
 			GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-			GL11.glRotatef(-player.getRenderManager().playerViewY, 0.0F, 1.0F, 0.0F);
-			GL11.glRotatef(player.getRenderManager().playerViewX, 1.0F, 0.0F, 0.0F);
+			GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+			GL11.glRotatef(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
 			GL11.glScalef(-f1, -f1, f1);
 			GL11.glDisable(GL11.GL_LIGHTING);
 			GL11.glDepthMask(false);
@@ -182,7 +177,7 @@ public class ACPlayerRender extends PlayerCoreRender {
 
 	@Override
 	public FontRenderer getFontRendererFromRenderManager() {
-		return player.getRenderManager().getFontRenderer();
+		return renderManager.getFontRenderer();
 	}
 
 	@Override
