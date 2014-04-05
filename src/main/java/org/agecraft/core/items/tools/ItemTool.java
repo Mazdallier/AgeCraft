@@ -269,6 +269,19 @@ public abstract class ItemTool extends Item {
 			}
 		}
 	}
+	
+	public static ItemStack createTool(String toolName, int toolMaterial, int toolRodMaterial, int toolEnhancementMaterial) {
+		ItemStack stack = new ItemStack(ToolRegistry.instance.get(toolName).item, 1, 0);
+		NBTTagCompound nbt = new NBTTagCompound();
+		NBTTagCompound nbt2 = new NBTTagCompound();
+		nbt2.setInteger("Type", ToolRegistry.instance.get(toolName).id);
+		nbt2.setInteger("Material", toolMaterial);
+		nbt2.setInteger("RodMaterial", toolRodMaterial);
+		nbt2.setInteger("EnhancementMaterial", toolEnhancementMaterial);
+		nbt.setTag("Tool", nbt2);
+		stack.setTagCompound(nbt);
+		return stack;
+	}
 
 	public NBTTagCompound getToolNBT(ItemStack stack) {
 		NBTTagCompound nbt = stack.stackTagCompound;

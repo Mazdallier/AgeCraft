@@ -45,6 +45,7 @@ public class ACEventHandler {
 			event.player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
 			event.player.setHealth(100.0F);
 			event.player.dimension = 10;
+			event.player.posY = 96;
 		}
 		PlayerData.getPlayer(event.player.getCommandSenderName()).loginCount++;
 		AgeCraft.log.info("Registered player " + event.player.getCommandSenderName());

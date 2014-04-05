@@ -49,7 +49,7 @@ public class GuiTechTree extends GuiScreen {
 
 	private ArrayList<String> pages = new ArrayList<String>();
 	private int pageIndex;
-	private String pageName = TechTree.PAGE_GENERAL;
+	private String pageName = TechTree.PAGE_PREHISTORY;
 	private ArrayList<TechTreeComponent> components = new ArrayList<TechTreeComponent>();
 
 	public GuiTechTree() {

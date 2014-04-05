@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.WorldSettings.GameType;
 
+import org.agecraft.core.AgeCraftCore;
 import org.agecraft.core.Crafting;
 import org.agecraft.core.techtree.TechTree;
 import org.agecraft.core.techtree.TechTreeServer;
@@ -35,9 +36,11 @@ public class CommandPreview extends CommandBase {
 			Arrays.asList(new ItemStack(Crafting.anvil, 1, 20)),
 			Arrays.asList(new ItemStack(Crafting.anvil, 1, 24))
 	);
+	public static List<List<ItemStack>> clothingSelector = Arrays.asList(Arrays.asList(new ItemStack(AgeCraftCore.clothingSelectorTest, 1, 0)));
 	
 	static {
 		previews.put("anvil", anvil);
+		previews.put("clothingSelector", clothingSelector);
 	}
 	
 	@Override
@@ -67,7 +70,7 @@ public class CommandPreview extends CommandBase {
 				sender.addChatMessage(new ChatComponentText(LanguageManager.getLocalization("commands.preview.topics") + " " + sb.toString().substring(0, sb.length() - 2)));
 			} else if(args[0].equalsIgnoreCase("creative")) {
 				EntityPlayer player = getCommandSenderAsPlayer(sender);
-				if(!TechTreeServer.hasUnlockedComponent(player.getCommandSenderName(), TechTree.PAGE_GENERAL, TechTree.enchantedBook.name)) {
+				if(!TechTreeServer.hasUnlockedComponent(player.getCommandSenderName(), TechTree.PAGE_PREHISTORY, TechTree.tool.name)) {
 					throw new WrongUsageException(LanguageManager.getLocalization("commands.preview.completeTechTree"));
 				}
 				if(!player.capabilities.isCreativeMode) {
@@ -78,7 +81,7 @@ public class CommandPreview extends CommandBase {
 				notifyAdmins(sender, LanguageManager.getLocalization("commands.preview.success"), args[0].toLowerCase(), sender.getCommandSenderName());
 			} else if(previews.containsKey(args[0].toLowerCase())) {
 				EntityPlayer player = getCommandSenderAsPlayer(sender);
-				if(!TechTreeServer.hasUnlockedComponent(player.getCommandSenderName(), TechTree.PAGE_GENERAL, TechTree.enchantedBook.name)) {
+				if(!TechTreeServer.hasUnlockedComponent(player.getCommandSenderName(), TechTree.PAGE_PREHISTORY, TechTree.tool.name)) {
 					throw new WrongUsageException(LanguageManager.getLocalization("commands.preview.completeTechTree"));
 				}
 				List<ItemStack> topic = previews.get(args[0]).get(random.nextInt(previews.get(args[0]).size()));
