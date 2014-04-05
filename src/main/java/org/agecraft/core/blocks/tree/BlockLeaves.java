@@ -223,6 +223,12 @@ public class BlockLeaves extends BlockExtendedMetadata {
 	}
 	
 	@Override
+	public int getDamageValue(World world, int x, int y, int z) {
+		int meta = getMetadata(world, x, y, z);
+		return (meta - (meta & 3)) / 4;
+	}
+	
+	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		return fancyGraphics ? TreeRegistry.instance.get((meta - (meta & 3)) / 4).leaves : TreeRegistry.instance.get((meta - (meta & 3)) / 4).leavesFast;

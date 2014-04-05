@@ -13,6 +13,7 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.world.WorldSettings.GameType;
 
 import org.agecraft.core.Crafting;
 import org.agecraft.core.techtree.TechTree;
@@ -64,6 +65,17 @@ public class CommandPreview extends CommandBase {
 					sb.append(", ");
 				}
 				sender.addChatMessage(new ChatComponentText(LanguageManager.getLocalization("commands.preview.topics") + " " + sb.toString().substring(0, sb.length() - 2)));
+			} else if(args[0].equalsIgnoreCase("creative")) {
+				EntityPlayer player = getCommandSenderAsPlayer(sender);
+				if(!TechTreeServer.hasUnlockedComponent(player.getCommandSenderName(), TechTree.PAGE_GENERAL, TechTree.enchantedBook.name)) {
+					throw new WrongUsageException(LanguageManager.getLocalization("commands.preview.completeTechTree"));
+				}
+				if(!player.capabilities.isCreativeMode) {
+					player.setGameType(GameType.CREATIVE);
+				} else {
+					player.setGameType(GameType.SURVIVAL);
+				}
+				notifyAdmins(sender, LanguageManager.getLocalization("commands.preview.success"), args[0].toLowerCase(), sender.getCommandSenderName());
 			} else if(previews.containsKey(args[0].toLowerCase())) {
 				EntityPlayer player = getCommandSenderAsPlayer(sender);
 				if(!TechTreeServer.hasUnlockedComponent(player.getCommandSenderName(), TechTree.PAGE_GENERAL, TechTree.enchantedBook.name)) {
@@ -87,6 +99,7 @@ public class CommandPreview extends CommandBase {
 		ArrayList<String> list = new ArrayList<String>();
 		list.addAll(previews.keySet());
 		list.add("list");
+		list.add("creative");
 		return getListOfStringsFromIterableMatchingLastWord(args, list);
 	}
 	

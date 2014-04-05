@@ -9,6 +9,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import org.agecraft.core.AgeCraftCore;
+import org.agecraft.core.PlayerData;
+import org.agecraft.core.PlayerData.Player;
 import org.agecraft.core.RankManager;
 import org.agecraft.core.clothing.MessageClothingAllUpdate;
 import org.agecraft.core.clothing.MessageClothingList;
@@ -22,9 +24,9 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 public class ACEventHandler {
-
+	
 	@SubscribeEvent
-	public void onPlayerRespan(PlayerRespawnEvent event) {
+	public void onPlayerRespawn(PlayerRespawnEvent event) {
 		event.player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
 		event.player.setHealth(100.0F);
 	}
@@ -38,6 +40,16 @@ public class ACEventHandler {
 	
 	@SubscribeEvent
 	public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
+		if(!PlayerData.hasPlayer(event.player.getCommandSenderName())) {
+			PlayerData.addPlayer(new Player(event.player.getCommandSenderName()));
+			event.player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
+			event.player.setHealth(100.0F);
+			event.player.dimension = 10;
+		}
+		PlayerData.getPlayer(event.player.getCommandSenderName()).loginCount++;
+		AgeCraft.log.info("Registered player " + event.player.getCommandSenderName());
+
+		
 		ArrayList<String> playersOnline = new ArrayList<String>();
 		List<EntityPlayerMP> list = FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().playerEntityList;
 		for(EntityPlayerMP p : list) {
