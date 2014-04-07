@@ -40,6 +40,11 @@ public class ItemRockTool extends Item {
 	}
 	
 	@Override
+	public boolean hasContainerItem(ItemStack stack) {
+		return true;
+	}
+	
+	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
 		ItemStack container = stack.copy();
 		container.setItemDamage(container.getItemDamage() - 1);

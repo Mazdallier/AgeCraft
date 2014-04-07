@@ -120,10 +120,11 @@ public class PrehistoryAge extends Age {
 	@Override
 	public void postInit() {
 		// add recipes
-		GameRegistry.addRecipe(new ItemStack(rockPickaxe), "#", "I", '#', rockPickaxeHead, 'I', new ItemStack(Trees.stick, 1, OreDictionary.WILDCARD_VALUE));
 		GameRegistry.addShapelessRecipe(new ItemStack(flintAndRock), new ItemStack(rock), new ItemStack(Items.flint));
 		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
 			if(TreeRegistry.instance.get(i) != null) {
+				GameRegistry.addRecipe(new ItemStack(rockPickaxe), "#", "I", '#', rockPickaxeHead, 'I', new ItemStack(Trees.stick, 1, i));
+				
 				GameRegistry.addShapelessRecipe(new ItemStack(Trees.planks, 1, i), new ItemStack(rockTool, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Trees.log, 1, i));
 				GameRegistry.addShapelessRecipe(new ItemStack(Trees.stick, 1, i), new ItemStack(rockTool, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Trees.planks, 1, i));
 			}

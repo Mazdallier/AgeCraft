@@ -277,16 +277,16 @@ public class EntityFallingBlock extends Entity {
 	
 	@SideOnly(Side.CLIENT)
 	public Block getBlockClient() {
-		return Block.getBlockFromItem(dataWatcher.getWatchableObjectItemStack(5).getItem());
+		return dataWatcher.getWatchableObjectItemStack(5) == null ? Blocks.air : Block.getBlockFromItem(dataWatcher.getWatchableObjectItemStack(5).getItem());
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public int getMetaClient() {
-		return dataWatcher.getWatchableObjectItemStack(5).getItemDamage();
+		return dataWatcher.getWatchableObjectItemStack(5) == null ? 0 : dataWatcher.getWatchableObjectItemStack(5).getItemDamage();
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public NBTTagCompound getNBTClient() {
-		return dataWatcher.getWatchableObjectItemStack(5).getTagCompound();
+		return dataWatcher.getWatchableObjectItemStack(5) == null ? null : dataWatcher.getWatchableObjectItemStack(5).getTagCompound();
 	}
 }

@@ -46,12 +46,12 @@ public class ItemRockPickaxe extends Item {
 
 	@Override
 	public boolean canHarvestBlock(Block block, ItemStack stack) {
-		return block != null && (block == Stone.stone || block == Stone.stoneCracked);
+		return block != null && (block == Stone.layeredStone || block == Stone.stone || block == Stone.stoneCracked);
 	}
 	
 	@Override
 	public float getDigSpeed(ItemStack stack, Block block, int meta) {
-		return block != null && (block == Stone.stone || block == Stone.stoneCracked) ? 1.0F : 0.0F;
+		return canHarvestBlock(block, stack) ? 1.0F : 0.0F;
 	}
 	
 	@Override

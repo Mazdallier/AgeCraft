@@ -92,7 +92,7 @@ public class ACRenderPlayer extends RenderPlayer {
 
 	@Override
 	protected void func_96449_a(EntityLivingBase entity, double x, double y, double z, String label, float par9, double par10) {
-		func_96449_a(entity, x, y, z, label, par9, par10);
+		func_96449_a((AbstractClientPlayer) entity, x, y, z, label, par9, par10);
 	}
 
 	@Override

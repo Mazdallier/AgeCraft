@@ -181,7 +181,7 @@ public class BlockLeaves extends BlockExtendedMetadata {
 	}
 
 	private void removeLeaves(World world, int x, int y, int z) {
-		dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
+		dropBlockAsItem(world, x, y, z, getMetadata(world, x, y, z), 0);
 		world.setBlockToAir(x, y, z);
 	}
 
