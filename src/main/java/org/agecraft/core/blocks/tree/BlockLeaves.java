@@ -1,5 +1,6 @@
 package org.agecraft.core.blocks.tree;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -197,19 +198,27 @@ public class BlockLeaves extends BlockExtendedMetadata {
 	}
 	
 	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		if(world.rand.nextInt(4) == 0) {
+			ret.add(new ItemStack(Trees.stick, 1, getDroppedMetadata(world, x, y, z, metadata, fortune)));
+		}
+		return ret;
+	}
+	
+	@Override
 	public boolean shouldDropItems(World world, int x, int y, int z, int meta, EntityPlayer player, ItemStack stack) {
-		System.out.println(stack != null && stack.getItem() instanceof ItemRockTool);
 		return stack != null && stack.getItem() instanceof ItemRockTool;
 	}
 	
 	@Override
 	public Item getItemDropped(int meta, Random random, int fortune) {
-		return Trees.stick;
+		return null;
 	}
 
 	@Override
 	public int quantityDropped(Random random) {
-		return random.nextInt(4) == 0 ? 1 : 0;
+		return 0;
 	}
 	
 	@Override

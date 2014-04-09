@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -190,6 +191,9 @@ public class ACRenderPlayer extends RenderPlayer {
 		if(clothing != null && clothing.glTextureID != -1) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, clothing.glTextureID);
 		} else {
+			if(renderManager == null) {
+				renderManager = RenderManager.instance;
+			}
 			super.bindEntityTexture(player);
 		}
 	}

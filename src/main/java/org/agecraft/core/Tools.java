@@ -179,7 +179,7 @@ public class Tools extends ACComponent {
 		}));
 
 		// register tool materials
-		ToolMaterialRegistry.registerToolMaterial(new ToolMaterial(127, "stone", "tools.materials.stone", new ItemStack(Stone.stone, 1, 1), 138, 1.5F, 2, 1));
+		ToolMaterialRegistry.registerToolMaterial(new ToolMaterial(127, "stone", "tools.materials.stone", new ItemStack(Stone.stoneCracked, 1, 0), 138, 1.5F, 2, 1));
 		ToolMaterialRegistry.registerToolMaterial(new ToolMaterial(128, "copper", "metals.copper", new ItemStack(Metals.ingot, 1, 0), 144, 2.25F, 2, 3));
 		ToolMaterialRegistry.registerToolMaterial(new ToolMaterial(130, "bronze", "metals.bronze", new ItemStack(Metals.ingot, 1, 2), 166, 3.0F, 3, 4));
 		ToolMaterialRegistry.registerToolMaterial(new ToolMaterial(131, "silver", "metals.silver", new ItemStack(Metals.ingot, 1, 3), 156, 3.75F, 4, 2));

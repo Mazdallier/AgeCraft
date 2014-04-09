@@ -27,6 +27,19 @@ public class TechTreeServer {
 		return components.contains(name);
 	}
 	
+	public static boolean canUnlockComponent(String player, String pageName, String name) {
+		if(TechTreeServer.hasUnlockedComponent(player, pageName, name)) {
+			return false;
+		}
+		TechTreeComponent component = TechTree.getComponent(pageName, name);
+		for(TechTreeComponent parent : component.parents) {
+			if(!TechTreeServer.hasUnlockedComponent(player, parent.pageName, parent.name)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public static void unlockComponent(String player, String pageName, String name) {
 		HashMap<String, ArrayList<String>> pages;
 		if(!players.containsKey(player)) {

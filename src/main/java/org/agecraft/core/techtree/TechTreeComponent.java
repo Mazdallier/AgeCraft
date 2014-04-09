@@ -3,35 +3,45 @@ package org.agecraft.core.techtree;
 import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import elcon.mods.elconqore.lang.LanguageManager;
 
 public class TechTreeComponent {
 
 	public String pageName;
 	public String name;
+	public TechTreeGoal goal;
 	public ArrayList<TechTreeComponent> parents = new ArrayList<TechTreeComponent>();
 	public ArrayList<TechTreeComponent> siblings = new ArrayList<TechTreeComponent>();
-
+	
 	public int displayColumn;
 	public int displayRow;
 	public ItemStack stack;
 	public int iconIndex;
-
+	
 	public boolean isSpecial;
 	public boolean isIndependent;
 	public boolean isHidden;
 
-	public TechTreeComponent(String pageName, String name, int displayColumn, int displayRow, ItemStack stack) {
-		this(pageName, name, displayColumn, displayRow, stack, -1);
+	public TechTreeComponent(String pageName, String name, TechTreeGoalItem goal, int displayColumn, int displayRow) {
+		this(pageName, name, goal, displayColumn, displayRow, goal.itemStack.copy(), -1);
+		if(goal.itemStack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
+			stack.setItemDamage(0);
+		}
 	}
 	
-	public TechTreeComponent(String pageName, String name, int displayColumn, int displayRow, int iconIndex) {
-		this(pageName, name, displayColumn, displayRow, null, iconIndex);
+	public TechTreeComponent(String pageName, String name, TechTreeGoal goal, int displayColumn, int displayRow, ItemStack stack) {
+		this(pageName, name, goal, displayColumn, displayRow, stack, -1);
 	}
 	
-	public TechTreeComponent(String pageName, String name, int displayColumn, int displayRow, ItemStack stack, int iconIndex) {
+	public TechTreeComponent(String pageName, String name, TechTreeGoal goal, int displayColumn, int displayRow, int iconIndex) {
+		this(pageName, name, goal, displayColumn, displayRow, null, iconIndex);
+	}
+	
+	public TechTreeComponent(String pageName, String name, TechTreeGoal goal, int displayColumn, int displayRow, ItemStack stack, int iconIndex) {
 		this.pageName = pageName;
 		this.name = name;
+		this.goal = goal;
 		this.displayColumn = displayColumn;
 		this.displayRow = displayRow;
 		this.stack = stack;

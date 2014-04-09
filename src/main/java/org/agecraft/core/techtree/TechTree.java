@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import org.agecraft.ACComponent;
 import org.agecraft.AgeCraft;
@@ -12,6 +13,7 @@ import org.agecraft.core.Stone;
 import org.agecraft.core.items.farming.ItemFood;
 import org.agecraft.core.items.tools.ItemTool;
 import org.agecraft.core.registry.FoodRegistry.FoodStage;
+import org.agecraft.core.registry.FoodRegistry.FoodType;
 import org.agecraft.prehistory.PrehistoryAge;
 
 public class TechTree extends ACComponent {
@@ -65,13 +67,13 @@ public class TechTree extends ACComponent {
 	@Override
 	public void postInit() {
 		//init tech tree components
-		rock = new TechTreeComponent(PAGE_PREHISTORY, "rock", 0, 0, new ItemStack(PrehistoryAge.rock));
-		rockTool = new TechTreeComponent(PAGE_PREHISTORY, "rockTool", 0, 2, new ItemStack(PrehistoryAge.rockTool));
-		campfire = new TechTreeComponent(PAGE_PREHISTORY, "campfire", -2, 4, new ItemStack(PrehistoryAge.campfire));
-		meat = new TechTreeComponent(PAGE_PREHISTORY, "meat", -2, 6, ItemFood.createFood("pork", FoodStage.COOKED));
-		workbench = new TechTreeComponent(PAGE_PREHISTORY, "workbench", 2, 4, new ItemStack(Crafting.workbench));
-		cobblestone = new TechTreeComponent(PAGE_PREHISTORY, "cobblestone", 0, 4, new ItemStack(Stone.stoneCracked));
-		tool = new TechTreeComponent(PAGE_PREHISTORY, "tool", 1, 6, ItemTool.createTool("pickaxe", 127, 15, 0)).setSpecial();
+		rock = new TechTreeComponent(PAGE_PREHISTORY, "rock", new TechTreeGoalItem(new ItemStack(PrehistoryAge.rock)), 0, 0);
+		rockTool = new TechTreeComponent(PAGE_PREHISTORY, "rockTool", new TechTreeGoalItem(new ItemStack(PrehistoryAge.rockTool, 1, OreDictionary.WILDCARD_VALUE)).disableNBT(), 0, 2);
+		campfire = new TechTreeComponent(PAGE_PREHISTORY, "campfire", new TechTreeGoalItem(new ItemStack(PrehistoryAge.campfire)).disableNBT(), -2, 2);
+		meat = new TechTreeComponent(PAGE_PREHISTORY, "meat", new TechTreeGoalItemFood(FoodType.MEAT), -2, 6, ItemFood.createFood("pork", FoodStage.COOKED));
+		workbench = new TechTreeComponent(PAGE_PREHISTORY, "workbench", new TechTreeGoalItem(new ItemStack(Crafting.workbench, 1, OreDictionary.WILDCARD_VALUE)), 2, 2, new ItemStack(Crafting.workbench, 1, 15));
+		cobblestone = new TechTreeComponent(PAGE_PREHISTORY, "cobblestone", new TechTreeGoalItem(new ItemStack(Stone.stoneCracked, 1, OreDictionary.WILDCARD_VALUE)), 0, 4);
+		tool = new TechTreeComponent(PAGE_PREHISTORY, "tool", new TechTreeGoalItem(ItemTool.createTool("pickaxe", 127, 15, 0)), 2, 6).setSpecial();
 		
 		rockTool.addParent(rock);
 		campfire.addParent(rockTool);
@@ -79,14 +81,6 @@ public class TechTree extends ACComponent {
 		workbench.addParent(rockTool);
 		cobblestone.addParent(rockTool);
 		tool.addParents(workbench, cobblestone);
-		
-		registerComponent(rock);
-		registerComponent(rockTool);
-		registerComponent(campfire);
-		registerComponent(meat);
-		registerComponent(workbench);
-		registerComponent(cobblestone);
-		registerComponent(tool);
 		
 		int size = 0;
 		for(ArrayList<TechTreeComponent> components : pages.values()) {

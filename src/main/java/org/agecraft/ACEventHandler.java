@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.NameFormat;
 
 import org.agecraft.core.AgeCraftCore;
 import org.agecraft.core.PlayerData;
@@ -17,25 +17,41 @@ import org.agecraft.core.clothing.MessageClothingList;
 import org.agecraft.core.clothing.MessageClothingUpdate;
 import org.agecraft.core.clothing.PlayerClothingServer;
 import org.agecraft.core.techtree.MessageTechTreeAllComponents;
+import org.agecraft.core.techtree.TechTree;
+import org.agecraft.core.techtree.TechTreeComponent;
+import org.agecraft.core.techtree.TechTreeServer;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 public class ACEventHandler {
 	
 	@SubscribeEvent
-	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		event.player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
-		event.player.setHealth(100.0F);
+	public void onPlayerItemPickup(ItemPickupEvent event) {
+		for(String page : TechTree.pages.keySet()) {
+			ArrayList<TechTreeComponent> components = TechTree.pages.get(page);
+			for(TechTreeComponent component : components) {
+				if(component.goal.hasReachedGoal(event.pickedUp.getEntityItem()) && TechTreeServer.canUnlockComponent(event.player.getCommandSenderName(), component.pageName, component.name)) {
+					TechTreeServer.unlockComponent(event.player.getCommandSenderName(), component.pageName, component.name);
+				}
+			}
+		}
 	}
 	
 	@SubscribeEvent
-	public void onPlayerNameFormat(PlayerEvent.NameFormat event) {
+	public void onPlayerNameFormat(NameFormat event) {
 		if(RankManager.hasRank(event.username)) {
 			event.displayname = RankManager.getPrefix(event.username) + event.displayname + RankManager.getPostfix(event.username) + EnumChatFormatting.RESET;
 		}
+	}
+	
+	@SubscribeEvent
+	public void onPlayerRespawn(PlayerRespawnEvent event) {
+		event.player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
+		event.player.setHealth(100.0F);
 	}
 	
 	@SubscribeEvent
@@ -50,7 +66,6 @@ public class ACEventHandler {
 		PlayerData.getPlayer(event.player.getCommandSenderName()).loginCount++;
 		AgeCraft.log.info("Registered player " + event.player.getCommandSenderName());
 
-		
 		ArrayList<String> playersOnline = new ArrayList<String>();
 		List<EntityPlayerMP> list = FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().playerEntityList;
 		for(EntityPlayerMP p : list) {

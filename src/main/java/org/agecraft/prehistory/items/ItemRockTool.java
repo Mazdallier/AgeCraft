@@ -47,8 +47,13 @@ public class ItemRockTool extends Item {
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
 		ItemStack container = stack.copy();
-		container.setItemDamage(container.getItemDamage() - 1);
+		container.setItemDamage(container.getItemDamage() + 1);
 		return container;
+	}
+	
+	@Override
+	public boolean doesContainerItemLeaveCraftingGrid(ItemStack stack) {
+		return false;
 	}
 	
 	@Override

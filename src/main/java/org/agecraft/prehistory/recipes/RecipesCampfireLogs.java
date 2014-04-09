@@ -15,6 +15,12 @@ import org.agecraft.prehistory.PrehistoryAge;
 public class RecipesCampfireLogs implements IRecipe {
 
 	public ItemStack[] getRecipe(InventoryCrafting inventory) {
+		for(int i = 0; i < inventory.getSizeInventory(); i++) {
+			ItemStack stack = inventory.getStackInSlot(i);
+			if(stack != null && Item.getIdFromItem(stack.getItem()) != Block.getIdFromBlock(Trees.log) && Item.getIdFromItem(stack.getItem()) != Block.getIdFromBlock(PrehistoryAge.campfire)) {
+				return null;
+			}
+		}
 		ItemStack[] stacks = new ItemStack[3];
 		int index = 1;
 		for(int i = 0; i <= 1; i++) {
@@ -26,6 +32,9 @@ public class RecipesCampfireLogs implements IRecipe {
 					}
 					stacks[Item.getIdFromItem(stack.getItem()) == Block.getIdFromBlock(PrehistoryAge.campfire) ? 0 : index] = stack;
 					index++;
+					if(index > 3) {
+						return null;
+					}
 				}
 			}
 		}

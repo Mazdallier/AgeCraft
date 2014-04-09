@@ -84,11 +84,11 @@ public class BlockStoneLayered extends BlockMetadata {
 					shouldDropItems = ((ItemTool) player.getCurrentEquippedItem().getItem()).canHarvestBlock(player.getCurrentEquippedItem(), this, meta);
 				} else if(player.getCurrentEquippedItem().getItem() instanceof ItemRockPickaxe) {
 					shouldDropItems = false;
-					int chance = world.rand.nextInt(4);
-					if(chance == 2) {
+					int chance = world.rand.nextInt(5);
+					if(chance == 0 || chance == 3) {
+						dropBlockAsItem(world, x, y, z, new ItemStack(Stone.stoneCracked, 1, 0));
+					} else if(chance == 1) {
 						dropBlockAsItem(world, x, y, z, new ItemStack(PrehistoryAge.rock));
-					} else if(chance == 3) {
-						dropBlockAsItem(world, x, y, z, new ItemStack(Stone.stone, 1, 1));
 					}
 				}
 			}
@@ -105,12 +105,12 @@ public class BlockStoneLayered extends BlockMetadata {
 
 	@Override
 	public Item getItemDropped(int i, Random random, int j) {
-		return Item.getItemFromBlock(Stone.stone);
+		return Item.getItemFromBlock(Stone.stoneCracked);
 	}
 
 	@Override
 	public int damageDropped(int meta) {
-		return 1;
+		return 0;
 	}
 	
 	@Override

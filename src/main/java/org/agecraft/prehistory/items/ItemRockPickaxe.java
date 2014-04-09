@@ -25,7 +25,7 @@ public class ItemRockPickaxe extends Item {
 
 	public ItemRockPickaxe() {
 		setMaxStackSize(1);
-		setMaxDamage(3);
+		setMaxDamage(7);
 		setCreativeTab(ACCreativeTabs.prehistoryAge);
 	}
 	
