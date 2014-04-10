@@ -173,5 +173,12 @@ public class Biomes extends ACComponent {
 
 		timelessIsland = new BiomeTimelessIsland(65).setBiomeName("Timeless Island");
 		timelessIslandShore = new BiomeTimelessIslandShore(66).setBiomeName("Timeless Island Shore");
+		
+		//add empty biomes
+		for(int i = 0; i < BiomeGenBase.getBiomeGenArray().length; i++) {
+			if(BiomeGenBase.getBiomeGenArray()[i] == null) {
+				new BiomeEmpty(i).setBiomeName("Empty" + Integer.toString(i));
+			}
+		}
 	}
 }

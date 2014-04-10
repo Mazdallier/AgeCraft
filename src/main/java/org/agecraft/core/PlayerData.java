@@ -18,7 +18,7 @@ public class PlayerData {
 	public static HashMap<String, Player> players = new HashMap<String, Player>();
 	
 	public static boolean hasPlayer(String name) {
-		return players.containsKey(name);
+		return players.containsKey(name) && players.get(name).loginCount > 0;
 	}
 	
 	public static Player getPlayer(String name) {

@@ -1,5 +1,6 @@
 package org.agecraft.prehistory.blocks;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -18,6 +19,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.core.Trees;
 import org.agecraft.prehistory.tileentities.TileEntityPrehistoryCampfire;
 
 import cpw.mods.fml.relauncher.Side;
@@ -25,13 +27,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.blocks.BlockExtendedContainer;
 import elcon.mods.elconqore.lang.LanguageManager;
 
-public class BlockPrehistoryCampfire extends BlockExtendedContainer { //implements IWailaBlock {
+public class BlockPrehistoryCampfire extends BlockExtendedContainer { // implements IWailaBlock {
 
 	@SideOnly(Side.CLIENT)
 	private IIcon icon;
 
 	public BlockPrehistoryCampfire() {
 		super(Material.wood);
+		setHardness(2.0F);
+		setResistance(5.0F);
 		setStepSound(Block.soundTypeWood);
 		setCreativeTab(ACCreativeTabs.prehistoryAge);
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.2F, 1.0F);
@@ -51,7 +55,7 @@ public class BlockPrehistoryCampfire extends BlockExtendedContainer { //implemen
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileEntityPrehistoryCampfire();
 	}
-	
+
 	@Override
 	public Class<? extends TileEntity> getTileEntityClass() {
 		return TileEntityPrehistoryCampfire.class;
@@ -140,6 +144,23 @@ public class BlockPrehistoryCampfire extends BlockExtendedContainer { //implemen
 	}
 
 	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+		TileEntityPrehistoryCampfire tile = (TileEntityPrehistoryCampfire) getTileEntity(world, x, y, z);
+		if(tile != null) {
+			for(int i = 0; i < tile.frameStage; i++) {
+				list.add(new ItemStack(Trees.stick, 1, tile.frameTypes[i]));
+			}
+			for(int i = 0; i < tile.logs.length; i++) {
+				if(tile.logs[i] > 0) {
+					list.add(new ItemStack(Trees.log, tile.logs[i], i));
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
 	public boolean isOpaqueCube() {
 		return false;
 	}
@@ -172,25 +193,13 @@ public class BlockPrehistoryCampfire extends BlockExtendedContainer { //implemen
 		icon = iconRegister.registerIcon("agecraft:ages/prehistory/campfire");
 	}
 
-	/*@Override
-	public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		return null;
-	}
-
-	@Override
-	public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		return currenttip;
-	}
-
-	@Override
-	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		TileEntityPrehistoryCampfire tile = (TileEntityPrehistoryCampfire) accessor.getTileEntity();
-		if(tile.logCount > 0) {
-			currenttip.add(Integer.toString(tile.logCount) + " " + LanguageManager.getLocalization("trees.logs"));
-		}
-		if(tile.isCooking() && tile.spitStack != null) {
-			currenttip.add(tile.spitStack.getDisplayName());
-		}
-		return currenttip;
-	}*/
+	/*
+	 * @Override public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) { return null; }
+	 * 
+	 * @Override public List<String> getWailaHead(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) { return currenttip; }
+	 * 
+	 * @Override public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) { TileEntityPrehistoryCampfire tile =
+	 * (TileEntityPrehistoryCampfire) accessor.getTileEntity(); if(tile.logCount > 0) { currenttip.add(Integer.toString(tile.logCount) + " " + LanguageManager.getLocalization("trees.logs")); }
+	 * if(tile.isCooking() && tile.spitStack != null) { currenttip.add(tile.spitStack.getDisplayName()); } return currenttip; }
+	 */
 }

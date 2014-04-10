@@ -43,6 +43,11 @@ public class BlockWorkbench extends BlockExtendedMetadataOverlay {
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileEntityWorkbench();
 	}
+	
+	@Override
+	public Class<? extends TileEntity> getTileEntityClass() {
+		return TileEntityWorkbench.class;
+	}
 
 	@Override
 	public String getLocalizedName(ItemStack stack) {

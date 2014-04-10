@@ -97,7 +97,7 @@ public class PrehistoryAge extends Age {
 		fakeStone = new ItemFakeStone().setUnlocalizedName("AC_prehistory_fakeStone");
 		rockTool = new ItemRockTool().setUnlocalizedName("AC_prehistory_rockTool");
 		rockSkinningTool = new ItemRockTanningTool().setUnlocalizedName("AC_prehistory_rockSkinningTool");
-		rockPickaxeHead = new ItemRockPickaxeHead().setUnlocalizedName("AC_prehistory_rockPickaxeAxe");
+		rockPickaxeHead = new ItemRockPickaxeHead().setUnlocalizedName("AC_prehistory_rockPickaxeHead");
 		rockPickaxe = new ItemRockPickaxe().setUnlocalizedName("AC_prehistory_rockPickaxe");
 		flintAndRock = new ItemFlintAndRock().setUnlocalizedName("AC_prehistory_flintAndRock");
 
@@ -105,7 +105,7 @@ public class PrehistoryAge extends Age {
 		GameRegistry.registerItem(fakeStone, "AC_prehistory_fakeStone");
 		GameRegistry.registerItem(rockTool, "AC_prehistory_rockTool");
 		GameRegistry.registerItem(rockSkinningTool, "AC_prehistory_rockSkinningTool");
-		GameRegistry.registerItem(rockPickaxeHead, "AC_prehistory_rockPickaxeHea");
+		GameRegistry.registerItem(rockPickaxeHead, "AC_prehistory_rockPickaxeHead");
 		GameRegistry.registerItem(rockPickaxe, "AC_prehistory_rockPickaxe");
 		GameRegistry.registerItem(flintAndRock, "AC_prehistory_flintAndRock");
 
@@ -120,10 +120,10 @@ public class PrehistoryAge extends Age {
 	@Override
 	public void postInit() {
 		// add recipes
-		GameRegistry.addShapelessRecipe(new ItemStack(flintAndRock), new ItemStack(rock), new ItemStack(Items.flint));
+		GameRegistry.addRecipe(new ItemStack(flintAndRock), "A ", " I", 'A', new ItemStack(rock), 'I', new ItemStack(Items.flint));
 		for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
 			if(TreeRegistry.instance.get(i) != null) {
-				GameRegistry.addRecipe(new ItemStack(rockPickaxe), "#", "I", '#', new ItemStack(rockPickaxeHead), 'I', new ItemStack(Trees.stick, 1, i));
+				GameRegistry.addRecipe(new ItemStack(rockPickaxe), "A", "I", 'A', new ItemStack(rockPickaxeHead, 1, 0), 'I', new ItemStack(Trees.stick, 1, i));
 				
 				GameRegistry.addShapelessRecipe(new ItemStack(Trees.planks, 1, i), new ItemStack(rockTool, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Trees.log, 1, i));
 				GameRegistry.addShapelessRecipe(new ItemStack(Trees.stick, 1, i), new ItemStack(rockTool, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Trees.planks, 1, i));

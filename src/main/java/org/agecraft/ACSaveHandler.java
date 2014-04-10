@@ -31,6 +31,7 @@ public class ACSaveHandler implements IEQSaveHandler {
 	@Override
 	public void load(String fileName, File file, ObjectInputStream in) {
 		if(fileName.equals("player_data")) {
+			PlayerData.players.clear();
 			try {
 				PlayerData.players = (HashMap<String, Player>) in.readObject();
 				AgeCraft.log.info("Loaded the player data");
@@ -38,6 +39,7 @@ public class ACSaveHandler implements IEQSaveHandler {
 				e.printStackTrace();
 			}
 		} else if(fileName.equals("tech_tree")) {
+			TechTreeServer.players.clear();
 			try {
 				TechTreeServer.players = (HashMap<String, HashMap<String, ArrayList<String>>>) in.readObject();
 				AgeCraft.log.info("[TechTree] Loaded the Tech Tree");
@@ -45,6 +47,7 @@ public class ACSaveHandler implements IEQSaveHandler {
 				e.printStackTrace();
 			}
 		} else if(fileName.equals("clothing")) {
+			PlayerClothingServer.players.clear();
 			try {
 				PlayerClothingServer.players = (HashMap<String, PlayerClothing>) in.readObject();
 				AgeCraft.log.info("[Clothing] Loaded the clothing");

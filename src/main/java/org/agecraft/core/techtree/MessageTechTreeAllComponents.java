@@ -42,11 +42,13 @@ public class MessageTechTreeAllComponents extends EQMessage {
 		int pageCount = source.readInt();
 		pages = new HashMap<String, ArrayList<String>>(pageCount);
 		for(int i = 0; i < pageCount; i++) {
+			String pageName = readString(source);
 			int componentCount = source.readInt();
 			ArrayList<String> components = new ArrayList<String>(componentCount);
 			for(int j = 0; j < componentCount; j++) {
 				components.add(readString(source));
 			}
+			pages.put(pageName, components);
 		}
 	}
 

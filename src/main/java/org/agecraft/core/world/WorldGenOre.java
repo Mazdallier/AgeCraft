@@ -3,11 +3,13 @@ package org.agecraft.core.world;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import org.agecraft.core.Stone;
+
 import elcon.mods.elconqore.tileentities.TileEntityMetadata;
 
 public class WorldGenOre extends WorldGenerator {
@@ -23,7 +25,7 @@ public class WorldGenOre extends WorldGenerator {
 	public int oreGenMaxY;
 
 	public WorldGenOre(Block minableBlock, int numberOfBlocks, int oreGenPerChunk, int oreGenMinY, int oreGenMaxY) {
-		this(minableBlock, numberOfBlocks, Blocks.stone, oreGenPerChunk, oreGenMinY, oreGenMaxY);
+		this(minableBlock, numberOfBlocks, Stone.layeredStone, oreGenPerChunk, oreGenMinY, oreGenMaxY);
 	}
 
 	public WorldGenOre(Block minableBlock, int numberOfBlocks, Block blockToReplace, int oreGenPerChunk, int oreGenMinY, int oreGenMaxY) {

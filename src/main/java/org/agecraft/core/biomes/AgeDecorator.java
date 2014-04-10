@@ -2,13 +2,13 @@ package org.agecraft.core.biomes;
 
 import java.util.Random;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 import org.agecraft.core.Metals;
+import org.agecraft.core.Stone;
 import org.agecraft.core.registry.MetalRegistry;
 import org.agecraft.core.world.WorldGenOre;
 import org.agecraft.prehistory.world.WorldGenTempSmallTree;
@@ -33,7 +33,7 @@ public class AgeDecorator {
 		oreGens = new WorldGenOre[MetalRegistry.instance.getAll().length];
 		for(int i = 0; i < MetalRegistry.instance.getAll().length; i++) {
 			if(MetalRegistry.instance.get(i) != null && MetalRegistry.instance.get(i).hasOre) {
-				oreGens[i] = new WorldGenOre(Metals.ore, i, true, MetalRegistry.instance.get(i).oreGenSize, Blocks.stone, MetalRegistry.instance.get(i).oreGenPerChunk, MetalRegistry.instance.get(i).oreGenMinY, MetalRegistry.instance.get(i).oreGenMaxY);
+				oreGens[i] = new WorldGenOre(Metals.ore, i, true, MetalRegistry.instance.get(i).oreGenSize, Stone.layeredStone, MetalRegistry.instance.get(i).oreGenPerChunk, MetalRegistry.instance.get(i).oreGenMinY, MetalRegistry.instance.get(i).oreGenMaxY);
 			}
 		}
 	}
