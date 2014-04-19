@@ -14,6 +14,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.ACUtil;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -36,7 +37,7 @@ public class BlockColoredStoneBrickPillar extends BlockExtendedMetadata implemen
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
+		return LanguageManager.getLocalization("color." + ACUtil.getColorName((stack.getItemDamage() & 60) / 4)) + " " + String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
 	}
 	
 	@Override

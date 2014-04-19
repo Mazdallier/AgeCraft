@@ -1,7 +1,10 @@
 package org.agecraft.core.models.animals;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelQuadruped;
 
+@SideOnly(Side.CLIENT)
 public class ModelPig extends ModelQuadruped {
 
 	public ModelPig() {

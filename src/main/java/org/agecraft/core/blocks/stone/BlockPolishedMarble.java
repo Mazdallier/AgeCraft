@@ -19,13 +19,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.blocks.BlockMetadata;
 import elcon.mods.elconqore.lang.LanguageManager;
 
-public class BlockColoredStoneCracked extends BlockMetadata {
-
+public class BlockPolishedMarble extends BlockMetadata {
+	
 	private IIcon icon;
 	
-	public BlockColoredStoneCracked() {
+	public BlockPolishedMarble() {
 		super(Material.rock);
-		setHardness(2.0F);
+		setHardness(1.5F);
 		setResistance(10.0F);
 		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
@@ -33,24 +33,24 @@ public class BlockColoredStoneCracked extends BlockMetadata {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("color." + ACUtil.getColorName(stack.getItemDamage())) + " " + String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
+		return LanguageManager.getLocalization("color." + ACUtil.getColorName(stack.getItemDamage())) + " " + LanguageManager.getLocalization(getUnlocalizedName());
 	}
 	
 	@Override
 	public String getUnlocalizedName() {
-		return "stone.stoneCracked";
+		return "stone.polishedMarble";
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderColor(int meta) {
-		return BlockColoredStone.colors[meta];
+		return BlockMarble.colors[meta];
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
-		return BlockColoredStone.colors[blockAccess.getBlockMetadata(x, y, z)];
+		return BlockMarble.colors[blockAccess.getBlockMetadata(x, y, z)];
 	}
 	
 	@Override
@@ -62,9 +62,9 @@ public class BlockColoredStoneCracked extends BlockMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		icon = iconRegister.registerIcon("agecraft:stone/coloredStoneCracked");
+		icon = iconRegister.registerIcon("agecraft:stone/polishedMarble");
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {

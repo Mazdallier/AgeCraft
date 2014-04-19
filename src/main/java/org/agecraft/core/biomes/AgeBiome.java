@@ -13,7 +13,10 @@ import org.agecraft.AgeCraft;
 import org.agecraft.core.Stone;
 import org.agecraft.core.blocks.metal.BlockStoneLayered;
 import org.agecraft.core.dimension.AgeChunkProvider;
+import org.agecraft.core.entity.animals.EntityChicken;
+import org.agecraft.core.entity.animals.EntityCow;
 import org.agecraft.core.entity.animals.EntityPig;
+import org.agecraft.core.entity.animals.EntitySheep;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,7 +26,7 @@ public abstract class AgeBiome extends BiomeGenBase {
 	public AgeChunkProvider chunkProvider;
 	public AgeChunkProvider currentChunkProvider;
 	private AgeBiome mutation;
-	
+
 	public AgeBiome(int id) {
 		this(id, true);
 	}
@@ -34,8 +37,11 @@ public abstract class AgeBiome extends BiomeGenBase {
 		spawnableMonsterList.clear();
 		spawnableWaterCreatureList.clear();
 		spawnableCaveCreatureList.clear();
-		
+
 		spawnableCreatureList.add(new SpawnListEntry(EntityPig.class, 10, 4, 4));
+		spawnableCreatureList.add(new SpawnListEntry(EntityCow.class, 8, 4, 4));
+		spawnableCreatureList.add(new SpawnListEntry(EntityChicken.class, 10, 4, 4));
+		spawnableCreatureList.add(new SpawnListEntry(EntitySheep.class, 12, 4, 4));
 	}
 
 	@Override
@@ -46,7 +52,7 @@ public abstract class AgeBiome extends BiomeGenBase {
 		}
 		return super.getSkyColorByTemp(f);
 	}
-	
+
 	@Override
 	public int getWaterColorMultiplier() {
 		if(currentChunkProvider != null && currentChunkProvider.age.ageID == Age.prehistory.ageID) {
@@ -54,15 +60,15 @@ public abstract class AgeBiome extends BiomeGenBase {
 		}
 		return super.getWaterColorMultiplier();
 	}
-	
+
 	public AgeBiome getMutation() {
 		return mutation;
 	}
-	
+
 	public void setMutation(AgeBiome biome) {
 		mutation = biome;
 	}
-	
+
 	public AgeBiome setMutation() {
 		mutation = new BiomeMutation(getBiomeID(), this);
 		return this;
@@ -88,9 +94,9 @@ public abstract class AgeBiome extends BiomeGenBase {
 		setDecoratorOptions(chunkProvider.getDecorator());
 		chunkProvider.getDecorator().decorate(world, random, chunkX, chunkZ, this);
 	}
-	
+
 	public void setDecoratorOptions(AgeDecorator decorator) {
-		
+
 	}
 
 	@Override
@@ -160,7 +166,7 @@ public abstract class AgeBiome extends BiomeGenBase {
 			}
 		}
 	}
-	
+
 	public static int getBiomeID() {
 		for(int i = 0; i < getBiomeGenArray().length; i++) {
 			if(getBiome(i) == null) {

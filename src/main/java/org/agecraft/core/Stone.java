@@ -9,6 +9,8 @@ import org.agecraft.core.blocks.stone.BlockColoredStoneBrick;
 import org.agecraft.core.blocks.stone.BlockColoredStoneBrickPillar;
 import org.agecraft.core.blocks.stone.BlockColoredStoneCracked;
 import org.agecraft.core.blocks.stone.BlockColoredStoneMossy;
+import org.agecraft.core.blocks.stone.BlockMarble;
+import org.agecraft.core.blocks.stone.BlockPolishedMarble;
 import org.agecraft.core.blocks.stone.BlockStone;
 import org.agecraft.core.blocks.stone.BlockStoneBrick;
 import org.agecraft.core.blocks.stone.BlockStoneBrickPillar;
@@ -37,6 +39,9 @@ public class Stone extends ACComponent {
 	public static Block coloredStoneBrick;
 	public static Block coloredStoneBrickPillar;
 	
+	public static Block marble;
+	public static Block polishedMarble;
+	
 	public Stone() {
 		super("stone", false);
 	}
@@ -58,6 +63,9 @@ public class Stone extends ACComponent {
 		coloredStoneBrick = new BlockColoredStoneBrick().setBlockName("AC_stone_coloredStoneBrick");
 		coloredStoneBrickPillar = new BlockColoredStoneBrickPillar().setBlockName("AC_stone_coloredStoneBrickPillar");
 		
+		marble = new BlockMarble().setBlockName("AC_stone_marble");
+		polishedMarble = new BlockPolishedMarble().setBlockName("AC_stone_polishedMarble");
+		
 		//register blocks
 		GameRegistry.registerBlock(layeredStone, ItemBlockMetadata.class, "AC_stone_layeredStone");
 
@@ -72,6 +80,9 @@ public class Stone extends ACComponent {
 		GameRegistry.registerBlock(coloredStoneMossy, ItemBlockMetadata.class, "AC_stone_coloredStoneMossy");
 		GameRegistry.registerBlock(coloredStoneBrick, ItemBlockExtendedMetadata.class, "AC_stone_coloredStoneBrick");
 		GameRegistry.registerBlock(coloredStoneBrickPillar, ItemBlockExtendedMetadata.class, "AC_coloredStone_stoneBrickPillar");
+		
+		GameRegistry.registerBlock(marble, ItemBlockMetadata.class, "AC_stone_marble");
+		GameRegistry.registerBlock(polishedMarble, ItemBlockMetadata.class, "AC_stone_polishedMarble");
 		
 		//register stone types
 		StoneTypeRegistry.registerStoneType(new StoneType(0, "stone"));

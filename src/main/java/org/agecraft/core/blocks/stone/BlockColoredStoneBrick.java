@@ -12,6 +12,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.ACUtil;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -37,7 +38,7 @@ public class BlockColoredStoneBrick extends BlockExtendedMetadataOverlay {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
+		return LanguageManager.getLocalization("color." + ACUtil.getColorName((stack.getItemDamage() & 120) / 8)) + " " + String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
 	}
 	
 	@Override

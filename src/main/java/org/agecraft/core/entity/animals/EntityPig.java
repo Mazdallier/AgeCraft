@@ -21,7 +21,7 @@ import org.agecraft.core.items.farming.ItemFood;
 
 public class EntityPig extends EntityAnimal {
 
-	public static DNAObjectAnimal pigDNA = new DNAObjectAnimal(100, "pig", EntityPig.class);
+	public static DNAObjectAnimal dna = new DNAObjectAnimal(100, "pig", EntityPig.class);
 	
 	public EntityPig(World world) {
 		super(world);
@@ -83,6 +83,6 @@ public class EntityPig extends EntityAnimal {
 
 	@Override
 	public DNAObject getDNAObject() {
-		return pigDNA;
+		return dna;
 	}
 }

@@ -19,13 +19,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 import elcon.mods.elconqore.blocks.BlockMetadata;
 import elcon.mods.elconqore.lang.LanguageManager;
 
-public class BlockColoredStoneCracked extends BlockMetadata {
+public class BlockMarble extends BlockMetadata {
 
+	public static int[] colors = new int[]{
+		0xE6E6E6, 0xA65833, 0x9948BB, 0x769FC9, 0xD3D045, 0x72AB32, 0xE989AB, 0x4D4D4D, 0x999999, 0x5C7C89, 0x7752A0, 0x334CB2, 0x5E4D3C, 0x68753E, 0x8D413F, 0x1A1A1A
+	};
+	
 	private IIcon icon;
 	
-	public BlockColoredStoneCracked() {
+	public BlockMarble() {
 		super(Material.rock);
-		setHardness(2.0F);
+		setHardness(1.5F);
 		setResistance(10.0F);
 		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
@@ -33,24 +37,24 @@ public class BlockColoredStoneCracked extends BlockMetadata {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return LanguageManager.getLocalization("color." + ACUtil.getColorName(stack.getItemDamage())) + " " + String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
+		return LanguageManager.getLocalization("color." + ACUtil.getColorName(stack.getItemDamage())) + " " + LanguageManager.getLocalization(getUnlocalizedName());
 	}
 	
 	@Override
 	public String getUnlocalizedName() {
-		return "stone.stoneCracked";
+		return "stone.marble";
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderColor(int meta) {
-		return BlockColoredStone.colors[meta];
+		return colors[meta];
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
-		return BlockColoredStone.colors[blockAccess.getBlockMetadata(x, y, z)];
+		return colors[blockAccess.getBlockMetadata(x, y, z)];
 	}
 	
 	@Override
@@ -62,9 +66,9 @@ public class BlockColoredStoneCracked extends BlockMetadata {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegister) {
-		icon = iconRegister.registerIcon("agecraft:stone/coloredStoneCracked");
+		icon = iconRegister.registerIcon("agecraft:stone/marble");
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs creativeTab, List list) {

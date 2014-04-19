@@ -8,11 +8,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
-public class RenderPig extends RenderLiving {
+public class RenderCow extends RenderLiving {
 
-	public static ResourceLocation texture = new ResourceLocation("agecraft", "textures/entity/animals/pig/pig.png");
+	public static ResourceLocation texture = new ResourceLocation("agecraft", "textures/entity/animals/cow/cow.png");
 	
-	public RenderPig(ModelBase model1, float f) {
+	public RenderCow(ModelBase model1, float f) {
 		super(model1, f);
 	}
 	

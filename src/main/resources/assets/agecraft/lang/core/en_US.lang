@@ -108,6 +108,7 @@ stone.stoneBrick.creeper=%s Brick Creeper
 stone.stoneBrick.chiseled=Chiseled %s Brick
 stone.stoneBrick.smooth=Smooth %s Brick
 stone.stoneBrick.pillar=%s Brick Pillar
+stone.marble=Marble
 
 trees.wood=Wood
 trees.leaves=Leaves

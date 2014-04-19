@@ -13,6 +13,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 import org.agecraft.ACCreativeTabs;
+import org.agecraft.ACUtil;
 import org.agecraft.core.Stone;
 
 import cpw.mods.fml.relauncher.Side;
@@ -38,7 +39,7 @@ public class BlockColoredStone extends BlockMetadata {
 	
 	@Override
 	public String getLocalizedName(ItemStack stack) {
-		return String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
+		return LanguageManager.getLocalization("color." + ACUtil.getColorName(stack.getItemDamage())) + " " + String.format(super.getLocalizedName(stack), LanguageManager.getLocalization("stone.types.stone"));
 	}
 	
 	@Override

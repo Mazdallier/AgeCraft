@@ -28,6 +28,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import elcon.mods.elconqore.blocks.BlockFluidMetadata;
 
 public class ACUtil {
+	
+	public static String[] colorNames = new String[]{"white", "orange", "magenta", "lightBlue", "yellow", "lime", "pink", "gray", "lightGray", "cyan", "purple", "blue", "brown", "green", "red", "black"};
 
 	public static String arrayToString(Object[] array) {
 		StringBuilder sb = new StringBuilder();
@@ -52,6 +54,19 @@ public class ACUtil {
 			}
 		}
 		return true;
+	}
+	
+	public static String getColorName(int color) {
+		return colorNames[color];
+	}
+	
+	public static int getColorFromName(String colorName) {
+		for(int i = 0; i < colorNames.length; i++) {
+			if(colorNames[i].equalsIgnoreCase(colorName)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	public static boolean areItemStacksEqualNoSize(ItemStack stack1, ItemStack stack2) {

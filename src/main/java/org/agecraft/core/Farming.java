@@ -1,7 +1,10 @@
 package org.agecraft.core;
 
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 import org.agecraft.ACComponent;
 import org.agecraft.core.items.farming.ItemFood;
@@ -13,10 +16,13 @@ import org.agecraft.core.registry.FoodRegistry.FoodStage;
 import org.agecraft.core.registry.FoodRegistry.FoodType;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import elcon.mods.elconqore.fluids.FluidName;
 
 public class Farming extends ACComponent {
 
 	public static Item food;
+
+	public static Fluid milk;
 
 	public Farming() {
 		super("food", false);
@@ -28,16 +34,22 @@ public class Farming extends ACComponent {
 		food = new ItemFood().setUnlocalizedName("AC_food_food");
 
 		// register items
-		GameRegistry.registerItem(food, "AC_food_food");				
-		
-		//register fruit
+		GameRegistry.registerItem(food, "AC_food_food");
+
+		// init fluids
+		milk = new FluidName("milk").setRarity(EnumRarity.common);
+
+		// register fluids
+		FluidRegistry.registerFluid(milk);
+
+		// register fruit
 		FoodRegistry.registerFood(new Food(0, "appleRed", FoodType.FRUIT).setProperties(FoodStage.RAW, new FoodProperties(FoodStage.RAW, 4, 0.3F).resetPrePostfix()));
 		FoodRegistry.registerFood(new Food(1, "appleGreen", FoodType.FRUIT).setProperties(FoodStage.RAW, new FoodProperties(FoodStage.RAW, 4, 0.3F).resetPrePostfix()));
 
 		FoodRegistry.registerFood(new Food(1024, "carrot", FoodType.VEGETABLES).setProperties(FoodStage.RAW, new FoodProperties(FoodStage.RAW, 4, 0.6F).resetPrePostfix()));
 		FoodRegistry.registerFood(new Food(1025, "potato", FoodType.VEGETABLES).setProperties(FoodStage.RAW, new FoodProperties(FoodStage.RAW, 1, 0.3F).resetPrePostfix()).setProperties(FoodStage.COOKED, new FoodProperties(FoodStage.COOKED, 6, 0.6F).setPrefix("food.baked")));
 		FoodRegistry.registerFood(new Food(1026, "tomato", FoodType.VEGETABLES).setProperties(FoodStage.RAW, new FoodProperties(FoodStage.RAW, 4, 0.3F).resetPrePostfix()));
-		
+
 		FoodRegistry.registerFood(new Food(2048, "pork", FoodType.MEAT).setProperties(FoodStage.RAW, new FoodProperties(FoodStage.RAW, 3, 0.3F)).setProperties(FoodStage.COOKED, new FoodProperties(FoodStage.COOKED, 8, 0.8F)).setProperties(FoodStage.BURNED, new FoodProperties(FoodStage.BURNED, 1, 0.1F).addPotionEffect(new FoodPotion(Potion.hunger.id, 30, 0, 0.8F))));
 		FoodRegistry.registerFood(new Food(2049, "beef", FoodType.MEAT).setProperties(FoodStage.RAW, new FoodProperties(FoodStage.RAW, 3, 0.3F)).setProperties(FoodStage.COOKED, new FoodProperties(FoodStage.COOKED, 8, 0.8F)).setProperties(FoodStage.BURNED, new FoodProperties(FoodStage.BURNED, 1, 0.1F).addPotionEffect(new FoodPotion(Potion.hunger.id, 30, 0, 0.8F))));
 		FoodRegistry.registerFood(new Food(2050, "chicken", FoodType.MEAT).setProperties(FoodStage.RAW, new FoodProperties(FoodStage.RAW, 2, 0.3F).addPotionEffect(new FoodPotion(Potion.hunger.id, 30, 0, 0.3F))).setProperties(FoodStage.COOKED, new FoodProperties(FoodStage.COOKED, 6, 0.6F)).setProperties(FoodStage.BURNED, new FoodProperties(FoodStage.BURNED, 1, 0.1F).addPotionEffect(new FoodPotion(Potion.hunger.id, 30, 0, 0.8F))));
