@@ -45,6 +45,7 @@ public class AgeCraftCore extends ACComponent {
 	public TechTree techTree;
 	public Biomes biomes;
 	public Stone stone;
+	public Building building;
 	public Metals metals;
 	public Trees trees;
 	public Tools tools;
@@ -52,6 +53,7 @@ public class AgeCraftCore extends ACComponent {
 	public Crafting crafting;
 	public Farming farming;
 	public Animals animals;
+	public MultiParts multiparts;
 
 	public static Block clothingSelectorTest;
 
@@ -61,6 +63,7 @@ public class AgeCraftCore extends ACComponent {
 		techTree = new TechTree();
 		biomes = new Biomes();
 		stone = new Stone();
+		building = new Building();
 		metals = new Metals();
 		trees = new Trees();
 		tools = new Tools();
@@ -68,6 +71,7 @@ public class AgeCraftCore extends ACComponent {
 		crafting = new Crafting();
 		farming = new Farming();
 		animals = new Animals();
+		multiparts = new MultiParts();
 
 		instance = this;
 	}

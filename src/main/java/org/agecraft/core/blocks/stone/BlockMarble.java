@@ -22,11 +22,11 @@ import elcon.mods.elconqore.lang.LanguageManager;
 public class BlockMarble extends BlockMetadata {
 
 	public static int[] colors = new int[]{
-		0xE6E6E6, 0xA65833, 0x9948BB, 0x769FC9, 0xD3D045, 0x72AB32, 0xE989AB, 0x4D4D4D, 0x999999, 0x5C7C89, 0x7752A0, 0x334CB2, 0x5E4D3C, 0x68753E, 0x8D413F, 0x1A1A1A
+		0xE3DCDC, 0xC27A57, 0xC078DE, 0x90B7DE, 0xEDEB79, 0x9BD45B, 0xF7BED3, 0x636363, 0xA8A7A7, 0x8EA4AD, 0xA587C7, 0x6C82D9, 0x87796B, 0x939E6F, 0xBA7C7B, 0x333232
 	};
-	
+
 	private IIcon icon;
-	
+
 	public BlockMarble() {
 		super(Material.rock);
 		setHardness(1.5F);
@@ -34,35 +34,35 @@ public class BlockMarble extends BlockMetadata {
 		setStepSound(Block.soundTypeStone);
 		setCreativeTab(ACCreativeTabs.stone);
 	}
-	
+
 	@Override
 	public String getLocalizedName(ItemStack stack) {
 		return LanguageManager.getLocalization("color." + ACUtil.getColorName(stack.getItemDamage())) + " " + LanguageManager.getLocalization(getUnlocalizedName());
 	}
-	
+
 	@Override
 	public String getUnlocalizedName() {
 		return "stone.marble";
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderColor(int meta) {
 		return colors[meta];
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z) {
 		return colors[blockAccess.getBlockMetadata(x, y, z)];
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
 		return icon;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister iconRegister) {

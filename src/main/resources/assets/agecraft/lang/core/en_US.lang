@@ -1,5 +1,6 @@
 itemGroup.AgeCraft=AgeCraft
 itemGroup.Stone=Stone
+itemGroup.Building=Building Blocks
 itemGroup.Metals=Metals
 itemGroup.Wood=Wood
 itemGroup.Tools=Tools
@@ -109,6 +110,24 @@ stone.stoneBrick.chiseled=Chiseled %s Brick
 stone.stoneBrick.smooth=Smooth %s Brick
 stone.stoneBrick.pillar=%s Brick Pillar
 stone.marble=Marble
+stone.polishedMarble=Polished Marble
+
+building.grass=Grass
+building.dirt=Dirt
+building.infertileDirt=Infertile Dirt
+building.podzol=Podzol
+building.sand=Sand
+building.redSand=Red Sand
+building.gravel=Gravel
+building.clay=Clay
+building.hardenedClay=Hardened Clay
+building.stainedHardenedClay=Stained Clay
+building.brickBlock=Brick
+building.glass=Glass
+building.clearGlass=Clear Glass
+building.stainedGlass=Stained Glass
+building.clayBall=Clay
+building.brick=Brick
 
 trees.wood=Wood
 trees.leaves=Leaves

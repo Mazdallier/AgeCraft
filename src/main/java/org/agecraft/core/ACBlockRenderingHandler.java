@@ -24,11 +24,11 @@ import elcon.mods.elconqore.tileentities.TileEntityMetadata;
 public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 
 	public static ACBlockRenderingHandler instance;
-	
+
 	public ACBlockRenderingHandler() {
 		instance = this;
 	}
-	
+
 	// private TileEntityAgeTeleporterChest tileChestInstance = new TileEntityAgeTeleporterChest();
 
 	@Override
@@ -36,6 +36,8 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		switch(modelID) {
 		case 91:
 			return renderBlockRotated(blockAccess, x, y, z, (IBlockRotated) block, modelID, renderer);
+		case 98:
+			return renderer.renderStandardBlock(block, x, y, z);
 		case 100:
 			return renderBlockMetalFence(blockAccess, x, y, z, (BlockMetalFence) block, modelID, renderer);
 		case 101:
@@ -696,7 +698,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 		}
 		return renderBlockAnvilOrient(block, x, y, z, tile.getMeta(), tile.direction, false, renderer);
 	}
-	
+
 	public boolean renderBlockAnvil(IBlockAccess blockAccess, int x, int y, int z, BlockAnvil block, int meta, int direction, RenderBlocks renderer) {
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, x, y, z));
@@ -808,6 +810,7 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
 		switch(modelID) {
 		case 91:
+		case 98:
 			renderItemBlock(block, metadata, modelID, renderer);
 			break;
 		case 99:
@@ -842,6 +845,67 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			renderItemBlockAnvil((BlockAnvil) block, metadata, modelID, renderer);
 			break;
 		}
+	}
+	
+	public void renderItemBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+		Tessellator tessellator = Tessellator.instance;
+		boolean flag = block == Blocks.grass || block == Building.grass;
+		float colorMultiplier = 1.0F;
+		if(renderer.useInventoryTint) {
+			int color = block.getRenderColor(metadata);
+			if(flag) {
+				color = 16777215;
+			}
+			float r = (float) (color >> 16 & 255) / 255.0F;
+			float g = (float) (color >> 8 & 255) / 255.0F;
+			float b = (float) (color & 255) / 255.0F;
+			GL11.glColor4f(r * colorMultiplier, g * colorMultiplier, b * colorMultiplier, 1.0F);
+		}
+		renderer.setRenderBoundsFromBlock(block);
+		block.setBlockBoundsForItemRender();
+		renderer.setRenderBoundsFromBlock(block);
+		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, -1.0F, 0.0F);
+		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 0, metadata));
+		tessellator.draw();
+
+		if(flag && renderer.useInventoryTint) {
+			int color = block.getRenderColor(metadata);
+			float r = (float) (color >> 16 & 255) / 255.0F;
+			float g = (float) (color >> 8 & 255) / 255.0F;
+			float b = (float) (color & 255) / 255.0F;
+			GL11.glColor4f(r * colorMultiplier, g * colorMultiplier, b * colorMultiplier, 1.0F);
+		}
+
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 1.0F, 0.0F);
+		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
+		tessellator.draw();
+
+		if(flag && renderer.useInventoryTint) {
+			GL11.glColor4f(colorMultiplier, colorMultiplier, colorMultiplier, 1.0F);
+		}
+
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 0.0F, -1.0F);
+		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 2, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(0.0F, 0.0F, 1.0F);
+		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 3, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
+		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 4, metadata));
+		tessellator.draw();
+		tessellator.startDrawingQuads();
+		tessellator.setNormal(1.0F, 0.0F, 0.0F);
+		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 5, metadata));
+		tessellator.draw();
+		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+
 	}
 
 	private void renderItemBlockMetalFence(Block block, int metadata, int modelID, RenderBlocks renderer) {
@@ -953,49 +1017,6 @@ public class ACBlockRenderingHandler implements ISimpleBlockRenderingHandler {
 			tessellator.draw();
 			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 		}
-	}
-
-	private void renderItemBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		Tessellator tessellator = Tessellator.instance;
-		if(renderer.useInventoryTint) {
-			int color = block.getRenderColor(metadata);
-			float r = (float) (color >> 16 & 255) / 255.0F;
-			float g = (float) (color >> 8 & 255) / 255.0F;
-			float b = (float) (color & 255) / 255.0F;
-			GL11.glColor4f(r, g, b, 1.0F);
-		}
-		block.setBlockBoundsForItemRender();
-		renderer.setRenderBoundsFromBlock(block);
-
-		GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, -1.0F, 0.0F);
-		renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 0, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, 1.0F, 0.0F);
-		renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, 0.0F, -1.0F);
-		renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 2, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(0.0F, 0.0F, 1.0F);
-		renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 3, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-		renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 4, metadata));
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setNormal(1.0F, 0.0F, 0.0F);
-		renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 5, metadata));
-		tessellator.draw();
-
-		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 	}
 
 	private void renderItemBlockWoodWall(Block block, int metadata, int modelID, RenderBlocks renderer) {

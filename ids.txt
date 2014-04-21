@@ -20,7 +20,8 @@
 90-98   Common blocks
 	90 Crossed Squares
 	91 Rotated
-99-199 	Core blocks
+98-199 	Core blocks
+	98  Grass
 	99  Age Teleporter Chest
 	100 Fence
 	101 Fence gate
