@@ -10,6 +10,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 import org.agecraft.Age;
 import org.agecraft.AgeCraft;
+import org.agecraft.core.Building;
 import org.agecraft.core.Stone;
 import org.agecraft.core.blocks.metal.BlockStoneLayered;
 import org.agecraft.core.dimension.AgeChunkProvider;
@@ -26,6 +27,9 @@ public abstract class AgeBiome extends BiomeGenBase {
 	public AgeChunkProvider chunkProvider;
 	public AgeChunkProvider currentChunkProvider;
 	private AgeBiome mutation;
+	
+	public int topMeta;
+	public int fillerMeta;
 
 	public AgeBiome(int id) {
 		this(id, true);
@@ -33,6 +37,9 @@ public abstract class AgeBiome extends BiomeGenBase {
 
 	public AgeBiome(int id, boolean register) {
 		super(id, register);
+		topMeta = 0;
+		fillerMeta = 0;
+		
 		spawnableCreatureList.clear();
 		spawnableMonsterList.clear();
 		spawnableWaterCreatureList.clear();
@@ -107,7 +114,9 @@ public abstract class AgeBiome extends BiomeGenBase {
 	public void genTerrainBiome(World world, Random random, Block[] blocks, byte[] meta, int x, int y, double noise) {
 		Block blockTop = topBlock;
 		byte b0 = (byte) (field_150604_aj & 255);
+		byte metaTop = (byte) topMeta;
 		Block blockFiller = fillerBlock;
+		byte metaFiller = (byte) fillerMeta;
 		int k = -1;
 		int l = (int) (noise / 3.0D + 3.0D + random.nextDouble() * 0.25D);
 		int xx = x & 15;
@@ -118,43 +127,54 @@ public abstract class AgeBiome extends BiomeGenBase {
 			if(height <= 0 + random.nextInt(5)) {
 				blocks[index] = Blocks.bedrock;
 			} else {
-				Block block2 = blocks[index];
-				if(block2 != null && block2.getMaterial() != Material.air) {
-					if(block2 == Stone.stone) {
+				Block block = blocks[index];
+				if(block != null && block.getMaterial() != Material.air) {
+					if(block == Stone.stone) {
 						if(k == -1) {
 							if(l <= 0) {
 								blockTop = null;
 								b0 = 0;
+								metaTop = 0;
 								blockFiller = Stone.stone;
+								metaFiller = 0;
 							} else if(height >= 59 && height <= 64) {
 								blockTop = topBlock;
 								b0 = (byte) (field_150604_aj & 255);
+								metaTop = (byte) topMeta;
 								blockFiller = fillerBlock;
+								metaFiller = (byte) fillerMeta;
 							}
 							if(height < 63 && (blockTop == null || blockTop.getMaterial() == Material.air)) {
 								if(getFloatTemperature(x, height, y) < 0.15F) {
 									blockTop = Blocks.ice;
 									b0 = 0;
+									metaTop = 0;
 								} else {
 									blockTop = Blocks.water;
 									b0 = 0;
+									metaTop = 0;
 								}
 							}
 							k = l;
 							if(height >= 62) {
 								blocks[index] = blockTop;
 								meta[index] = b0;
+								meta[index] = metaTop;
 							} else if(height < 56 - l) {
 								blockTop = null;
+								metaTop = 0;
 								blockFiller = Stone.stone;
-								blocks[index] = Blocks.gravel;
+								metaFiller = 0;
+								blocks[index] = Building.sand;
+								meta[index] = 2;
 							} else {
 								blocks[index] = blockFiller;
+								meta[index] = metaFiller;
 							}
 						} else if(k > 0) {
-							--k;
+							k--;
 							blocks[index] = blockFiller;
-							if(k == 0 && blockFiller == Blocks.sand) {
+							if(k == 0 && blockFiller == Building.sand) {
 								k = random.nextInt(4) + Math.max(0, height - 63);
 								blockFiller = Blocks.sandstone;
 							}
