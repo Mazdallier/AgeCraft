@@ -3,4 +3,5 @@
 <properties version="1.0">
 	<comment>Version lookup for AgeCraft. Format is "Current Version Number|URL to update page"</comment>
 	<entry key="Minecraft 1.6.4">Alpha 0.1.1|[url]</entry>
+	<entry key="Minecraft 1.7.2">Alpha 0.3.2|http://agecraft.org/</entry>
 </properties>
