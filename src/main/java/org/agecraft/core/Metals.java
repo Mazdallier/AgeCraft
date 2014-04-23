@@ -148,6 +148,21 @@ public class Metals extends ACComponent {
 		for(int i = 0; i < MetalRegistry.instance.getAll().length; i++) {
 			Metal metal = MetalRegistry.instance.get(i);
 			if(metal != null) {
+				if(metal.hasOre) {
+					registerHarvestLevels(ore, metal, 0);
+				}
+				if(metal.hasBlock) {
+					registerHarvestLevels(block, metal, 4);
+					registerHarvestLevels(blockPillar, metal, 4);
+				}
+				if(metal.hasDoor) {
+					registerHarvestLevels(fence, metal, 0);
+					registerHarvestLevels(fenceGate, metal, 8);
+					registerHarvestLevels(door, metal, 128);
+					registerHarvestLevels(trapdoor, metal, 32);
+					registerHarvestLevels(ladder, metal, 8);
+				}
+				
 				DustRegistry.registerDust(new Dust(128 + i, metal.name, "metals." + metal.name, new ItemStack(dust, 1, i)));
 
 				// TODO: set density, viscosity and temperature
@@ -157,6 +172,12 @@ public class Metals extends ACComponent {
 			}
 		}
 		((BlockFluidMetadata) fluid).setFluids(fluids);
+	}
+	
+	private void registerHarvestLevels(Block block, Metal metal, int base) {
+		for(int i = 0; i < base; i++) {
+			block.setHarvestLevel("pickaxe", metal.harvestLevel, metal.id * base + i);
+		}
 	}
 
 	@Override

@@ -112,7 +112,7 @@ public class Trees extends ACComponent {
 		GameRegistry.registerBlock(leavesDNA, ItemBlockName.class, "AC_trees_leavesDNA");
 		GameRegistry.registerBlock(saplingDNA, ItemSaplingDNA.class, "AC_trees_saplingDNA");
 
-		// register block flammability
+		// set block flammability
 		Blocks.fire.setFireInfo(wood, 5, 5);
 		Blocks.fire.setFireInfo(log, 5, 5);
 		Blocks.fire.setFireInfo(planks, 5, 20);
@@ -176,7 +176,7 @@ public class Trees extends ACComponent {
 	@Override
 	public void postInit() {
 		ItemRockTool.blocksEffectiveAgainst = ArrayUtils.addAll(ItemRockTool.blocksEffectiveAgainst, log, leaves);
-		
+
 		for(Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
 			for(int i = 0; i < TreeRegistry.instance.getAll().length; i++) {
 				if(TreeRegistry.instance.get(i) != null) {

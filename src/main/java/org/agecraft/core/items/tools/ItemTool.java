@@ -88,7 +88,7 @@ public abstract class ItemTool extends Item {
 
 	@Override
 	public float getDigSpeed(ItemStack stack, Block block, int metadata) {
-		return isEffectiveAgainstBlock(stack, block) && canHarvestBlock(stack, block, metadata) ? getToolEfficiency(stack) : 1.0F;
+		return isEffectiveAgainstBlock(stack, block) && canHarvestBlock(stack, block, metadata) ? getToolEfficiency(stack) : 0.1F;
 	}
 
 	public boolean canHarvestBlock(ItemStack stack, Block block, int meta) {

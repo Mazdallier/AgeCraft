@@ -63,6 +63,11 @@ public class Building extends ACComponent {
 		GameRegistry.registerBlock(glass, ItemBlockMetadata.class, "AC_building_glass");
 		GameRegistry.registerBlock(stainedGlass, ItemBlockMetadata.class, "AC_building_stainedGlass");
 		
+		//set block harvest levels
+		hardenedClay.setHarvestLevel("pickaxe", 0);
+		stainedHardenedClay.setHarvestLevel("pickaxe", 0);
+		brickBlock.setHarvestLevel("pickaxe", 0);
+		
 		//init items
 		clayBall = new ItemDummy("building.clayBall").setCreativeTab(ACCreativeTabs.building).setTextureName("agecraft:building/clay").setUnlocalizedName("AC_building_clayBall");
 		brick = new ItemDummy("building.brick").setCreativeTab(ACCreativeTabs.building).setTextureName("agecraft:building/brick").setUnlocalizedName("AC_building_brick");
