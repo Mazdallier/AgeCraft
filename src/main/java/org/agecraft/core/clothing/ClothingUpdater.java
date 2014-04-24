@@ -285,7 +285,7 @@ public class ClothingUpdater implements Runnable {
 		LinkedList<String> lines = new LinkedList<String>();
 		for(ClothingCategory category : downloadCategories) {
 			try {
-				AgeCraft.log.info("[Clothing] Updating category " + category.name + " to version " + versions.get(category.name));
+				AgeCraft.log.info("[Clothing] Updating category " + category.name + " to version " + versions.get(category.name).version);
 				File clothingZip = new File(clothingDir, category.name + ".zip");
 				clothingZip.createNewFile();
 				FileUtils.copyURLToFile(new URL(category.updateURL), clothingZip);
