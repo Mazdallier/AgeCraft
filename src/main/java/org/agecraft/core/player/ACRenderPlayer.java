@@ -155,7 +155,7 @@ public class ACRenderPlayer extends RenderPlayer {
 			GL11.glDepthMask(true);
 			fontRenderer.drawString(label, -fontRenderer.getStringWidth(label) / 2, b0, -1);
 
-			if(entity instanceof EntityPlayer && RankManager.getRank(((EntityPlayer) entity).getCommandSenderName()).name.equals(RankManager.developer.name)) {
+			if(entity instanceof EntityPlayer && RankManager.getRank(((EntityPlayer) entity).getCommandSenderName()) != null && RankManager.getRank(((EntityPlayer) entity).getCommandSenderName()) == RankManager.developer) {
 				int halfLabelLength = fontRenderer.getStringWidth(label) / 2;
 				Minecraft.getMinecraft().getTextureManager().bindTexture(AgeCraftCoreClient.gear);
 				tessellator.startDrawingQuads();

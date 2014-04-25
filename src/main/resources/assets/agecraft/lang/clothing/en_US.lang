@@ -22,14 +22,17 @@ clothing.general.skin.steve=Steve's Skin
 
 clothing.general.hair.steve=Steve's Hair
 
-clothing.general.mouth.steve=Steve's Mouth
-
 clothing.general.eyes.steve=Steve's Eyes
 clothing.general.eyes.happy=Happy Eyes
 clothing.general.eyes.large=Large Eyes
 clothing.general.eyes.scared=Scared Eyes
+clothing.general.eyes.derp=Derpy Eyes
+
+clothing.general.mouth.steve=Steve's Mouth
+clothing.general.mouth.derp=Derpy Mouth
 
 clothing.general.facialHair.steve=Steve's Face
+clothing.general.facialHair.none=None
 
 clothing.general.hat.steve=Steve's Hat
 clothing.general.hat.smooth=Smooth Hat
