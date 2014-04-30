@@ -33,12 +33,18 @@ public class AgeCraft {
 
 	@SidedProxy(clientSide = ACReference.CLIENT_PROXY_CLASS, serverSide = ACReference.SERVER_PROXY_CLASS)
 	public static ACCommonProxy proxy;
+	
+	public static ACSaveHandler saveHandler;
 
 	public static Logger log = LogManager.getLogger(ACReference.MOD_ID);
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		EQMod mod = new EQMod(this, ACReference.VERSION_URL, new ACConfig(event.getSuggestedConfigurationFile()), event.getSourceFile());
+		//init save handler
+		saveHandler = new ACSaveHandler();
+		
+		//register mod
+		EQMod mod = new EQMod(this, ACReference.VERSION_URL, new ACConfig(event.getSuggestedConfigurationFile()), event.getSourceFile(), saveHandler);
 		mod.localizationURLs.add("https://raw.github.com/AgeCraft/AgeCraft/master/clothing-localizations.zip");
 
 		// init components

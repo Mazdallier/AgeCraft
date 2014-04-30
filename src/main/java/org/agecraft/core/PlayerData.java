@@ -1,11 +1,14 @@
 package org.agecraft.core;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 public class PlayerData {
 
-	public static class Player {
-		
+	public static class Player implements Serializable {
+
+		private static final long serialVersionUID = 1L;
+
 		public String name;
 		
 		public int loginCount = 0;
