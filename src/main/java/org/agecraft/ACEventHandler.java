@@ -9,7 +9,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.PlayerEvent.NameFormat;
 
 import org.agecraft.core.AgeCraftCore;
-import org.agecraft.core.AgeTeleporter;
 import org.agecraft.core.PlayerData;
 import org.agecraft.core.PlayerData.Player;
 import org.agecraft.core.RankManager;
@@ -63,7 +62,8 @@ public class ACEventHandler {
 			event.player.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
 			event.player.setHealth(100.0F);
 			//event.player.setPosition(event.player.posX, Math.max(event.player.posY, Math.max(EQUtil.getHighestBlock(event.player.worldObj, (int) event.player.posX, (int) event.player.posZ), 96.0D)), event.player.posZ);
-			ACUtil.transferEntityToDimension(event.player, 10, AgeTeleporter.class);
+			//ACUtil.transferEntityToDimension(event.player, 10, AgeTeleporter.class);
+			event.player.travelToDimension(10);
 		}
 		PlayerData.getPlayer(event.player.getCommandSenderName()).loginCount++;
 		AgeCraft.log.info("Registered player " + event.player.getCommandSenderName());

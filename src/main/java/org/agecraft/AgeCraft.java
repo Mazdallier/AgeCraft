@@ -37,6 +37,8 @@ public class AgeCraft {
 	public static ACSaveHandler saveHandler;
 
 	public static Logger log = LogManager.getLogger(ACReference.MOD_ID);
+	
+	public static int isNewWorld = -1;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -111,6 +113,17 @@ public class AgeCraft {
 	
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
+		System.out.println("STARTING: " + isNewWorld);
+		if(isNewWorld == 1) {
+			isNewWorld = 2;
+			for(int i = 0; i < event.getServer().worldServers.length; i++) {
+				if(event.getServer().worldServers[i] != null) {
+					System.out.println("SET WORLD INFO");
+					event.getServer().worldServers[i].getWorldInfo().getNBTTagCompound().setBoolean("AgeCraft", true);
+				}
+			}
+		}
+		
 		event.registerServerCommand(new CommandTechTree());
 		event.registerServerCommand(new CommandPreview());
 	}

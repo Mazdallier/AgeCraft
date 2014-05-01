@@ -126,7 +126,7 @@ public class AgeCraftCore extends ACComponent {
 
 		// update clothing
 		ClothingUpdater clothingUpdater = new ClothingUpdater(new File(ElConQore.minecraftDir, File.separator + "clothing"));
-		clothingUpdater.excecute();
+		clothingUpdater.run();
 	}
 
 	@Override

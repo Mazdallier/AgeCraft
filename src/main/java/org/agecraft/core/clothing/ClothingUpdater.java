@@ -392,8 +392,4 @@ public class ClothingUpdater implements Runnable {
 		download();
 		load();
 	}
-
-	public void excecute() {
-		new Thread(this).start();
-	}
 }

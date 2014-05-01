@@ -6,6 +6,7 @@ import org.agecraft.core.Trees;
 import org.agecraft.core.blocks.tree.BlockLeaves;
 import org.agecraft.core.gui.GuiInGame;
 import org.agecraft.core.gui.GuiTechTreeComponent;
+import org.agecraft.core.gui.menu.GuiMainMenu;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -18,6 +19,9 @@ public class ACTickHandlerClient {
 	public void onRenderTick(RenderTickEvent event) {
 		if(event.phase == Phase.END) {
 			Minecraft mc = Minecraft.getMinecraft();
+			if(mc.currentScreen instanceof net.minecraft.client.gui.GuiMainMenu && !(mc.currentScreen instanceof GuiMainMenu)) {
+				mc.displayGuiScreen(new GuiMainMenu());
+			}
 			if(!(mc.ingameGUI instanceof GuiInGame)) {
 				mc.ingameGUI = new GuiInGame(mc);
 			}
