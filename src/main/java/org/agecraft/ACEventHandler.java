@@ -63,7 +63,7 @@ public class ACEventHandler {
 			event.player.setHealth(100.0F);
 			//event.player.setPosition(event.player.posX, Math.max(event.player.posY, Math.max(EQUtil.getHighestBlock(event.player.worldObj, (int) event.player.posX, (int) event.player.posZ), 96.0D)), event.player.posZ);
 			//ACUtil.transferEntityToDimension(event.player, 10, AgeTeleporter.class);
-			event.player.travelToDimension(10);
+			//event.player.travelToDimension(10);
 		}
 		PlayerData.getPlayer(event.player.getCommandSenderName()).loginCount++;
 		AgeCraft.log.info("Registered player " + event.player.getCommandSenderName());
