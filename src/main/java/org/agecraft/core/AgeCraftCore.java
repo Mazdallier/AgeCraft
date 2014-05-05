@@ -9,6 +9,8 @@ import org.agecraft.ACComponent;
 import org.agecraft.ACComponentClient;
 import org.agecraft.AgeCraft;
 import org.agecraft.core.biomes.Biomes;
+import org.agecraft.core.blocks.BlockAgeTeleporter;
+import org.agecraft.core.blocks.BlockAgeTeleporterBlock;
 import org.agecraft.core.blocks.BlockClothingSelectorTest;
 import org.agecraft.core.clothing.ClothingCategory;
 import org.agecraft.core.clothing.ClothingRegistry;
@@ -29,6 +31,7 @@ import org.agecraft.core.techtree.MessageTechTreeComponent;
 import org.agecraft.core.techtree.TechTree;
 import org.agecraft.core.tileentities.TileEntityAnvil.MessageTileAnvil;
 import org.agecraft.core.tileentities.TileEntityDNA;
+import org.agecraft.core.world.WorldGenSpawnCage;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -56,6 +59,8 @@ public class AgeCraftCore extends ACComponent {
 	public MultiParts multiparts;
 
 	public static Block clothingSelectorTest;
+	public static Block ageTeleporter;
+	public static Block ageTeleporterBlock;
 
 	public AgeCraftCore() {
 		super("core", true);
@@ -80,9 +85,13 @@ public class AgeCraftCore extends ACComponent {
 	public void preInit() {
 		// init blocks
 		clothingSelectorTest = new BlockClothingSelectorTest().setBlockName("AC_clothingSelectorTest");
+		ageTeleporter = new BlockAgeTeleporter().setBlockName("AC_ageTeleporter");
+		ageTeleporterBlock = new BlockAgeTeleporterBlock().setBlockName("AC_ageTeleporterBlock");
 
 		// register blocks
 		GameRegistry.registerBlock(clothingSelectorTest, ItemBlockName.class, "AC_clothingSelectorTest");
+		GameRegistry.registerBlock(ageTeleporter, ItemBlockName.class, "AC_ageTeleporter");
+		GameRegistry.registerBlock(ageTeleporterBlock, ItemBlockName.class, "AC_ageTeleporterBlock");
 
 		// register tile entities
 		GameRegistry.registerTileEntity(TileEntityDNA.class, "AC_TileDNA");
@@ -92,6 +101,9 @@ public class AgeCraftCore extends ACComponent {
 		
 		// remove recipes
 		CraftingManager.getInstance().getRecipeList().clear();
+		
+		//register world generators
+		GameRegistry.registerWorldGenerator(new WorldGenSpawnCage(), 0);
 	}
 
 	@Override

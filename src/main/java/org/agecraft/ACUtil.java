@@ -28,7 +28,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import elcon.mods.elconqore.blocks.BlockFluidMetadata;
 
 public class ACUtil {
-	
+
 	public static String[] colorNames = new String[]{"white", "orange", "magenta", "lightBlue", "yellow", "lime", "pink", "gray", "lightGray", "cyan", "purple", "blue", "brown", "green", "red", "black"};
 
 	public static String arrayToString(Object[] array) {
@@ -55,11 +55,11 @@ public class ACUtil {
 		}
 		return true;
 	}
-	
+
 	public static String getColorName(int color) {
 		return colorNames[color];
 	}
-	
+
 	public static int getColorFromName(String colorName) {
 		for(int i = 0; i < colorNames.length; i++) {
 			if(colorNames[i].equalsIgnoreCase(colorName)) {
@@ -285,7 +285,7 @@ public class ACUtil {
 			Entity newEntity = EntityList.createEntityByName(EntityList.getEntityString(entity), world);
 			if(newEntity != null) {
 				newEntity.copyDataFrom(entity, true);
-				if(oldDimension == 1 && dimensionID == 1) {
+				if((oldDimension == 1 && dimensionID == 1) || dimensionID >= 10) {
 					ChunkCoordinates chunkcoordinates = world.getSpawnPoint();
 					chunkcoordinates.posY = entity.worldObj.getTopSolidOrLiquidBlock(chunkcoordinates.posX, chunkcoordinates.posZ);
 					newEntity.setLocationAndAngles((double) chunkcoordinates.posX, (double) chunkcoordinates.posY, (double) chunkcoordinates.posZ, newEntity.rotationYaw, newEntity.rotationPitch);
