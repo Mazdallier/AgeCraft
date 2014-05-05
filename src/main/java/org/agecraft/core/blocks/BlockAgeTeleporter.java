@@ -2,10 +2,10 @@ package org.agecraft.core.blocks;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
-import org.agecraft.ACUtil;
 import org.agecraft.core.AgeTeleporter;
 
 import cpw.mods.fml.relauncher.Side;
@@ -36,7 +36,8 @@ public class BlockAgeTeleporter extends BlockAgeTeleporterBlock {
 				//dimensionID = world.provider.dimensionId + 1;
 				return false;
 			}
-			ACUtil.transferEntityToDimension(player, dimensionID, AgeTeleporter.class);
+			EntityPlayerMP playerMP = (EntityPlayerMP) player;
+			playerMP.mcServer.getConfigurationManager().transferPlayerToDimension(playerMP, dimensionID, new AgeTeleporter(playerMP.mcServer.worldServerForDimension(dimensionID)));
 			return true;
 		}
 		return world.provider.dimensionId < 10;

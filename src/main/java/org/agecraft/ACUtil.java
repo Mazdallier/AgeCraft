@@ -285,7 +285,7 @@ public class ACUtil {
 			Entity newEntity = EntityList.createEntityByName(EntityList.getEntityString(entity), world);
 			if(newEntity != null) {
 				newEntity.copyDataFrom(entity, true);
-				if((oldDimension == 1 && dimensionID == 1) || dimensionID >= 10) {
+				if(oldDimension == 1 && dimensionID == 1) {
 					ChunkCoordinates chunkcoordinates = world.getSpawnPoint();
 					chunkcoordinates.posY = entity.worldObj.getTopSolidOrLiquidBlock(chunkcoordinates.posX, chunkcoordinates.posZ);
 					newEntity.setLocationAndAngles((double) chunkcoordinates.posX, (double) chunkcoordinates.posY, (double) chunkcoordinates.posZ, newEntity.rotationYaw, newEntity.rotationPitch);

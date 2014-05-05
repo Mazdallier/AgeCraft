@@ -2,6 +2,7 @@ package org.agecraft.core;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
@@ -17,6 +18,11 @@ public class AgeTeleporter extends Teleporter {
 
 	@Override
 	public void placeInPortal(Entity entity, double x, double y, double z, float yaw) {
+		ChunkCoordinates chunkcoordinates = world.getSpawnPoint();
+		chunkcoordinates.posY = world.getTopSolidOrLiquidBlock(chunkcoordinates.posX, chunkcoordinates.posZ);
+		entity.setLocationAndAngles((double) chunkcoordinates.posX, (double) chunkcoordinates.posY, (double) chunkcoordinates.posZ, entity.rotationYaw, entity.rotationPitch);
+		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
+		
 		int blockX = MathHelper.floor_double(entity.posX);
 		int blockY = MathHelper.floor_double(entity.posY);
 		int blockZ = MathHelper.floor_double(entity.posZ);
@@ -32,8 +38,6 @@ public class AgeTeleporter extends Teleporter {
 					world.setBlock(xx, yy, zz, flag ? AgeCraftCore.ageTeleporterBlock : Blocks.air);
 				}
 			}
-		}
-		entity.setLocationAndAngles((double) blockX, (double) blockY, (double) blockZ, entity.rotationYaw, 0.0F);
-		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
+		}		
 	}
 }
