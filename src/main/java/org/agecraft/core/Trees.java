@@ -72,9 +72,30 @@ public class Trees extends ACComponent {
 	public static Item dust;
 	public static Item bucket;
 
-	public static DNAObject treeDNA = new DNAObject(0, "tree", TileEntityDNATree.class, new Chromosome[]{new Chromosome(0, "species", new Gene[]{new Gene(0, "woodType", 0, MAX_TREE_TYPE), new Gene(1, "leafType", 0, MAX_TREE_TYPE), new Gene(2, "leafColor", 0, 0xFFFFFF, false, true)}), new Chromosome(1, "habitat", new Gene[]{new Gene(0, "biome", 0, MAX_BIOME_TYPE), new Gene(1, "temperature", 0, 4), new Gene(2, "humidity", 0, 4)}),
-			new Chromosome(2, "growth", new Gene[]{new Gene(0, "saplingGrowSpeed", 0, 4), new Gene(1, "growSpeed", 0, 4), new Gene(2, "breedingSpeed", 0, 4)}), new Chromosome(3, "appearance", new Gene[]{new Gene(0, "trunkSize", 1, MAX_TRUNK_SIZE), new Gene(1, "leafSize", 1, MAX_LEAF_SIZE), new Gene(2, "height", 3, MAX_HEIGHT), new Gene(3, "generationType", 1, MAX_TREE_TYPE)}),
-			new Chromosome(4, "drops", new Gene[]{new Gene(0, "saplingDropRate", 0, 2), new Gene(1, "sappiness", 0, 4), new Gene(2, "fruit"), new Gene(3, "fruitDropRate", 0, 2)})});
+	public static DNAObject treeDNA = new DNAObject(0, "tree", TileEntityDNATree.class, new Chromosome[]{
+		new Chromosome(0, "species", new Gene[]{
+			new Gene(0, "woodType", 0, MAX_TREE_TYPE), 
+			new Gene(1, "leafType", 0, MAX_TREE_TYPE), 
+			new Gene(2, "leafColor", 0, 0xFFFFFF, false, true)}), 
+		new Chromosome(1, "habitat", new Gene[]{
+			new Gene(0, "biome", 0, MAX_BIOME_TYPE), 
+			new Gene(1, "temperature", 0, 4), 
+			new Gene(2, "humidity", 0, 4)}),
+		new Chromosome(2, "growth", new Gene[]{
+			new Gene(0, "saplingGrowSpeed", 0, 4), 
+			new Gene(1, "growSpeed", 0, 4), 
+			new Gene(2, "breedingSpeed", 0, 4)}), 
+		new Chromosome(3, "appearance", new Gene[]{
+			new Gene(0, "trunkSize", 1, MAX_TRUNK_SIZE), 
+			new Gene(1, "leafSize", 1, MAX_LEAF_SIZE),
+			new Gene(2, "height", 3, MAX_HEIGHT), 
+			new Gene(3, "generationType", 1, MAX_TREE_TYPE)}),
+		new Chromosome(4, "drops", new Gene[]{
+			new Gene(0, "saplingDropRate", 0, 2), 
+			new Gene(1, "sappiness", 0, 4), 
+			new Gene(2, "fruit"), 
+			new Gene(3, "fruitDropRate", 0, 2)})
+	});
 
 	public Trees() {
 		super("trees", false);

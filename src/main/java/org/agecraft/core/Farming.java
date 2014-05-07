@@ -7,6 +7,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import org.agecraft.ACComponent;
+import org.agecraft.core.dna.structure.Chromosome;
+import org.agecraft.core.dna.structure.DNAObject;
+import org.agecraft.core.dna.structure.Gene;
 import org.agecraft.core.items.farming.ItemFood;
 import org.agecraft.core.registry.FoodRegistry;
 import org.agecraft.core.registry.FoodRegistry.Food;
@@ -14,12 +17,21 @@ import org.agecraft.core.registry.FoodRegistry.FoodPotion;
 import org.agecraft.core.registry.FoodRegistry.FoodProperties;
 import org.agecraft.core.registry.FoodRegistry.FoodStage;
 import org.agecraft.core.registry.FoodRegistry.FoodType;
+import org.agecraft.core.tileentities.TileEntityDNAPlant;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import elcon.mods.elconqore.fluids.FluidName;
 
 public class Farming extends ACComponent {
 
+	public static final int MAX_PLANT_TYPE = 1;
+	
+	public static DNAObject plantDNA = new DNAObject(1, "plant", TileEntityDNAPlant.class, new Chromosome[]{
+		new Chromosome(0, "species", new Gene[]{
+			new Gene(0, "type", 0, MAX_PLANT_TYPE)
+		})
+	});
+	
 	public static Item food;
 
 	public static Fluid milk;
