@@ -72,12 +72,12 @@ public class ItemRockPickaxe extends Item {
 	}
 	
 	@Override
-	public Multimap getItemAttributeModifiers() {
-		Multimap multimap = super.getItemAttributeModifiers();
+	public Multimap getAttributeModifiers(ItemStack stack) {
+		Multimap multimap = super.getAttributeModifiers(stack);
 		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Tool modifier", 1.0D, 0));
 		return multimap;
 	}
-
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean isFull3D() {
