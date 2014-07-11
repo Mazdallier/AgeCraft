@@ -32,7 +32,7 @@ public class RecipesCampfireLogs implements IRecipe {
 					}
 					stacks[Item.getIdFromItem(stack.getItem()) == Block.getIdFromBlock(PrehistoryAge.campfire) ? 0 : index] = stack;
 					index++;
-					if(index > 3) {
+					if(index > 2) {
 						return null;
 					}
 				}
