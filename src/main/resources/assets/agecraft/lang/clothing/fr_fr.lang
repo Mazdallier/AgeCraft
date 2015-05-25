@@ -1,0 +1,59 @@
+clothing.types=Types
+clothing.categories=Catégories
+clothing.pieces=Pièces
+
+clothing.type.skin=La peau
+clothing.type.hair=Les cheveux
+clothing.type.eyes=Les yeux
+clothing.type.mouth=La bouche
+clothing.type.facialHair=Le visage
+clothing.type.hat=Le chapeau
+clothing.type.shirt=Le haut
+clothing.type.pants=Le bas
+clothing.type.boots=Les chaussures
+
+
+clothing.category.general=Général
+clothing.category.special=Spécial
+clothing.category.prehistory=Préhistoire
+
+
+clothing.general.skin.steve=La peau de Steve
+
+clothing.general.hair.steve=Les cheveux de Steve
+
+clothing.general.eyes.steve=Les Yeux de Steve
+clothing.general.eyes.happy=Les yeux contents
+clothing.general.eyes.large=Les yeux larges
+clothing.general.eyes.scared=Les yeux effrayés
+clothing.general.eyes.derp=Les yeux étonnés
+
+clothing.general.mouth.steve=La bouche de Steve
+clothing.general.mouth.derp=La bouche étonnée
+
+clothing.general.facialHair.steve=Le visage de Steve
+clothing.general.facialHair.none=Aucun
+
+clothing.general.hat.steve=Le chapeau de Steve
+clothing.general.hat.smooth=Chapeal lisse
+clothing.general.hat.headband=Bandeau
+
+clothing.general.shirt.steve=Le haut de Steve
+clothing.general.shirt.smooth=Veste lisse
+clothing.general.shirt.gradient=Chemise dégradée
+clothing.general.shirt.sleeveless=Chemise sans manche
+
+clothing.general.pants.steve=Le bas de Steve
+clothing.general.pants.smooth=Pantalon lisse
+
+clothing.general.boots.steve=Les chaussures de Steve
+clothing.general.boots.smooth=Chaussures cirées
+
+
+clothing.special.boots.djprincecap=Chaussures de DJPrinceCap
+clothing.special.shirt.djprincecap=Haut de DJPrinceCap
+clothing.special.pants.djprincecap=Bas de DJPrinceCap
+clothing.special.hat.djprincecap=Lunettes de DJPrinceCap
+
+
+clothing.prehistory.hat.bone=Os
